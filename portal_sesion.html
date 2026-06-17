@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seguridad y buenas prácticas en desarrollo con IA · AI PM Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@300;400;500;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0E1A;
+    --bg-deeper: #060912;
+    --bg-raised: #11162B;
+    --bg-card: #141A30;
+    --ink: #F5F3EE;
+    --ink-dim: #AEB4C6;
+    --ink-faint: #646B82;
+    --divider: #1F2745;
+
+    --accent: #DCEE3C;
+    --accent-glow: rgba(220, 238, 60, 0.4);
+    --accent-soft: rgba(220, 238, 60, 0.12);
+
+    --blue: #6B9DFF;
+    --coral: #FF7A6B;
+    --jade: #7FD1B9;
+    --violet: #B39DFF;
+
+    --notes: #FFB454;
+    --notes-soft: rgba(255, 180, 84, 0.1);
+    --notes-border: rgba(255, 180, 84, 0.35);
+
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Manrope", -apple-system, sans-serif;
+    --mono: "JetBrains Mono", monospace;
+
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --max-w: 1180px;
+    --gutter: clamp(20px, 5vw, 72px);
+    --header-h: 68px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: var(--header-h); }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    opacity: 0.03; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
+    background: rgba(6, 9, 18, 0.85);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--divider);
+    z-index: 100;
+    display: flex; align-items: center;
+    padding: 0 var(--gutter);
+    gap: 32px;
+  }
+  .brand {
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.1em; color: var(--accent);
+    white-space: nowrap; display: flex; align-items: center; gap: 8px;
+  }
+  .brand-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); }
+  .nav { display: flex; gap: 4px; flex: 1; overflow-x: auto; scrollbar-width: none; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a {
+    font-family: var(--sans); font-size: 13px; font-weight: 500;
+    color: var(--ink-faint); text-decoration: none;
+    padding: 7px 13px; border-radius: 6px; white-space: nowrap;
+    transition: all 0.3s var(--ease);
+  }
+  .nav a:hover { color: var(--ink); background: var(--bg-raised); }
+  .nav a.active { color: var(--accent); background: var(--accent-soft); }
+  .header-meta { font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: 0.1em; white-space: nowrap; }
+  @media (max-width: 880px) {
+    .header-meta { display: none; }
+    .site-header { gap: 16px; }
+  }
+
+  /* ===== PROGRESS ===== */
+  .progress { position: fixed; top: var(--header-h); left: 0; right: 0; height: 2px; background: transparent; z-index: 99; }
+  .progress-bar { height: 100%; width: 0%; background: var(--accent); box-shadow: 0 0 12px var(--accent-glow); transition: width 0.1s linear; }
+
+  /* ===== SECTIONS ===== */
+  section {
+    min-height: calc(100vh - var(--header-h));
+    padding: clamp(60px, 9vh, 110px) var(--gutter);
+    margin-top: var(--header-h);
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; justify-content: center;
+    scroll-margin-top: var(--header-h);
+  }
+  .container { width: 100%; max-width: var(--max-w); margin: 0 auto; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 22px; display: flex; align-items: center; gap: 14px;
+  }
+  .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--accent); }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 300; line-height: 1.04; letter-spacing: -0.02em; }
+  h1 { font-size: clamp(44px, 7vw, 104px); }
+  h2 { font-size: clamp(38px, 5.5vw, 76px); }
+  h3 { font-size: clamp(22px, 2.6vw, 34px); }
+  h2 em, h1 em { font-style: italic; color: var(--accent); }
+
+  p { font-size: clamp(15px, 1.1vw, 17px); color: var(--ink-dim); max-width: 64ch; }
+  p.lead { font-size: clamp(18px, 1.5vw, 23px); color: var(--ink); max-width: 56ch; line-height: 1.5; }
+
+  /* ===== REVEAL ===== */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .rd1 { transition-delay: 0.08s; } .rd2 { transition-delay: 0.2s; }
+  .rd3 { transition-delay: 0.32s; } .rd4 { transition-delay: 0.44s; } .rd5 { transition-delay: 0.56s; }
+
+  /* ===== HERO ===== */
+  .hero { justify-content: center; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(ellipse at 25% 35%, rgba(220,238,60,0.09), transparent 50%),
+                radial-gradient(ellipse at 75% 70%, rgba(107,157,255,0.07), transparent 55%); }
+  .hero-grid { position: absolute; inset: 0; z-index: -1;
+    background-image: linear-gradient(var(--divider) 1px, transparent 1px), linear-gradient(90deg, var(--divider) 1px, transparent 1px);
+    background-size: 110px 110px;
+    mask-image: radial-gradient(ellipse at center, black, transparent 72%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black, transparent 72%); opacity: 0.35; }
+  .hero-label { font-family: var(--mono); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 36px; display: inline-flex; align-items: center; gap: 12px; }
+  .hero-label::before { content: ""; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 16px var(--accent); animation: pulse 2.4s var(--ease) infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.6;transform:scale(0.8);} }
+  .hero h1 { margin-bottom: 36px; }
+  .hero-footer { display: flex; gap: 56px; margin-top: 64px; padding-top: 30px; border-top: 1px solid var(--divider); flex-wrap: wrap; }
+  .hf-item { display: flex; flex-direction: column; gap: 5px; }
+  .hf-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); }
+  .hf-value { font-family: var(--serif); font-size: 19px; font-style: italic; color: var(--ink); }
+
+  /* ===== TRAYECTORIA ===== */
+  .traj-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  @media (max-width: 880px) { .traj-layout { grid-template-columns: 1fr; gap: 40px; } }
+  .traj-intro { font-family: var(--serif); font-style: italic; font-size: clamp(22px, 2.6vw, 32px); font-weight: 300; color: var(--ink); line-height: 1.4; }
+  .traj-points { display: flex; flex-direction: column; gap: 28px; }
+  .traj-point { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: start; }
+  .traj-marker { font-family: var(--mono); font-size: 12px; color: var(--accent); padding-top: 4px; white-space: nowrap; }
+  .traj-text { font-size: 16px; color: var(--ink-dim); }
+  .traj-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ===== PARA QUÉ / ENTREGABLES ===== */
+  .entregables-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 56px; }
+  @media (max-width: 880px) { .entregables-grid { grid-template-columns: 1fr; } }
+  .ent-card { position: relative; padding: 40px; background: linear-gradient(140deg, var(--bg-raised), var(--bg-deeper)); border: 1px solid var(--divider); overflow: hidden; transition: all 0.5s var(--ease); cursor: pointer; }
+  .ent-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent); }
+  .ent-card:hover { transform: translateY(-4px); border-color: var(--notes-border); }
+  .ent-card.open { transform: translateY(-4px); border-color: rgba(220,238,60,0.3); }
+  .ent-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--accent); margin-bottom: 14px; }
+  .ent-title { font-family: var(--serif); font-size: 30px; color: var(--ink); margin-bottom: 16px; }
+  .ent-desc { font-size: 15px; color: var(--ink-dim); line-height: 1.6; }
+  .ent-toggle { position: absolute; top: 20px; right: 24px; font-family: var(--mono); font-size: 20px; color: var(--ink-faint); transition: transform 0.4s var(--ease); }
+  .ent-card.open .ent-toggle { transform: rotate(45deg); }
+  .ent-detail { max-height: 0; overflow: hidden; transition: max-height 0.6s var(--ease); }
+  .ent-card.open .ent-detail { max-height: 800px; }
+  .ent-detail-inner { padding-top: 24px; border-top: 1px solid var(--divider); margin-top: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .ent-detail-inner p { font-size: 14px; color: var(--ink-dim); line-height: 1.6; margin: 0; max-width: none; }
+  .ent-detail-inner strong { color: var(--ink); font-weight: 600; }
+  .ent-items { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  .ent-item { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+  .ent-item-mark { color: var(--accent); font-size: 14px; padding-top: 1px; }
+  .ent-item-text { font-size: 14px; color: var(--ink-dim); line-height: 1.5; }
+  .ent-item-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ===== DATOS DE IMPACTO ===== */
+  .datos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  @media (max-width: 880px) { .datos-grid { grid-template-columns: 1fr; } }
+  .dato-card { padding: 36px 32px; background: var(--bg-raised); border: 1px solid var(--divider); border-left: 3px solid var(--accent); transition: all 0.5s var(--ease); position: relative; overflow: hidden; cursor: pointer; }
+  .dato-card:nth-child(2) { border-left-color: var(--blue); }
+  .dato-card:nth-child(3) { border-left-color: var(--coral); }
+  .dato-card:hover { transform: translateX(6px); }
+  .dato-card.open { transform: translateX(6px); }
+  .dato-num { font-family: var(--serif); font-size: clamp(52px, 6vw, 80px); font-weight: 300; color: var(--accent); line-height: 1; margin-bottom: 16px; }
+  .dato-card:nth-child(2) .dato-num { color: var(--blue); }
+  .dato-card:nth-child(3) .dato-num { color: var(--coral); }
+  .dato-desc { font-size: 15px; color: var(--ink); line-height: 1.5; margin-bottom: 14px; }
+  .dato-source { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); padding-top: 12px; border-top: 1px solid var(--divider); display: flex; justify-content: space-between; align-items: center; }
+  .dato-source-toggle { font-size: 16px; transition: transform 0.4s var(--ease); }
+  .dato-card.open .dato-source-toggle { transform: rotate(45deg); }
+  .dato-detail { max-height: 0; overflow: hidden; transition: max-height 0.6s var(--ease); }
+  .dato-card.open .dato-detail { max-height: 600px; }
+  .dato-detail-inner { padding-top: 20px; border-top: 1px solid var(--divider); margin-top: 16px; display: flex; flex-direction: column; gap: 14px; }
+  .dato-detail-inner p { font-size: 14px; color: var(--ink-dim); line-height: 1.6; margin: 0; max-width: none; }
+  .dato-detail-inner strong { color: var(--ink); font-weight: 600; }
+  .dato-personal { padding: 14px 16px; background: var(--accent-soft); border-left: 2px solid var(--accent); margin-top: 4px; }
+  .dato-personal-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .dato-personal p { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--ink); line-height: 1.5; margin: 0; max-width: none; }
+
+  /* ===== FAMILIAS (TEORÍA APLICADA) ===== */
+  .familias-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 56px; }
+  @media (max-width: 880px) { .familias-grid { grid-template-columns: 1fr; } }
+  .fam-card { position: relative; padding: 38px; background: var(--bg-card); border: 1px solid var(--divider); overflow: hidden; transition: all 0.5s var(--ease); }
+  .fam-card::before { content: attr(data-n); position: absolute; top: 20px; right: 28px; font-family: var(--serif); font-size: 84px; font-weight: 300; line-height: 1; }
+  .fam-card[data-c="blue"]::before { color: rgba(107,157,255,0.14); }
+  .fam-card[data-c="coral"]::before { color: rgba(255,122,107,0.14); }
+  .fam-card[data-c="jade"]::before { color: rgba(127,209,185,0.14); }
+  .fam-card[data-c="violet"]::before { color: rgba(179,157,255,0.14); }
+  .fam-card:hover { transform: translateY(-4px); }
+  .fam-card[data-c="blue"]:hover { border-color: rgba(107,157,255,0.4); }
+  .fam-card[data-c="coral"]:hover { border-color: rgba(255,122,107,0.4); }
+  .fam-card[data-c="jade"]:hover { border-color: rgba(127,209,185,0.4); }
+  .fam-card[data-c="violet"]:hover { border-color: rgba(179,157,255,0.4); }
+  .fam-card.fam-open { transform: none !important; }
+  .fam-card[data-c="blue"].fam-open { border-color: rgba(107,157,255,0.5); }
+  .fam-card[data-c="coral"].fam-open { border-color: rgba(255,122,107,0.5); }
+  .fam-card[data-c="jade"].fam-open { border-color: rgba(127,209,185,0.5); }
+  .fam-card[data-c="violet"].fam-open { border-color: rgba(179,157,255,0.5); }
+  .fam-card-toggle { position: absolute; top: 16px; right: 20px; font-family: var(--mono); font-size: 20px; color: var(--ink-faint); transition: transform 0.4s var(--ease), color 0.4s var(--ease); z-index: 3; }
+  .fam-card.fam-open .fam-card-toggle { transform: rotate(45deg); }
+  .fam-card[data-c="blue"].fam-open .fam-card-toggle { color: var(--blue); }
+  .fam-card[data-c="coral"].fam-open .fam-card-toggle { color: var(--coral); }
+  .fam-card[data-c="jade"].fam-open .fam-card-toggle { color: var(--jade); }
+  .fam-card[data-c="violet"].fam-open .fam-card-toggle { color: var(--violet); }
+  .fam-expanded { max-height: 0; overflow: hidden; transition: max-height 0.7s var(--ease); }
+  .fam-card.fam-open .fam-expanded { max-height: 6000px; }
+  .fam-expanded-inner { padding-top: 24px; border-top: 1px solid var(--divider); margin-top: 20px; }
+  .fam-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 18px; position: relative; z-index: 2; }
+  .fam-card[data-c="blue"] .fam-tag { color: var(--blue); }
+  .fam-card[data-c="coral"] .fam-tag { color: var(--coral); }
+  .fam-card[data-c="jade"] .fam-tag { color: var(--jade); }
+  .fam-card[data-c="violet"] .fam-tag { color: var(--violet); }
+  .fam-name { font-family: var(--serif); font-size: 28px; color: var(--ink); line-height: 1.1; margin-bottom: 14px; position: relative; z-index: 2; max-width: 80%; }
+  .fam-desc { font-size: 14px; color: var(--ink-dim); line-height: 1.5; margin-bottom: 20px; position: relative; z-index: 2; }
+  .fam-case { padding: 14px 18px; background: var(--bg-deeper); border-left: 2px solid; font-family: var(--mono); font-size: 11.5px; color: var(--ink); line-height: 1.5; position: relative; z-index: 2; }
+  .fam-card[data-c="blue"] .fam-case { border-left-color: var(--blue); }
+  .fam-card[data-c="coral"] .fam-case { border-left-color: var(--coral); }
+  .fam-card[data-c="jade"] .fam-case { border-left-color: var(--jade); }
+  .fam-card[data-c="violet"] .fam-case { border-left-color: var(--violet); }
+
+  /* ===== DETALLE AMPLIADO DE FAMILIA ===== */
+  .fam-detail { margin-top: 28px; border: 1px solid var(--divider); background: var(--bg-raised); overflow: hidden; }
+  .fam-detail-head { display: flex; align-items: center; gap: 16px; padding: 22px 28px; cursor: pointer; transition: background 0.3s var(--ease); user-select: none; }
+  .fam-detail-head:hover { background: var(--bg-card); }
+  .fam-detail-badge { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 11px; border-radius: 3px; white-space: nowrap; }
+  .fam-detail[data-c="blue"] .fam-detail-badge { background: rgba(107,157,255,0.15); color: var(--blue); }
+  .fam-detail[data-c="coral"] .fam-detail-badge { background: rgba(255,122,107,0.15); color: var(--coral); }
+  .fam-detail[data-c="jade"] .fam-detail-badge { background: rgba(127,209,185,0.15); color: var(--jade); }
+  .fam-detail[data-c="violet"] .fam-detail-badge { background: rgba(179,157,255,0.15); color: var(--violet); }
+  .fam-detail-title { font-family: var(--serif); font-size: 21px; color: var(--ink); flex: 1; }
+  .fam-detail-toggle { font-family: var(--mono); font-size: 22px; color: var(--ink-faint); transition: transform 0.4s var(--ease); }
+  .fam-detail.open .fam-detail-toggle { transform: rotate(45deg); }
+  .fam-detail-body { max-height: 0; overflow: hidden; transition: max-height 0.6s var(--ease); }
+  .fam-detail.open .fam-detail-body { max-height: 3200px; }
+  .fam-detail-inner { padding: 8px 28px 32px; }
+  .fam-block { margin-top: 28px; }
+  .fam-block:first-child { margin-top: 8px; }
+  .fam-block-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .fam-block-label::before { content: ""; width: 20px; height: 1px; }
+  .fam-detail[data-c="blue"] .fam-block-label { color: var(--blue); }
+  .fam-detail[data-c="blue"] .fam-block-label::before { background: var(--blue); }
+  .fam-detail[data-c="coral"] .fam-block-label { color: var(--coral); }
+  .fam-detail[data-c="coral"] .fam-block-label::before { background: var(--coral); }
+  .fam-detail[data-c="jade"] .fam-block-label { color: var(--jade); }
+  .fam-detail[data-c="jade"] .fam-block-label::before { background: var(--jade); }
+  .fam-detail[data-c="violet"] .fam-block-label { color: var(--violet); }
+  .fam-detail[data-c="violet"] .fam-block-label::before { background: var(--violet); }
+  .fam-block p { font-size: 15px; color: var(--ink-dim); margin-bottom: 12px; max-width: none; }
+  .fam-block p strong { color: var(--ink); font-weight: 600; }
+  .fam-steps { display: flex; flex-direction: column; gap: 2px; counter-reset: step; }
+  .fam-step { display: grid; grid-template-columns: 36px 1fr; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--divider); align-items: start; }
+  .fam-step:last-child { border-bottom: none; }
+  .fam-step-n { font-family: var(--serif); font-style: italic; font-size: 22px; line-height: 1; }
+  .fam-detail[data-c="blue"] .fam-step-n { color: var(--blue); }
+  .fam-detail[data-c="coral"] .fam-step-n { color: var(--coral); }
+  .fam-detail[data-c="jade"] .fam-step-n { color: var(--jade); }
+  .fam-detail[data-c="violet"] .fam-step-n { color: var(--violet); }
+  .fam-step-t { font-size: 14px; color: var(--ink-dim); padding-top: 3px; }
+  .fam-step-t strong { color: var(--ink); font-weight: 600; }
+  .fam-keys { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+  @media (max-width: 680px) { .fam-keys { grid-template-columns: 1fr; } }
+  .fam-key { padding: 16px 18px; background: var(--bg-deeper); border: 1px solid var(--divider); }
+  .fam-key-t { font-family: var(--mono); font-size: 12px; margin-bottom: 6px; }
+  .fam-detail[data-c="blue"] .fam-key-t { color: var(--blue); }
+  .fam-detail[data-c="coral"] .fam-key-t { color: var(--coral); }
+  .fam-detail[data-c="jade"] .fam-key-t { color: var(--jade); }
+  .fam-detail[data-c="violet"] .fam-key-t { color: var(--violet); }
+  .fam-key-d { font-size: 13px; color: var(--ink-dim); line-height: 1.45; }
+  .fam-data-row { display: flex; gap: 18px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--divider); }
+  .fam-data-row:last-child { border-bottom: none; }
+  .fam-data-num { font-family: var(--serif); font-size: 28px; font-weight: 300; line-height: 1; white-space: nowrap; min-width: 130px; }
+  .fam-detail[data-c="blue"] .fam-data-num { color: var(--blue); }
+  .fam-detail[data-c="coral"] .fam-data-num { color: var(--coral); }
+  .fam-detail[data-c="jade"] .fam-data-num { color: var(--jade); }
+  .fam-detail[data-c="violet"] .fam-data-num { color: var(--violet); }
+  .fam-data-txt { font-size: 14px; color: var(--ink-dim); }
+  .fam-ideas { display: flex; flex-direction: column; gap: 14px; }
+  .fam-idea { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
+  .fam-idea-mark { font-size: 16px; padding-top: 2px; }
+  .fam-detail[data-c="blue"] .fam-idea-mark { color: var(--blue); }
+  .fam-detail[data-c="coral"] .fam-idea-mark { color: var(--coral); }
+  .fam-detail[data-c="jade"] .fam-idea-mark { color: var(--jade); }
+  .fam-detail[data-c="violet"] .fam-idea-mark { color: var(--violet); }
+  .fam-idea-txt { font-size: 14px; color: var(--ink-dim); }
+  .fam-idea-txt strong { color: var(--ink); font-weight: 600; }
+
+  /* ===== PRÁCTICA / PIPELINE ===== */
+  .pipeline-flow { display: flex; flex-direction: column; align-items: center; gap: 22px; margin-top: 56px; }
+  .pf-node { padding: 16px 28px; border: 1px solid var(--divider); background: var(--bg-raised); text-align: center; min-width: 240px; }
+  .pf-node-t { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--ink); }
+  .pf-node-s { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-top: 4px; }
+  .pf-orch { background: var(--bg-deeper); border: 2px solid var(--accent); box-shadow: 0 0 30px rgba(220,238,60,0.15); }
+  .pf-orch .pf-node-t { font-family: var(--mono); font-style: normal; text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; color: var(--accent); }
+  .pf-arrow { color: var(--ink-faint); font-size: 18px; }
+  .pf-skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 620px; }
+  @media (max-width: 680px) { .pf-skills { grid-template-columns: 1fr 1fr; } }
+  .pf-skill { padding: 16px 12px; border: 1px solid var(--divider); background: var(--bg-raised); text-align: center; font-family: var(--mono); font-size: 11px; color: var(--ink-dim); line-height: 1.4; transition: all 0.4s var(--ease); }
+  .pf-skill:hover { border-color: var(--accent); color: var(--ink); transform: translateY(-2px); }
+  .pf-skill b { display: block; color: var(--accent); margin-bottom: 6px; }
+  .practica-fases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+  @media (max-width: 880px) { .practica-fases { grid-template-columns: 1fr; } }
+  .pfase { padding: 28px; background: var(--bg-raised); border-top: 3px solid var(--accent); }
+  .pfase-t { font-family: var(--serif); font-size: 30px; font-style: italic; color: var(--accent); margin-bottom: 10px; }
+  .pfase-d { font-size: 14px; color: var(--ink-dim); line-height: 1.5; }
+
+  /* ===== DEBATE ===== */
+  .debate-box { margin-top: 48px; padding: 44px; background: var(--accent-soft); border: 1px solid var(--notes-border); }
+  .debate-q { font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2.4vw, 30px); font-weight: 300; color: var(--ink); line-height: 1.4; margin-bottom: 16px; }
+  .debate-q:last-child { margin-bottom: 0; }
+
+  /* ===== NOTAS (oculto por defecto) ===== */
+  .notas-block { display: none; }
+  body.show-notes .notas-block {
+    display: block;
+    margin-top: 28px; padding: 24px 28px;
+    background: var(--notes-soft); border: 1px solid var(--notes-border); border-left: 3px solid var(--notes);
+    border-radius: 2px;
+  }
+  .notas-block .notas-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--notes); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .notas-block .notas-label::before { content: "▸"; }
+  .notas-block p { color: var(--ink-dim); font-size: 14px; margin-bottom: 10px; max-width: none; }
+  .notas-block p:last-child { margin-bottom: 0; }
+  .notas-block strong { color: var(--notes); font-weight: 600; }
+  .notas-block ul { margin: 8px 0 0 20px; color: var(--ink-dim); font-size: 14px; }
+  .notas-block li { margin-bottom: 6px; }
+
+  /* Banner modo notas */
+  .notes-banner {
+    display: none;
+    position: fixed; bottom: 20px; right: 20px; z-index: 200;
+    background: var(--notes); color: var(--bg-deeper);
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 10px 16px; border-radius: 6px;
+    box-shadow: 0 4px 24px rgba(255,180,84,0.4);
+  }
+  body.show-notes .notes-banner { display: block; }
+
+  /* ===== QUIZ ===== */
+  .quiz-tabs { display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+  .quiz-tab {
+    padding: 9px 20px; border: 1px solid var(--divider); background: var(--bg-raised);
+    font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--ink-faint); cursor: pointer;
+    transition: all 0.3s var(--ease); border-radius: 4px;
+  }
+  .quiz-tab:hover { color: var(--ink); border-color: var(--ink-faint); }
+  .quiz-tab.active { color: var(--bg); border-color: transparent; }
+  .quiz-tab[data-f="f1"].active { background: var(--blue); }
+  .quiz-tab[data-f="f2"].active { background: var(--coral); }
+  .quiz-tab[data-f="f3"].active { background: var(--jade); color: var(--bg-deeper); }
+  .quiz-tab[data-f="f4"].active { background: var(--violet); }
+
+  .quiz-panel { display: none; flex-direction: column; gap: 32px; }
+  .quiz-panel.active { display: flex; }
+
+  .quiz-q {
+    background: var(--bg-raised); border: 1px solid var(--divider);
+    border-radius: 4px; overflow: hidden;
+    transition: border-color 0.4s var(--ease);
+  }
+  .quiz-q.revealed-correct { border-color: var(--jade); }
+  .quiz-q-header { padding: 24px 28px 20px; }
+  .quiz-q-num {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-faint); margin-bottom: 10px;
+  }
+  .quiz-q-text {
+    font-family: var(--serif); font-size: clamp(17px, 1.6vw, 22px);
+    font-weight: 300; color: var(--ink); line-height: 1.45;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 0; }
+  .quiz-opt {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 14px 28px; border-top: 1px solid var(--divider);
+    font-size: 14px; color: var(--ink-dim); cursor: default;
+    transition: all 0.4s var(--ease);
+  }
+  .quiz-opt-letter {
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    color: var(--ink-faint); min-width: 18px; padding-top: 1px;
+    transition: color 0.4s var(--ease);
+  }
+  .quiz-opt.correct { background: rgba(127,209,185,0.08); color: var(--ink); }
+  .quiz-opt.correct .quiz-opt-letter { color: var(--jade); }
+  .quiz-opt.wrong { opacity: 0.45; }
+
+  .quiz-reveal-row { padding: 16px 28px; border-top: 1px solid var(--divider); display: flex; align-items: center; gap: 16px; }
+  .quiz-btn {
+    font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 9px 18px; border: 1px solid var(--accent);
+    background: transparent; color: var(--accent); cursor: pointer;
+    transition: all 0.3s var(--ease);
+  }
+  .quiz-btn:hover { background: var(--accent); color: var(--bg); }
+  .quiz-btn.done { border-color: var(--divider); color: var(--ink-faint); cursor: default; }
+  .quiz-btn.done:hover { background: transparent; color: var(--ink-faint); }
+  .quiz-btn-reset {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 6px 12px; border: 1px solid var(--divider);
+    background: transparent; color: var(--ink-faint); cursor: pointer;
+    transition: all 0.3s var(--ease);
+  }
+  .quiz-btn-reset:hover { color: var(--ink); border-color: var(--ink-faint); }
+
+  .quiz-explanation {
+    display: none; padding: 16px 28px;
+    border-top: 1px solid rgba(127,209,185,0.2);
+    background: rgba(127,209,185,0.05);
+  }
+  .quiz-explanation.show { display: block; }
+  .quiz-explanation p {
+    font-size: 14px; color: var(--jade); line-height: 1.55; margin: 0; max-width: none;
+  }
+  .quiz-explanation strong { color: var(--ink); }
+
+  .quiz-debate {
+    margin-top: 8px; padding: 22px 28px;
+    background: var(--accent-soft); border: 1px solid rgba(220,238,60,0.25);
+    border-radius: 4px;
+  }
+  .quiz-debate-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+  }
+  .quiz-debate p {
+    font-family: var(--serif); font-style: italic; font-size: 16px;
+    color: var(--ink); line-height: 1.5; margin: 0; max-width: none;
+  }
+
+  /* ===== CIERRE ===== */
+  .cierre { background: var(--bg-deeper); }
+  .cierre h2 { margin-bottom: 28px; }
+  .compromisos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+  @media (max-width: 880px) { .compromisos { grid-template-columns: 1fr; } }
+  .comp-card { padding: 28px; background: var(--bg-raised); border: 1px solid var(--divider); }
+  .comp-num { font-family: var(--serif); font-size: 40px; font-style: italic; color: var(--accent); line-height: 1; margin-bottom: 14px; }
+  .comp-text { font-size: 15px; color: var(--ink); line-height: 1.5; }
+
+  .footer { padding: 40px var(--gutter); border-top: 1px solid var(--divider); text-align: center; }
+  .footer { display: flex; flex-direction: column; align-items: center; }
+  .footer p { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.1em; margin: 0 auto; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+    .hero-label::before { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand"><img src="data:image/png;base64,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" alt="Hero Camp" style="height:28px; width:auto; display:block;"></div>
+  <nav class="nav" id="nav">
+    <a href="#hero" class="active">Inicio</a>
+    <a href="#quien">Quién</a>
+    <a href="#paraque">Qué te llevas</a>
+    <a href="#impacto">Impacto</a>
+    <a href="#dinamicas">Quiz previo</a>
+    <a href="#familias">Las 4 familias</a>
+    <a href="#practica">Práctica</a>
+    <a href="#debate">Debate</a>
+    <a href="#cierre">Cierre</a>
+  </nav>
+  <div class="header-meta">AI PM PRO · 26 JUN</div>
+</header>
+
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+<div class="notes-banner">Modo notas activo</div>
+
+<!-- HERO -->
+<section id="hero" class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-label reveal">Sesión final · AI PM Pro</div>
+    <h1 class="reveal rd1">Seguridad <em>y buenas</em><br>prácticas en<br>desarrollo <em>con IA</em></h1>
+    <p class="lead reveal rd2">Cómo construir rápido con agentes sin que la velocidad te pase factura. Cuatro patrones de riesgo, casos reales y un pipeline que audita tu código.</p>
+    <div class="hero-footer reveal rd3">
+      <div class="hf-item"><span class="hf-label">Duración</span><span class="hf-value">3 horas</span></div>
+      <div class="hf-item"><span class="hf-label">Formato</span><span class="hf-value">Remoto · Zoom</span></div>
+      <div class="hf-item"><span class="hf-label">Ponente</span><span class="hf-value">Jaime · Senior Tech Leader</span></div>
+    </div>
+    <div class="notas-block">
+      <div class="notas-label">Nota de apertura</div>
+      <p>Conéctate 10 min antes. A las 17:00 en punto arrancas, aunque no estén todos. Cámara encendida, saludo natural.</p>
+      <p><strong>No abras compartiendo esta web.</strong> Primero un saludo humano. Cuando la conversación social se cierre de forma natural, comparte pantalla: "He preparado esto para que lo recorramos juntos."</p>
+      <p><strong>Frase de arranque:</strong> "Soy Jaime, llevo años como Tech Leader trabajando con IA en producto. Esta es la última sesión del curso, así que no os voy a dar teoría que podáis leer en cualquier sitio. Os voy a contar cosas que me han pasado a mí."</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUIÉN SOY -->
+<section id="quien">
+  <div class="container">
+    <div class="eyebrow reveal">Punto de partida</div>
+    <h2 class="reveal rd1" style="margin-bottom:48px;">Quién os <em>habla</em></h2>
+    <div class="traj-layout">
+      <p class="traj-intro reveal rd2">Llevo más de una década en banca y tecnología. He cometido los errores que hoy os voy a enseñar a evitar, y eso es lo que hace que esto sea útil.</p>
+      <div class="traj-points">
+        <div class="traj-point reveal rd2">
+          <span class="traj-marker">HOY</span>
+          <span class="traj-text"><strong>AI Engineering Lead en NTT DATA</strong> — diseño y ejecución de pipelines multi-agente para modernizar sistemas bancarios legacy. Claude Code, LangGraph y arquitecturas agenticas aplicadas a proyectos reales.</span>
+        </div>
+        <div class="traj-point reveal rd3">
+          <span class="traj-marker">RECORRIDO</span>
+          <span class="traj-text"><strong>8 años en NTT DATA</strong>, creciendo de Software Engineer a Technical Lead y AI Engineering Senior Lead. Equipos de 8 a 12 personas, microservicios, Azure, mainframe, banca de inversión.</span>
+        </div>
+        <div class="traj-point reveal rd4">
+          <span class="traj-marker">ORIGEN</span>
+          <span class="traj-text">Economista de formación, con experiencia previa en el sector financiero antes de pivotar a tecnología. La combinación de negocio y técnica es lo que define mi forma de trabajar.</span>
+        </div>
+        <div class="traj-point reveal rd5">
+          <span class="traj-marker">SESIÓN</span>
+          <span class="traj-text">No soy un gurú. Soy alguien que ha construido con estas herramientas, ha cometido estos errores, y quiere ayudaros a <strong>evitarlos antes de que os cuesten algo</strong>.</span>
+        </div>
+      </div>
+    </div>
+    <div class="notas-block">
+      <div class="notas-label">Nota · Mantener breve · máx. 90 segundos</div>
+      <p>Cuatro puntos, cuatro frases en voz alta. No los leas: cuéntalos. El que más impacta es el último: "No soy un gurú" desarma cualquier distancia con el grupo y abre la puerta a las historias personales.</p>
+      <p><strong>Datos que puedes soltar de memoria:</strong> 10 años en banca y tecnología, 8 en NTT DATA, de Software Engineer a AI Lead, equipos de hasta 12 personas.</p>
+      <p><strong>Gancho de cierre:</strong> "Pero no estáis aquí por mi CV. Estáis aquí por lo que os vais a llevar. Vamos a ello."</p>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUÉ -->
+<section id="paraque">
+  <div class="container">
+    <div class="eyebrow reveal">Para qué</div>
+    <h2 class="reveal rd1">Qué te llevas <em>hoy</em></h2>
+    <p class="reveal rd2" style="margin-top:24px;">No son apuntes. Son dos herramientas que puedes usar el lunes sobre tu propio proyecto.</p>
+    <div class="entregables-grid">
+      <div class="ent-card reveal rd2" onclick="this.classList.toggle('open')">
+        <span class="ent-toggle">+</span>
+        <div class="ent-num">ENTREGABLE 01</div>
+        <h3 class="ent-title">Guía de Seguridad</h3>
+        <p class="ent-desc">Un documento operativo con las cuatro familias de riesgo y un checklist para revisar antes de cada despliegue.</p>
+        <div class="ent-detail">
+          <div class="ent-detail-inner">
+            <p>No son apuntes de clase. Es un documento pensado para tenerlo abierto el día que vayas a desplegar algo a producción.</p>
+            <div class="ent-items">
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Resumen de las cuatro familias</strong> con sus mecanismos y casos reales, en formato de referencia rápida.</span></div>
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Checklist previo al despliegue</strong>: las comprobaciones que debes hacer antes de cada push a producción, ordenadas por familia.</span></div>
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Preguntas de auditoría</strong> para revisar el trabajo del agente: qué buscar, cómo verificarlo, qué hacer si lo encuentras.</span></div>
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Sin jerga innecesaria.</strong> Pensado para un PM Senior, no para un equipo de seguridad.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ent-card reveal rd3" onclick="this.classList.toggle('open')">
+        <span class="ent-toggle">+</span>
+        <div class="ent-num">ENTREGABLE 02</div>
+        <h3 class="ent-title">Pipeline de agentes</h3>
+        <p class="ent-desc">Un sistema en Claude Code que audita tu código automáticamente y te dice dónde tienes problemas.</p>
+        <div class="ent-detail">
+          <div class="ent-detail-inner">
+            <p>Lo construimos juntos en directo durante el Bloque 2. Al terminar la sesión te lo llevas funcionando y puedes ejecutarlo sobre cualquier proyecto tuyo.</p>
+            <div class="ent-items">
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Un orquestador</strong> que coordina cuatro agentes especializados en paralelo y consolida el resultado.</span></div>
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Cuatro skills</strong>: una por familia de riesgo. Cada una audita un vector específico de tu código.</span></div>
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Informe legible</strong>: no es output técnico, es un documento con hallazgos priorizados y acciones concretas.</span></div>
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Se ejecuta con un comando</strong> sobre cualquier repositorio. No hace falta configuración extra.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notas-block">
+      <div class="notas-label">Nota · El "para qué" antes del shock</div>
+      <p>Esta sección va ANTES del caso Gemini a propósito (ajuste del informe de evaluación). Que el alumno sepa qué gana antes de asustarle con cifras.</p>
+      <p><strong>Da permiso a todos los niveles:</strong> "Los dos entregables sirven tanto si tocáis código como si no. La guía es para cualquiera. El pipeline lo ejecutáis con un comando."</p>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACTO -->
+<section id="impacto">
+  <div class="container">
+    <div class="eyebrow reveal">La realidad del sector</div>
+    <h2 class="reveal rd1">Por qué esto <em>importa</em> ahora</h2>
+    <div class="datos-grid">
+
+      <div class="dato-card reveal rd2" onclick="this.classList.toggle('open')">
+        <div class="dato-num">82K$</div>
+        <p class="dato-desc">Factura de una startup en 48 horas tras filtrar una clave de Gemini. Un bot la encontró 4 minutos después del commit.</p>
+        <div class="dato-source">
+          <span>The Register · febrero 2026</span>
+          <span class="dato-source-toggle">+</span>
+        </div>
+        <div class="dato-detail">
+          <div class="dato-detail-inner">
+            <p>Una startup mexicana de tres desarrolladores. Su factura habitual en servicios de IA: 180$ al mes. El 11 de febrero alguien subió una clave de Gemini en un commit de madrugada. A las pocas horas un bot automatizado la encontró, la validó, y empezó a consumir la API a máxima velocidad.</p>
+            <p>El día 12 tenían una factura de <strong>82.314 dólares</strong>. Google aplicó el modelo de responsabilidad compartida: la infraestructura era segura, la clave la gestionaba el cliente. Sin perdón, sin devolución.</p>
+            <p>El bot tardó <strong>4 minutos</strong> desde el commit hasta el primer uso de la clave. No hay margen de reacción: o se previene o se paga.</p>
+            <div class="dato-personal">
+              <div class="dato-personal-label">Me pasó a mí</div>
+              <p>"He subido el .env a GitLab. No una vez, varias. Siempre igual: tenía prisa, había probado que funcionaba, hice git add . sin pensar. No fue negligencia. Fue que a esa velocidad el check mental simplemente no ocurre."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dato-card reveal rd3" onclick="this.classList.toggle('open')">
+        <div class="dato-num">29M</div>
+        <p class="dato-desc">Credenciales nuevas expuestas en GitHub público en 2025. Un 34% más que el año anterior.</p>
+        <div class="dato-source">
+          <span>GitGuardian · State of Secrets Sprawl 2026</span>
+          <span class="dato-source-toggle">+</span>
+        </div>
+        <div class="dato-detail">
+          <div class="dato-detail-inner">
+            <p>29 millones de secretos nuevos expuestos en 2025. El mayor salto interanual jamás registrado. No son 29 millones de incidentes: muchos son del mismo proyecto en distintos commits, pero todos son claves activas que algún bot ya habrá encontrado.</p>
+            <p>El dato más preocupante del informe: el <strong>70% de los secretos expuestos en 2022 seguían activos en 2025</strong>. La mayoría de fugas no se detectan ni se corrigen. Simplemente se olvidan.</p>
+            <p>Y el dato específico para este grupo: los commits asistidos por Claude Code tienen el <strong>doble de tasa de fuga</strong> que la línea base de GitHub. No porque Claude Code sea malo: porque cuando construyes más rápido, los checks manuales dejan de ser fiables.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dato-card reveal rd4" onclick="this.classList.toggle('open')">
+        <div class="dato-num">×2</div>
+        <p class="dato-desc">Tasa de fuga de credenciales en commits con Claude Code frente a la línea base. La velocidad sin defensas tiene un coste.</p>
+        <div class="dato-source">
+          <span>GitGuardian · State of Secrets Sprawl 2026</span>
+          <span class="dato-source-toggle">+</span>
+        </div>
+        <div class="dato-detail">
+          <div class="dato-detail-inner">
+            <p>Este dato hay que enmarcarlo bien porque la audiencia usa Claude Code: <strong>la IA no es el problema, es el amplificador</strong>. Cuando el agente genera código que funciona y lo hace rápido, la tendencia natural es revisar menos antes de hacer commit.</p>
+            <p>El mecanismo es simple: el agente resuelve un error de conexión poniendo la clave directamente en el código porque es la forma más rápida de que funcione. Tú ves que funciona y haces push. El agente no sabe qué es un .gitignore ni por qué importa.</p>
+            <p>La respuesta correcta no es usar menos IA: es añadir las defensas que el agente no añade por defecto. Eso es exactamente lo que construimos en el Bloque 2 de esta sesión.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="notas-block">
+      <div class="notas-label">Nota · Uso de los datos en clase</div>
+      <p><strong>No leas las tarjetas.</strong> Narra el caso Gemini de memoria (tres desarrolladores, 180$/mes habitual, 82.314$ en 48h, sin perdón). La cifra en pantalla es el ancla visual mientras tú cuentas la historia.</p>
+      <p><strong>Tu historia del .env va aquí</strong>, justo después del caso Gemini. Abre el desplegable para que el grupo la vea mientras la cuentas. Luego pregunta al chat: "¿Quién ha tenido alguna vez una clave en un repo, aunque fuera un momento?"</p>
+      <p><strong>El dato ×2 es delicado</strong> porque la audiencia usa Claude Code. Úsalo después de las otras dos, y enmárcalo: "La IA no es el enemigo. La velocidad sin defensas, sí. De ahí el pipeline que construimos hoy."</p>
+    </div>
+  </div>
+</section>
+
+<!-- DINÁMICAS / QUIZ -->
+<section id="dinamicas">
+  <div class="container">
+    <div class="eyebrow reveal">¿Qué sabes ya? · Antes de empezar</div>
+    <h2 class="reveal rd1">Ponte a <em>prueba</em></h2>
+    <p class="reveal rd2" style="margin-top:24px;">Antes de ver las familias, responde en el chat de Zoom. Veremos qué intuiciones ya tenéis sobre cada riesgo.</p>
+
+    <div class="quiz-tabs reveal rd2">
+      <button class="quiz-tab active" data-f="f1" onclick="showFamily('f1')">01 · Credenciales</button>
+      <button class="quiz-tab" data-f="f2" onclick="showFamily('f2')">02 · Bases de datos</button>
+      <button class="quiz-tab" data-f="f3" onclick="showFamily('f3')">03 · Datos sensibles</button>
+      <button class="quiz-tab" data-f="f4" onclick="showFamily('f4')">04 · Configuración</button>
+    </div>
+
+    <!-- F1 -->
+    <div class="quiz-panel active" id="qf1">
+      <div class="quiz-q" id="q1-1">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F01 · 1 / 4</div>
+          <div class="quiz-q-text">Subiste una clave a GitHub por error hace una hora. ¿Cuánto tiempo tienes?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Días</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Horas</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">C</span>Minutos</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende del repo</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q1-1')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q1-1')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q1-1">
+          <p><strong>C · minutos.</strong> Bots monitorizan GitHub en tiempo real. Caso documentado: 4 minutos desde el commit hasta la explotación. No hay margen de reacción, solo prevención.</p>
+        </div>
+      </div>
+      <div class="quiz-q" id="q1-2">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F01 · 2 / 4</div>
+          <div class="quiz-q-text">Tienes la clave en una variable de entorno. ¿Es suficiente?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Sí, es privada</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Solo si .env no está en el repo</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo con repo privado</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Sí, no aparece en el código</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q1-2')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q1-2')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q1-2">
+          <p><strong>B.</strong> La variable de entorno protege solo si el archivo .env está en el .gitignore. El 35% de los repos privados contienen secretos en texto plano.</p>
+        </div>
+      </div>
+      <div class="quiz-q" id="q1-3">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F01 · 3 / 4</div>
+          <div class="quiz-q-text">Subiste una clave y la borraste en el siguiente commit. ¿El problema está resuelto?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Sí, ya no está</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Sí si hiciste push</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">C</span>No: sigue en el historial</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende del tiempo</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q1-3')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q1-3')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q1-3">
+          <p><strong>C.</strong> Git es append-only. Borrar en un commit no elimina el historial. Acción correcta: rotar la clave inmediatamente, tratarla como comprometida.</p>
+        </div>
+      </div>
+      <div class="quiz-q" id="q1-4">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F01 · 4 / 4</div>
+          <div class="quiz-q-text">Tu repositorio es privado. ¿Las claves que contiene están seguras?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Sí, solo tú puedes verlas</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>No del todo</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Sí, GitHub las cifra</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende del plan</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q1-4')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q1-4')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q1-4">
+          <p><strong>B.</strong> "Privado" no significa "seguro". El historial, los colaboradores y una futura fuga del repo son riesgos reales. Trata las claves igual que en repos públicos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- F2 -->
+    <div class="quiz-panel" id="qf2">
+      <div class="quiz-q" id="q2-1">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F02 · 1 / 4</div>
+          <div class="quiz-q-text">Creas una tabla en Supabase con el agente. ¿Quién puede leer esos datos por defecto?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Solo usuarios autenticados</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Solo tú como admin</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">C</span>Cualquiera con la URL</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Nadie hasta configurarlo</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q2-1')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q2-1')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q2-1">
+          <p><strong>C.</strong> Sin RLS, la anon key (pública en el frontend) da acceso libre a toda la tabla. Cualquiera puede volcarla con un curl en 30 segundos.</p>
+        </div>
+      </div>
+      <div class="quiz-q" id="q2-2">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F02 · 2 / 4</div>
+          <div class="quiz-q-text">Tienes RLS activado. ¿Significa que estás protegido?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Sí, eso es lo que hace RLS</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Depende de las políticas</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Sí con la anon key</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Solo con service_role protegida</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q2-2')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q2-2')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q2-2">
+          <p><strong>B.</strong> Una política USING (true) activa RLS pero permite todo: es seguridad cosmética. Las políticas deben filtrar por auth.uid() para ser reales.</p>
+        </div>
+      </div>
+      <div class="quiz-q" id="q2-3">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F02 · 3 / 4</div>
+          <div class="quiz-q-text">¿Cuál es la diferencia entre anon key y service_role key?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>La anon está cifrada</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Service_role salta todo el RLS</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Anon solo va en el frontend</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">D</span>B y C son correctas</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q2-3')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q2-3')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q2-3">
+          <p><strong>D.</strong> Anon key: pública por diseño, va en el frontend, el RLS la hace segura. Service_role: modo dios, nunca en el cliente, nunca en un repo.</p>
+        </div>
+      </div>
+      <div class="quiz-q" id="q2-4">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F02 · 4 / 4</div>
+          <div class="quiz-q-text">¿Qué necesita un atacante para comprobar si tu base de datos está expuesta?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Credenciales robadas</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Solo la URL y la anon key</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Acceso a tu dashboard</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Herramienta de pentesting</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q2-4')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q2-4')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q2-4">
+          <p><strong>B.</strong> La anon key está visible en el JavaScript de cualquier app. Con ella y la URL estándar de Supabase, un curl simple vuelca la tabla si no hay RLS.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- F3 -->
+    <div class="quiz-panel" id="qf3">
+      <div class="quiz-q" id="q3-1">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F03 · 1 / 4</div>
+          <div class="quiz-q-text">Un email sin nombre ni apellidos, ¿es dato personal bajo el RGPD?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>No, sin nombre no identifica</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Sí</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo combinado con otros datos</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende del país</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q3-1')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q3-1')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q3-1">
+          <p><strong>B.</strong> El RGPD protege cualquier dato que permita identificar a alguien directa o indirectamente. Email, IP, user_id, cookie: todos están protegidos.</p>
+        </div>
+      </div>
+      <div class="quiz-q" id="q3-2">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F03 · 2 / 4</div>
+          <div class="quiz-q-text">El agente deja logs en producción que imprimen el objeto completo del usuario. ¿Es un problema?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>No si son logs internos</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Solo si hay una brecha</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">C</span>Sí, registra PII de cada usuario</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Solo con datos bancarios</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q3-2')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q3-2')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q3-2">
+          <p><strong>C.</strong> Registrar PII sistemáticamente en logs puede ser incumplimiento del RGPD por sí solo, aunque no haya ninguna brecha posterior.</p>
+        </div>
+      </div>
+      <div class="quiz-q" id="q3-3">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F03 · 3 / 4</div>
+          <div class="quiz-q-text">Un desarrollador pega emails de clientes en ChatGPT para limpiar el formato. ¿Qué pasa?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Nada, ChatGPT no guarda nada</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Transfiere datos personales sin permiso</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Depende de los términos de OpenAI</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Nada si borra la conversación</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q3-3')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q3-3')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q3-3">
+          <p><strong>B.</strong> La transferencia en sí puede ser incumplimiento del RGPD. Los usuarios no consintieron que sus datos fueran a un proveedor externo.</p>
+        </div>
+      </div>
+      <div class="quiz-q" id="q3-4">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F03 · 4 / 4</div>
+          <div class="quiz-q-text">Descubres hoy que tu staging tuvo datos reales durante tres semanas. ¿Cuánto tiempo tienes para notificar a la AEPD?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Un mes</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Una semana</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">C</span>72 horas desde ahora</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Sin obligación si no hubo ataque</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q3-4')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q3-4')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q3-4">
+          <p><strong>C.</strong> El reloj empieza cuando tienes constancia, no cuando ocurrió. D es incorrecto: la exposición sin protecciones adecuadas ya es brecha aunque no haya habido ataque.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- F4 -->
+    <div class="quiz-panel" id="qf4">
+      <div class="quiz-q" id="q4-1">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F04 · 1 / 4</div>
+          <div class="quiz-q-text">El agente deja el modo debug activo en producción. ¿Qué puede pasar?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>La app va más lenta</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Los errores exponen información interna</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo afecta a desarrollo</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Nada hasta que haya un error</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q4-1')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q4-1')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q4-1">
+          <p><strong>B.</strong> Debug activo devuelve stack traces con el framework, versión y estructura interna del código. Un mapa del sistema para cualquier atacante.</p>
+        </div>
+      </div>
+      <div class="quiz-q" id="q4-2">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F04 · 2 / 4</div>
+          <div class="quiz-q-text">Algo falla por mala configuración en AWS. ¿Quién es responsable?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>AWS</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Tú, el cliente</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>50% cada uno</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende del contrato</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q4-2')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q4-2')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q4-2">
+          <p><strong>B.</strong> Gartner: el 99% de los fallos cloud son del cliente. La plataforma asegura su infraestructura. Lo que configuras tú encima es responsabilidad tuya.</p>
+        </div>
+      </div>
+      <div class="quiz-q" id="q4-3">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F04 · 3 / 4</div>
+          <div class="quiz-q-text">Tu app lleva seis meses en producción. ¿Sabes qué endpoints expone además de los que tú creaste?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Sí, los reviso siempre</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Solo los que están en mi código</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Probablemente hay otros que no conozco</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Los del README</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q4-3', true)">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q4-3')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q4-3">
+          <p><strong>Pregunta de debate.</strong> Los frameworks exponen endpoints por defecto que no están en tu código: /health, /api-docs, /actuator. ¿Alguien ha encontrado uno que no sabía que tenía?</p>
+        </div>
+        <div class="quiz-debate">
+          <div class="quiz-debate-label">Para el debate</div>
+          <p>¿Alguien ha encontrado alguna vez un endpoint expuesto que no sabía que tenía?</p>
+        </div>
+      </div>
+      <div class="quiz-q" id="q4-4">
+        <div class="quiz-q-header">
+          <div class="quiz-q-num">F04 · 4 / 4</div>
+          <div class="quiz-q-text">El agente añade <code style="font-family:var(--mono);font-size:14px;color:var(--violet);">origin: *</code> para resolver un error de CORS. ¿Qué significa eso?</div>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>CORS ya no dará problemas</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Cualquier web puede hacer peticiones a tu API</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo orígenes conocidos tienen acceso</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Hay que reiniciar el servidor</div>
+        </div>
+        <div class="quiz-reveal-row">
+          <button class="quiz-btn" onclick="revealAnswer('q4-4')">Revelar</button>
+          <button class="quiz-btn-reset" onclick="resetQuestion('q4-4')">Reiniciar</button>
+        </div>
+        <div class="quiz-explanation" id="exp-q4-4">
+          <p><strong>B.</strong> Origin: * significa "acepto peticiones de cualquier dominio". Cómodo en dev, catastrófico en prod. El agente lo pone para que deje de dar error; nadie lo revisa antes del deploy.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="notas-block">
+      <div class="notas-label">Nota · Uso del quiz en clase</div>
+      <p><strong>Mecánica:</strong> pregunta en voz alta, responden A/B/C/D en el chat de Zoom, lees algunas, pulsas Revelar cuando el debate esté listo.</p>
+      <p><strong>Sin respuesta incorrecta pública.</strong> La explicación corrige sin nombrar. Objetivo: activar intuición, no evaluar.</p>
+      <p><strong>F04 P3 es de debate</strong> sin respuesta mala. Úsala para arrancar el Bloque 3.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAMILIAS -->
+<section id="familias">
+  <div class="container">
+    <div class="eyebrow reveal">Teoría aplicada · Bloque 1</div>
+    <h2 class="reveal rd1">Las cuatro <em>familias</em> de riesgo</h2>
+    <p class="reveal rd2" style="margin-top:24px;">Cuatro patrones que aparecen una y otra vez. Cuatro dimensiones de impacto que convergen sobre el mismo producto.</p>
+    <div class="familias-grid">
+
+      <div class="fam-card reveal rd2" data-n="01" data-c="blue" style="cursor:pointer" onclick="this.classList.toggle('fam-open')">
+        <div class="fam-card-toggle">+</div>
+        <div class="fam-tag">Impacto económico inmediato</div>
+        <h3 class="fam-name">Credenciales y claves de acceso</h3>
+        <p class="fam-desc">Claves de API, tokens y credenciales que acaban en el código o el repositorio.</p>
+        <div class="fam-case">Caso Gemini · 82.314$ en 48h tras filtrar la clave.</div>
+        <div class="fam-expanded">
+          <div class="fam-expanded-inner">
+          <div class="fam-block" style="background:rgba(255,122,107,0.06);border:1px solid rgba(255,122,107,0.18);border-radius:10px;padding:20px 24px;">
+            <div class="fam-block-label" style="color:var(--coral);">Antes de entrar · tres conceptos en lenguaje humano</div>
+            <div style="display:grid;gap:14px;margin-top:4px;">
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
+                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--coral);padding-top:2px;">Clave de API</span>
+                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">Es la contraseña que tu app usa para identificarse ante un servicio externo. Si alguien la roba, puede usarla en tu nombre: gastar tu crédito, borrar tus datos o suplantar tu aplicación.</span>
+              </div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
+                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--coral);padding-top:2px;">.env</span>
+                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">El archivo donde se guardan todas las claves en local, separadas del código. Es como la caja fuerte del proyecto. El problema ocurre cuando ese archivo viaja al repositorio por error y queda visible para siempre en el historial de Git.</span>
+              </div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
+                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--coral);padding-top:2px;">Secrets / variables de entorno</span>
+                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">La versión segura del .env en producción. Plataformas como Cloudflare Pages o GitHub guardan las claves cifradas fuera del código, inyectándolas solo cuando la app arranca. La clave nunca toca el repositorio.</span>
+              </div>
+            </div>
+          </div>
+
+            <div class="fam-block">
+            <div class="fam-block-label">Qué es</div>
+            <p>Cualquier cadena que autentica tu aplicación contra un servicio y que debería permanecer protegida: claves de API de servicios externos (Gemini, OpenAI, Stripe), credenciales de infraestructura cloud (AWS, GCP, Azure), credenciales de base de datos, tokens de autenticación y secretos de aplicación. Es el vector con la mejor relación impacto/esfuerzo que existe hoy: no requiere técnicas sofisticadas, solo que alguien deje una clave donde no debe y que un bot la encuentre.</p>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">No todas las claves son iguales</div>
+            <p>La distinción que un PM casi nunca maneja, y que es puro criterio de producto:</p>
+            <div class="fam-keys">
+              <div class="fam-key">
+                <div class="fam-key-t">Claves de identificación</div>
+                <div class="fam-key-d">Pensadas para ser públicas (una Google Maps key en el frontend). Identifican, no dan acceso sensible.</div>
+              </div>
+              <div class="fam-key">
+                <div class="fam-key-t">Claves de autenticación</div>
+                <div class="fam-key-d">Dan acceso real y nunca deben salir del servidor. Una AWS IAM con permisos amplios expuesta es una catástrofe.</div>
+              </div>
+            </div>
+            <p style="margin-top:14px;">Esa frontera se está rompiendo: en el caso Gemini 2026, claves que Google consideraba "solo identificadores públicos" empezaron a autenticar silenciosamente, convirtiéndose en credenciales de facto sin que nadie avisara.</p>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Por qué ocurre, sobre todo con agentes IA</div>
+            <div style="margin-bottom:20px;overflow-x:auto;">
+              <svg width="100%" viewBox="0 0 680 130" style="display:block;min-width:400px;">
+                <defs>
+                  <marker id="arr-f1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="#6B9DFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                  <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="#FF7A6B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                </defs>
+                <rect x="0" y="0" width="680" height="130" fill="none"/>
+                <!-- línea base -->
+                <line x1="40" y1="54" x2="640" y2="54" stroke="#1F2745" stroke-width="1.5"/>
+                <!-- Nodo 1: commit -->
+                <circle cx="60" cy="54" r="10" fill="#2E75B6" stroke="#6B9DFF" stroke-width="1.5"/>
+                <text x="60" y="34" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#6B9DFF">git push</text>
+                <text x="60" y="22" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#646B82">t = 0</text>
+                <text x="60" y="78" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">Commit</text>
+                <text x="60" y="90" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">con clave</text>
+                <!-- Flecha 1→2 -->
+                <line x1="72" y1="54" x2="170" y2="54" stroke="#6B9DFF" stroke-width="1.5" marker-end="url(#arr-f1)"/>
+                <!-- Nodo 2: bot detecta -->
+                <circle cx="184" cy="54" r="10" fill="#3B1F1A" stroke="#FF7A6B" stroke-width="1.5"/>
+                <text x="184" y="34" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">bot scan</text>
+                <text x="184" y="22" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#FF7A6B">t = 4 min</text>
+                <text x="184" y="78" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">Bot</text>
+                <text x="184" y="90" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">detecta</text>
+                <!-- Flecha 2→3 -->
+                <line x1="196" y1="54" x2="294" y2="54" stroke="#FF7A6B" stroke-width="1.5" marker-end="url(#arr-red)"/>
+                <!-- Nodo 3: validación -->
+                <circle cx="308" cy="54" r="10" fill="#3B1F1A" stroke="#FF7A6B" stroke-width="1.5"/>
+                <text x="308" y="34" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">validate</text>
+                <text x="308" y="22" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#646B82">t = 5 min</text>
+                <text x="308" y="78" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">Clave</text>
+                <text x="308" y="90" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">verificada</text>
+                <!-- Flecha 3→4 -->
+                <line x1="320" y1="54" x2="418" y2="54" stroke="#FF7A6B" stroke-width="1.5" marker-end="url(#arr-red)"/>
+                <!-- Nodo 4: explotación -->
+                <circle cx="432" cy="54" r="10" fill="#3B1F1A" stroke="#FF7A6B" stroke-width="1.5"/>
+                <text x="432" y="34" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">exploit</text>
+                <text x="432" y="22" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#646B82">t = 6 min</text>
+                <text x="432" y="78" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">Explotación</text>
+                <text x="432" y="90" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">automática</text>
+                <!-- Flecha 4→5 -->
+                <line x1="444" y1="54" x2="542" y2="54" stroke="#FF7A6B" stroke-width="1.5" marker-end="url(#arr-red)"/>
+                <!-- Nodo 5: factura -->
+                <circle cx="556" cy="54" r="14" fill="#4A1B0C" stroke="#FF7A6B" stroke-width="2"/>
+                <text x="556" y="34" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">$$$</text>
+                <text x="556" y="22" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#646B82">t = 48h</text>
+                <text x="556" y="80" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#FF7A6B">82.314$</text>
+                <text x="556" y="92" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">en 48 horas</text>
+                <!-- Zona sin reacción humana -->
+                <rect x="170" y="106" width="270" height="18" rx="4" fill="#2A1010"/>
+                <text x="305" y="118" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#FF7A6B">No hay margen de reacción humana aquí</text>
+              </svg>
+            </div>
+            <div class="fam-steps">
+              <div class="fam-step"><span class="fam-step-n">1</span><span class="fam-step-t">El PM pide una funcionalidad: "conecta el formulario a Supabase", "añade un botón que genere texto con Gemini".</span></div>
+              <div class="fam-step"><span class="fam-step-n">2</span><span class="fam-step-t">El agente busca el camino que <strong>menos errores produce</strong>. Si la clave administrativa "simplemente funciona", tira de ella.</span></div>
+              <div class="fam-step"><span class="fam-step-n">3</span><span class="fam-step-t">La clave se hardcodea <strong>"temporalmente"</strong>. El refactor para moverla a variables de entorno no llega nunca.</span></div>
+              <div class="fam-step"><span class="fam-step-n">4</span><span class="fam-step-t">El PM hace <strong>commit y push</strong>. Si el repo es público, la clave queda expuesta al mundo; si es privado, al historial permanente y a todos los colaboradores.</span></div>
+              <div class="fam-step"><span class="fam-step-n">5</span><span class="fam-step-t">Bots automatizados <strong>detectan la clave</strong> monitorizando el stream de eventos de GitHub en tiempo real.</span></div>
+              <div class="fam-step"><span class="fam-step-n">6</span><span class="fam-step-t">El atacante <strong>explota</strong>: consume servicios a tu cargo, mina cripto con tu infraestructura, o exfiltra tus datos.</span></div>
+            </div>
+            <p style="margin-top:16px;">El agente no es el culpable: es un <strong>amplificador</strong>. Acelera el paso 2, multiplica el volumen del paso 3, y los datos lo confirman: los commits asistidos por Claude Code en 2025 tuvieron el doble de tasa de fuga que la línea base.</p>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">La magnitud del problema</div>
+            <div class="fam-data-row"><span class="fam-data-num">29 M</span><span class="fam-data-txt">secretos nuevos expuestos en GitHub público en 2025 (+34% interanual, el mayor salto jamás registrado).</span></div>
+            <div class="fam-data-row"><span class="fam-data-num">70 %</span><span class="fam-data-txt">de los secretos expuestos en 2022 seguían activos en 2025. Mayoritariamente no se solucionan nunca.</span></div>
+            <div class="fam-data-row"><span class="fam-data-num">4-5 min</span><span class="fam-data-txt">tiempo medio desde que se expone una clave hasta el primer intento de explotación. No hay margen para reaccionar, solo para prevenir.</span></div>
+            <div class="fam-data-row"><span class="fam-data-num">35 %</span><span class="fam-data-txt">de los repositorios privados contienen secretos en texto plano. El repo privado no es un refugio.</span></div>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Lo que el PM tiene que interiorizar</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>"Que funcione" no es "que esté bien".</strong> Cuando el agente dice que ya funciona, pregúntate si es porque está bien construido o porque ha quitado un obstáculo.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>El repo privado no protege.</strong> Trata cualquier credencial commiteada como comprometida desde el momento en que se sube.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Se mide en minutos, no en días.</strong> No intentes reaccionar a la fuga: previene que ocurra y configura límites de gasto como red de seguridad.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Mínimo privilegio siempre.</strong> Cada clave solo debe tener los permisos que necesita. Una clave con AdministratorAccess expuesta no tiene techo de daño.</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fam-card reveal rd3" data-n="02" data-c="coral" style="cursor:pointer" onclick="this.classList.toggle('fam-open')">
+        <div class="fam-card-toggle">+</div>
+        <div class="fam-tag">Impacto técnico y de usuarios</div>
+        <h3 class="fam-name">Bases de datos y permisos</h3>
+        <p class="fam-desc">RLS desactivado, claves con privilegios excesivos, acceso sin restricciones reales.</p>
+        <div class="fam-case">CVE-2025-48757 · Lovable + Supabase · 13.000 usuarios expuestos.</div>
+        <div class="fam-expanded">
+          <div class="fam-expanded-inner">
+            <div class="fam-block" style="background:rgba(107,157,255,0.06);border:1px solid rgba(107,157,255,0.18);border-radius:10px;padding:20px 24px;">
+            <div class="fam-block-label" style="color:var(--blue);">Antes de entrar · tres conceptos en lenguaje humano</div>
+            <div style="display:grid;gap:14px;margin-top:4px;">
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
+                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--blue);padding-top:2px;">RLS</span>
+                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">El portero de cada habitación de tu base de datos. Sin él, cualquiera que entre al edificio puede abrir todas las puertas. Con él, cada habitación tiene su propia cerradura.</span>
+              </div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
+                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--blue);padding-top:2px;">Anon key</span>
+                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">La llave que Supabase pone intencionadamente en la puerta de entrada de tu app —es pública y eso está bien—. El problema es si las habitaciones de dentro no tienen cerradura (RLS).</span>
+              </div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
+                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--blue);padding-top:2px;">Service role key</span>
+                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">La llave maestra del edificio: abre todo, ignora todos los porteros. Existe para el servidor, no para tu app. Si la metes en el código del frontend es como colgar la llave maestra en la puerta principal.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Qué es y por qué os afecta directamente</div>
+            <p>El control de quién puede leer, escribir o borrar cada dato de tu base de datos. Es la familia más relevante para este curso porque el stack que usáis (Supabase, Lovable, anon keys en el cliente) es exactamente el mismo que ha protagonizado los casos más graves de 2025. A diferencia de las credenciales, una base de datos mal protegida no se descubre con una factura: se descubre meses después, cuando alguien publica un volcado de tus datos o llega una carta del regulador. La ventana silenciosa es larga y el daño, acumulativo.</p>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">El trío que hay que dominar</div>
+            <div class="fam-keys">
+              <div class="fam-key">
+                <div class="fam-key-t">RLS · Row Level Security</div>
+                <div class="fam-key-d">Reglas de PostgreSQL que deciden, fila por fila, quién accede a qué. Clave: no se activa por defecto. Una tabla sin RLS es una tabla pública accesible desde internet.</div>
+              </div>
+              <div class="fam-key">
+                <div class="fam-key-t">Anon key</div>
+                <div class="fam-key-d">Pensada para ir en el frontend, es pública por diseño. Es la llave de la puerta principal; RLS son las cerraduras de cada habitación. Sin cerraduras, la llave abre toda la casa.</div>
+              </div>
+              <div class="fam-key">
+                <div class="fam-key-t">Service role key</div>
+                <div class="fam-key-d">Modo dios: salta todas las políticas RLS. Solo en servidor, nunca en el cliente, nunca en un repo, nunca en un ticket. Si aparece fuera de su sitio, el proyecto está comprometido.</div>
+              </div>
+              <div class="fam-key">
+                <div class="fam-key-t">Vistas SECURITY DEFINER</div>
+                <div class="fam-key-d">Se ejecutan con permisos del administrador que las creó, saltándose el RLS de la tabla. Vector sutil que un agente puede introducir sin que nadie lo revise.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Qué diferencia hace el RLS en la práctica</div>
+            <div style="margin-bottom:8px;overflow-x:auto;">
+              <svg width="100%" viewBox="0 0 680 200" style="display:block;min-width:380px;">
+                <defs>
+                  <marker id="arr-ok" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="#7FD1B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                  <marker id="arr-bad" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="#FF7A6B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                  <marker id="arr-block" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="#646B82" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                </defs>
+
+                <!-- ===== LADO SEGURO (izquierda) ===== -->
+                <!-- Título -->
+                <rect x="20" y="10" width="290" height="24" rx="4" fill="#0D2B1E"/>
+                <text x="165" y="26" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="11" font-weight="600" fill="#7FD1B9">Con RLS bien configurado</text>
+
+                <!-- Anon key -->
+                <rect x="60" y="48" width="100" height="34" rx="6" fill="#11162B" stroke="#6B9DFF" stroke-width="1.5"/>
+                <text x="110" y="62" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#6B9DFF">anon key</text>
+                <text x="110" y="75" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">pública · OK</text>
+
+                <!-- Flecha hacia RLS -->
+                <line x1="162" y1="65" x2="188" y2="65" stroke="#7FD1B9" stroke-width="1.5" marker-end="url(#arr-ok)"/>
+
+                <!-- Bloque RLS -->
+                <rect x="190" y="44" width="72" height="42" rx="6" fill="#0D2B1E" stroke="#7FD1B9" stroke-width="2"/>
+                <text x="226" y="62" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="#7FD1B9">RLS</text>
+                <text x="226" y="76" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#7FD1B9">activo</text>
+
+                <!-- Flecha hacia datos propios -->
+                <line x1="264" y1="57" x2="294" y2="50" stroke="#7FD1B9" stroke-width="1.2" marker-end="url(#arr-ok)"/>
+                <!-- Datos propios usuario -->
+                <rect x="296" y="38" width="90" height="26" rx="4" fill="#0D2B1E" stroke="#7FD1B9" stroke-width="1"/>
+                <text x="341" y="55" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#7FD1B9">Tus datos ✓</text>
+
+                <!-- Flecha bloqueada hacia otros datos -->
+                <line x1="264" y1="72" x2="294" y2="82" stroke="#646B82" stroke-width="1.2" stroke-dasharray="4,3"/>
+                <!-- Datos de otros bloqueados -->
+                <rect x="296" y="72" width="90" height="26" rx="4" fill="#11162B" stroke="#646B82" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="341" y="89" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#646B82">Otros datos ✗</text>
+
+                <!-- Explicación bajo lado seguro -->
+                <text x="165" y="124" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#7FD1B9">Cada usuario solo ve sus filas</text>
+
+                <!-- ===== SEPARADOR ===== -->
+                <line x1="340" y1="30" x2="340" y2="140" stroke="#1F2745" stroke-width="1" stroke-dasharray="4,4"/>
+
+                <!-- ===== LADO INSEGURO (derecha) ===== -->
+                <!-- Título -->
+                <rect x="370" y="10" width="290" height="24" rx="4" fill="#2A1010"/>
+                <text x="515" y="26" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="11" font-weight="600" fill="#FF7A6B">Sin RLS (o con USING true)</text>
+
+                <!-- Anon key -->
+                <rect x="410" y="48" width="100" height="34" rx="6" fill="#11162B" stroke="#6B9DFF" stroke-width="1.5"/>
+                <text x="460" y="62" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#6B9DFF">anon key</text>
+                <text x="460" y="75" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">pública · OK</text>
+
+                <!-- Flecha directa a todos los datos -->
+                <line x1="512" y1="65" x2="548" y2="65" stroke="#FF7A6B" stroke-width="2" marker-end="url(#arr-bad)"/>
+
+                <!-- Todos los datos expuestos -->
+                <rect x="550" y="38" width="100" height="56" rx="6" fill="#2A1010" stroke="#FF7A6B" stroke-width="2"/>
+                <text x="600" y="58" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" font-weight="600" fill="#FF7A6B">TODOS</text>
+                <text x="600" y="72" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#FF7A6B">los datos</text>
+                <text x="600" y="86" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#FF7A6B">sin filtro</text>
+
+                <!-- Explicación bajo lado inseguro -->
+                <text x="515" y="124" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#FF7A6B">Cualquiera puede volcar toda la tabla</text>
+
+                <!-- ===== NOTA INFERIOR GLOBAL ===== -->
+                <rect x="20" y="148" width="640" height="38" rx="6" fill="#11162B"/>
+                <text x="340" y="163" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">La anon key es pública en los dos casos · La diferencia la hace el RLS</text>
+                <text x="340" y="179" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#646B82">Sin RLS = anon key + curl = volcado completo de tus datos de usuarios</text>
+              </svg>
+            </div>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Cómo el agente deja tu base de datos abierta</div>
+            <div class="fam-steps">
+              <div class="fam-step"><span class="fam-step-n">1</span><span class="fam-step-t">El PM pide una funcionalidad con tablas: "guarda los perfiles", "que los usuarios dejen comentarios".</span></div>
+              <div class="fam-step"><span class="fam-step-n">2</span><span class="fam-step-t">El agente crea las tablas vía SQL o migraciones, caminos donde <strong>RLS no se activa por defecto</strong>. La tabla nace desprotegida.</span></div>
+              <div class="fam-step"><span class="fam-step-n">3</span><span class="fam-step-t">Conecta el frontend con la anon key. Todo funciona. Para el PM, "la funcionalidad ya va".</span></div>
+              <div class="fam-step"><span class="fam-step-n">4</span><span class="fam-step-t">La app se publica con la anon key embebida (correcto) sobre tablas sin cerraduras (catastrófico).</span></div>
+              <div class="fam-step"><span class="fam-step-n">5</span><span class="fam-step-t">Cualquiera extrae la anon key del navegador en 30 segundos y vuelca la tabla entera con una simple petición HTTP. No hay que hackear nada.</span></div>
+            </div>
+            <p style="margin-top:16px;">Dos variantes aún peores: que el agente <strong>desactive RLS explícitamente</strong> para "que deje de dar errores", o que cree una política <strong>USING (true)</strong> que aparenta seguridad pero permite todo. Seguridad cosmética.</p>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">La verificación de 30 segundos</div>
+            <p>El mismo comando que usa un atacante es el que te audita a ti. Si devuelve datos, tu tabla no tiene RLS; si devuelve vacío, las políticas bloquean:</p>
+            <p style="font-family:var(--mono); font-size:12.5px; color:var(--coral); background:var(--bg-deeper); padding:14px 18px; border-left:2px solid var(--coral); margin-top:6px;">curl 'https://tu-proyecto.supabase.co/rest/v1/users?select=*' -H "apikey: TU_ANON_KEY"</p>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">La magnitud del problema</div>
+            <div class="fam-data-row"><span class="fam-data-num">170+ apps</span><span class="fam-data-txt">en producción afectadas por el CVE-2025-48757: Lovable generaba esquemas de Supabase sin RLS de forma consistente.</span></div>
+            <div class="fam-data-row"><span class="fam-data-num">13.000</span><span class="fam-data-txt">usuarios con sus datos expuestos, incluyendo tablas de tokens de reseteo de contraseña que permitían tomas de cuenta completas.</span></div>
+            <div class="fam-data-row"><span class="fam-data-num">40 %</span><span class="fam-data-txt">de las claves expuestas en GitHub, GitLab y Pastebin corresponden a bases de datos. El vector es masivo.</span></div>
+            <div class="fam-data-row"><span class="fam-data-num">∞</span><span class="fam-data-txt">la ventana de exposición. A diferencia de una credencial, una base de datos sin RLS sigue abierta indefinidamente hasta que alguien lo descubre.</span></div>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">La trifecta letal · cuando el agente es la causa directa</div>
+            <p>Simon Willison describió cómo cualquier agente IA con acceso a tu base de datos es explotable cuando se combinan tres elementos: <strong>acceso a datos privados</strong> (service_role), <strong>exposición a instrucciones de usuarios externos</strong> (un ticket de soporte, un comentario) y <strong>un canal de salida</strong> (escribir de vuelta, enviar un email). Un atacante esconde instrucciones en un ticket, el agente las obedece y exfiltra los datos. RLS no protege aquí: el agente actúa con plenos permisos.</p>
+            <p><strong>La defensa:</strong> nunca des service_role a un agente que procesa input no confiable. Usa modo read-only siempre que puedas: si el agente no puede escribir, la trifecta se rompe.</p>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Lo que el PM tiene que interiorizar</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>RLS no se activa por defecto, se activa por decisión.</strong> Asume que cualquier tabla creada por un agente está desprotegida hasta que lo verifiques con el Security Advisor.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Tener RLS no garantiza estar protegido.</strong> Una política USING (true) es cosmética. Las políticas deben filtrar por auth.uid() o una condición real.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>La anon key puede ser pública; la service_role, nunca.</strong> Si aparece fuera del servidor, trata el proyecto como comprometido y rota las claves.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Permisos mínimos y read-only para agentes.</strong> Ningún agente debería operar con service_role si puede hacerlo con una clave protegida por RLS.</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fam-card reveal rd4" data-n="03" data-c="jade" style="cursor:pointer" onclick="this.classList.toggle('fam-open')">
+        <div class="fam-card-toggle">+</div>
+        <div class="fam-tag">Impacto regulatorio · RGPD</div>
+        <h3 class="fam-name">Datos sensibles y privacidad</h3>
+        <p class="fam-desc">Datos personales en logs, datos reales en pruebas, fugas a LLMs externos.</p>
+        <div class="fam-case">Samsung · 3 fugas de código propietario a ChatGPT en 20 días.</div>
+        <div class="fam-expanded">
+          <div class="fam-expanded-inner">
+          <div class="fam-block" style="background:rgba(127,209,185,0.06);border:1px solid rgba(127,209,185,0.18);border-radius:10px;padding:20px 24px;">
+            <div class="fam-block-label" style="color:var(--jade);">Antes de entrar · tres conceptos en lenguaje humano</div>
+            <div style="display:grid;gap:14px;margin-top:4px;">
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
+                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--jade);padding-top:2px;">PII / Dato personal</span>
+                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">Cualquier información que permita identificar a una persona, directa o indirectamente. No solo el nombre: una dirección IP, un user_id o un historial de compras son datos personales. Si aparecen en un log que se filtra, el RGPD aplica.</span>
+              </div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
+                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--jade);padding-top:2px;">RGPD</span>
+                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">El reglamento europeo que regula cómo se recogen, almacenan y procesan los datos personales. No es solo una ley técnica: afecta a decisiones de producto como qué datos loguear, cuánto tiempo guardarlos y a quién se los mandas. Las multas llegan al 4% de la facturación global anual.</span>
+              </div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
+                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--jade);padding-top:2px;">Log</span>
+                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">El diario de a bordo de tu aplicación: registra qué pasa, cuándo y con qué datos. Imprescindible para depurar errores, pero si logueas sin filtrar puedes estar guardando emails, contraseñas o mensajes privados de tus usuarios sin darte cuenta.</span>
+              </div>
+            </div>
+          </div>
+
+            <div class="fam-block">
+            <div class="fam-block-label">Qué es y por qué es la más cara a medio plazo</div>
+            <p>La familia con mayor impacto regulatorio. Cuando una clave de Gemini se filtra, el coste lo marca el atacante con su factura. Cuando se exponen datos personales, el coste lo marca el regulador. En 2025 las autoridades europeas emitieron 1.200 millones de euros en multas RGPD. Y el reglamento no distingue entre startup y multinacional: <strong>las obligaciones son las mismas desde el primer email recogido</strong>.</p>
+            <p>Esta familia convierte el discurso técnico en discurso de negocio. Una configuración incorrecta de logs puede derivar en una multa sobre el porcentaje de tu facturación global. Eso ya no es un problema de ingeniería: es una decisión de producto.</p>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Qué cuenta como dato personal (más de lo que crees)</div>
+            <div class="fam-keys">
+              <div class="fam-key">
+                <div class="fam-key-t">Datos personales ordinarios</div>
+                <div class="fam-key-d">Nombres, emails, teléfonos, IPs, user_id, session_id, historial de uso, localización. Un email suelto sin nombre es dato personal. Una IP sin nombre es dato personal.</div>
+              </div>
+              <div class="fam-key">
+                <div class="fam-key-t">Categorías especiales</div>
+                <div class="fam-key-d">Salud, datos biométricos, orientación sexual, religión, opiniones políticas, datos de menores. Su exposición multiplica la gravedad regulatoria. Muchos productos los recogen sin darse cuenta.</div>
+              </div>
+              <div class="fam-key">
+                <div class="fam-key-t">Datos técnicos con potencial sensible</div>
+                <div class="fam-key-d">Logs que parecen inocuos pero contienen PII, trazas de API con payload completo, mensajes de error con datos del usuario. La categoría más olvidada.</div>
+              </div>
+              <div class="fam-key">
+                <div class="fam-key-t">La pregunta útil</div>
+                <div class="fam-key-d">"Si este archivo se publica mañana en Reddit, ¿tengo un problema?" No: "¿este campo es personal?"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Los tres vectores por donde se escapan los datos</div>
+            <div style="margin-bottom:20px; overflow-x:auto;">
+              <svg width="100%" viewBox="0 0 680 230" style="display:block;min-width:380px;">
+                <defs>
+                  <marker id="arr-jade" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="#7FD1B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                  <marker id="arr-jade-dash" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="#7FD1B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                </defs>
+                <!-- Producto central -->
+                <rect x="255" y="85" width="170" height="60" rx="8" fill="#0D2B22" stroke="#7FD1B9" stroke-width="2"/>
+                <text x="340" y="109" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="13" font-weight="600" fill="#7FD1B9">Tu producto</text>
+                <text x="340" y="126" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#7FD1B9">datos personales de usuarios</text>
+
+                <!-- Vector 1: Logs (arriba izquierda) -->
+                <path d="M290 85 Q230 60 150 44" fill="none" stroke="#7FD1B9" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-jade)"/>
+                <rect x="20" y="14" width="140" height="50" rx="6" fill="#0A1F18" stroke="#7FD1B9" stroke-width="1"/>
+                <text x="90" y="34" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="11" font-weight="600" fill="#7FD1B9">Logs de aplicación</text>
+                <text x="90" y="49" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">console.log(user)</text>
+                <text x="90" y="61" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">Vector 01 · nadie los revisa</text>
+
+                <!-- Vector 2: Entorno pruebas (abajo) -->
+                <path d="M340 145 L340 178" fill="none" stroke="#7FD1B9" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-jade)"/>
+                <rect x="220" y="180" width="240" height="44" rx="6" fill="#0A1F18" stroke="#7FD1B9" stroke-width="1"/>
+                <text x="340" y="199" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="11" font-weight="600" fill="#7FD1B9">Entorno de pruebas</text>
+                <text x="340" y="214" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">Vector 02 · datos reales sin protecciones de prod</text>
+
+                <!-- Vector 3: LLM externo (arriba derecha) -->
+                <path d="M390 85 Q450 60 510 44" fill="none" stroke="#7FD1B9" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-jade)"/>
+                <rect x="500" y="14" width="162" height="50" rx="6" fill="#0A1F18" stroke="#7FD1B9" stroke-width="1"/>
+                <text x="581" y="34" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="11" font-weight="600" fill="#7FD1B9">LLM externo</text>
+                <text x="581" y="49" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">ChatGPT, Gemini, Claude web</text>
+                <text x="581" y="61" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">Vector 03 · shadow AI</text>
+
+                <!-- Etiqueta inferior -->
+                <text x="340" y="220" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#646B82">En los tres casos el dato sale de entornos controlados sin que nadie lo decida conscientemente</text>
+              </svg>
+            </div>
+            <p><strong>Vector 1 · Logs.</strong> El agente añade <code style="font-family:var(--mono);font-size:12px;color:var(--jade);">console.log(user)</code> para depurar. Ese log llega a producción y registra PII de cada usuario que pasa por ese punto. Nadie lo revisa porque los logs "son técnicos".</p>
+            <p><strong>Vector 2 · Entornos de pruebas.</strong> El 29% de las empresas usa datos reales de producción en testing. El agente pide "un ejemplo real para reproducir el bug" y los datos acaban en el laptop, en Slack, en un .txt de referencia. Cuando el bug se arregla, nadie limpia los datos.</p>
+            <p><strong>Vector 3 · Shadow AI.</strong> El 20% de las brechas de 2025 tuvieron shadow AI involucrada. Un desarrollador pega datos de usuarios en ChatGPT "para consultar algo rápido". Esos datos viajan al proveedor, que puede retenerlos por defecto.</p>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Cómo el agente multiplica la superficie de fuga</div>
+            <div class="fam-steps">
+              <div class="fam-step"><span class="fam-step-n">1</span><span class="fam-step-t">El PM necesita resolver algo: "¿por qué falla este usuario?", "¿cómo replico este bug?". Son preguntas de trabajo completamente legítimas.</span></div>
+              <div class="fam-step"><span class="fam-step-n">2</span><span class="fam-step-t">Se extrae un snapshot de datos reales: dump de BBDD, consulta ad-hoc, export CSV. En producción tenían protecciones. A partir de aquí, no.</span></div>
+              <div class="fam-step"><span class="fam-step-n">3</span><span class="fam-step-t">Los datos viajan: laptop, Slack de debug, ticket interno, <strong>contexto del agente IA</strong>, caché del IDE, logs del terminal.</span></div>
+              <div class="fam-step"><span class="fam-step-n">4</span><span class="fam-step-t">Los datos <strong>quedan</strong>. El bug se arregla, nadie limpia. El archivo sigue. El Slack sigue. El agente tiene el contexto en su historial.</span></div>
+              <div class="fam-step"><span class="fam-step-n">5</span><span class="fam-step-t">La fuga ocurre meses después: el laptop se pierde, el repo privado se expone, el staging tenía configuración de red distinta. <strong>Nadie recuerda ya por qué estaban ahí esos datos.</strong></span></div>
+            </div>
+            <p style="margin-top:16px;">Diferencia clave con F1 y F2: aquí el agente no filtra "sin querer". <strong>Mueve activamente el dato a sitios más expuestos</strong>. Cada "dame un ejemplo real" al LLM crea una nueva copia del dato en un lugar que no controlas.</p>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">La magnitud del problema</div>
+            <div class="fam-data-row"><span class="fam-data-num">1.200 M€</span><span class="fam-data-txt">en multas RGPD en 2025. 7.100 M€ acumulados desde 2018. La multa más grande del año: 530 M€ a TikTok.</span></div>
+            <div class="fam-data-row"><span class="fam-data-num">29 %</span><span class="fam-data-txt">de empresas usan datos reales de producción en entornos de pruebas. El 45% ha sufrido una brecha relacionada.</span></div>
+            <div class="fam-data-row"><span class="fam-data-num">20 %</span><span class="fam-data-txt">de todas las brechas de datos en 2025 tuvieron shadow AI involucrada, con 670.000$ de coste adicional por incidente.</span></div>
+            <div class="fam-data-row"><span class="fam-data-num">72 h</span><span class="fam-data-txt">plazo para notificar una brecha a la autoridad. El reloj empieza cuando tienes constancia, no cuando ocurre la brecha.</span></div>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Las obligaciones RGPD que el PM debe manejar</div>
+            <p>No es contenido de Legal. Son decisiones de producto con consecuencias económicas directas. Las cinco más importantes para un PM que construye con Claude Code:</p>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Base jurídica antes de recoger.</strong> Necesitas un motivo legal para cada dato que recoges: consentimiento, contrato, interés legítimo. Sin él, recoger el dato ya es incumplimiento.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Minimización.</strong> Solo recoges lo que necesitas. Cada campo extra es una obligación más y una superficie de exposición más.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>72 horas para notificar.</strong> Desde que tienes constancia de una brecha que afecta a datos personales. Tener el procedimiento preparado antes de necesitarlo no es opcional.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Derechos de los usuarios.</strong> Acceso, rectificación, borrado, portabilidad. Tu producto necesita mecanismos para atenderlos. No importa que estés en beta.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Privacy by Design.</strong> La protección de datos se diseña desde el principio, no se añade después. Pseudonimización, cifrado, accesos mínimos, logs protegidos.</span></div>
+            </div>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Lo que el PM tiene que interiorizar</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Un email es un dato personal.</strong> No necesitas nombre y DNI para que el RGPD aplique. Email, IP, user_id, cookie: todos están protegidos.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>"Estoy en beta" no existe regulatoriamente.</strong> Desde el primer usuario real, las obligaciones aplican. La AEPD no acepta "estábamos validando la idea".</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Datos reales fuera de producción = brecha invisible.</strong> Laptop, Slack, IDE, LLM: si contienen datos reales de usuarios, tienes una superficie de exposición que nadie protege.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Lo que le das al agente, se lo das al proveedor.</strong> Revisa las políticas de retención. Nunca pegues un dump de producción en el contexto de un LLM externo.</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fam-card reveal rd5" data-n="04" data-c="violet" style="cursor:pointer" onclick="this.classList.toggle('fam-open')">
+        <div class="fam-card-toggle">+</div>
+        <div class="fam-tag">Impacto operacional · transversal</div>
+        <h3 class="fam-name">Configuración de entornos</h3>
+        <p class="fam-desc">Frontera difusa entre dev y producción, defaults permisivos, endpoints expuestos.</p>
+        <div class="fam-case">Caso CBIZ · endpoint sin auth 3 meses · 36.000 registros.</div>
+        <div class="fam-expanded">
+          <div class="fam-expanded-inner">
+            <div class="fam-block" style="background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.18);border-radius:10px;padding:20px 24px;">
+            <div class="fam-block-label" style="color:var(--violet);">Antes de entrar · un concepto en lenguaje humano</div>
+            <div style="display:grid;gap:14px;margin-top:4px;">
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
+                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--violet);padding-top:2px;">CORS</span>
+                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">Es el portero que decide qué webs externas pueden hablar con tu servidor. <code style="font-family:var(--mono);font-size:12px;color:var(--violet);">origin: *</code> es decirle al portero "deja pasar a todo el mundo sin preguntar". Cómodo para desarrollar, peligroso en producción: cualquier web del mundo puede hacer peticiones a tu API.</span>
+              </div>
+            </div>
+          </div>
+
+            <div class="fam-block">
+            <div class="fam-block-label">La más silenciosa y la que cierra el círculo</div>
+            <p>No hay CVE, no hay factura desorbitada, no hay carta del regulador. Lo que hay es un endpoint de debug respondiendo durante tres meses sin que nadie lo sepa, un bucket de almacenamiento creado para pruebas y nunca cerrado, una configuración CORS que acepta cualquier origen desde el día uno. Es la familia más grande estadísticamente y la más invisible.</p>
+            <p>Su rol en la sesión es específico: <strong>conecta todo lo anterior</strong>. Las tres familias previas ocurren casi siempre sobre un sustrato de mala configuración. La clave expuesta es más peligrosa porque el IAM tenía permisos de administrador. La base de datos sin RLS está accesible porque el endpoint REST acepta cualquier origen. El log que filtra PII es visible porque el modo debug sigue activo en producción. La configuración determina cuánto daño puede hacer cualquier otro fallo.</p>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Qué es una "misconfiguración" en la práctica</div>
+            <div class="fam-keys">
+              <div class="fam-key">
+                <div class="fam-key-t">Defaults no cambiados</div>
+                <div class="fam-key-d">Endpoints que el framework expone por defecto: /health, /actuator, /api-docs, /swagger. El PM no los creó. Vienen en la caja y nadie los cierra.</div>
+              </div>
+              <div class="fam-key">
+                <div class="fam-key-t">Permisos excesivos</div>
+                <div class="fam-key-d">CORS con origin: *, IAM con AdministratorAccess, buckets de almacenamiento públicos. Creados en desarrollo "para que funcione" y nunca reducidos.</div>
+              </div>
+              <div class="fam-key">
+                <div class="fam-key-t">Configuración que revela información</div>
+                <div class="fam-key-d">Stack traces verbosos, variables de entorno expuestas por endpoints de debug, mensajes de error con datos del sistema. Ofrece al atacante un mapa del sistema.</div>
+              </div>
+              <div class="fam-key">
+                <div class="fam-key-t">Frontera dev/prod difusa</div>
+                <div class="fam-key-d">Variables de entorno con fallback permisivo, modo debug hardcodeado, autenticación desactivada "temporalmente". Lo que funciona en local viaja a producción sin revisión.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Cómo el agente arrastra la deuda de configuración a producción</div>
+            <div style="margin-bottom:20px; overflow-x:auto;">
+              <svg width="100%" viewBox="0 0 680 210" style="display:block;min-width:400px;">
+                <defs>
+                  <marker id="arr-vio" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="#B39DFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                  <marker id="arr-vio-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="#FF7A6B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                </defs>
+
+                <!-- Columna DEV -->
+                <rect x="20" y="10" width="240" height="30" rx="6" fill="#1A1330" stroke="#B39DFF" stroke-width="1.5"/>
+                <text x="140" y="30" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="12" font-weight="600" fill="#B39DFF">Entorno de desarrollo</text>
+
+                <!-- Items DEV (en verde, son intencionales aquí) -->
+                <rect x="30" y="52" width="220" height="26" rx="4" fill="#111827" stroke="#646B82" stroke-width="1"/>
+                <text x="44" y="68" font-family="'JetBrains Mono',monospace" font-size="10" fill="#7FD1B9">CORS_ORIGIN = *</text>
+                <text x="228" y="68" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">necesario en local</text>
+
+                <rect x="30" y="84" width="220" height="26" rx="4" fill="#111827" stroke="#646B82" stroke-width="1"/>
+                <text x="44" y="100" font-family="'JetBrains Mono',monospace" font-size="10" fill="#7FD1B9">DEBUG = true</text>
+                <text x="228" y="100" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">útil para depurar</text>
+
+                <rect x="30" y="116" width="220" height="26" rx="4" fill="#111827" stroke="#646B82" stroke-width="1"/>
+                <text x="44" y="132" font-family="'JetBrains Mono',monospace" font-size="10" fill="#7FD1B9">AUTH_REQUIRED = false</text>
+                <text x="228" y="132" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">facilita el testing</text>
+
+                <rect x="30" y="148" width="220" height="26" rx="4" fill="#111827" stroke="#646B82" stroke-width="1"/>
+                <text x="44" y="164" font-family="'JetBrains Mono',monospace" font-size="10" fill="#7FD1B9">CORS_ORIGIN || '*'</text>
+                <text x="228" y="164" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">fallback permisivo</text>
+
+                <!-- Flecha central con etiqueta -->
+                <line x1="264" y1="105" x2="390" y2="105" stroke="#B39DFF" stroke-width="2.5" marker-end="url(#arr-vio)"/>
+                <rect x="282" y="82" width="96" height="46" rx="4" fill="#0A0E1A" stroke="#B39DFF" stroke-width="1"/>
+                <text x="330" y="101" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" font-weight="600" fill="#B39DFF">deploy</text>
+                <text x="330" y="116" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">nadie revisa</text>
+                <text x="330" y="128" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">la config</text>
+
+                <!-- Columna PROD -->
+                <rect x="394" y="10" width="266" height="30" rx="6" fill="#2A1A1A" stroke="#FF7A6B" stroke-width="1.5"/>
+                <text x="527" y="30" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="12" font-weight="600" fill="#FF7A6B">Producción · mismo código</text>
+
+                <!-- Items PROD (los mismos, ahora en rojo porque son peligrosos) -->
+                <rect x="404" y="52" width="246" height="26" rx="4" fill="#1A0A0A" stroke="#FF7A6B" stroke-width="1"/>
+                <text x="418" y="68" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">CORS_ORIGIN = *</text>
+                <text x="638" y="68" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#FF7A6B">⚠ cualquier origen</text>
+
+                <rect x="404" y="84" width="246" height="26" rx="4" fill="#1A0A0A" stroke="#FF7A6B" stroke-width="1"/>
+                <text x="418" y="100" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">DEBUG = true</text>
+                <text x="638" y="100" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#FF7A6B">⚠ expone internos</text>
+
+                <rect x="404" y="116" width="246" height="26" rx="4" fill="#1A0A0A" stroke="#FF7A6B" stroke-width="1"/>
+                <text x="418" y="132" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">AUTH_REQUIRED = false</text>
+                <text x="638" y="132" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#FF7A6B">⚠ sin autenticación</text>
+
+                <rect x="404" y="148" width="246" height="26" rx="4" fill="#1A0A0A" stroke="#FF7A6B" stroke-width="1"/>
+                <text x="418" y="164" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">CORS_ORIGIN || '*'</text>
+                <text x="638" y="164" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#FF7A6B">⚠ fallback activo</text>
+
+                <!-- Nota inferior -->
+                <rect x="20" y="186" width="640" height="18" rx="4" fill="#1A0E0A"/>
+                <text x="340" y="199" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#FF7A6B">La misma configuración. Apropiada en dev. Catastrófica en prod. El agente no distingue entre entornos.</text>
+              </svg>
+            </div>
+            <div class="fam-steps">
+              <div class="fam-step"><span class="fam-step-n">1</span><span class="fam-step-t">El entorno dev se configura con <strong>defaults permisivos</strong>: tiene sentido. Quieres que las cosas funcionen rápido.</span></div>
+              <div class="fam-step"><span class="fam-step-n">2</span><span class="fam-step-t">El agente <strong>hereda esas convenciones</strong> y las replica en todo el código nuevo que genera. La mala configuración se propaga por mimetismo.</span></div>
+              <div class="fam-step"><span class="fam-step-n">3</span><span class="fam-step-t">Al desplegar, el PM configura las variables de producción <strong>apresuradamente</strong>, olvidando algunas. El agente no tiene contexto de "esto cambia en prod".</span></div>
+              <div class="fam-step"><span class="fam-step-n">4</span><span class="fam-step-t">Los <strong>fallbacks inseguros</strong> entran en acción: <code style="font-family:var(--mono);font-size:11px;color:var(--violet);">CORS_ORIGIN || '*'</code> activa el wildcard si la variable no está definida.</span></div>
+              <div class="fam-step"><span class="fam-step-n">5</span><span class="fam-step-t">La deuda <strong>se acumula en silencio</strong>. No hay alertas, no hay errores observables. El endpoint olvidado sigue respondiendo.</span></div>
+            </div>
+            <p style="margin-top:16px;">Un patrón especialmente común: el agente resuelve un error de CORS o autenticación <strong>aflojando la configuración</strong> en lugar de resolver la raíz. "Si pongo origin: *, deja de dar error." Desde el punto de vista del agente, el problema está resuelto.</p>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">La magnitud del problema</div>
+            <div class="fam-data-row"><span class="fam-data-num">99 %</span><span class="fam-data-txt">de los fallos de seguridad en la nube hasta 2026 serán culpa del cliente, no del proveedor (Gartner). AWS, Supabase y Cloudflare hacen bien su parte. Lo que configuras tú, es tu responsabilidad.</span></div>
+            <div class="fam-data-row"><span class="fam-data-num">#2</span><span class="fam-data-txt">las misconfiguraciones son la segunda causa de brechas después del phishing, y el 23% de los incidentes cloud se deben directamente a ellas.</span></div>
+            <div class="fam-data-row"><span class="fam-data-num">3.000+</span><span class="fam-data-txt">activos cloud mal configurados tiene la empresa media en cualquier momento dado. La mayoría no lo sabe.</span></div>
+            <div class="fam-data-row"><span class="fam-data-num">3 meses</span><span class="fam-data-txt">estuvo activo el endpoint sin autenticación en el caso CBIZ antes de que se descubriera. 36.000 registros exfiltrados. Sin malware, sin atacantes sofisticados. Solo un endpoint olvidado.</span></div>
+          </div>
+
+          <div class="fam-block">
+            <div class="fam-block-label">Lo que el PM tiene que interiorizar</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>La configuración es código invisible.</strong> Cada variable, flag y permiso es una decisión. Si nadie la toma conscientemente, gana el default. Y los defaults priorizan facilidad de desarrollo sobre seguridad.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>La configuración de dev no es la de prod. Nunca.</strong> Las variables de entorno deben fallar ruidosamente si falta algo crítico en producción. "Si no está definido, usa este permisivo" es casi siempre una mala decisión.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Las misconfiguraciones se descubren tarde.</strong> No hay alertas, no hay facturas, no hay picos de tráfico. Por eso hay que buscarlas activamente, no esperar a que se manifiesten.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>El agente no revisa la configuración por iniciativa propia.</strong> Hay que pedírselo. O mejor: automatizar esa revisión con el pipeline que construimos en clase.</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="familia-pie reveal rd5">Las cuatro familias se interconectan: un fallo en una amplifica el riesgo en las demás.</p>
+
+        <div class="notas-block">
+      <div class="notas-label">Nota · Estructura de cada familia</div>
+      <p><strong>Para cada una:</strong> caso (30-60s) → pregunta de producto al grupo → patrón general → qué hace la skill del pipeline. No es exposición: es debate guiado.</p>
+      <p><strong>Tus historias:</strong> Familia 1 → el .env. Familia 2 → la BBDD PostgreSQL que dejé sin seguridad "para la demo". Familia 4 → compañeros que borraron procesos por permisos excesivos.</p>
+      <p><strong>Familia 3 (RGPD) - riesgo de "esto es de Legal":</strong> ánclala con pregunta de producto. "Si descubrís que lleváis 3 meses guardando IPs en los logs sin saberlo, ¿qué decisión tomáis primero?"</p>
+      <p><strong>Preguntas de producto por familia:</strong></p>
+      <ul>
+        <li>F1: ¿Tenéis configurado un límite de gasto en vuestros servicios de IA?</li>
+        <li>F2: ¿Habéis ejecutado el Security Advisor de Supabase alguna vez?</li>
+        <li>F3: ¿Habéis usado datos reales de usuarios para probar algo?</li>
+        <li>F4: ¿Sabéis qué endpoints tiene expuestos vuestro proyecto ahora mismo?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PRÁCTICA -->
+<section id="practica">
+  <div class="container">
+    <div class="eyebrow reveal">Manos a la obra · Bloque 2</div>
+    <h2 class="reveal rd1">El pipeline <em>en vivo</em></h2>
+    <p class="reveal rd2" style="margin-top:24px;">Lo ejecutamos sobre un proyecto real con fallos sembrados. Vemos qué encuentra, abrimos el capó, y lo adaptáis vosotros.</p>
+
+    <div class="pipeline-flow reveal rd2">
+      <div class="pf-node"><div class="pf-node-t">Tu proyecto</div><div class="pf-node-s">listo para desplegar</div></div>
+      <div class="pf-arrow">↓</div>
+      <div class="pf-node pf-orch"><div class="pf-node-t">Orquestador</div><div class="pf-node-s">coordina y consolida</div></div>
+      <div class="pf-arrow">↓</div>
+      <div class="pf-skills">
+        <div class="pf-skill"><b>01</b>Credenciales y claves</div>
+        <div class="pf-skill"><b>02</b>RLS y permisos</div>
+        <div class="pf-skill"><b>03</b>Datos sensibles</div>
+        <div class="pf-skill"><b>04</b>Configuración</div>
+      </div>
+      <div class="pf-arrow">↓</div>
+      <div class="pf-node"><div class="pf-node-t">Informe</div><div class="pf-node-s">✓ OK · △ revisar · ✗ bloquea</div></div>
+    </div>
+
+    <div class="practica-fases">
+      <div class="pfase reveal rd2"><div class="pfase-t">20'</div><div class="pfase-d">Ejecución en vivo sobre el repositorio de demostración. El impacto de ver qué encuentra.</div></div>
+      <div class="pfase reveal rd3"><div class="pfase-t">40'</div><div class="pfase-d">Abrimos el capó: orquestador, skills, cómo está construido y por qué.</div></div>
+      <div class="pfase reveal rd4"><div class="pfase-t">20'</div><div class="pfase-d">Lo adaptáis vosotros. Tres niveles, elegís el vuestro.</div></div>
+    </div>
+
+    <div class="notas-block">
+      <div class="notas-label">Nota · Gestión de la heterogeneidad (riesgo clave del informe)</div>
+      <p><strong>Al abrir el capó (fase 40'), da permiso explícito:</strong> "Los que estéis cómodos con código, mirad la arquitectura. Los que no, mirad el output: qué dice el informe. Las dos lecturas son igual de válidas."</p>
+      <p><strong>Las instrucciones de la fase de adaptación van por escrito</strong> (compártelas en el chat antes de empezar). Tres opciones: A (cualquier nivel, añadir un patrón de detección), B (medio, modificar el formato del informe), C (avanzado, añadir una quinta skill).</p>
+      <p><strong>Si falla la demo:</strong> "Esto es justo lo que pasa cuando no pruebas el día antes." Ten captura de pantalla del output como fallback.</p>
+      <p><strong>Si alguien menos técnico se desconecta:</strong> pregunta de producto directa. "Veruzka, desde fintech, ¿cuál de los cuatro hallazgos te parece más crítico para un producto regulado?"</p>
+      <p><strong>Si el tiempo se escapa:</strong> no cortes la fase 1 ni la 3. Comprime la 2 (abre solo 2 skills en vez de 4).</p>
+    </div>
+  </div>
+</section>
+
+<!-- DEBATE -->
+<section id="debate">
+  <div class="container">
+    <div class="eyebrow reveal">Abrimos el micro · Bloque 3</div>
+    <h2 class="reveal rd1">Cuándo el pipeline <em>no basta</em></h2>
+    <p class="reveal rd2" style="margin-top:24px;">Hay situaciones donde la herramienta no llega y necesitas a un profesional. Salid con el criterio para reconocerlas.</p>
+    <div class="debate-box reveal rd2">
+      <p class="debate-q">¿Vuestro producto maneja datos de salud, financieros o biométricos?</p>
+      <p class="debate-q">¿Vais a pasar de 100 a 10.000 usuarios en semanas?</p>
+      <p class="debate-q">¿Os conectáis a sistemas críticos de un cliente?</p>
+      <p class="debate-q">¿Os pide alguien una auditoría formal?</p>
+    </div>
+    <div class="notas-block">
+      <div class="notas-label">Nota · El momento más valioso para el grupo</div>
+      <p>Los 5 escenarios donde llamar a un experto: datos regulados, salto de escala, sistemas críticos de cliente, procesamiento de pagos, auditoría formal.</p>
+      <p><strong>Cómo pedir ayuda eficiente:</strong> qué producto y stack, qué datos y cuántos usuarios, qué has revisado ya, qué escenario concreto preocupa.</p>
+      <p><strong>15 min de debate abierto sobre SUS proyectos.</strong> Facilita, no protagonices. Disparador si nadie arranca: "Marga, has construido con Lovable. ¿Algo de hoy te ha hecho pensar en tu proyecto?"</p>
+      <p><strong>Corta a las 19:52:</strong> "Podríamos seguir, que es buena señal. Dos minutos y cerramos."</p>
+    </div>
+  </div>
+</section>
+
+<!-- CIERRE -->
+<section id="cierre" class="cierre">
+  <div class="container">
+    <div class="eyebrow reveal">Antes de iros</div>
+    <h2 class="reveal rd1">Tres cosas para <em>esta semana</em></h2>
+    <div class="compromisos">
+      <div class="comp-card reveal rd2"><div class="comp-num">01</div><p class="comp-text">Ejecutad el Security Advisor de Supabase sobre vuestro proyecto. Anotad cuántas tablas salen sin RLS.</p></div>
+      <div class="comp-card reveal rd3"><div class="comp-num">02</div><p class="comp-text">Ejecutad el pipeline sobre un repositorio vuestro. El informe es vuestro punto de partida real.</p></div>
+      <div class="comp-card reveal rd4"><div class="comp-num">03</div><p class="comp-text">Configurad un límite de gasto en los servicios de IA que uséis. Hoy, antes de cerrar el ordenador.</p></div>
+    </div>
+    <div class="notas-block">
+      <div class="notas-label">Nota · Cierre en 5 minutos estrictos</div>
+      <p><strong>Da 1 minuto de silencio para que anoten los compromisos.</strong> "Un minuto para que los apuntéis." Eso los convierte de "algo que escuché" en "algo que tengo que hacer" (ajuste del informe).</p>
+      <p><strong>Entrega de materiales:</strong> manda la Guía en PDF y el repo del pipeline por Slack EN DIRECTO mientras hablas.</p>
+      <p><strong>Cierre:</strong> "Espero que esto os haga la próxima revisión un poco más reflexiva antes de hacer push. Estoy en el canal para lo que necesitéis." No alargues.</p>
+      <p><strong>Seguimiento una semana después:</strong> mensaje al canal. "¿Alguien ejecutó el Security Advisor? ¿Qué encontró?"</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <img src="data:image/png;base64,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" alt="Hero Camp" style="height:22px; width:auto; display:block; filter:invert(1); margin-bottom:10px;">
+  <p>AI PM PRO · THE HERO CAMP · 26 JUNIO 2026 · JAIME</p>
+</footer>
+
+<script>
+  // Progress bar
+  const progressBar = document.getElementById('progressBar');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    progressBar.style.width = (scrolled * 100) + '%';
+  });
+
+  // Reveal
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  // Nav scroll-spy
+  const navLinks = document.querySelectorAll('.nav a');
+  const sections = document.querySelectorAll('section');
+  const spyObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => spyObs.observe(s));
+
+  // ===== QUIZ =====
+  function showFamily(f) {
+    document.querySelectorAll('.quiz-tab').forEach(t => t.classList.toggle('active', t.dataset.f === f));
+    document.querySelectorAll('.quiz-panel').forEach(p => p.classList.toggle('active', p.id === 'qf' + f.slice(1)));
+  }
+
+  function revealAnswer(qId, isDebate) {
+    const q = document.getElementById(qId);
+    if (!q) return;
+    const btn = q.querySelector('.quiz-btn');
+    if (btn.classList.contains('done')) return;
+    // Marcar correctas e incorrectas
+    q.querySelectorAll('.quiz-opt').forEach(opt => {
+      if (opt.dataset.correct === 'true') opt.classList.add('correct');
+      else opt.classList.add('wrong');
+    });
+    q.classList.add('revealed-correct');
+    const exp = document.getElementById('exp-' + qId);
+    if (exp) exp.classList.add('show');
+    btn.textContent = 'Revelado';
+    btn.classList.add('done');
+  }
+
+  function resetQuestion(qId) {
+    const q = document.getElementById(qId);
+    if (!q) return;
+    q.querySelectorAll('.quiz-opt').forEach(opt => {
+      opt.classList.remove('correct', 'wrong');
+    });
+    q.classList.remove('revealed-correct');
+    const exp = document.getElementById('exp-' + qId);
+    if (exp) exp.classList.remove('show');
+    const btn = q.querySelector('.quiz-btn');
+    btn.textContent = 'Revelar respuesta';
+    btn.classList.remove('done');
+  }
+
+  // Acceso: añade ?notas a la URL (ej: index.html?notas)
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('notas')) {
+    document.body.classList.add('show-notes');
+  }
+  // Atajo de teclado: tecla "N" para activar/desactivar durante la sesión
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'n' || ev.key === 'N') {
+      // Evita activarlo si se está escribiendo en un campo
+      if (ev.target.tagName === 'INPUT' || ev.target.tagName === 'TEXTAREA') return;
+      document.body.classList.toggle('show-notes');
+    }
+  });
+</script>
+</body>
+</html>
