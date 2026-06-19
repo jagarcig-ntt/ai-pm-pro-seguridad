@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(timeout 300 sh -c 'until which gh >/dev/null 2>&1; do sleep 1; done && echo \"GitHub CLI installed successfully\"')"
+    ]
+  }
+}

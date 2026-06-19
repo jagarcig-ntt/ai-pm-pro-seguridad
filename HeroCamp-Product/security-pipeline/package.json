@@ -1,0 +1,21 @@
+{
+  "name": "security-pipeline",
+  "version": "1.0.0",
+  "description": "Pipeline de auditoría de seguridad para productos construidos con IA",
+  "main": "dist/index.js",
+  "bin": {
+    "audit-security": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "test": "bash test/run-against-demo.sh"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.1",
+    "@types/node": "^20.10.5"
+  }
+}

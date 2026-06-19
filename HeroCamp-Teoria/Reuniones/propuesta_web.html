@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seguridad y buenas prácticas en desarrollo con IA · AI PM Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@300;400;500;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     TOKENS
+     ============================================================ */
+  :root {
+    --bg: #0A0E1A;
+    --bg-deeper: #060912;
+    --bg-raised: #11162B;
+    --ink: #F5F3EE;
+    --ink-dim: #A8AEC0;
+    --ink-faint: #5B6278;
+    --divider: #1C2340;
+
+    --accent: #DCEE3C;          /* Hero Camp lime */
+    --accent-glow: rgba(220, 238, 60, 0.35);
+    --accent-soft: rgba(220, 238, 60, 0.10);
+
+    --blue: #6B9DFF;
+    --coral: #FF7A6B;
+    --jade: #7FD1B9;
+    --violet: #B39DFF;
+
+    --serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+    --sans: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-slow: cubic-bezier(0.16, 1, 0.3, 1);
+
+    --max-w: 1280px;
+    --gutter: clamp(20px, 5vw, 80px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--bg);
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Grain overlay constante para textura editorial */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* ============================================================
+     SIDEBAR: progreso + navegación elegante
+     ============================================================ */
+  .rail {
+    position: fixed;
+    left: clamp(16px, 2vw, 40px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: flex-start;
+  }
+
+  .rail-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--ink-faint);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.5s var(--ease);
+    padding: 4px 0;
+  }
+  .rail-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+    transition: all 0.5s var(--ease);
+    flex-shrink: 0;
+  }
+  .rail-label {
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: all 0.5s var(--ease);
+    white-space: nowrap;
+  }
+  .rail-item:hover .rail-label,
+  .rail-item.active .rail-label {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .rail-item.active { color: var(--accent); }
+  .rail-item.active .rail-dot {
+    background: var(--accent);
+    box-shadow: 0 0 20px var(--accent-glow);
+    transform: scale(1.4);
+  }
+  @media (max-width: 900px) {
+    .rail { display: none; }
+  }
+
+  /* ============================================================
+     PROGRESS BAR SUPERIOR
+     ============================================================ */
+  .progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--divider);
+    z-index: 60;
+  }
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow);
+    transition: width 0.1s linear;
+  }
+
+  /* ============================================================
+     HEADER METADATO (esquina superior derecha fija)
+     ============================================================ */
+  .meta-top {
+    position: fixed;
+    top: clamp(20px, 3vw, 40px);
+    right: clamp(20px, 3vw, 40px);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .meta-top span:first-child { color: var(--accent); }
+
+  /* ============================================================
+     UTILITY: contenedor & layout
+     ============================================================ */
+  section {
+    position: relative;
+    padding: clamp(80px, 12vh, 140px) var(--gutter);
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .container {
+    width: 100%;
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  h1 { font-size: clamp(48px, 8vw, 128px); font-weight: 300; }
+  h2 { font-size: clamp(40px, 6vw, 80px); font-weight: 300; }
+  h3 { font-size: clamp(24px, 3vw, 40px); }
+  h4 { font-size: clamp(18px, 2vw, 24px); font-weight: 500; }
+
+  p { font-size: clamp(15px, 1.1vw, 17px); color: var(--ink-dim); max-width: 62ch; }
+  p.lead {
+    font-size: clamp(18px, 1.4vw, 22px);
+    color: var(--ink);
+    max-width: 56ch;
+    line-height: 1.5;
+  }
+
+  .accent { color: var(--accent); }
+  .italic { font-style: italic; }
+  .serif-italic {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  /* ============================================================
+     REVEAL ANIMATIONS (scroll-triggered)
+     ============================================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.1s var(--ease-slow), transform 1.1s var(--ease-slow);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.25s; }
+  .reveal-delay-3 { transition-delay: 0.4s; }
+  .reveal-delay-4 { transition-delay: 0.55s; }
+  .reveal-delay-5 { transition-delay: 0.7s; }
+
+  /* ============================================================
+     SECTION 1: HERO
+     ============================================================ */
+  .hero {
+    justify-content: center;
+    padding-top: 10vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(220, 238, 60, 0.08), transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(107, 157, 255, 0.08), transparent 50%);
+  }
+  .hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(to right, var(--divider) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--divider) 1px, transparent 1px);
+    background-size: 120px 120px;
+    mask-image: radial-gradient(ellipse at center, black, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black, transparent 70%);
+    opacity: 0.4;
+  }
+
+  .hero-content { max-width: 1100px; }
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-label::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 16px var(--accent);
+    animation: pulse 2.4s var(--ease) infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 300;
+  }
+
+  .hero-footer {
+    display: flex;
+    gap: 60px;
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--divider);
+    flex-wrap: wrap;
+  }
+  .hero-footer-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .hero-footer-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .hero-footer-value {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--ink);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    animation: scrollBob 2.8s var(--ease) infinite;
+  }
+  .scroll-hint-line {
+    width: 1px;
+    height: 32px;
+    background: linear-gradient(to bottom, var(--ink-faint), transparent);
+  }
+  @keyframes scrollBob {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+    50% { transform: translateX(-50%) translateY(6px); opacity: 1; }
+  }
+
+  /* ============================================================
+     SECTION 2: AGENDA (cuatro puntos)
+     ============================================================ */
+  .agenda-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 40px;
+    margin-bottom: 80px;
+  }
+
+  .agenda-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--divider);
+  }
+  .agenda-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 2fr;
+    gap: 40px;
+    align-items: center;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--divider);
+    position: relative;
+    transition: all 0.6s var(--ease);
+  }
+  .agenda-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, var(--accent-soft), transparent);
+    opacity: 0;
+    transition: opacity 0.6s var(--ease);
+    pointer-events: none;
+  }
+  .agenda-item:hover::before { opacity: 1; }
+  .agenda-item:hover .agenda-num { color: var(--accent); }
+  .agenda-item:hover .agenda-title { transform: translateX(8px); }
+
+  .agenda-num {
+    font-family: var(--serif);
+    font-size: 64px;
+    font-weight: 300;
+    color: var(--ink-faint);
+    font-style: italic;
+    transition: color 0.6s var(--ease);
+    line-height: 1;
+  }
+  .agenda-title {
+    font-family: var(--serif);
+    font-size: clamp(22px, 2.4vw, 32px);
+    font-weight: 400;
+    color: var(--ink);
+    transition: transform 0.6s var(--ease);
+  }
+  .agenda-desc {
+    font-size: 15px;
+    color: var(--ink-dim);
+  }
+  @media (max-width: 720px) {
+    .agenda-item {
+      grid-template-columns: 60px 1fr;
+      gap: 20px;
+    }
+    .agenda-desc {
+      grid-column: 2;
+      margin-top: 8px;
+    }
+  }
+
+  /* ============================================================
+     SECTION 3: CONTEXTO + DATOS
+     ============================================================ */
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .split { grid-template-columns: 1fr; gap: 50px; }
+  }
+
+  .manifesto { position: relative; padding-left: 30px; }
+  .manifesto::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 40px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+  .manifesto p { margin-bottom: 24px; }
+  .manifesto .highlight {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(20px, 2vw, 26px);
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.4;
+    margin: 32px 0;
+    padding: 0;
+  }
+
+  .stats {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .stat-card {
+    position: relative;
+    padding: 32px;
+    background: var(--bg-raised);
+    border: 1px solid var(--divider);
+    border-left: 3px solid var(--accent);
+    overflow: hidden;
+    transition: all 0.6s var(--ease);
+  }
+  .stat-card:nth-child(2) { border-left-color: var(--blue); }
+  .stat-card:nth-child(3) { border-left-color: var(--coral); }
+  .stat-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, var(--accent-soft), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.8s var(--ease);
+    pointer-events: none;
+  }
+  .stat-card:hover::after { opacity: 1; }
+  .stat-card:hover { transform: translateX(6px); }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: clamp(48px, 6vw, 72px);
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .stat-card:nth-child(2) .stat-num { color: var(--blue); }
+  .stat-card:nth-child(3) .stat-num { color: var(--coral); }
+
+  .stat-desc {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .stat-source {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: 12px;
+    border-top: 1px solid var(--divider);
+  }
+
+  /* ============================================================
+     SECTION 4: OBJETIVOS + ENTREGABLES
+     ============================================================ */
+  .objetivos-split {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .objetivos-split { grid-template-columns: 1fr; gap: 40px; }
+    .objetivos-split .divider-plus { display: none; }
+  }
+
+  .col-heading {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 32px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .obj-list { display: flex; flex-direction: column; gap: 20px; }
+  .obj-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    align-items: start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  .obj-check {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--accent);
+    font-size: 12px;
+  }
+  .obj-text {
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .divider-plus {
+    font-family: var(--serif);
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    padding-top: 40px;
+    text-align: center;
+  }
+
+  .entregables { display: flex; flex-direction: column; gap: 20px; }
+  .entregable {
+    position: relative;
+    padding: 32px;
+    background: linear-gradient(135deg, var(--bg-raised), var(--bg-deeper));
+    border: 1px solid var(--divider);
+    overflow: hidden;
+    cursor: default;
+    transition: all 0.6s var(--ease);
+  }
+  .entregable::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent);
+  }
+  .entregable::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--accent-soft), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.8s var(--ease);
+  }
+  .entregable:hover { transform: translateY(-4px); border-color: rgba(220, 238, 60, 0.3); }
+  .entregable:hover::after { opacity: 1; }
+
+  .entregable-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .entregable-title {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .entregable-desc {
+    font-size: 14px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  .close-note {
+    margin-top: 60px;
+    padding: 28px 32px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(220, 238, 60, 0.3);
+    text-align: center;
+  }
+  .close-note strong {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--ink);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .close-note span {
+    font-size: 14px;
+    color: var(--ink-dim);
+  }
+
+  /* ============================================================
+     SECTION 5: ESTRUCTURA DE LA SESIÓN
+     ============================================================ */
+  .timeline-wrapper {
+    margin: 60px 0;
+    position: relative;
+  }
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    position: relative;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    top: 28px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--divider) 10%, var(--divider) 90%, transparent);
+  }
+  @media (max-width: 760px) {
+    .timeline {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .timeline::before { display: none; }
+  }
+
+  .tl-step {
+    position: relative;
+    padding-top: 70px;
+    text-align: center;
+    transition: transform 0.5s var(--ease);
+  }
+  .tl-step::before {
+    content: "";
+    position: absolute;
+    top: 21px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--ink-faint);
+    transition: all 0.5s var(--ease);
+  }
+  .tl-step.featured::before {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 24px var(--accent-glow);
+    width: 16px;
+    height: 16px;
+  }
+  .tl-time {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+  .tl-step.featured .tl-time { color: var(--accent); }
+  .tl-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .tl-desc {
+    font-size: 13px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  .bloque-zoom {
+    margin-top: 60px;
+    padding: 40px;
+    background: var(--bg-raised);
+    border-left: 3px solid var(--accent);
+    position: relative;
+  }
+  .bloque-zoom-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .bloque-zoom-fases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  @media (max-width: 760px) {
+    .bloque-zoom-fases { grid-template-columns: 1fr; gap: 20px; }
+  }
+  .fase {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .fase-time {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--accent);
+    font-style: italic;
+    line-height: 1;
+  }
+  .fase-desc {
+    font-size: 14px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  /* ============================================================
+     SECTION 6: 4 FAMILIAS DE RIESGO
+     ============================================================ */
+  .familias-galaxy {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 60px;
+  }
+  @media (max-width: 760px) {
+    .familias-galaxy { grid-template-columns: 1fr; }
+  }
+
+  .familia-card {
+    position: relative;
+    padding: 40px;
+    background: var(--bg-raised);
+    border: 1px solid var(--divider);
+    transition: all 0.6s var(--ease);
+    overflow: hidden;
+    cursor: default;
+  }
+  .familia-card::before {
+    content: attr(data-number);
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    font-family: var(--serif);
+    font-size: 90px;
+    font-weight: 300;
+    color: var(--divider);
+    line-height: 1;
+    transition: color 0.6s var(--ease);
+    z-index: 1;
+  }
+  .familia-card:hover { transform: translateY(-4px); }
+  .familia-card[data-color="blue"]:hover { border-color: rgba(107, 157, 255, 0.4); }
+  .familia-card[data-color="coral"]:hover { border-color: rgba(255, 122, 107, 0.4); }
+  .familia-card[data-color="jade"]:hover { border-color: rgba(127, 209, 185, 0.4); }
+  .familia-card[data-color="violet"]:hover { border-color: rgba(179, 157, 255, 0.4); }
+  .familia-card:hover::before { opacity: 0.6; }
+
+  .familia-card[data-color="blue"]::before { color: rgba(107, 157, 255, 0.15); }
+  .familia-card[data-color="coral"]::before { color: rgba(255, 122, 107, 0.15); }
+  .familia-card[data-color="jade"]::before { color: rgba(127, 209, 185, 0.15); }
+  .familia-card[data-color="violet"]::before { color: rgba(179, 157, 255, 0.15); }
+
+  .familia-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+  }
+  .familia-card[data-color="blue"] .familia-tag { color: var(--blue); }
+  .familia-card[data-color="coral"] .familia-tag { color: var(--coral); }
+  .familia-card[data-color="jade"] .familia-tag { color: var(--jade); }
+  .familia-card[data-color="violet"] .familia-tag { color: var(--violet); }
+
+  .familia-name {
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 2;
+    max-width: 75%;
+  }
+  .familia-desc {
+    font-size: 15px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .familia-case {
+    padding: 16px 20px;
+    background: var(--bg-deeper);
+    border-left: 2px solid;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.5;
+    position: relative;
+    z-index: 2;
+  }
+  .familia-card[data-color="blue"] .familia-case { border-left-color: var(--blue); }
+  .familia-card[data-color="coral"] .familia-case { border-left-color: var(--coral); }
+  .familia-card[data-color="jade"] .familia-case { border-left-color: var(--jade); }
+  .familia-card[data-color="violet"] .familia-case { border-left-color: var(--violet); }
+  .familia-case strong { color: var(--ink); font-weight: 700; }
+
+  .familia-pie {
+    margin-top: 50px;
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-dim);
+    font-weight: 300;
+  }
+
+  /* ============================================================
+     SECTION 7: PIPELINE
+     ============================================================ */
+  .pipeline-layout {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-top: 60px;
+  }
+  @media (max-width: 900px) {
+    .pipeline-layout { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .pipeline-diagram {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+  }
+  .p-node {
+    padding: 18px 28px;
+    border: 1px solid var(--divider);
+    background: var(--bg-raised);
+    font-family: var(--mono);
+    font-size: 12px;
+    text-align: center;
+    color: var(--ink);
+    position: relative;
+    min-width: 220px;
+  }
+  .p-node-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 2px;
+    font-weight: 400;
+  }
+  .p-node-sub { font-size: 10px; color: var(--ink-faint); letter-spacing: 0.15em; text-transform: uppercase; }
+
+  .p-orchestrator {
+    background: var(--bg-deeper);
+    border: 2px solid var(--accent);
+    padding: 22px 36px;
+    box-shadow: 0 0 32px rgba(220, 238, 60, 0.15);
+  }
+  .p-orchestrator .p-node-title { color: var(--accent); font-style: normal; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; font-family: var(--mono); font-size: 12px; }
+  .p-orchestrator .p-node-sub { color: var(--ink-dim); text-transform: none; letter-spacing: 0; font-family: var(--sans); font-size: 12px; margin-top: 6px; }
+
+  .p-skills {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 560px;
+  }
+  .p-skill {
+    padding: 14px 10px;
+    border: 1px solid var(--divider);
+    background: var(--bg-raised);
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    line-height: 1.3;
+    transition: all 0.5s var(--ease);
+  }
+  .p-skill-num {
+    display: block;
+    color: var(--accent);
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .p-skill:hover { border-color: var(--accent); color: var(--ink); transform: translateY(-2px); }
+
+  .p-arrow {
+    color: var(--ink-faint);
+    font-family: var(--mono);
+    font-size: 18px;
+  }
+
+  .p-report {
+    background: var(--bg-raised);
+    border: 1px solid var(--divider);
+    padding: 16px 32px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+  }
+  .p-report span strong { color: var(--ink); margin-right: 4px; }
+  .p-report .ok strong { color: var(--jade); }
+  .p-report .warn strong { color: var(--accent); }
+  .p-report .fail strong { color: var(--coral); }
+
+  .pipeline-text { padding-top: 20px; }
+  .pipeline-text h4 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+  .pipeline-text p {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.5;
+    font-weight: 400;
+    margin-bottom: 18px;
+    max-width: none;
+  }
+  .pipeline-text p:last-of-type { color: var(--ink-dim); font-style: italic; }
+
+  .pipeline-stamp {
+    margin-top: 32px;
+    display: inline-block;
+    padding: 10px 16px;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ============================================================
+     SECTION 8: ENCAJE
+     ============================================================ */
+  .encaje-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+  @media (max-width: 900px) {
+    .encaje-grid { grid-template-columns: 1fr; }
+  }
+
+  .encaje-card {
+    padding: 36px 32px;
+    background: var(--bg-raised);
+    border: 1px solid var(--divider);
+    border-top: 3px solid;
+    position: relative;
+    transition: all 0.6s var(--ease);
+  }
+  .encaje-card:nth-child(1) { border-top-color: var(--blue); }
+  .encaje-card:nth-child(2) { border-top-color: var(--accent); }
+  .encaje-card:nth-child(3) { border-top-color: var(--jade); }
+  .encaje-card:hover { transform: translateY(-4px); }
+
+  .encaje-who {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .encaje-what {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--divider);
+  }
+  .encaje-how {
+    font-size: 14px;
+    color: var(--ink-dim);
+    line-height: 1.6;
+  }
+
+  /* ============================================================
+     SECTION 9: PRÓXIMOS PASOS
+     ============================================================ */
+  .pasos-timeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 60px;
+    position: relative;
+  }
+  .pasos-timeline::before {
+    content: "";
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    top: 32px;
+    height: 1px;
+    background: linear-gradient(to right, var(--accent), var(--divider));
+  }
+  @media (max-width: 900px) {
+    .pasos-timeline { grid-template-columns: 1fr; }
+    .pasos-timeline::before { display: none; }
+  }
+
+  .paso {
+    position: relative;
+    padding-top: 80px;
+    text-align: center;
+  }
+  .paso-circle {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--ink-faint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink-faint);
+    transition: all 0.5s var(--ease);
+  }
+  .paso.active .paso-circle {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+  .paso-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+  .paso.active .paso-label { color: var(--accent); }
+  .paso-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .paso-desc {
+    font-size: 13px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  .pasos-footer {
+    margin-top: 60px;
+    padding: 28px 32px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(220, 238, 60, 0.2);
+  }
+  .pasos-footer-heading {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .pasos-footer-body {
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* ============================================================
+     SECTION 10: FUENTES
+     ============================================================ */
+  .fuentes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+  @media (max-width: 900px) {
+    .fuentes-grid { grid-template-columns: 1fr; }
+  }
+  .fuente-col h4 {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--divider);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  .fuente-item {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  .fuente-item:last-child { border-bottom: none; }
+  .fuente-item a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .fuente-title {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    transition: color 0.4s var(--ease);
+  }
+  .fuente-url {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    transition: color 0.4s var(--ease);
+  }
+  .fuente-item a:hover .fuente-title { color: var(--accent); }
+  .fuente-item a:hover .fuente-url { color: var(--ink-dim); }
+
+  /* ============================================================
+     SECTION 11: CIERRE
+     ============================================================ */
+  .cierre {
+    background: var(--bg-deeper);
+    position: relative;
+    overflow: hidden;
+  }
+  .cierre::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(220, 238, 60, 0.06), transparent 50%),
+      radial-gradient(ellipse at 70% 60%, rgba(107, 157, 255, 0.04), transparent 50%);
+  }
+  .cierre .container { position: relative; z-index: 2; text-align: left; }
+  .cierre h2 {
+    font-family: var(--serif);
+    font-size: clamp(56px, 10vw, 140px);
+    font-weight: 300;
+    line-height: 0.95;
+    margin-bottom: 32px;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+  }
+  .cierre h2 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 300;
+  }
+  .cierre-sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(20px, 2.2vw, 28px);
+    color: var(--ink-dim);
+    font-weight: 300;
+    max-width: 640px;
+    margin-bottom: 60px;
+  }
+  .cierre-card {
+    display: inline-block;
+    padding: 24px 32px;
+    border: 1px solid rgba(220, 238, 60, 0.3);
+    background: rgba(220, 238, 60, 0.05);
+  }
+  .cierre-card strong {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .cierre-card p {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--ink);
+    margin: 0;
+    max-width: 600px;
+  }
+
+  .cierre-firma {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--divider);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .cierre-firma strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+<!-- META TOP -->
+<div class="meta-top">
+  <span>PROPUESTA 2026</span>
+  <span>AI PM PRO · THE HERO CAMP</span>
+</div>
+
+<!-- RAIL NAV -->
+<nav class="rail" id="rail">
+  <button class="rail-item" data-target="hero"><span class="rail-dot"></span><span class="rail-label">Inicio</span></button>
+  <button class="rail-item" data-target="agenda"><span class="rail-dot"></span><span class="rail-label">Agenda</span></button>
+  <button class="rail-item" data-target="contexto"><span class="rail-dot"></span><span class="rail-label">Contexto</span></button>
+  <button class="rail-item" data-target="objetivos"><span class="rail-dot"></span><span class="rail-label">Objetivos</span></button>
+  <button class="rail-item" data-target="estructura"><span class="rail-dot"></span><span class="rail-label">Estructura</span></button>
+  <button class="rail-item" data-target="familias"><span class="rail-dot"></span><span class="rail-label">Familias</span></button>
+  <button class="rail-item" data-target="pipeline"><span class="rail-dot"></span><span class="rail-label">Pipeline</span></button>
+  <button class="rail-item" data-target="encaje"><span class="rail-dot"></span><span class="rail-label">Encaje</span></button>
+  <button class="rail-item" data-target="pasos"><span class="rail-dot"></span><span class="rail-label">Próximos pasos</span></button>
+  <button class="rail-item" data-target="fuentes"><span class="rail-dot"></span><span class="rail-label">Fuentes</span></button>
+  <button class="rail-item" data-target="cierre"><span class="rail-dot"></span><span class="rail-label">Cierre</span></button>
+</nav>
+
+<!-- ============================================================
+     1. HERO
+     ============================================================ -->
+<section id="hero" class="hero">
+  <div class="hero-backdrop"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="container hero-content">
+    <div class="hero-label reveal">Propuesta de sesión · 26 de junio de 2026</div>
+    <h1 class="reveal reveal-delay-1">
+      Seguridad <em>y buenas</em><br>
+      prácticas en desarrollo<br>
+      <em>con IA</em>
+    </h1>
+    <p class="lead reveal reveal-delay-2" style="max-width: 620px;">
+      Documento de trabajo para la reunión con la coordinación académica. Propuesta formativa para el módulo final del programa AI PM Pro.
+    </p>
+    <div class="hero-footer reveal reveal-delay-3">
+      <div class="hero-footer-item">
+        <span class="hero-footer-label">Duración</span>
+        <span class="hero-footer-value">3 horas · 17:00 – 20:00</span>
+      </div>
+      <div class="hero-footer-item">
+        <span class="hero-footer-label">Formato</span>
+        <span class="hero-footer-value">Remoto por Google Meet</span>
+      </div>
+      <div class="hero-footer-item">
+        <span class="hero-footer-label">Ponente</span>
+        <span class="hero-footer-value">Jaime · Senior Technical Leader</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Desplázate</span>
+    <span class="scroll-hint-line"></span>
+  </div>
+</section>
+
+<!-- ============================================================
+     2. AGENDA
+     ============================================================ -->
+<section id="agenda">
+  <div class="container">
+    <div class="agenda-header">
+      <div>
+        <div class="eyebrow reveal">01 · Agenda</div>
+        <h2 class="reveal reveal-delay-1">Estructura de la<br><em class="serif-italic">conversación</em></h2>
+      </div>
+      <p class="reveal reveal-delay-2" style="max-width: 380px;">Cuatro bloques temáticos para la reunión, pensados para caber en los próximos treinta minutos de conversación.</p>
+    </div>
+    <div class="agenda-list">
+      <div class="agenda-item reveal reveal-delay-1">
+        <span class="agenda-num">01</span>
+        <h3 class="agenda-title">Resumen de la propuesta</h3>
+        <p class="agenda-desc">Problema que aborda la sesión, perfil destinatario y enfoque pedagógico.</p>
+      </div>
+      <div class="agenda-item reveal reveal-delay-2">
+        <span class="agenda-num">02</span>
+        <h3 class="agenda-title">Estructura y bloques de la sesión</h3>
+        <p class="agenda-desc">Distribución de las tres horas y contenido de cada bloque.</p>
+      </div>
+      <div class="agenda-item reveal reveal-delay-3">
+        <span class="agenda-num">03</span>
+        <h3 class="agenda-title">Componente práctico y entregables</h3>
+        <p class="agenda-desc">Pipeline de agentes desarrollado en vivo y materiales que reciben los alumnos.</p>
+      </div>
+      <div class="agenda-item reveal reveal-delay-4">
+        <span class="agenda-num">04</span>
+        <h3 class="agenda-title">Encaje en el programa formativo</h3>
+        <p class="agenda-desc">Conexión con sesiones previas y cierre del recorrido de seguridad del curso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     3. CONTEXTO
+     ============================================================ -->
+<section id="contexto">
+  <div class="container">
+    <div class="eyebrow reveal">02 · Contexto</div>
+    <h2 class="reveal reveal-delay-1" style="margin-bottom: 80px;">
+      Contexto y magnitud<br>del <em class="serif-italic">problema</em>
+    </h2>
+    <div class="split">
+      <div class="manifesto reveal reveal-delay-2">
+        <h3 style="margin-bottom: 24px; font-size: 28px;">Una transformación silenciosa del rol</h3>
+        <p>La adopción generalizada de Claude Code y herramientas similares ha desplazado al perfil de Product Manager Senior una serie de responsabilidades que tradicionalmente recaían sobre los equipos de ingeniería: la gestión de credenciales y claves de acceso, la configuración segura de bases de datos, el cumplimiento del RGPD y el endurecimiento de los entornos de despliegue.</p>
+        <p>Este desplazamiento se ha producido sin un periodo formal de transición ni de formación. La velocidad que aporta la IA conviene aprovecharla, pero requiere asumir el marco de criterio profesional que antes proporcionaba un equipo de ingeniería completo.</p>
+        <p class="highlight">La sesión propuesta aborda precisamente ese vacío de criterio.</p>
+      </div>
+      <div class="stats">
+        <div class="stat-card reveal reveal-delay-3">
+          <span class="stat-num">29M</span>
+          <p class="stat-desc">Credenciales y claves de acceso expuestas en GitHub público durante 2025, con un crecimiento interanual del 34 %.</p>
+          <div class="stat-source">Fuente · GitGuardian, State of Secrets Sprawl 2026</div>
+        </div>
+        <div class="stat-card reveal reveal-delay-4">
+          <span class="stat-num">3,2% <span style="font-size: 0.6em; color: var(--ink-faint);">vs 1,5%</span></span>
+          <p class="stat-desc">Tasa de fuga de credenciales en commits asistidos por Claude Code frente a la línea base de GitHub.</p>
+          <div class="stat-source">Fuente · GitGuardian, State of Secrets Sprawl 2026</div>
+        </div>
+        <div class="stat-card reveal reveal-delay-5">
+          <span class="stat-num">443<span style="font-size: 0.4em; color: var(--ink-dim); font-family: var(--sans); margin-left: 12px; font-style: italic;">al día</span></span>
+          <p class="stat-desc">Notificaciones de brechas de datos personales en Europa en 2025, un 22 % más que en 2024.</p>
+          <div class="stat-source">Fuente · DLA Piper, GDPR Fines and Data Breach Survey 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     4. OBJETIVOS + ENTREGABLES
+     ============================================================ -->
+<section id="objetivos">
+  <div class="container">
+    <div class="eyebrow reveal">03 · Alcance</div>
+    <h2 class="reveal reveal-delay-1" style="margin-bottom: 60px;">
+      Objetivos del módulo<br>y entregables <em class="serif-italic">propuestos</em>
+    </h2>
+    <div class="objetivos-split">
+      <div class="reveal reveal-delay-2">
+        <div class="col-heading">Objetivos definidos en el programa</div>
+        <div class="obj-list">
+          <div class="obj-item">
+            <div class="obj-check">✓</div>
+            <div class="obj-text">Checklist de seguridad previa al despliegue a producción</div>
+          </div>
+          <div class="obj-item">
+            <div class="obj-check">✓</div>
+            <div class="obj-text">Gestión adecuada de claves y credenciales en el ciclo de desarrollo</div>
+          </div>
+          <div class="obj-item">
+            <div class="obj-check">✓</div>
+            <div class="obj-text">Análisis de casos reales de exposición de código y respuesta operativa</div>
+          </div>
+        </div>
+      </div>
+      <div class="divider-plus reveal reveal-delay-3">+</div>
+      <div class="reveal reveal-delay-4">
+        <div class="col-heading">Dos entregables tangibles</div>
+        <div class="entregables">
+          <div class="entregable">
+            <div class="entregable-num">01</div>
+            <h3 class="entregable-title">Guía de Seguridad</h3>
+            <p class="entregable-desc">Documento operativo con las cuatro familias de riesgo y checklist previo al despliegue. Aplicable desde el día siguiente a la sesión.</p>
+          </div>
+          <div class="entregable">
+            <div class="entregable-num">02</div>
+            <h3 class="entregable-title">Pipeline de agentes</h3>
+            <p class="entregable-desc">Sistema funcional en Claude Code: orquestador y cuatro skills de auditoría. Ejecutable sobre los proyectos del alumno.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="close-note reveal reveal-delay-5">
+      <strong>La propuesta cubre íntegramente los objetivos del programa e incorpora dos activos reutilizables.</strong>
+      <span>El alumno traduce la formación en aplicación inmediata sobre sus proyectos.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     5. ESTRUCTURA DE LA SESIÓN
+     ============================================================ -->
+<section id="estructura">
+  <div class="container">
+    <div class="eyebrow reveal">04 · Estructura</div>
+    <h2 class="reveal reveal-delay-1" style="margin-bottom: 20px;">
+      Estructura de la<br><em class="serif-italic">sesión</em>
+    </h2>
+    <p class="reveal reveal-delay-2">Cuatro bloques con concentración del peso en el componente práctico.</p>
+
+    <div class="timeline-wrapper">
+      <div class="timeline">
+        <div class="tl-step reveal reveal-delay-1">
+          <div class="tl-time">15 min</div>
+          <h4 class="tl-title">Apertura</h4>
+          <p class="tl-desc">Marco conceptual inicial y primeros datos del contexto.</p>
+        </div>
+        <div class="tl-step reveal reveal-delay-2">
+          <div class="tl-time">45 min</div>
+          <h4 class="tl-title">Bloque 1</h4>
+          <p class="tl-desc">Las cuatro familias de riesgo con casos reales.</p>
+        </div>
+        <div class="tl-step featured reveal reveal-delay-3">
+          <div class="tl-time">80 min</div>
+          <h4 class="tl-title">Bloque 2</h4>
+          <p class="tl-desc">Componente práctico: construcción en Claude Code.</p>
+        </div>
+        <div class="tl-step reveal reveal-delay-4">
+          <div class="tl-time">25 min</div>
+          <h4 class="tl-title">Bloque 3</h4>
+          <p class="tl-desc">Cuándo el pipeline no basta: derivación al experto.</p>
+        </div>
+        <div class="tl-step reveal reveal-delay-5">
+          <div class="tl-time">15 min</div>
+          <h4 class="tl-title">Cierre</h4>
+          <p class="tl-desc">Compromisos de aplicación y entrega de materiales.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-zoom reveal">
+      <div class="bloque-zoom-label">Bloque 2 · Desarrollo del componente práctico</div>
+      <div class="bloque-zoom-fases">
+        <div class="fase">
+          <span class="fase-time">20'</span>
+          <p class="fase-desc">Ejecución del pipeline sobre repositorio de demostración.</p>
+        </div>
+        <div class="fase">
+          <span class="fase-time">40'</span>
+          <p class="fase-desc">Análisis de la arquitectura: orquestador, skills, integración.</p>
+        </div>
+        <div class="fase">
+          <span class="fase-time">20'</span>
+          <p class="fase-desc">Adaptación guiada al proyecto del alumno.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     6. LAS CUATRO FAMILIAS
+     ============================================================ -->
+<section id="familias">
+  <div class="container">
+    <div class="eyebrow reveal">05 · Marco conceptual</div>
+    <h2 class="reveal reveal-delay-1" style="margin-bottom: 20px;">
+      Las cuatro <em class="serif-italic">familias</em><br>de riesgo
+    </h2>
+    <p class="reveal reveal-delay-2">Marco conceptual del Bloque 1: vectores de fallo recurrentes en desarrollo con IA. Cuatro dimensiones de impacto distintas que convergen sobre el mismo producto.</p>
+
+    <div class="familias-galaxy">
+      <div class="familia-card reveal reveal-delay-1" data-number="01" data-color="blue">
+        <div class="familia-tag">Impacto económico inmediato</div>
+        <h3 class="familia-name">Credenciales<br>y claves de acceso</h3>
+        <p class="familia-desc">Claves de API, tokens y credenciales expuestas en código o repositorios.</p>
+        <div class="familia-case">
+          <strong>Caso Gemini · febrero 2026</strong><br>
+          82.314 USD facturados en 48 horas tras filtrar la clave.
+        </div>
+      </div>
+
+      <div class="familia-card reveal reveal-delay-2" data-number="02" data-color="coral">
+        <div class="familia-tag">Impacto técnico y de usuarios</div>
+        <h3 class="familia-name">Bases de datos<br>y permisos</h3>
+        <p class="familia-desc">Row Level Security desactivado o mal configurado, credenciales con privilegios excesivos.</p>
+        <div class="familia-case">
+          <strong>CVE-2025-48757 · Lovable + Supabase</strong><br>
+          13.000 usuarios con sus datos expuestos.
+        </div>
+      </div>
+
+      <div class="familia-card reveal reveal-delay-3" data-number="03" data-color="jade">
+        <div class="familia-tag">Impacto regulatorio (RGPD)</div>
+        <h3 class="familia-name">Datos sensibles<br>y privacidad</h3>
+        <p class="familia-desc">Información personal en logs, datos reales en entornos de pruebas, fugas a LLMs externos.</p>
+        <div class="familia-case">
+          <strong>Samsung · marzo 2023</strong><br>
+          Tres fugas de código propietario a ChatGPT en veinte días.
+        </div>
+      </div>
+
+      <div class="familia-card reveal reveal-delay-4" data-number="04" data-color="violet">
+        <div class="familia-tag">Impacto operacional y transversal</div>
+        <h3 class="familia-name">Configuración<br>de entornos</h3>
+        <p class="familia-desc">Frontera difusa entre desarrollo y producción, defaults permisivos, endpoints expuestos.</p>
+        <div class="familia-case">
+          <strong>Caso CBIZ · 2024</strong><br>
+          Endpoint sin autenticación durante tres meses: 36.000 registros exfiltrados.
+        </div>
+      </div>
+    </div>
+
+    <p class="familia-pie reveal reveal-delay-5">Las cuatro familias se interconectan: un fallo en una amplifica el riesgo en las demás.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     7. PIPELINE
+     ============================================================ -->
+<section id="pipeline">
+  <div class="container">
+    <div class="eyebrow reveal">06 · Componente práctico</div>
+    <h2 class="reveal reveal-delay-1" style="margin-bottom: 20px;">
+      Pipeline de agentes<br>de <em class="serif-italic">seguridad</em>
+    </h2>
+    <p class="reveal reveal-delay-2">Sistema multi-agente desarrollado en Claude Code. Se ejecuta antes de cada promoción de código a producción.</p>
+
+    <div class="pipeline-layout">
+      <div class="pipeline-diagram reveal reveal-delay-1">
+        <div class="p-node">
+          <div class="p-node-title">Producto del alumno</div>
+          <div class="p-node-sub">listo para despliegue</div>
+        </div>
+        <div class="p-arrow">↓</div>
+        <div class="p-node p-orchestrator">
+          <div class="p-node-title">Orquestador de seguridad</div>
+          <div class="p-node-sub">coordina las auditorías y consolida el informe</div>
+        </div>
+        <div class="p-arrow">↓</div>
+        <div class="p-skills">
+          <div class="p-skill"><span class="p-skill-num">01</span>Credenciales y claves</div>
+          <div class="p-skill"><span class="p-skill-num">02</span>RLS y permisos BBDD</div>
+          <div class="p-skill"><span class="p-skill-num">03</span>Datos sensibles</div>
+          <div class="p-skill"><span class="p-skill-num">04</span>Configuración</div>
+        </div>
+        <div class="p-arrow">↓</div>
+        <div class="p-report">
+          <span class="ok"><strong>✓</strong>Validado</span>
+          <span class="warn"><strong>△</strong>Revisar</span>
+          <span class="fail"><strong>✗</strong>Bloquea</span>
+        </div>
+      </div>
+
+      <div class="pipeline-text reveal reveal-delay-3">
+        <h4>Funcionamiento del sistema</h4>
+        <p>El alumno invoca el orquestador antes de promocionar código a producción.</p>
+        <p>Cuatro skills especializadas auditan en paralelo: credenciales y claves, permisos de base de datos, datos sensibles y configuración de entornos.</p>
+        <p>El orquestador consolida los hallazgos en un informe único con código de severidad: validado, requiere revisión o bloquea el despliegue.</p>
+        <p>El alumno dispone de información completa para decidir si promocionar el código o intervenir antes.</p>
+        <div class="pipeline-stamp">Adaptable a cualquier proyecto del stack del curso</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     8. ENCAJE
+     ============================================================ -->
+<section id="encaje">
+  <div class="container">
+    <div class="eyebrow reveal">07 · Programa</div>
+    <h2 class="reveal reveal-delay-1" style="margin-bottom: 20px;">
+      Encaje en el <em class="serif-italic">programa</em><br>formativo
+    </h2>
+    <p class="reveal reveal-delay-2">La sesión cierra el recorrido de seguridad presente de forma transversal en el curso.</p>
+
+    <div class="encaje-grid">
+      <div class="encaje-card reveal reveal-delay-1">
+        <div class="encaje-who">Fito Arévalo</div>
+        <div class="encaje-what">Autenticación y APIs · Git, deploys y entornos</div>
+        <p class="encaje-how">Sus sesiones aportan los conceptos técnicos fundamentales: autenticación, endpoints, gestión de entornos, variables en producción. Esta sesión los asume como prerrequisito y se concentra en los patrones de fallo cuando se implementan en flujos asistidos por IA.</p>
+      </div>
+      <div class="encaje-card reveal reveal-delay-2">
+        <div class="encaje-who">Dani Diestre</div>
+        <div class="encaje-what">Agentes Autónomos · una semana antes</div>
+        <p class="encaje-how">Su sesión introduce el concepto de agente autónomo y los principios de implementación. El componente práctico de esta propuesta aplica esa base a un caso concreto: un pipeline multi-agente especializado en seguridad. La continuidad refuerza ambas sesiones.</p>
+      </div>
+      <div class="encaje-card reveal reveal-delay-3">
+        <div class="encaje-who">Objetivos del programa</div>
+        <div class="encaje-what">definidos en el welcome pack</div>
+        <p class="encaje-how">Los tres objetivos del módulo están cubiertos en profundidad: el checklist de seguridad previo al despliegue, la gestión adecuada de claves y credenciales, y el análisis de casos reales. Los entregables propuestos los traducen en aplicación práctica inmediata.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     9. PRÓXIMOS PASOS
+     ============================================================ -->
+<section id="pasos">
+  <div class="container">
+    <div class="eyebrow reveal">08 · Proceso</div>
+    <h2 class="reveal reveal-delay-1" style="margin-bottom: 20px;">
+      Próximos <em class="serif-italic">pasos</em>
+    </h2>
+    <p class="reveal reveal-delay-2">Plan de trabajo desde la fecha actual hasta la sesión.</p>
+
+    <div class="pasos-timeline">
+      <div class="paso active reveal reveal-delay-1">
+        <div class="paso-circle">1</div>
+        <div class="paso-label">Abril</div>
+        <h4 class="paso-title">Cierre de diseño</h4>
+        <p class="paso-desc">Ajustes tras esta reunión y consolidación del guion definitivo.</p>
+      </div>
+      <div class="paso reveal reveal-delay-2">
+        <div class="paso-circle">2</div>
+        <div class="paso-label">Mayo</div>
+        <h4 class="paso-title">Construcción técnica</h4>
+        <p class="paso-desc">Desarrollo del pipeline, las skills y el repositorio de demostración.</p>
+      </div>
+      <div class="paso reveal reveal-delay-3">
+        <div class="paso-circle">3</div>
+        <div class="paso-label">Principios junio</div>
+        <h4 class="paso-title">Material final</h4>
+        <p class="paso-desc">Guía de Seguridad, dossier de casos y presentación definitiva.</p>
+      </div>
+      <div class="paso reveal reveal-delay-4">
+        <div class="paso-circle">4</div>
+        <div class="paso-label">2ª quincena junio</div>
+        <h4 class="paso-title">Preparación final</h4>
+        <p class="paso-desc">Validación de tiempos, ajustes de detalle y logística.</p>
+      </div>
+      <div class="paso reveal reveal-delay-5">
+        <div class="paso-circle">5</div>
+        <div class="paso-label">26 junio</div>
+        <h4 class="paso-title">Sesión</h4>
+        <p class="paso-desc">Impartición (17:00–20:00) y entrega de materiales.</p>
+      </div>
+    </div>
+
+    <div class="pasos-footer reveal">
+      <div class="pasos-footer-heading">Aspectos a confirmar con la coordinación</div>
+      <p class="pasos-footer-body">Validación del enfoque · acceso a la plantilla visual del programa · detalles sobre el estado de los proyectos del alumnado en la fecha de la sesión.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     10. FUENTES
+     ============================================================ -->
+<section id="fuentes">
+  <div class="container">
+    <div class="eyebrow reveal">09 · Respaldo</div>
+    <h2 class="reveal reveal-delay-1" style="margin-bottom: 20px;">
+      Fuentes y <em class="serif-italic">referencias</em>
+    </h2>
+    <p class="reveal reveal-delay-2">Material de respaldo del diagnóstico presentado. Enlaces clicables para consulta directa.</p>
+
+    <div class="fuentes-grid">
+      <div class="fuente-col reveal reveal-delay-1">
+        <h4>Informes anuales de referencia</h4>
+        <div class="fuente-item">
+          <a href="https://blog.gitguardian.com/the-state-of-secrets-sprawl-2026-pr/" target="_blank" rel="noopener">
+            <div class="fuente-title">GitGuardian — State of Secrets Sprawl 2026</div>
+            <div class="fuente-url">blog.gitguardian.com</div>
+          </a>
+        </div>
+        <div class="fuente-item">
+          <a href="https://www.ibm.com/reports/data-breach" target="_blank" rel="noopener">
+            <div class="fuente-title">IBM — Cost of a Data Breach Report 2025</div>
+            <div class="fuente-url">ibm.com/reports/data-breach</div>
+          </a>
+        </div>
+        <div class="fuente-item">
+          <a href="https://www.dlapiper.com/en/insights/publications/2026/01/dla-piper-gdpr-fines-and-data-breach-survey-january-2026" target="_blank" rel="noopener">
+            <div class="fuente-title">DLA Piper — GDPR Fines and Data Breach Survey 2026</div>
+            <div class="fuente-url">dlapiper.com</div>
+          </a>
+        </div>
+      </div>
+      <div class="fuente-col reveal reveal-delay-2">
+        <h4>Casos reales utilizados en la sesión</h4>
+        <div class="fuente-item">
+          <a href="https://mattpalmer.io/posts/2025/05/CVE-2025-48757/" target="_blank" rel="noopener">
+            <div class="fuente-title">CVE-2025-48757 — Vulnerabilidad RLS en Lovable + Supabase</div>
+            <div class="fuente-url">mattpalmer.io</div>
+          </a>
+        </div>
+        <div class="fuente-item">
+          <a href="https://www.theregister.com/2026/03/03/gemini_api_key_82314_dollar_charge/" target="_blank" rel="noopener">
+            <div class="fuente-title">Caso Gemini — Startup mexicana, 82.314 USD en 48h</div>
+            <div class="fuente-url">theregister.com</div>
+          </a>
+        </div>
+        <div class="fuente-item">
+          <a href="https://medium.com/lets-code-future/we-got-a-89k-aws-bill-overnight-heres-what-went-wrong-b5dfd51c9a7e" target="_blank" rel="noopener">
+            <div class="fuente-title">Caso AWS — Credenciales filtradas, 89.432 USD</div>
+            <div class="fuente-url">medium.com/lets-code-future</div>
+          </a>
+        </div>
+      </div>
+      <div class="fuente-col reveal reveal-delay-3">
+        <h4>Análisis técnico complementario</h4>
+        <div class="fuente-item">
+          <a href="https://simonwillison.net/2025/Jul/6/supabase-mcp-lethal-trifecta/" target="_blank" rel="noopener">
+            <div class="fuente-title">Simon Willison — La trifecta letal en agentes LLM con MCP</div>
+            <div class="fuente-url">simonwillison.net</div>
+          </a>
+        </div>
+        <div class="fuente-item">
+          <a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/" target="_blank" rel="noopener">
+            <div class="fuente-title">OWASP Top 10 — A05 Security Misconfiguration</div>
+            <div class="fuente-url">owasp.org</div>
+          </a>
+        </div>
+        <div class="fuente-item">
+          <a href="https://trufflesecurity.com/blog/google-api-keys-werent-secrets-but-then-gemini-changed-the-rules" target="_blank" rel="noopener">
+            <div class="fuente-title">Truffle Security — Investigación sobre claves de Google API</div>
+            <div class="fuente-url">trufflesecurity.com</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     11. CIERRE
+     ============================================================ -->
+<section id="cierre" class="cierre">
+  <div class="container">
+    <h2 class="reveal">Gracias</h2>
+    <p class="cierre-sub reveal reveal-delay-1">Quedo a tu disposición para comentarios, ajustes y para afinar juntos cualquier detalle de la propuesta.</p>
+    <div class="cierre-card reveal reveal-delay-2">
+      <strong>Siguiente paso</strong>
+      <p>Envío del resumen formal en Word con los acuerdos alcanzados durante esta reunión, como documento de referencia común hasta la fecha de la sesión.</p>
+    </div>
+    <div class="cierre-firma reveal reveal-delay-3">
+      <div><strong>Jaime</strong> · Senior Technical Leader</div>
+      <div>AI PM Pro · The Hero Camp · 2026</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // ============================================================
+  // PROGRESS BAR
+  // ============================================================
+  const progressBar = document.getElementById('progressBar');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    progressBar.style.width = (scrolled * 100) + '%';
+  });
+
+  // ============================================================
+  // REVEAL ON SCROLL (IntersectionObserver)
+  // ============================================================
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  revealEls.forEach(el => revealObs.observe(el));
+
+  // ============================================================
+  // RAIL ACTIVE STATE (scroll-spy)
+  // ============================================================
+  const sections = document.querySelectorAll('section');
+  const railItems = document.querySelectorAll('.rail-item');
+
+  const spyObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        railItems.forEach(r => {
+          r.classList.toggle('active', r.dataset.target === id);
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => spyObs.observe(s));
+
+  // Rail click -> smooth scroll to section
+  railItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const target = document.getElementById(item.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
