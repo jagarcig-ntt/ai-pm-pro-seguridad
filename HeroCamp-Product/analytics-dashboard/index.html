@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Dashboard - Métricas en tiempo real</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@300;400;500;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0A0E1A;
+      --bg-deeper: #060912;
+      --bg-raised: #11162B;
+      --ink: #F5F3EE;
+      --ink-dim: #A8AEC0;
+      --ink-faint: #5B6278;
+      --divider: #1C2340;
+
+      --accent: #DCEE3C;
+      --accent-glow: rgba(220, 238, 60, 0.35);
+      --accent-soft: rgba(220, 238, 60, 0.10);
+
+      --blue: #6B9DFF;
+      --coral: #FF7A6B;
+      --jade: #7FD1B9;
+      --violet: #B39DFF;
+
+      --serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+      --sans: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --max-w: 1280px;
+      --gutter: clamp(20px, 5vw, 60px);
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.035;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* Progress bar */
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--divider);
+      z-index: 60;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      box-shadow: 0 0 16px var(--accent-glow);
+      transition: width 0.1s linear;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    /* Header */
+    header {
+      background: var(--bg-deeper);
+      border-bottom: 1px solid var(--divider);
+      padding: 40px 0;
+      margin-bottom: 60px;
+      position: relative;
+      z-index: 10;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 300;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      border: 1px solid var(--divider);
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s var(--ease);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+
+    .btn-feedback {
+      background: transparent;
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-feedback:hover {
+      background: var(--accent-soft);
+      box-shadow: 0 8px 24px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s var(--ease), transform 1s var(--ease);
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      margin-bottom: 80px;
+    }
+
+    .kpi-card {
+      position: relative;
+      background: linear-gradient(135deg, var(--bg-raised), var(--bg-deeper));
+      border: 1px solid var(--divider);
+      border-radius: 8px;
+      padding: 40px;
+      overflow: hidden;
+      transition: all 0.5s var(--ease);
+    }
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, var(--accent-soft), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.6s var(--ease);
+      pointer-events: none;
+    }
+
+    .kpi-card:hover {
+      border-color: rgba(220, 238, 60, 0.3);
+      transform: translateY(-6px);
+    }
+
+    .kpi-card:hover::before {
+      opacity: 1;
+    }
+
+    .kpi-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      font-weight: 600;
+      margin-bottom: 16px;
+      letter-spacing: 0.15em;
+    }
+
+    .kpi-value {
+      font-family: var(--serif);
+      font-size: clamp(40px, 5vw, 56px);
+      font-weight: 300;
+      color: var(--accent);
+      margin-bottom: 14px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .kpi-change {
+      font-size: 13px;
+      color: var(--jade);
+      font-weight: 600;
+    }
+
+    .kpi-change.negative {
+      color: var(--coral);
+    }
+
+    /* Charts Section */
+    .charts-section {
+      background: linear-gradient(135deg, var(--bg-raised), var(--bg-deeper));
+      border: 1px solid var(--divider);
+      border-radius: 8px;
+      padding: 48px;
+      margin-bottom: 80px;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 400;
+      margin-bottom: 40px;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 40px;
+    }
+
+    .chart-container {
+      border: 1px solid var(--divider);
+      border-radius: 6px;
+      padding: 28px;
+      background: var(--bg-deeper);
+      transition: all 0.5s var(--ease);
+    }
+
+    .chart-container:hover {
+      border-color: rgba(220, 238, 60, 0.2);
+      transform: translateY(-4px);
+    }
+
+    .chart-title {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 20px;
+      color: var(--ink);
+    }
+
+    /* SVG Charts */
+    svg {
+      width: 100%;
+      height: auto;
+    }
+
+    /* Events Table */
+    .events-section {
+      background: linear-gradient(135deg, var(--bg-raised), var(--bg-deeper));
+      border: 1px solid var(--divider);
+      border-radius: 8px;
+      padding: 48px;
+    }
+
+    .events-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+
+    .events-table thead {
+      background: transparent;
+      border-bottom: 2px solid var(--divider);
+    }
+
+    .events-table th {
+      padding: 16px;
+      text-align: left;
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--ink-faint);
+    }
+
+    .events-table td {
+      padding: 16px;
+      border-bottom: 1px solid var(--divider);
+      font-size: 13px;
+      color: var(--ink-dim);
+    }
+
+    .events-table tr:hover {
+      background: rgba(220, 238, 60, 0.05);
+    }
+
+    .event-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(107, 157, 255, 0.15);
+      color: var(--blue);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(10, 14, 26, 0.8);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, var(--bg-raised), var(--bg-deeper));
+      padding: 48px;
+      border-radius: 8px;
+      border: 1px solid var(--divider);
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-title {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 400;
+      margin-bottom: 32px;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .form-group {
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 12px;
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink);
+    }
+
+    textarea,
+    input,
+    select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--divider);
+      border-radius: 6px;
+      font-family: var(--sans);
+      font-size: 14px;
+      background: var(--bg-deeper);
+      color: var(--ink);
+      transition: all 0.3s var(--ease);
+    }
+
+    textarea::placeholder,
+    input::placeholder {
+      color: var(--ink-faint);
+    }
+
+    textarea:focus,
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      justify-content: flex-end;
+    }
+
+    .btn-close {
+      background: transparent;
+      border-color: var(--divider);
+      color: var(--ink);
+    }
+
+    .btn-close:hover {
+      border-color: var(--ink-dim);
+      background: var(--accent-soft);
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--ink-dim);
+    }
+
+    .spinner {
+      border: 3px solid var(--divider);
+      border-top: 3px solid var(--accent);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--serif);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      font-size: clamp(14px, 1.1vw, 16px);
+      color: var(--ink-dim);
+      max-width: 62ch;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      :root {
+        --gutter: clamp(16px, 4vw, 24px);
+      }
+
+      .header-actions {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .btn {
+        padding: 10px 16px;
+        font-size: 11px;
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .kpi-value {
+        font-size: 32px;
+      }
+
+      .events-table {
+        font-size: 12px;
+      }
+
+      .events-table th,
+      .events-table td {
+        padding: 10px;
+      }
+
+      .modal-content {
+        padding: 32px;
+      }
+
+      .charts-section,
+      .events-section {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">📊 Analytics</div>
+      <div class="header-actions">
+        <button class="btn btn-feedback" onclick="openFeedbackModal()">📝 Feedback</button>
+        <button class="btn btn-primary">Perfil</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="container" style="padding-top: 80px; padding-bottom: 80px;">
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi-card reveal reveal-delay-1">
+        <div class="kpi-label">Usuarios Totales</div>
+        <div class="kpi-value">1,250</div>
+        <div class="kpi-change">↑ 12% desde el mes pasado</div>
+      </div>
+
+      <div class="kpi-card reveal reveal-delay-2">
+        <div class="kpi-label">Usuarios Activos (7d)</div>
+        <div class="kpi-value">687</div>
+        <div class="kpi-change">↑ 8% desde la semana pasada</div>
+      </div>
+
+      <div class="kpi-card reveal reveal-delay-3">
+        <div class="kpi-label">Eventos Totales</div>
+        <div class="kpi-value">45,230</div>
+        <div class="kpi-change">↑ 24% desde el mes pasado</div>
+      </div>
+
+      <div class="kpi-card reveal reveal-delay-4">
+        <div class="kpi-label">Tasa de Conversión</div>
+        <div class="kpi-value">34.2%</div>
+        <div class="kpi-change negative">↓ 2.1% desde el mes pasado</div>
+      </div>
+
+      <div class="kpi-card reveal reveal-delay-5">
+        <div class="kpi-label">Ingresos Totales</div>
+        <div class="kpi-value">$125.4K</div>
+        <div class="kpi-change">↑ 18% desde el mes pasado</div>
+      </div>
+
+      <div class="kpi-card reveal" style="transition-delay: 0.6s;">
+        <div class="kpi-label">Tasa de Retención</div>
+        <div class="kpi-value">78%</div>
+        <div class="kpi-change">↑ 5% desde el mes pasado</div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section reveal" style="transition-delay: 0.7s;">
+      <h2 class="section-title reveal" style="margin-bottom: 0;">Tendencias y Análisis</h2>
+      <div class="charts-grid">
+        <!-- Chart 1: Usuarios por semana -->
+        <div class="chart-container">
+          <div class="chart-title">Usuarios Nuevos (Últimas 8 semanas)</div>
+          <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+            <!-- Grid lines -->
+            <line x1="40" y1="10" x2="40" y2="220" stroke="#e2e8f0" stroke-width="1"/>
+            <line x1="40" y1="220" x2="380" y2="220" stroke="#e2e8f0" stroke-width="1"/>
+
+            <!-- Bars -->
+            <rect x="50" y="140" width="35" height="80" fill="#0066cc" rx="4"/>
+            <rect x="95" y="110" width="35" height="110" fill="#0066cc" rx="4"/>
+            <rect x="140" y="90" width="35" height="130" fill="#0066cc" rx="4"/>
+            <rect x="185" y="60" width="35" height="160" fill="#667eea" rx="4"/>
+            <rect x="230" y="50" width="35" height="170" fill="#667eea" rx="4"/>
+            <rect x="275" y="70" width="35" height="150" fill="#0066cc" rx="4"/>
+            <rect x="320" y="40" width="35" height="180" fill="#667eea" rx="4"/>
+            <rect x="365" y="30" width="35" height="190" fill="#667eea" rx="4"/>
+
+            <!-- Labels -->
+            <text x="67" y="235" font-size="11" text-anchor="middle" fill="#64748b">Sem 1</text>
+            <text x="112" y="235" font-size="11" text-anchor="middle" fill="#64748b">Sem 2</text>
+            <text x="157" y="235" font-size="11" text-anchor="middle" fill="#64748b">Sem 3</text>
+            <text x="202" y="235" font-size="11" text-anchor="middle" fill="#64748b">Sem 4</text>
+            <text x="247" y="235" font-size="11" text-anchor="middle" fill="#64748b">Sem 5</text>
+            <text x="292" y="235" font-size="11" text-anchor="middle" fill="#64748b">Sem 6</text>
+            <text x="337" y="235" font-size="11" text-anchor="middle" fill="#64748b">Sem 7</text>
+            <text x="382" y="235" font-size="11" text-anchor="middle" fill="#64748b">Sem 8</text>
+          </svg>
+        </div>
+
+        <!-- Chart 2: Ingresos por mes -->
+        <div class="chart-container">
+          <div class="chart-title">Ingresos Mensuales (Últimos 6 meses)</div>
+          <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+            <!-- Grid -->
+            <line x1="40" y1="10" x2="40" y2="220" stroke="#e2e8f0" stroke-width="1"/>
+            <line x1="40" y1="220" x2="380" y2="220" stroke="#e2e8f0" stroke-width="1"/>
+
+            <!-- Line chart -->
+            <polyline points="50,180 100,150 150,120 200,110 250,100 300,90 350,80"
+                      fill="none" stroke="#10b981" stroke-width="3"/>
+
+            <!-- Points -->
+            <circle cx="50" cy="180" r="4" fill="#10b981"/>
+            <circle cx="100" cy="150" r="4" fill="#10b981"/>
+            <circle cx="150" cy="120" r="4" fill="#10b981"/>
+            <circle cx="200" cy="110" r="4" fill="#10b981"/>
+            <circle cx="250" cy="100" r="4" fill="#10b981"/>
+            <circle cx="300" cy="90" r="4" fill="#10b981"/>
+            <circle cx="350" cy="80" r="4" fill="#10b981"/>
+
+            <!-- Labels -->
+            <text x="50" y="235" font-size="11" text-anchor="middle" fill="#64748b">Ene</text>
+            <text x="100" y="235" font-size="11" text-anchor="middle" fill="#64748b">Feb</text>
+            <text x="150" y="235" font-size="11" text-anchor="middle" fill="#64748b">Mar</text>
+            <text x="200" y="235" font-size="11" text-anchor="middle" fill="#64748b">Abr</text>
+            <text x="250" y="235" font-size="11" text-anchor="middle" fill="#64748b">May</text>
+            <text x="300" y="235" font-size="11" text-anchor="middle" fill="#64748b">Jun</text>
+            <text x="350" y="235" font-size="11" text-anchor="middle" fill="#64748b">Jul</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Events Table -->
+    <div class="events-section reveal" style="transition-delay: 0.8s;">
+      <h2 class="section-title">Eventos en Tiempo Real</h2>
+      <table class="events-table">
+        <thead>
+          <tr>
+            <th>Tipo de Evento</th>
+            <th>Usuario</th>
+            <th>Timestamp</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="event-badge">page_view</span></td>
+            <td>user-456</td>
+            <td>2024-05-02 14:32:10</td>
+            <td>✅ Procesado</td>
+          </tr>
+          <tr>
+            <td><span class="event-badge">button_click</span></td>
+            <td>user-789</td>
+            <td>2024-05-02 14:31:45</td>
+            <td>✅ Procesado</td>
+          </tr>
+          <tr>
+            <td><span class="event-badge">page_view</span></td>
+            <td>user-123</td>
+            <td>2024-05-02 14:30:20</td>
+            <td>✅ Procesado</td>
+          </tr>
+          <tr>
+            <td><span class="event-badge">purchase</span></td>
+            <td>user-234</td>
+            <td>2024-05-02 14:28:55</td>
+            <td>✅ Procesado</td>
+          </tr>
+          <tr>
+            <td><span class="event-badge">signup</span></td>
+            <td>user-345</td>
+            <td>2024-05-02 14:27:30</td>
+            <td>✅ Procesado</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Feedback Modal -->
+  <div id="feedbackModal" class="modal">
+    <div class="modal-content">
+      <h2 class="modal-title">Envía tu Feedback</h2>
+      <form id="feedbackForm">
+        <div class="form-group">
+          <label for="feedbackEmail">Email</label>
+          <input type="email" id="feedbackEmail" required placeholder="tu@email.com">
+        </div>
+
+        <div class="form-group">
+          <label for="feedbackRating">Calificación</label>
+          <select id="feedbackRating" required>
+            <option value="">Selecciona una calificación</option>
+            <option value="5">⭐ Excelente</option>
+            <option value="4">⭐⭐⭐⭐ Muy bueno</option>
+            <option value="3">⭐⭐⭐ Bueno</option>
+            <option value="2">⭐⭐ Regular</option>
+            <option value="1">⭐ Pobre</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="feedbackText">Tu feedback</label>
+          <textarea id="feedbackText" required placeholder="Cuéntanos qué piensas del dashboard..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-close" onclick="closeFeedbackModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "analytics-dashboard",
+  "version": "1.0.0",
+  "description": "Dashboard de analytics integrado con módulo de feedback",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.0"
+  },
+  "keywords": ["analytics", "dashboard", "feedback"],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,40 @@
+{
+  "test_users": [
+    {
+      "id": "user-001",
+      "email": "carlos.hernandez@bancantander.es",
+      "name": "Carlos Hernández Martínez",
+      "company": "Banco Santander",
+      "phone": "+34 652 847 291",
+      "ip_address": "85.54.123.201",
+      "credit_card": "4532-1234-5678-9999"
+    },
+    {
+      "id": "user-002",
+      "email": "lucia.garcia@ibm.com",
+      "name": "Lucía García López",
+      "company": "IBM Spain",
+      "phone": "+34 695 123 456",
+      "ip_address": "80.34.67.189",
+      "ssn": "12345678A",
+      "password_for_testing": "MySecurePassword2024!"
+    }
+  ],
+  "test_events": [
+    {
+      "user_id": "user-001",
+      "event_type": "login_success",
+      "timestamp": "2024-05-02T10:30:00Z",
+      "ip_address": "85.54.123.201",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
+    },
+    {
+      "user_id": "user-002",
+      "event_type": "payment_processed",
+      "amount": 2500.00,
+      "payment_method": "credit_card",
+      "card_last4": "9999",
+      "timestamp": "2024-05-02T11:15:00Z"
+    }
+  ]
+}
