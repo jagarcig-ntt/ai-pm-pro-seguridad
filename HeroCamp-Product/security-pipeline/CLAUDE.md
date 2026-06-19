@@ -1,13 +1,65 @@
-# CLAUDE.md — Pipeline de Auditoría de Seguridad
+# CLAUDE.md — Pipeline de Auditoría de Seguridad con Agentes IA
 
 ## Qué es esto
 
-Un pipeline de 4 skills independientes que audita repositorios en busca de vulnerabilidades de seguridad comunes en proyectos construidos con IA (Claude Code, Lovable, etc.).
+Un sistema de auditoría de seguridad basado en **4 agentes IA especializados** que analizan repositorios en paralelo. Cada agente es una instancia de Claude con un prompt especializado y acceso a las herramientas de lectura de archivos.
 
-Está diseñado para:
-- Ejecutarse en <200ms
-- Sin dependencias externas (cero API calls excepto HTTP a Supabase)
-- Output legible para PMs sin formación técnica
+**No es un script de regex.** Es IA real que razona sobre el código.
+
+## Cómo usarlo
+
+Desde Claude Code, ejecuta:
+
+```
+/security-audit --repo ./feedbackhub
+/security-audit --repo ../otro-proyecto
+```
+
+El orquestador lanzará 4 agentes en paralelo. Verás el progreso en tiempo real.
+
+## Arquitectura
+
+```
+/security-audit (skill en .claude/commands/security-audit.md)
+    ↓
+Orquestador (Claude, este mismo contexto)
+    ↓ lanza en paralelo
+    ├── Agente 1: Credenciales y Secretos    (agents/family-1-credentials.md)
+    ├── Agente 2: Bases de Datos y Permisos  (agents/family-2-database.md)
+    ├── Agente 3: Datos Sensibles y Privacidad (agents/family-3-privacy.md)
+    └── Agente 4: Configuración y Entornos   (agents/family-4-configuration.md)
+    ↓
+Informe consolidado (security-report.md en el repo auditado)
+```
+
+## Archivos clave
+
+- `.claude/commands/security-audit.md` — La skill. Define cómo orquestar los agentes.
+- `agents/family-1-credentials.md` — Prompt del agente de credenciales
+- `agents/family-2-database.md` — Prompt del agente de base de datos
+- `agents/family-3-privacy.md` — Prompt del agente de privacidad
+- `agents/family-4-configuration.md` — Prompt del agente de configuración
+
+## Cómo modificar un agente
+
+Edita el archivo `.md` del agente correspondiente. Puedes:
+- Añadir nuevos patrones a buscar
+- Cambiar el formato de salida
+- Ajustar criterios de severidad
+- Especializar el agente para un stack concreto (Next.js, Supabase, etc.)
+
+## Para la sesión del 26
+
+```
+Minuto 45: ejecutar /security-audit --repo ./feedbackhub
+           → ver los 4 agentes trabajar en paralelo en vivo
+
+Minuto 60: revisar security-report.md generado
+           → conectar cada hallazgo con el bloque teórico
+
+Minuto 120: los alumnos auditan su propio proyecto
+            → /security-audit --repo ./su-proyecto
+```
 - Ser usado en sesiones de formación en vivo
 
 ## Stack
