@@ -40,7 +40,8 @@ node /ruta/al/pipeline/dist/index.js --repo .
 ### Familia 2: Base de Datos
 **Caso:** CVE-2025-48757, 170 apps, 13.000 usuarios  
 **Fallo:** Tablas sin RLS  
-**Lección:** RLS no se activa por defecto
+**Lección:** RLS no se activa por defecto  
+**Extra:** Prompt Injection (OWASP LLM #1) — agentes que leen input de usuarios sin permisos mínimos
 
 ### Familia 3: Datos Sensibles
 **Caso:** Samsung 2023, 3 incidentes en 20 días  
@@ -122,6 +123,10 @@ Entregar carpeta `/security-pipeline/` con:
 > "Si dice 'NO DESPLEGAR', hay riesgo AHORA MISMO."
 
 > "72 horas. No para investigar. Para NOTIFICAR."
+
+> "El agente no distingue entre instrucción y input de usuario. Todo es texto."
+
+> "Si ya ocurrió: rota, evalúa, llama, documenta, no borres."
 
 ---
 
