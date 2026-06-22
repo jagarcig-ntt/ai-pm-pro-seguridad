@@ -138,9 +138,21 @@ node dist/index.js --repo ../HeroCamp-Product/feedbackhub  # ✅ Test rápido
 
 **PAUSA LARGA. 4 segundos. Que procese.**
 
+**ACCIÓN: señala las cuatro tarjetas del portal mientras hablas.**
+
 **Tú:**
 
-> "Eso es lo que vamos a aprender a prevenir hoy. Cuatro tipos de errores que son fáciles de cometer cuando construyes rápido. Cuatro patrones que cuestan dinero, datos, o credibilidad.
+> "Y ese no es el único patrón. Son cuatro. Mirad las tarjetas.
+>
+> Número dos: bases de datos y permisos. Lovable generó más de 170 aplicaciones con Supabase sin Row Level Security activado. 13.000 usuarios con sus datos expuestos sin autenticación. Tiene CVE oficial: mayo de 2025.
+>
+> Número tres: datos sensibles. Samsung tuvo tres incidentes en 20 días. Empleados copiando código propietario y diseños internos a ChatGPT. Si eso hubiese llegado al regulador: 72 horas para notificar, hasta 20 millones de euros de multa.
+>
+> Número cuatro: configuración. CBIZ, una empresa de servicios financieros, dejó un endpoint de API expuesto sin autenticación. Nadie lo detectó durante tres meses. 36.000 registros filtrados. Sin malware, sin ataque sofisticado. Solo un endpoint que nadie recordaba que existía."
+
+**Pausa 2 segundos.**
+
+> "Cuatro patrones. Cuatro formas distintas de que algo salga mal cuando construyes rápido con IA. Dinero, datos, credibilidad, o los tres a la vez.
 >
 > Y una herramienta que los detecta automáticamente."
 
