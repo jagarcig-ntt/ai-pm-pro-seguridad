@@ -181,23 +181,17 @@
   .ent-item-text strong { color: var(--ink); font-weight: 600; }
 
   /* ===== DATOS DE IMPACTO ===== */
-  .datos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
-  @media (max-width: 880px) { .datos-grid { grid-template-columns: 1fr; } }
-  .dato-card { padding: 36px 32px; background: var(--bg-raised); border: 1px solid var(--divider); border-left: 3px solid var(--accent); transition: all 0.5s var(--ease); position: relative; overflow: hidden; cursor: pointer; }
-  .dato-card:nth-child(2) { border-left-color: var(--blue); }
-  .dato-card:nth-child(3) { border-left-color: var(--coral); }
-  .dato-card:hover { transform: translateX(6px); }
-  .dato-card.open { transform: translateX(6px); }
-  .dato-num { font-family: var(--serif); font-size: clamp(52px, 6vw, 80px); font-weight: 300; color: var(--accent); line-height: 1; margin-bottom: 16px; }
-  .dato-card:nth-child(2) .dato-num { color: var(--blue); }
-  .dato-card:nth-child(3) .dato-num { color: var(--coral); }
-  .dato-desc { font-size: 15px; color: var(--ink); line-height: 1.5; margin-bottom: 14px; }
-  .dato-source { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); padding-top: 12px; border-top: 1px solid var(--divider); display: flex; justify-content: space-between; align-items: center; }
+  .dato-card { padding: 22px 26px; background: var(--bg-raised); border: 1px solid var(--divider); transition: background 0.3s var(--ease); position: relative; overflow: hidden; cursor: pointer; }
+  .dato-card:hover, .dato-card.open { background: var(--bg-card); }
+  .dato-hdr { display: flex; align-items: flex-start; gap: 22px; }
+  .dato-num { font-family: var(--serif); font-size: 38px; font-weight: 300; line-height: 1.1; flex-shrink: 0; min-width: 76px; }
+  .dato-desc { font-size: 14px; color: var(--ink); line-height: 1.5; margin: 4px 0 8px; }
+  .dato-source { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); display: flex; justify-content: space-between; align-items: center; }
   .dato-source-toggle { font-size: 16px; transition: transform 0.4s var(--ease); }
   .dato-card.open .dato-source-toggle { transform: rotate(45deg); }
   .dato-detail { max-height: 0; overflow: hidden; transition: max-height 0.6s var(--ease); }
-  .dato-card.open .dato-detail { max-height: 600px; }
-  .dato-detail-inner { padding-top: 20px; border-top: 1px solid var(--divider); margin-top: 16px; display: flex; flex-direction: column; gap: 14px; }
+  .dato-card.open .dato-detail { max-height: 800px; }
+  .dato-detail-inner { padding-top: 18px; border-top: 1px solid var(--divider); margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
   .dato-detail-inner p { font-size: 14px; color: var(--ink-dim); line-height: 1.6; margin: 0; max-width: none; }
   .dato-detail-inner strong { color: var(--ink); font-weight: 600; }
   .dato-personal { padding: 14px 16px; background: var(--accent-soft); border-left: 2px solid var(--accent); margin-top: 4px; }
@@ -205,25 +199,24 @@
   .dato-personal p { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--ink); line-height: 1.5; margin: 0; max-width: none; }
 
   /* ===== FAMILIAS (TEORÍA APLICADA) ===== */
-  .familias-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 56px; }
-  @media (max-width: 880px) { .familias-grid { grid-template-columns: 1fr; } }
-  .fam-card { position: relative; padding: 38px; background: var(--bg-card); border: 1px solid var(--divider); overflow: hidden; transition: all 0.5s var(--ease); }
-  .fam-card::before { content: attr(data-n); position: absolute; top: 20px; right: 28px; font-family: var(--serif); font-size: 84px; font-weight: 300; line-height: 1; }
-  .fam-card[data-c="blue"]::before { color: rgba(107,157,255,0.14); }
-  .fam-card[data-c="coral"]::before { color: rgba(255,122,107,0.14); }
-  .fam-card[data-c="jade"]::before { color: rgba(127,209,185,0.14); }
-  .fam-card[data-c="violet"]::before { color: rgba(179,157,255,0.14); }
-  .fam-card:hover { transform: translateY(-4px); }
-  .fam-card[data-c="blue"]:hover { border-color: rgba(107,157,255,0.4); }
-  .fam-card[data-c="coral"]:hover { border-color: rgba(255,122,107,0.4); }
-  .fam-card[data-c="jade"]:hover { border-color: rgba(127,209,185,0.4); }
-  .fam-card[data-c="violet"]:hover { border-color: rgba(179,157,255,0.4); }
-  .fam-card.fam-open { transform: none !important; }
-  .fam-card[data-c="blue"].fam-open { border-color: rgba(107,157,255,0.5); }
-  .fam-card[data-c="coral"].fam-open { border-color: rgba(255,122,107,0.5); }
-  .fam-card[data-c="jade"].fam-open { border-color: rgba(127,209,185,0.5); }
-  .fam-card[data-c="violet"].fam-open { border-color: rgba(179,157,255,0.5); }
-  .fam-card-toggle { position: absolute; top: 16px; right: 20px; font-family: var(--mono); font-size: 20px; color: var(--ink-faint); transition: transform 0.4s var(--ease), color 0.4s var(--ease); z-index: 3; }
+  .familias-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 40px; }
+  .fam-hdr { display: flex; align-items: flex-start; gap: 20px; }
+  .fam-num-hdr { flex-shrink: 0; font-family: var(--serif); font-size: 34px; font-weight: 300; line-height: 1.15; min-width: 42px; }
+  .fam-card[data-c="blue"] .fam-num-hdr { color: var(--blue); }
+  .fam-card[data-c="coral"] .fam-num-hdr { color: var(--coral); }
+  .fam-card[data-c="jade"] .fam-num-hdr { color: var(--jade); }
+  .fam-card[data-c="violet"] .fam-num-hdr { color: var(--violet); }
+  .fam-card { position: relative; padding: 22px 28px; background: var(--bg-card); border: 1px solid var(--divider); overflow: hidden; transition: background 0.3s var(--ease), border-color 0.3s var(--ease); }
+  .fam-card[data-c="blue"] { border-left: 3px solid var(--blue); }
+  .fam-card[data-c="coral"] { border-left: 3px solid var(--coral); }
+  .fam-card[data-c="jade"] { border-left: 3px solid var(--jade); }
+  .fam-card[data-c="violet"] { border-left: 3px solid var(--violet); }
+  .fam-card:hover, .fam-card.fam-open { background: var(--bg-raised); }
+  .fam-card[data-c="blue"].fam-open { border-color: var(--blue); }
+  .fam-card[data-c="coral"].fam-open { border-color: var(--coral); }
+  .fam-card[data-c="jade"].fam-open { border-color: var(--jade); }
+  .fam-card[data-c="violet"].fam-open { border-color: var(--violet); }
+  .fam-card-toggle { position: absolute; top: 20px; right: 22px; font-family: var(--mono); font-size: 18px; color: var(--ink-faint); transition: transform 0.4s var(--ease), color 0.4s var(--ease); z-index: 3; }
   .fam-card.fam-open .fam-card-toggle { transform: rotate(45deg); }
   .fam-card[data-c="blue"].fam-open .fam-card-toggle { color: var(--blue); }
   .fam-card[data-c="coral"].fam-open .fam-card-toggle { color: var(--coral); }
@@ -231,15 +224,15 @@
   .fam-card[data-c="violet"].fam-open .fam-card-toggle { color: var(--violet); }
   .fam-expanded { max-height: 0; overflow: hidden; transition: max-height 0.7s var(--ease); }
   .fam-card.fam-open .fam-expanded { max-height: 6000px; }
-  .fam-expanded-inner { padding-top: 24px; border-top: 1px solid var(--divider); margin-top: 20px; }
-  .fam-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 18px; position: relative; z-index: 2; }
+  .fam-expanded-inner { padding-top: 22px; border-top: 1px solid var(--divider); margin-top: 18px; }
+  .fam-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
   .fam-card[data-c="blue"] .fam-tag { color: var(--blue); }
   .fam-card[data-c="coral"] .fam-tag { color: var(--coral); }
   .fam-card[data-c="jade"] .fam-tag { color: var(--jade); }
   .fam-card[data-c="violet"] .fam-tag { color: var(--violet); }
-  .fam-name { font-family: var(--serif); font-size: 28px; color: var(--ink); line-height: 1.1; margin-bottom: 14px; position: relative; z-index: 2; max-width: 80%; }
-  .fam-desc { font-size: 14px; color: var(--ink-dim); line-height: 1.5; margin-bottom: 20px; position: relative; z-index: 2; }
-  .fam-case { padding: 14px 18px; background: var(--bg-deeper); border-left: 2px solid; font-family: var(--mono); font-size: 11.5px; color: var(--ink); line-height: 1.5; position: relative; z-index: 2; }
+  .fam-name { font-family: var(--serif); font-size: 22px; color: var(--ink); line-height: 1.1; margin-bottom: 6px; }
+  .fam-desc { font-size: 13px; color: var(--ink-dim); line-height: 1.5; margin-bottom: 12px; }
+  .fam-case { padding: 10px 16px; background: var(--bg-deeper); border-left: 2px solid; font-family: var(--mono); font-size: 11px; color: var(--ink); line-height: 1.5; }
   .fam-card[data-c="blue"] .fam-case { border-left-color: var(--blue); }
   .fam-card[data-c="coral"] .fam-case { border-left-color: var(--coral); }
   .fam-card[data-c="jade"] .fam-case { border-left-color: var(--jade); }
@@ -614,41 +607,81 @@
   <div class="container">
     <div class="eyebrow reveal">La realidad del sector</div>
     <h2 class="reveal rd1">Por qué esto <em>importa</em> ahora</h2>
-    <div style="display:flex;flex-direction:column;gap:14px;margin-top:32px;">
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:32px;">
 
-      <div class="reveal rd2" style="display:flex;align-items:flex-start;gap:28px;padding:26px 30px;background:var(--bg-raised);border:1px solid var(--divider);border-left:3px solid var(--accent);">
-        <div style="flex-shrink:0;min-width:76px;font-family:var(--serif);font-size:38px;font-weight:300;color:var(--accent);line-height:1.1;">82K$</div>
-        <div>
-          <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.15em;margin-bottom:7px;">F1 · CREDENCIALES</div>
-          <p style="font-size:14px;color:var(--ink);margin:0 0 7px;line-height:1.5;">Factura de una startup en 48 horas tras filtrar una clave de Gemini. Un bot la encontró <strong>4 minutos</strong> después del commit. Google no devolvió nada.</p>
-          <span style="font-family:var(--mono);font-size:10px;color:var(--ink-faint);">The Register · febrero 2026</span>
+      <div class="dato-card reveal rd2" style="border-left:3px solid var(--accent);" onclick="toggleDato(this)">
+        <div class="dato-hdr">
+          <div class="dato-num" style="color:var(--accent);">82K$</div>
+          <div style="flex:1">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.15em;margin-bottom:6px;">F1 · CREDENCIALES</div>
+            <p class="dato-desc">Factura de una startup en 48 horas tras filtrar una clave de Gemini. Un bot la encontró <strong>4 minutos</strong> después del commit. Google no devolvió nada.</p>
+            <div class="dato-source"><span>The Register · febrero 2026</span><span class="dato-source-toggle">+</span></div>
+          </div>
+        </div>
+        <div class="dato-detail">
+          <div class="dato-detail-inner">
+            <p>Una startup mexicana de tres desarrolladores. Su factura habitual en servicios de IA: 180$ al mes. El 11 de febrero alguien subió una clave de Gemini en un commit de madrugada. A las pocas horas un bot automatizado la encontró, la validó, y empezó a consumir la API a máxima velocidad.</p>
+            <p>El día 12 tenían una factura de <strong>82.314 dólares</strong>. Google aplicó el modelo de responsabilidad compartida: la infraestructura era segura, la clave la gestionaba el cliente. Sin perdón, sin devolución.</p>
+            <p>El bot tardó <strong>4 minutos</strong> desde el commit hasta el primer uso de la clave. No hay margen de reacción: o se previene o se paga.</p>
+            <div class="dato-personal">
+              <div class="dato-personal-label">Me pasó a mí</div>
+              <p>"He subido el .env a GitLab. No una vez, varias. Siempre igual: tenía prisa, había probado que funcionaba, hice git add . sin pensar. No fue negligencia. Fue que a esa velocidad el check mental simplemente no ocurre."</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="reveal rd3" style="display:flex;align-items:flex-start;gap:28px;padding:26px 30px;background:var(--bg-raised);border:1px solid var(--divider);border-left:3px solid var(--coral);">
-        <div style="flex-shrink:0;min-width:76px;font-family:var(--serif);font-size:38px;font-weight:300;color:var(--coral);line-height:1.1;">170+</div>
-        <div>
-          <div style="font-family:var(--mono);font-size:10px;color:var(--coral);letter-spacing:0.15em;margin-bottom:7px;">F2 · BASES DE DATOS Y PERMISOS</div>
-          <p style="font-size:14px;color:var(--ink);margin:0 0 7px;line-height:1.5;">Apps generadas por Lovable con RLS desactivado en Supabase. <strong>13.000 usuarios expuestos</strong>, datos accesibles sin autenticación. CVE-2025-48757, mayo 2025.</p>
-          <span style="font-family:var(--mono);font-size:10px;color:var(--ink-faint);">Supabase Security Advisory · 2025</span>
+      <div class="dato-card reveal rd3" style="border-left:3px solid var(--coral);" onclick="toggleDato(this)">
+        <div class="dato-hdr">
+          <div class="dato-num" style="color:var(--coral);">170+</div>
+          <div style="flex:1">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--coral);letter-spacing:0.15em;margin-bottom:6px;">F2 · BASES DE DATOS Y PERMISOS</div>
+            <p class="dato-desc">Apps generadas por Lovable con RLS desactivado en Supabase. <strong>13.000 usuarios expuestos</strong>, datos accesibles sin autenticación. CVE-2025-48757, mayo 2025.</p>
+            <div class="dato-source"><span>Supabase Security Advisory · 2025</span><span class="dato-source-toggle">+</span></div>
+          </div>
+        </div>
+        <div class="dato-detail">
+          <div class="dato-detail-inner">
+            <p>En mayo de 2025, investigadores documentaron que Lovable generaba esquemas de Supabase con Row Level Security desactivado por defecto. Cada tabla era accesible desde la API pública sin necesidad de autenticación.</p>
+            <p>El problema afectó a <strong>más de 170 aplicaciones publicadas</strong>, con al menos <strong>13.000 usuarios finales</strong> cuyos datos eran accesibles con solo conocer la URL del proyecto. CVE-2025-48757.</p>
+            <p>El mecanismo: la anon key de Supabase <em>está pensada</em> para ser pública cuando RLS está activo. Sin RLS, esa clave da acceso de lectura —y a veces escritura— a todas las tablas. El generador omitía RLS porque era más simple no configurarlo.</p>
+          </div>
         </div>
       </div>
 
-      <div class="reveal rd4" style="display:flex;align-items:flex-start;gap:28px;padding:26px 30px;background:var(--bg-raised);border:1px solid var(--divider);border-left:3px solid var(--jade);">
-        <div style="flex-shrink:0;min-width:76px;font-family:var(--serif);font-size:38px;font-weight:300;color:var(--jade);line-height:1.1;">3</div>
-        <div>
-          <div style="font-family:var(--mono);font-size:10px;color:var(--jade);letter-spacing:0.15em;margin-bottom:7px;">F3 · DATOS SENSIBLES</div>
-          <p style="font-size:14px;color:var(--ink);margin:0 0 7px;line-height:1.5;">Incidentes en 20 días en Samsung: empleados copiando código propietario, diseños y actas de reuniones a ChatGPT. La empresa prohibió la IA generativa internamente. <strong>RGPD: 72h para notificar, hasta €20M de multa.</strong></p>
-          <span style="font-family:var(--mono);font-size:10px;color:var(--ink-faint);">Bloomberg · abril 2023</span>
+      <div class="dato-card reveal rd4" style="border-left:3px solid var(--jade);" onclick="toggleDato(this)">
+        <div class="dato-hdr">
+          <div class="dato-num" style="color:var(--jade);">3</div>
+          <div style="flex:1">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--jade);letter-spacing:0.15em;margin-bottom:6px;">F3 · DATOS SENSIBLES</div>
+            <p class="dato-desc">Incidentes en 20 días en Samsung: empleados copiando código propietario, diseños y actas de reuniones a ChatGPT. <strong>RGPD: 72h para notificar, hasta €20M de multa.</strong></p>
+            <div class="dato-source"><span>Bloomberg · abril 2023</span><span class="dato-source-toggle">+</span></div>
+          </div>
+        </div>
+        <div class="dato-detail">
+          <div class="dato-detail-inner">
+            <p>En abril de 2023, Bloomberg reveló que Samsung sufrió tres incidentes en menos de 20 días. Empleados utilizaron ChatGPT para depurar código de semiconductores, comprimir notas de reuniones internas y resumir código de una base de datos propietaria. Los datos viajaron a servidores de OpenAI y quedaron fuera del control de Samsung.</p>
+            <p>La respuesta: Samsung prohibió el uso de IA generativa externa para todos sus empleados. El coste inmediato no fue regulatorio sino de reputación y operacional.</p>
+            <p><strong>La obligación RGPD si ocurre con datos europeos:</strong> notificación a la autoridad de protección de datos en 72 horas. Multa de hasta el 4% de la facturación global anual o <strong>20 millones de euros</strong>, la cifra que sea mayor.</p>
+          </div>
         </div>
       </div>
 
-      <div class="reveal rd5" style="display:flex;align-items:flex-start;gap:28px;padding:26px 30px;background:var(--bg-raised);border:1px solid var(--divider);border-left:3px solid var(--violet);">
-        <div style="flex-shrink:0;min-width:76px;font-family:var(--serif);font-size:38px;font-weight:300;color:var(--violet);line-height:1.1;">99%</div>
-        <div>
-          <div style="font-family:var(--mono);font-size:10px;color:var(--violet);letter-spacing:0.15em;margin-bottom:7px;">F4 · CONFIGURACIÓN</div>
-          <p style="font-size:14px;color:var(--ink);margin:0 0 7px;line-height:1.5;">De los fallos de seguridad cloud hasta 2026 serán culpa del cliente, no del proveedor — Gartner. CBIZ: un endpoint API dormido expuso <strong>36.000 registros</strong> durante 3 meses sin que nadie lo detectara.</p>
-          <span style="font-family:var(--mono);font-size:10px;color:var(--ink-faint);">Gartner 2025 · CBIZ breach report</span>
+      <div class="dato-card reveal rd5" style="border-left:3px solid var(--violet);" onclick="toggleDato(this)">
+        <div class="dato-hdr">
+          <div class="dato-num" style="color:var(--violet);">99%</div>
+          <div style="flex:1">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--violet);letter-spacing:0.15em;margin-bottom:6px;">F4 · CONFIGURACIÓN</div>
+            <p class="dato-desc">De los fallos de seguridad cloud hasta 2026 serán culpa del cliente, no del proveedor — Gartner. CBIZ: endpoint dormido, <strong>36.000 registros</strong>, 3 meses sin detectar.</p>
+            <div class="dato-source"><span>Gartner 2025 · CBIZ breach report</span><span class="dato-source-toggle">+</span></div>
+          </div>
+        </div>
+        <div class="dato-detail">
+          <div class="dato-detail-inner">
+            <p>CBIZ, uno de los principales proveedores de servicios financieros en Estados Unidos, mantuvo un endpoint de API accesible públicamente sin autenticación entre mayo y agosto de 2024. No hubo malware, no hubo ataque sofisticado: solo una puerta abierta que alguien encontró.</p>
+            <p><strong>36.000 registros</strong> personales y financieros de clientes fueron exfiltrados durante los tres meses que el endpoint estuvo activo. La brecha se descubrió cuando los datos ya circulaban en mercados negros.</p>
+            <p>Gartner lo enmarca en una tendencia clara: el 99% de los fallos de seguridad cloud hasta 2026 serán responsabilidad del cliente, no del proveedor. Las plataformas funcionan. Lo que falla es la configuración de quienes las usan.</p>
+          </div>
         </div>
       </div>
 
@@ -672,10 +705,15 @@
 
       <div class="fam-card reveal rd2" data-n="01" data-c="blue" style="cursor:pointer" onclick="toggleFamily(this)">
         <div class="fam-card-toggle">+</div>
-        <div class="fam-tag">Impacto económico inmediato</div>
-        <h3 class="fam-name">Credenciales y claves de acceso</h3>
-        <p class="fam-desc">Claves de API, tokens y credenciales que acaban en el código o el repositorio.</p>
-        <div class="fam-case">Caso Gemini · 82.314$ en 48h tras filtrar la clave.</div>
+        <div class="fam-hdr">
+          <div class="fam-num-hdr">01</div>
+          <div style="flex:1">
+            <div class="fam-tag">Impacto económico inmediato</div>
+            <h3 class="fam-name">Credenciales y claves de acceso</h3>
+            <p class="fam-desc">Claves de API, tokens y credenciales que acaban en el código o el repositorio.</p>
+            <div class="fam-case">Caso Gemini · 82.314$ en 48h tras filtrar la clave.</div>
+          </div>
+        </div>
         <div class="fam-expanded">
           <div class="fam-expanded-inner">
           <div class="fam-block" style="background:rgba(255,122,107,0.06);border:1px solid rgba(255,122,107,0.18);border-radius:10px;padding:20px 24px;">
@@ -809,10 +847,15 @@
 
       <div class="fam-card reveal rd3" data-n="02" data-c="coral" style="cursor:pointer" onclick="toggleFamily(this)">
         <div class="fam-card-toggle">+</div>
-        <div class="fam-tag">Impacto técnico y de usuarios</div>
-        <h3 class="fam-name">Bases de datos y permisos</h3>
-        <p class="fam-desc">RLS desactivado, claves con privilegios excesivos, acceso sin restricciones reales.</p>
-        <div class="fam-case">CVE-2025-48757 · Lovable + Supabase · 13.000 usuarios expuestos.</div>
+        <div class="fam-hdr">
+          <div class="fam-num-hdr">02</div>
+          <div style="flex:1">
+            <div class="fam-tag">Impacto técnico y de usuarios</div>
+            <h3 class="fam-name">Bases de datos y permisos</h3>
+            <p class="fam-desc">RLS desactivado, claves con privilegios excesivos, acceso sin restricciones reales.</p>
+            <div class="fam-case">CVE-2025-48757 · Lovable + Supabase · 13.000 usuarios expuestos.</div>
+          </div>
+        </div>
         <div class="fam-expanded">
           <div class="fam-expanded-inner">
             <div class="fam-block" style="background:rgba(107,157,255,0.06);border:1px solid rgba(107,157,255,0.18);border-radius:10px;padding:20px 24px;">
@@ -1013,10 +1056,15 @@
 
       <div class="fam-card reveal rd4" data-n="03" data-c="jade" style="cursor:pointer" onclick="toggleFamily(this)">
         <div class="fam-card-toggle">+</div>
-        <div class="fam-tag">Impacto regulatorio · RGPD</div>
-        <h3 class="fam-name">Datos sensibles y privacidad</h3>
-        <p class="fam-desc">Datos personales en logs, datos reales en pruebas, fugas a LLMs externos.</p>
-        <div class="fam-case">Samsung · 3 fugas de código propietario a ChatGPT en 20 días.</div>
+        <div class="fam-hdr">
+          <div class="fam-num-hdr">03</div>
+          <div style="flex:1">
+            <div class="fam-tag">Impacto regulatorio · RGPD</div>
+            <h3 class="fam-name">Datos sensibles y privacidad</h3>
+            <p class="fam-desc">Datos personales en logs, datos reales en pruebas, fugas a LLMs externos.</p>
+            <div class="fam-case">Samsung · 3 fugas de código propietario a ChatGPT en 20 días.</div>
+          </div>
+        </div>
         <div class="fam-expanded">
           <div class="fam-expanded-inner">
           <div class="fam-block" style="background:rgba(127,209,185,0.06);border:1px solid rgba(127,209,185,0.18);border-radius:10px;padding:20px 24px;">
@@ -1158,10 +1206,15 @@
 
       <div class="fam-card reveal rd5" data-n="04" data-c="violet" style="cursor:pointer" onclick="toggleFamily(this)">
         <div class="fam-card-toggle">+</div>
-        <div class="fam-tag">Impacto operacional · transversal</div>
-        <h3 class="fam-name">Configuración de entornos</h3>
-        <p class="fam-desc">Frontera difusa entre dev y producción, defaults permisivos, endpoints expuestos.</p>
-        <div class="fam-case">Caso CBIZ · endpoint sin auth 3 meses · 36.000 registros.</div>
+        <div class="fam-hdr">
+          <div class="fam-num-hdr">04</div>
+          <div style="flex:1">
+            <div class="fam-tag">Impacto operacional · transversal</div>
+            <h3 class="fam-name">Configuración de entornos</h3>
+            <p class="fam-desc">Frontera difusa entre dev y producción, defaults permisivos, endpoints expuestos.</p>
+            <div class="fam-case">Caso CBIZ · endpoint sin auth 3 meses · 36.000 registros.</div>
+          </div>
+        </div>
         <div class="fam-expanded">
           <div class="fam-expanded-inner">
             <div class="fam-block" style="background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.18);border-radius:10px;padding:20px 24px;">
@@ -1853,6 +1906,13 @@
     const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
     progressBar.style.width = (scrolled * 100) + '%';
   });
+
+  // Impacto accordion — solo uno abierto a la vez
+  function toggleDato(el) {
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.dato-card').forEach(c => c.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
 
   // Familias accordion — solo una abierta a la vez
   function toggleFamily(el) {
