@@ -88,6 +88,10 @@ node dist/index.js --repo ../HeroCamp-Product/feedbackhub  # ✅ Test rápido
 >
 > Eso es lo que vamos a construir mentalmente durante estas 3 horas. Y vosotros os lo lleváis."
 
+**Pausa. Baja el ritmo.**
+
+> "Para llegar ahí, vamos a recorrer cuatro familias de riesgo: credenciales expuestas, permisos de base de datos, datos sensibles, y configuración de entornos. Cuatro patrones que se repiten en casi todos los proyectos construidos rápido con IA. Cuando los conozcas, los empiezas a ver en todas partes."
+
 **Pausa 2 segundos.**
 
 ### MINUTO 3:30 - Quién soy (contexto corto)
@@ -105,9 +109,9 @@ node dist/index.js --repo ../HeroCamp-Product/feedbackhub  # ✅ Test rápido
 
 **Pausa 1 segundo.**
 
-> "Pero lo más importante: no soy un gurú. No soy alguien que haya acertado siempre. He cometido todos estos errores. Algunos una vez. Algunos varias.
+> "Lo que importa no viene de la teoría. Viene de haber construido con estas herramientas en proyectos reales, haber cometido estos errores, y haber visto qué pasa cuando no hay defensas.
 >
-> Por eso sé dónde duele. Y por eso puedo ayudaros a evitarlo."
+> Por eso sé dónde duele. Y por eso creo que esto os va a ser útil."
 
 **Pausa 2 segundos.**
 
