@@ -614,66 +614,50 @@
   <div class="container">
     <div class="eyebrow reveal">La realidad del sector</div>
     <h2 class="reveal rd1">Por qué esto <em>importa</em> ahora</h2>
-    <div class="datos-grid">
+    <div style="display:flex;flex-direction:column;gap:14px;margin-top:32px;">
 
-      <div class="dato-card reveal rd2" onclick="this.classList.toggle('open')">
-        <div class="dato-num">82K$</div>
-        <p class="dato-desc">Factura de una startup en 48 horas tras filtrar una clave de Gemini. Un bot la encontró 4 minutos después del commit.</p>
-        <div class="dato-source">
-          <span>The Register · febrero 2026</span>
-          <span class="dato-source-toggle">+</span>
-        </div>
-        <div class="dato-detail">
-          <div class="dato-detail-inner">
-            <p>Una startup mexicana de tres desarrolladores. Su factura habitual en servicios de IA: 180$ al mes. El 11 de febrero alguien subió una clave de Gemini en un commit de madrugada. A las pocas horas un bot automatizado la encontró, la validó, y empezó a consumir la API a máxima velocidad.</p>
-            <p>El día 12 tenían una factura de <strong>82.314 dólares</strong>. Google aplicó el modelo de responsabilidad compartida: la infraestructura era segura, la clave la gestionaba el cliente. Sin perdón, sin devolución.</p>
-            <p>El bot tardó <strong>4 minutos</strong> desde el commit hasta el primer uso de la clave. No hay margen de reacción: o se previene o se paga.</p>
-            <div class="dato-personal">
-              <div class="dato-personal-label">Me pasó a mí</div>
-              <p>"He subido el .env a GitLab. No una vez, varias. Siempre igual: tenía prisa, había probado que funcionaba, hice git add . sin pensar. No fue negligencia. Fue que a esa velocidad el check mental simplemente no ocurre."</p>
-            </div>
-          </div>
+      <div class="reveal rd2" style="display:flex;align-items:flex-start;gap:28px;padding:26px 30px;background:var(--bg-raised);border:1px solid var(--divider);border-left:3px solid var(--accent);">
+        <div style="flex-shrink:0;min-width:76px;font-family:var(--serif);font-size:38px;font-weight:300;color:var(--accent);line-height:1.1;">82K$</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.15em;margin-bottom:7px;">F1 · CREDENCIALES</div>
+          <p style="font-size:14px;color:var(--ink);margin:0 0 7px;line-height:1.5;">Factura de una startup en 48 horas tras filtrar una clave de Gemini. Un bot la encontró <strong>4 minutos</strong> después del commit. Google no devolvió nada.</p>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--ink-faint);">The Register · febrero 2026</span>
         </div>
       </div>
 
-      <div class="dato-card reveal rd3" onclick="this.classList.toggle('open')">
-        <div class="dato-num">29M</div>
-        <p class="dato-desc">Credenciales nuevas expuestas en GitHub público en 2025. Un 34% más que el año anterior.</p>
-        <div class="dato-source">
-          <span>GitGuardian · State of Secrets Sprawl 2026</span>
-          <span class="dato-source-toggle">+</span>
-        </div>
-        <div class="dato-detail">
-          <div class="dato-detail-inner">
-            <p>29 millones de secretos nuevos expuestos en 2025. El mayor salto interanual jamás registrado. No son 29 millones de incidentes: muchos son del mismo proyecto en distintos commits, pero todos son claves activas que algún bot ya habrá encontrado.</p>
-            <p>El dato más preocupante del informe: el <strong>70% de los secretos expuestos en 2022 seguían activos en 2025</strong>. La mayoría de fugas no se detectan ni se corrigen. Simplemente se olvidan.</p>
-            <p>Y el dato específico para este grupo: los commits asistidos por Claude Code tienen el <strong>doble de tasa de fuga</strong> que la línea base de GitHub. No porque Claude Code sea malo: porque cuando construyes más rápido, los checks manuales dejan de ser fiables.</p>
-          </div>
+      <div class="reveal rd3" style="display:flex;align-items:flex-start;gap:28px;padding:26px 30px;background:var(--bg-raised);border:1px solid var(--divider);border-left:3px solid var(--coral);">
+        <div style="flex-shrink:0;min-width:76px;font-family:var(--serif);font-size:38px;font-weight:300;color:var(--coral);line-height:1.1;">170+</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--coral);letter-spacing:0.15em;margin-bottom:7px;">F2 · BASES DE DATOS Y PERMISOS</div>
+          <p style="font-size:14px;color:var(--ink);margin:0 0 7px;line-height:1.5;">Apps generadas por Lovable con RLS desactivado en Supabase. <strong>13.000 usuarios expuestos</strong>, datos accesibles sin autenticación. CVE-2025-48757, mayo 2025.</p>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--ink-faint);">Supabase Security Advisory · 2025</span>
         </div>
       </div>
 
-      <div class="dato-card reveal rd4" onclick="this.classList.toggle('open')">
-        <div class="dato-num">×2</div>
-        <p class="dato-desc">Tasa de fuga de credenciales en commits con Claude Code frente a la línea base. La velocidad sin defensas tiene un coste.</p>
-        <div class="dato-source">
-          <span>GitGuardian · State of Secrets Sprawl 2026</span>
-          <span class="dato-source-toggle">+</span>
+      <div class="reveal rd4" style="display:flex;align-items:flex-start;gap:28px;padding:26px 30px;background:var(--bg-raised);border:1px solid var(--divider);border-left:3px solid var(--jade);">
+        <div style="flex-shrink:0;min-width:76px;font-family:var(--serif);font-size:38px;font-weight:300;color:var(--jade);line-height:1.1;">3</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--jade);letter-spacing:0.15em;margin-bottom:7px;">F3 · DATOS SENSIBLES</div>
+          <p style="font-size:14px;color:var(--ink);margin:0 0 7px;line-height:1.5;">Incidentes en 20 días en Samsung: empleados copiando código propietario, diseños y actas de reuniones a ChatGPT. La empresa prohibió la IA generativa internamente. <strong>RGPD: 72h para notificar, hasta €20M de multa.</strong></p>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--ink-faint);">Bloomberg · abril 2023</span>
         </div>
-        <div class="dato-detail">
-          <div class="dato-detail-inner">
-            <p>Este dato hay que enmarcarlo bien porque la audiencia usa Claude Code: <strong>la IA no es el problema, es el amplificador</strong>. Cuando el agente genera código que funciona y lo hace rápido, la tendencia natural es revisar menos antes de hacer commit.</p>
-            <p>El mecanismo es simple: el agente resuelve un error de conexión poniendo la clave directamente en el código porque es la forma más rápida de que funcione. Tú ves que funciona y haces push. El agente no sabe qué es un .gitignore ni por qué importa.</p>
-            <p>La respuesta correcta no es usar menos IA: es añadir las defensas que el agente no añade por defecto. Eso es exactamente lo que construimos en el Bloque 2 de esta sesión.</p>
-          </div>
+      </div>
+
+      <div class="reveal rd5" style="display:flex;align-items:flex-start;gap:28px;padding:26px 30px;background:var(--bg-raised);border:1px solid var(--divider);border-left:3px solid var(--violet);">
+        <div style="flex-shrink:0;min-width:76px;font-family:var(--serif);font-size:38px;font-weight:300;color:var(--violet);line-height:1.1;">99%</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--violet);letter-spacing:0.15em;margin-bottom:7px;">F4 · CONFIGURACIÓN</div>
+          <p style="font-size:14px;color:var(--ink);margin:0 0 7px;line-height:1.5;">De los fallos de seguridad cloud hasta 2026 serán culpa del cliente, no del proveedor — Gartner. CBIZ: un endpoint API dormido expuso <strong>36.000 registros</strong> durante 3 meses sin que nadie lo detectara.</p>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--ink-faint);">Gartner 2025 · CBIZ breach report</span>
         </div>
       </div>
 
     </div>
-    <div class="notas-block">
+    <div class="notas-block" style="margin-top:32px;">
       <div class="notas-label">Nota · Uso de los datos en clase</div>
       <p><strong>No leas las tarjetas.</strong> Narra el caso Gemini de memoria (tres desarrolladores, 180$/mes habitual, 82.314$ en 48h, sin perdón). La cifra en pantalla es el ancla visual mientras tú cuentas la historia.</p>
-      <p><strong>Tu historia del .env va aquí</strong>, justo después del caso Gemini. Abre el desplegable para que el grupo la vea mientras la cuentas. Luego pregunta al chat: "¿Quién ha tenido alguna vez una clave en un repo, aunque fuera un momento?"</p>
-      <p><strong>El dato ×2 es delicado</strong> porque la audiencia usa Claude Code. Úsalo después de las otras dos, y enmárcalo: "La IA no es el enemigo. La velocidad sin defensas, sí. De ahí el pipeline que construimos hoy."</p>
+      <p><strong>Tu historia del .env va justo aquí</strong>, después del caso Gemini. Pregunta al chat: "¿Quién ha tenido alguna vez una clave en un repo, aunque fuera un momento?"</p>
+      <p><strong>Las cuatro familias están representadas</strong>: recuerda que estos son solo los ganchos de entrada, cada caso se desarrolla a fondo en su bloque teórico.</p>
     </div>
   </div>
 </section>
@@ -686,7 +670,7 @@
     <p class="reveal rd2" style="margin-top:24px;">Cuatro patrones que aparecen una y otra vez. Cuatro dimensiones de impacto que convergen sobre el mismo producto.</p>
     <div class="familias-grid">
 
-      <div class="fam-card reveal rd2" data-n="01" data-c="blue" style="cursor:pointer" onclick="this.classList.toggle('fam-open')">
+      <div class="fam-card reveal rd2" data-n="01" data-c="blue" style="cursor:pointer" onclick="toggleFamily(this)">
         <div class="fam-card-toggle">+</div>
         <div class="fam-tag">Impacto económico inmediato</div>
         <h3 class="fam-name">Credenciales y claves de acceso</h3>
@@ -823,7 +807,7 @@
         </div>
       </div>
 
-      <div class="fam-card reveal rd3" data-n="02" data-c="coral" style="cursor:pointer" onclick="this.classList.toggle('fam-open')">
+      <div class="fam-card reveal rd3" data-n="02" data-c="coral" style="cursor:pointer" onclick="toggleFamily(this)">
         <div class="fam-card-toggle">+</div>
         <div class="fam-tag">Impacto técnico y de usuarios</div>
         <h3 class="fam-name">Bases de datos y permisos</h3>
@@ -1027,7 +1011,7 @@
         </div>
       </div>
 
-      <div class="fam-card reveal rd4" data-n="03" data-c="jade" style="cursor:pointer" onclick="this.classList.toggle('fam-open')">
+      <div class="fam-card reveal rd4" data-n="03" data-c="jade" style="cursor:pointer" onclick="toggleFamily(this)">
         <div class="fam-card-toggle">+</div>
         <div class="fam-tag">Impacto regulatorio · RGPD</div>
         <h3 class="fam-name">Datos sensibles y privacidad</h3>
@@ -1172,7 +1156,7 @@
         </div>
       </div>
 
-      <div class="fam-card reveal rd5" data-n="04" data-c="violet" style="cursor:pointer" onclick="this.classList.toggle('fam-open')">
+      <div class="fam-card reveal rd5" data-n="04" data-c="violet" style="cursor:pointer" onclick="toggleFamily(this)">
         <div class="fam-card-toggle">+</div>
         <div class="fam-tag">Impacto operacional · transversal</div>
         <h3 class="fam-name">Configuración de entornos</h3>
@@ -1869,6 +1853,13 @@
     const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
     progressBar.style.width = (scrolled * 100) + '%';
   });
+
+  // Familias accordion — solo una abierta a la vez
+  function toggleFamily(el) {
+    const isOpen = el.classList.contains('fam-open');
+    document.querySelectorAll('.fam-card').forEach(c => c.classList.remove('fam-open'));
+    if (!isOpen) el.classList.add('fam-open');
+  }
 
   // Reveal
   const revealObs = new IntersectionObserver((entries) => {
