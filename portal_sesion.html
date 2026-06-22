@@ -1682,12 +1682,12 @@
   <div class="container">
     <div class="eyebrow reveal">Manos a la obra · Bloque 2</div>
     <h2 class="reveal rd1">El pipeline <em>en vivo</em></h2>
-    <p class="reveal rd2" style="margin-top:24px;">Lo ejecutamos sobre un proyecto real con fallos sembrados. Vemos qué encuentra, abrimos el capó, y lo adaptáis vosotros.</p>
+    <p class="reveal rd2" style="margin-top:24px;">4 agentes Claude corren en paralelo sobre un proyecto real con fallos sembrados. Vemos qué encuentran, abrimos el capó, y lo adaptáis vosotros.</p>
 
     <div class="pipeline-flow reveal rd2">
       <div class="pf-node"><div class="pf-node-t">Tu proyecto</div><div class="pf-node-s">listo para desplegar</div></div>
       <div class="pf-arrow">↓</div>
-      <div class="pf-node pf-orch"><div class="pf-node-t">Orquestador</div><div class="pf-node-s">coordina y consolida</div></div>
+      <div class="pf-node pf-orch"><div class="pf-node-t">Orquestador</div><div class="pf-node-s">lanza 4 agentes · consolida</div></div>
       <div class="pf-arrow">↓</div>
       <div class="pf-skills">
         <div class="pf-skill"><b>01</b>Credenciales y claves</div>
@@ -1699,19 +1699,30 @@
       <div class="pf-node"><div class="pf-node-t">Informe</div><div class="pf-node-s">✓ OK · △ revisar · ✗ bloquea</div></div>
     </div>
 
+    <div class="reveal rd3" style="margin:28px 0;padding:20px 24px;background:var(--bg-raised);border:1px solid var(--divider);border-left:2px solid var(--accent);">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">Cómo ejecutarlo · Claude Code</div>
+      <div style="font-family:var(--mono);font-size:13px;color:var(--ink);line-height:1.8;">
+        <span style="color:var(--ink-dim);"># 1. Abre Claude Code en la carpeta security-pipeline</span><br>
+        <span style="color:var(--ink-dim);"># 2. Lanza la auditoría sobre el repo trampa</span><br>
+        <span style="color:var(--coral);">/security-audit</span> --repo ../feedbackhub<br><br>
+        <span style="color:var(--ink-dim);"># Los 4 agentes corren en paralelo · informe en &lt;1 seg</span><br>
+        <span style="color:var(--ink-dim);"># Resultado → feedbackhub/security-report.md</span>
+      </div>
+    </div>
+
     <div class="practica-fases">
-      <div class="pfase reveal rd2"><div class="pfase-t">20'</div><div class="pfase-d">Ejecución en vivo sobre el repositorio de demostración. El impacto de ver qué encuentra.</div></div>
-      <div class="pfase reveal rd3"><div class="pfase-t">40'</div><div class="pfase-d">Abrimos el capó: orquestador, skills, cómo está construido y por qué.</div></div>
+      <div class="pfase reveal rd2"><div class="pfase-t">20'</div><div class="pfase-d">Ejecución en vivo sobre el repositorio de demostración. El impacto de ver 17 hallazgos en menos de un segundo.</div></div>
+      <div class="pfase reveal rd3"><div class="pfase-t">40'</div><div class="pfase-d">Abrimos el capó: los 4 prompts de <code style="font-size:11px;background:rgba(255,255,255,0.07);padding:2px 5px;">agents/</code>, qué busca cada agente y por qué ese reparto tiene sentido.</div></div>
       <div class="pfase reveal rd4"><div class="pfase-t">20'</div><div class="pfase-d">Lo adaptáis vosotros. Tres niveles, elegís el vuestro.</div></div>
     </div>
 
     <div class="notas-block">
       <div class="notas-label">Nota · Gestión de la heterogeneidad (riesgo clave del informe)</div>
-      <p><strong>Al abrir el capó (fase 40'), da permiso explícito:</strong> "Los que estéis cómodos con código, mirad la arquitectura. Los que no, mirad el output: qué dice el informe. Las dos lecturas son igual de válidas."</p>
-      <p><strong>Las instrucciones de la fase de adaptación van por escrito</strong> (compártelas en el chat antes de empezar). Tres opciones: A (cualquier nivel, añadir un patrón de detección), B (medio, modificar el formato del informe), C (avanzado, añadir una quinta skill).</p>
-      <p><strong>Si falla la demo:</strong> "Esto es justo lo que pasa cuando no pruebas el día antes." Ten captura de pantalla del output como fallback.</p>
+      <p><strong>Al abrir el capó (fase 40'), da permiso explícito:</strong> "Los que estéis cómodos con código, leed el prompt del agente. Los que no, mirad el output: qué dice el informe y por qué ese hallazgo es crítico. Las dos lecturas son igual de válidas."</p>
+      <p><strong>Las instrucciones de la fase de adaptación van por escrito</strong> (compártelas en el chat antes de empezar). Tres opciones: A (cualquier nivel, añadir una línea de detección al prompt de un agente), B (medio, cambiar el formato del JSON de salida), C (avanzado, escribir un quinto agente desde cero).</p>
+      <p><strong>Si falla la demo:</strong> "Esto es justo lo que pasa cuando no pruebas el día antes." Ten captura de pantalla del security-report.md como fallback.</p>
       <p><strong>Si alguien menos técnico se desconecta:</strong> pregunta de producto directa. "Veruzka, desde fintech, ¿cuál de los cuatro hallazgos te parece más crítico para un producto regulado?"</p>
-      <p><strong>Si el tiempo se escapa:</strong> no cortes la fase 1 ni la 3. Comprime la 2 (abre solo 2 skills en vez de 4).</p>
+      <p><strong>Si el tiempo se escapa:</strong> no cortes la fase 1 ni la 3. Comprime la 2 (abre solo 2 prompts de agente en vez de 4).</p>
     </div>
   </div>
 </section>
@@ -1817,6 +1828,13 @@
           <div>
             <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--accent);margin-bottom:4px;">FAMILIA 4 · PDF</div>
             <div style="font-size:13px;color:var(--ink);font-weight:500;line-height:1.3;">Configuración<br><span style="font-weight:400;color:var(--ink-dim);">Referencia profunda</span></div>
+          </div>
+        </a>
+        <a href="materiales_practica.zip" download style="display:flex;align-items:center;gap:14px;padding:18px 20px;background:var(--bg-raised);border:1px solid rgba(255,122,107,0.35);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--coral)'" onmouseout="this.style.borderColor='rgba(255,122,107,0.35)'">
+          <div style="flex-shrink:0;width:36px;height:36px;background:rgba(255,122,107,0.1);border:1px solid rgba(255,122,107,0.3);display:flex;align-items:center;justify-content:center;font-size:16px;">📦</div>
+          <div>
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--coral);margin-bottom:4px;">PRÁCTICA · ZIP</div>
+            <div style="font-size:13px;color:var(--ink);font-weight:500;line-height:1.3;">Pipeline + proyectos<br><span style="font-weight:400;color:var(--ink-dim);">feedbackhub · pipeline · dashboard</span></div>
           </div>
         </a>
       </div>
