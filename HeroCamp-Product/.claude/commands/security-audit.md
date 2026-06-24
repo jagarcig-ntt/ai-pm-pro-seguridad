@@ -30,10 +30,10 @@ Si no hay argumentos o falta `--repo`, pregunta al usuario por la ruta del repos
 
 Lanza los 4 agentes EN PARALELO con el Agent tool. Cada uno recibe como prompt el contenido de su archivo de definición MÁS la ruta del repositorio:
 
-- **Agente 1 — Credenciales y Secretos:** usa `security-pipeline/agents/family-1-credentials.md`
-- **Agente 2 — Bases de Datos y Permisos:** usa `security-pipeline/agents/family-2-database.md`
-- **Agente 3 — Datos Sensibles y Privacidad:** usa `security-pipeline/agents/family-3-privacy.md`
-- **Agente 4 — Configuración y Entornos:** usa `security-pipeline/agents/family-4-configuration.md`
+- **Agente 1 — Credenciales y Secretos:** usa `.claude/agents/family-1-credentials.md`
+- **Agente 2 — Bases de Datos y Permisos:** usa `.claude/agents/family-2-database.md`
+- **Agente 3 — Datos Sensibles y Privacidad:** usa `.claude/agents/family-3-privacy.md`
+- **Agente 4 — Configuración y Entornos:** usa `.claude/agents/family-4-configuration.md`
 
 Añade al final de cada prompt: "Repositorio a analizar: [REPO_PATH]. Comienza listando el directorio raíz."
 
@@ -42,20 +42,27 @@ Después ve al PASO 3.
 **PASO 2B — Modo familia por familia (opción B o `--family <N>`):**
 
 Lanza UNO de los agentes según el número de familia:
-- 1 → `security-pipeline/agents/family-1-credentials.md`
-- 2 → `security-pipeline/agents/family-2-database.md`
-- 3 → `security-pipeline/agents/family-3-privacy.md`
-- 4 → `security-pipeline/agents/family-4-configuration.md`
+- 1 → `.claude/agents/family-1-credentials.md`
+- 2 → `.claude/agents/family-2-database.md`
+- 3 → `.claude/agents/family-3-privacy.md`
+- 4 → `.claude/agents/family-4-configuration.md`
 
 Muestra los hallazgos de esa familia nada más terminar.
 
 Si el usuario eligió opción B (no `--family` directo), pregunta después: "¿Continúo con la siguiente familia o prefieres parar aquí?" Repite hasta que el usuario decida parar o se completen las 4 familias.
 
-Al final, si se analizaron más de una familia, ve al PASO 3 con los resultados acumulados.
+Tras cada familia analizada (o al finalizar la secuencia si el usuario para antes), **siempre ve al PASO 3** con los resultados acumulados hasta ese momento.
 
 **PASO 3 — Consolidar resultados:**
 
-Cuando todos los agentes terminen, cada uno habrá devuelto un JSON con sus hallazgos. Consolida todos los findings y genera el informe final.
+Cuando los agentes terminen, cada uno habrá devuelto un JSON con sus hallazgos. Consolida los findings de todas las familias analizadas (1 o más) y genera el informe.
+
+Determina el nombre del archivo de salida:
+- Si se analizaron las 4 familias → `security-report.md`
+- Si se analizó solo la familia N → `security-report-f[N].md` (ej: `security-report-f1.md`)
+- Si se analizaron varias pero no todas → `security-report-f[N1]-f[N2].md` (ej: `security-report-f1-f2.md`)
+
+En el encabezado del informe indica siempre qué familias cubre: "Auditoría completa (4 familias)" o "Auditoría parcial — Familia 2: Base de datos".
 
 ## Formato del informe final
 
@@ -66,13 +73,17 @@ Genera el informe en Markdown con esta estructura:
 ```markdown
 # Informe de Seguridad — [Nombre del proyecto]
 
-> Auditado el [fecha] por 4 agentes IA especializados (HeroCamp Security Pipeline)
+> Auditado el [fecha] · [Auditoría completa (4 familias) | Auditoría parcial — Familia N: Nombre]
+> HeroCamp Security Pipeline
 
 ---
 
 ## ¿Puedo desplegar este proyecto?
 
 ### ❌ NO DESPLEGAR / ⚠️ REVISAR PRIMERO / ✅ LISTO PARA DESPLEGAR
+
+> ⚠️ **Nota**: este informe cubre solo [N] de 4 familias. Una auditoría parcial no garantiza que el resto del proyecto esté libre de problemas.
+> *(Elimina esta nota si el informe es completo)*
 
 **Resumen en una línea**: [frase que un CEO entendería]
 
@@ -131,9 +142,10 @@ Para cada hallazgo dentro de las secciones, usa este formato orientado a negocio
 ```
 
 **PASO 4 — Guardar el informe:**
-- Guarda el informe como `security-report.md` dentro del repositorio auditado
-- Muestra el informe completo
-- Indica el path donde se guardó
+- Guarda el informe con el nombre determinado en el PASO 3 (`security-report.md`, `security-report-f1.md`, etc.) dentro del repositorio auditado
+- Muestra el informe completo en pantalla
+- Indica el path exacto donde se guardó y qué familias cubre
+- Si el informe es parcial, añade al final: "Para una auditoría completa ejecuta: `/security-audit --repo [ruta]`"
 
 ## Criterio de recomendación
 

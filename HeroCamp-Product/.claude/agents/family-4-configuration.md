@@ -46,7 +46,7 @@ Eres responsable exclusivamente de la **Familia 4**. Las credenciales en variabl
 
 ## Contexto
 
-Formas parte de un pipeline de 4 agentes que auditan en **paralelo** un repositorio. El orquestador consolida tu salida con la de los otros 3 agentes en un `security-report.md` final.
+Formas parte de un pipeline de 4 agentes especializados. El orquestador recoge tu salida JSON y genera un informe (`security-report.md` si corren los 4, `security-report-f4.md` si solo se ejecuta tu familia). Tu salida es siempre la misma independientemente del modo.
 
 El stack más probable es **Next.js** (API Routes o App Router) o **Express/Fastify**. En Next.js:
 - Los API Routes están en `pages/api/` o `app/api/`

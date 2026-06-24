@@ -1392,20 +1392,20 @@
       <div class="quiz-q" id="q1-1">
         <div class="quiz-q-header">
           <div class="quiz-q-num">F01 · 1 / 4</div>
-          <div class="quiz-q-text">Subiste una clave a GitHub por error hace una hora. ¿Cuánto tiempo tienes?</div>
+          <div class="quiz-q-text">Vuestra app usa una clave de API de Stripe. El proyecto está desplegado en Cloudflare Pages. ¿Dónde debe vivir esa clave?</div>
         </div>
         <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Días</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Horas</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">C</span>Minutos</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende del repo</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>En el .env commiteado al repositorio</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Hardcodeada en el código con un nombre de variable genérico</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">C</span>Como Secret en Cloudflare Pages, nunca en el repositorio</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>En un archivo de configuración separado, fuera del código</div>
         </div>
         <div class="quiz-reveal-row">
           <button class="quiz-btn" onclick="revealAnswer('q1-1')">Revelar</button>
           <button class="quiz-btn-reset" onclick="resetQuestion('q1-1')">Reiniciar</button>
         </div>
         <div class="quiz-explanation" id="exp-q1-1">
-          <p><strong>C · minutos.</strong> Bots monitorizan GitHub en tiempo real. Caso documentado: 4 minutos desde el commit hasta la explotación. No hay margen de reacción, solo prevención.</p>
+          <p><strong>C.</strong> Los Secrets son la versión de producción del .env. Cloudflare, Vercel y similares guardan la clave cifrada en la plataforma e inyectan en la app al arrancar. La clave nunca toca el repositorio. A y D son trampas: el archivo sigue en el repo. B es el peor caso: visible para cualquiera.</p>
         </div>
       </div>
       <div class="quiz-q" id="q1-2">
@@ -1529,20 +1529,20 @@
       <div class="quiz-q" id="q2-4">
         <div class="quiz-q-header">
           <div class="quiz-q-num">F02 · 4 / 4</div>
-          <div class="quiz-q-text">¿Qué necesita un atacante para comprobar si tu base de datos está expuesta?</div>
+          <div class="quiz-q-text">La anon key de Supabase está diseñada para estar visible en el JavaScript del navegador. ¿Eso es un riesgo de seguridad?</div>
         </div>
         <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Credenciales robadas</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Solo la URL y la anon key</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Acceso a tu dashboard</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Herramienta de pentesting</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Sí siempre: ninguna clave debería ser pública</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>No si RLS está bien configurado: la clave es pública, los datos no</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo si alguien inspecciona el código fuente</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende de si el repositorio es privado</div>
         </div>
         <div class="quiz-reveal-row">
           <button class="quiz-btn" onclick="revealAnswer('q2-4')">Revelar</button>
           <button class="quiz-btn-reset" onclick="resetQuestion('q2-4')">Reiniciar</button>
         </div>
         <div class="quiz-explanation" id="exp-q2-4">
-          <p><strong>B.</strong> La anon key está visible en el JavaScript de cualquier app. Con ella y la URL estándar de Supabase, un curl simple vuelca la tabla si no hay RLS.</p>
+          <p><strong>B.</strong> La anon key puede ser pública por diseño: identifica el proyecto pero no da acceso a los datos. RLS es lo que decide qué puede ver alguien con esa clave. Sin RLS, la clave pública da acceso a todo. Con RLS bien configurado, solo da acceso a lo que el usuario tiene permitido.</p>
         </div>
       </div>
     </div>
@@ -1590,39 +1590,39 @@
       <div class="quiz-q" id="q3-3">
         <div class="quiz-q-header">
           <div class="quiz-q-num">F03 · 3 / 4</div>
-          <div class="quiz-q-text">Un desarrollador pega emails de clientes en ChatGPT para limpiar el formato. ¿Qué pasa?</div>
+          <div class="quiz-q-text">Vuestra app usa un modelo de IA externo para generar resúmenes de conversaciones de soporte. Esas conversaciones contienen nombres y emails de clientes. ¿Qué problema legal puede tener esto?</div>
         </div>
         <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Nada, ChatGPT no guarda nada</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Transfiere datos personales sin permiso</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Depende de los términos de OpenAI</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Nada si borra la conversación</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Ninguno: los datos ya están en vuestro sistema, no salís del entorno</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Estáis transfiriendo datos personales a un tercero sin que el usuario haya consentido</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo hay problema si el proveedor de IA tiene servidores fuera de Europa</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende del tamaño de la empresa</div>
         </div>
         <div class="quiz-reveal-row">
           <button class="quiz-btn" onclick="revealAnswer('q3-3')">Revelar</button>
           <button class="quiz-btn-reset" onclick="resetQuestion('q3-3')">Reiniciar</button>
         </div>
         <div class="quiz-explanation" id="exp-q3-3">
-          <p><strong>B.</strong> La transferencia en sí puede ser incumplimiento del RGPD. Los usuarios no consintieron que sus datos fueran a un proveedor externo.</p>
+          <p><strong>B.</strong> Los usuarios consintieron que sus datos estuvieran en vuestro sistema. No consintieron que viajaran a un proveedor de IA externo. Esto no impide usar IA: hay que declararlo en la política de privacidad, elegir proveedores con los acuerdos adecuados y, en algunos casos, obtener consentimiento explícito.</p>
         </div>
       </div>
       <div class="quiz-q" id="q3-4">
         <div class="quiz-q-header">
           <div class="quiz-q-num">F03 · 4 / 4</div>
-          <div class="quiz-q-text">Descubres hoy que tu staging tuvo datos reales durante tres semanas. ¿Cuánto tiempo tienes para notificar a la AEPD?</div>
+          <div class="quiz-q-text">Detectáis que datos de usuarios han estado expuestos sin las protecciones adecuadas. ¿Cuánto tiempo tenéis para notificar a la autoridad de protección de datos?</div>
         </div>
         <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Un mes</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Una semana</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">C</span>72 horas desde ahora</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Sin obligación si no hubo ataque</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>30 días desde que ocurrió</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>72 horas desde que lo detectáis</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo si hay más de 100 afectados</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Sin obligación si no hubo un ataque externo activo</div>
         </div>
         <div class="quiz-reveal-row">
           <button class="quiz-btn" onclick="revealAnswer('q3-4')">Revelar</button>
           <button class="quiz-btn-reset" onclick="resetQuestion('q3-4')">Reiniciar</button>
         </div>
         <div class="quiz-explanation" id="exp-q3-4">
-          <p><strong>C.</strong> El reloj empieza cuando tienes constancia, no cuando ocurrió. D es incorrecto: la exposición sin protecciones adecuadas ya es brecha aunque no haya habido ataque.</p>
+          <p><strong>B.</strong> 72 horas desde que tenéis constancia, no desde que ocurrió. D es la trampa más común: la exposición sin protecciones adecuadas ya es brecha notificable aunque no haya habido ataque. C también es trampa: el RGPD no tiene umbral mínimo de afectados.</p>
         </div>
       </div>
     </div>
@@ -1670,24 +1670,20 @@
       <div class="quiz-q" id="q4-3">
         <div class="quiz-q-header">
           <div class="quiz-q-num">F04 · 3 / 4</div>
-          <div class="quiz-q-text">Tu app lleva seis meses en producción. ¿Sabes qué endpoints expone además de los que tú creaste?</div>
+          <div class="quiz-q-text">El agente crea un endpoint /api/debug durante el desarrollo que muestra logs internos del servidor. El proyecto se despliega sin eliminarlo. ¿Qué riesgo tiene?</div>
         </div>
         <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Sí, los reviso siempre</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Solo los que están en mi código</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Probablemente hay otros que no conozco</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Los del README</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Ninguno: solo los desarrolladores conocen esa URL</div>
+          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Cualquiera que la encuentre puede ver información interna de la aplicación</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Es un riesgo solo si la app tiene muchos usuarios</div>
+          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Se desactiva automáticamente en modo producción</div>
         </div>
         <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q4-3', true)">Revelar</button>
+          <button class="quiz-btn" onclick="revealAnswer('q4-3')">Revelar</button>
           <button class="quiz-btn-reset" onclick="resetQuestion('q4-3')">Reiniciar</button>
         </div>
         <div class="quiz-explanation" id="exp-q4-3">
-          <p><strong>Pregunta de debate.</strong> Los frameworks exponen endpoints por defecto que no están en tu código: /health, /api-docs, /actuator. ¿Alguien ha encontrado uno que no sabía que tenía?</p>
-        </div>
-        <div class="quiz-debate">
-          <div class="quiz-debate-label">Para el debate</div>
-          <p>¿Alguien ha encontrado alguna vez un endpoint expuesto que no sabía que tenía?</p>
+          <p><strong>B.</strong> A es "seguridad por oscuridad": asumir que nadie encontrará algo porque no está anunciado. Los atacantes tienen listas de rutas comunes (/debug, /api-docs, /swagger, /actuator) y las prueban sistemáticamente. D es otra trampa: el modo producción no elimina endpoints, solo cambia el entorno.</p>
         </div>
       </div>
       <div class="quiz-q" id="q4-4">
@@ -1715,7 +1711,7 @@
       <div class="notas-label">Nota · Uso del quiz en clase</div>
       <p><strong>Mecánica:</strong> pregunta en voz alta, responden A/B/C/D en el chat de Zoom, lees algunas, pulsas Revelar cuando el debate esté listo.</p>
       <p><strong>Sin respuesta incorrecta pública.</strong> La explicación corrige sin nombrar. Objetivo: activar intuición, no evaluar.</p>
-      <p><strong>F04 P3 es de debate</strong> sin respuesta mala. Úsala para arrancar el Bloque 3.</p>
+      <p>Todas las preguntas tienen respuesta correcta definida. El objetivo es reforzar conceptos, no evaluar.</p>
     </div>
   </div>
 </section>
