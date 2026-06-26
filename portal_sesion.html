@@ -497,9 +497,8 @@
     <a href="#quien">Quién</a>
     <a href="#impacto">Impacto</a>
     <a href="#familias">Las 4 familias</a>
-    <a href="#dinamicas">Quiz previo</a>
+    <a href="#dinamicas">Quiz</a>
     <a href="#practica">Práctica</a>
-    <a href="#debate">Debate</a>
     <a href="#cierre">Cierre</a>
   </nav>
   <div class="header-meta">AI PM PRO · 26 JUN</div>
@@ -552,7 +551,7 @@
           <div class="ent-detail-inner">
             <p>No son apuntes de clase. Es un documento pensado para tenerlo abierto el día que vayas a desplegar algo a producción.</p>
             <div class="ent-items">
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Resumen de las cuatro familias</strong> con sus mecanismos y casos reales, en formato de referencia rápida.</span></div>
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Resumen de las cuatro familias</strong> con sus mecanismos y principios, en formato de referencia rápida.</span></div>
               <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Checklist previo al despliegue</strong>: las comprobaciones que debes hacer antes de cada push a producción, ordenadas por familia.</span></div>
               <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Preguntas de auditoría</strong> para revisar el trabajo del agente: qué buscar, cómo verificarlo, qué hacer si lo encuentras.</span></div>
               <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Sin jerga innecesaria.</strong> Pensado para un PM Senior, no para un equipo de seguridad.</span></div>
@@ -563,16 +562,16 @@
       <div class="ent-card reveal rd3" onclick="this.classList.toggle('open')">
         <span class="ent-toggle">+</span>
         <div class="ent-num">ENTREGABLE 02</div>
-        <h3 class="ent-title">Pipeline de agentes</h3>
-        <p class="ent-desc">Un sistema en Claude Code que audita tu código automáticamente y te dice dónde tienes problemas.</p>
+        <h3 class="ent-title">Agentes de seguridad</h3>
+        <p class="ent-desc">Cuatro agentes especializados en Claude Code que auditan tu repositorio en paralelo y generan un informe de despliegue.</p>
         <div class="ent-detail">
           <div class="ent-detail-inner">
-            <p>Lo construimos juntos en directo durante el Bloque 2. Al terminar la sesión te lo llevas funcionando y puedes ejecutarlo sobre cualquier proyecto tuyo.</p>
+            <p>Al terminar la sesión te lo llevas funcionando. Un comando sobre cualquier proyecto tuyo y tienes el informe.</p>
             <div class="ent-items">
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Un orquestador</strong> que coordina cuatro agentes especializados en paralelo y consolida el resultado.</span></div>
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Cuatro skills</strong>: una por familia de riesgo. Cada una audita un vector específico de tu código.</span></div>
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Informe legible</strong>: no es output técnico, es un documento con hallazgos priorizados y acciones concretas.</span></div>
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Se ejecuta con un comando</strong> sobre cualquier repositorio. No hace falta configuración extra.</span></div>
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Cuatro agentes especializados</strong>: credenciales, base de datos, privacidad y configuración. Corren en paralelo.</span></div>
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Informe de despliegue</strong>: ¿puedo desplegar? Hallazgos priorizados por severidad con acción concreta para cada uno.</span></div>
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Adaptable</strong>: los prompts de los agentes son archivos de texto que puedes leer, modificar y extender.</span></div>
+              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Modo familia</strong>: puedes auditar las 4 familias o solo la que te interesa con <code style="font-size:11px;">--family 2</code>.</span></div>
             </div>
           </div>
         </div>
@@ -643,7 +642,7 @@
             <p>El día 12 tenían una factura de <strong>82.314 dólares</strong>. Google aplicó el modelo de responsabilidad compartida: la infraestructura era segura, la clave la gestionaba el cliente. Sin perdón, sin devolución.</p>
             <p>El bot tardó <strong>4 minutos</strong> desde el commit hasta el primer uso de la clave. No hay margen de reacción: o se previene o se paga.</p>
             <div class="dato-personal">
-              <div class="dato-personal-label">Me pasó a mí</div>
+              <div class="dato-personal-label">Contexto</div>
               <p>"He subido el .env a GitLab. No una vez, varias. Siempre igual: tenía prisa, había probado que funcionaba, hice git add . sin pensar. No fue negligencia. Fue que a esa velocidad el check mental simplemente no ocurre."</p>
             </div>
           </div>
@@ -1866,7 +1865,7 @@
 <!-- DEBATE -->
 <section id="debate">
   <div class="container">
-    <div class="eyebrow reveal">Abrimos el micro · Bloque 3</div>
+    <div class="eyebrow reveal">Para terminar</div>
     <h2 class="reveal rd1">Cuándo el pipeline <em>no basta</em></h2>
     <p class="reveal rd2" style="margin-top:24px;">Hay situaciones donde la herramienta no llega y necesitas a un profesional. Salid con el criterio para reconocerlas.</p>
     <div class="debate-box reveal rd2">
