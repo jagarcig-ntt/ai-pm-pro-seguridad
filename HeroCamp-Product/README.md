@@ -1,278 +1,179 @@
-# 🔒 Pipeline de Auditoría de Seguridad
+# Pipeline de Seguridad — Guía de uso para alumnos
 
-Una herramienta que audita tu repositorio en busca de las 4 vulnerabilidades más comunes en proyectos construidos con IA.
-
-**Tiempo de ejecución**: <1 segundo  
-**Dependencias**: Ninguna (excepto Node.js 18+)  
-**Output**: Informe Markdown claro y accionable
+> HeroCamp · AI PM Pro · Sesión de Seguridad para Agentes IA
 
 ---
 
-## Instalación rápida
+## Qué es esto
 
-```bash
-# Opción 1: Clonar y ejecutar localmente
-git clone <repo-url> security-pipeline
-cd security-pipeline
-npm install
-npm run build
+Cuatro agentes IA especializados que auditan tu repositorio en busca de los errores de seguridad más frecuentes cuando se construye con Claude Code.
 
-# Opción 2: npx directo (después de publicar a npm)
-npx audit-security --repo ./mi-proyecto
-```
+Cada agente cubre una familia de riesgo:
 
----
-
-## Uso
-
-### En VSCode (recomendado para PMs)
-
-1. Abre tu proyecto en VSCode
-2. Abre terminal integrada: `Ctrl+` ` (backtick)
-3. Ejecuta:
-   ```bash
-   node /ruta/al/pipeline/dist/index.js --repo .
-   ```
-4. Se genera `security-report.md` en la raíz de tu proyecto
-5. Abre el archivo y léelo en el editor
-
-### Desde línea de comandos
-
-```bash
-# Auditar tu proyecto
-node dist/index.js --repo ./mi-proyecto
-
-# Guardar en archivo específico
-node dist/index.js --repo ./mi-proyecto --output mi-reporte.md
-
-# JSON para procesar programáticamente
-node dist/index.js --repo ./mi-proyecto --json
-```
+| # | Familia | Qué detecta | Consecuencia si no se revisa |
+|---|---------|-------------|------------------------------|
+| 1 | Credenciales | API keys en código, .env commiteado, secretos en historial Git | Factura inesperada, cuenta comprometida |
+| 2 | Base de datos | RLS desactivado en Supabase, service_role en cliente | Datos de usuarios expuestos sin alerta |
+| 3 | Datos sensibles | PII en archivos de test, logs que guardan datos de usuarios | Multa RGPD, brecha notificable en 72h |
+| 4 | Configuración | CORS wildcard, endpoints de debug en producción, headers ausentes | Acceso silencioso durante meses |
 
 ---
 
-## Lo que detecta
+## Cómo ejecutarlo
 
-### 🔑 Familia 1: Credenciales y Secretos
-- API keys hardcodeadas (Google, OpenAI, AWS, etc.)
-- Archivos `.env` commiteados
-- Cadenas de conexión con contraseñas
-- Claves en historial de Git
+### Desde Claude Code (recomendado)
 
-**Riesgo**: Factura de $82.000+ en 48 horas si se expone una clave
+Abre Claude Code en la carpeta de este proyecto y escribe:
+
+```
+/security-audit --repo ./ruta-a-tu-proyecto
+```
+
+El orquestador te preguntará si quieres auditoría completa (4 agentes en paralelo) o familia por familia.
+
+### Auditoría completa
+
+```
+/security-audit --repo ./mi-proyecto
+→ Elige opción A
+→ Genera: mi-proyecto/security-report.md
+```
+
+### Solo una familia
+
+```
+/security-audit --repo ./mi-proyecto --family 1
+→ Genera: mi-proyecto/security-report-f1.md
+```
+
+Útil cuando ya tienes el informe completo y quieres volver a revisar una familia concreta después de arreglar algo.
 
 ---
 
-### 🗄️ Familia 2: Bases de Datos y Permisos
-- Tablas Supabase sin RLS (Row Level Security)
-- Service role key en código de cliente
-- Vistas con `SECURITY DEFINER` mal configuradas
+## El informe
 
-**Riesgo**: Cualquiera puede leer TODOS tus datos de usuario
+El pipeline genera un archivo Markdown en la raíz de tu proyecto auditado. Está escrito para que lo entienda un PM, no un equipo técnico.
 
----
+**Estructura del informe:**
 
-### 👤 Familia 3: Datos Sensibles y Privacidad
-- PII real en código/fixtures (emails, IPs, teléfonos)
-- `console.log(user)` que registra datos personales
-- Ausencia de política de privacidad
+1. **¿Puedo desplegar?** — respuesta inmediata: ✅ / ⚠️ / ❌
+2. **Lo más urgente** — hallazgos críticos con impacto de negocio y tiempo estimado de resolución
+3. **Hallazgos por área** — desglose por familia con ubicación exacta y acción concreta
+4. **Plan de acción** — esta semana / antes del siguiente sprint / a medio plazo
 
-**Riesgo**: Multa RGPD de hasta 20 millones de euros
+**Si el informe dice NO DESPLEGAR:** hay al menos un hallazgo crítico explotable ahora mismo. No es una advertencia teórica.
 
 ---
 
-### ⚙️ Familia 4: Configuración de Entornos
-- CORS configurado con `*` (acepta cualquier origen)
-- Endpoints sin autenticación (`/admin`, `/debug`)
-- Headers de seguridad ausentes
-- Variables de entorno con defaults inseguros
+## Cómo interpretar la severidad
 
-**Riesgo**: Acceso no autorizado a endpoints críticos
-
----
-
-## Entender el informe
-
-```markdown
-# 🔒 Informe de Seguridad
-
-**Resumen Ejecutivo**
-❌ **10 hallazgos CRÍTICOS** → Bloquean despliegue
-⚠️  **5 hallazgos ALTOS** → Revisar antes de desplegar
-🔶 **2 hallazgos MEDIOS** → Arreglar pronto
-
-**Recomendación**: ❌ NO DESPLEGAR HASTA RESOLVER
-```
-
-### Cómo leer cada hallazgo
-
-```markdown
-❌ **[CRITICAL]** Google API Key hardcodeada
-- **Ubicación**: config.js:2
-- **Por qué importa**: La clave está visible. Cualquiera puede usarla.
-- **Qué hacer**: Mueve la clave a una variable de entorno.
-```
-
-Prioridades:
-1. **CRÍTICOS** → Arregla AHORA
-2. **ALTOS** → Arregla esta semana
-3. **MEDIOS** → Arregla cuando tengas tiempo
+| Nivel | Qué significa | ¿Bloquea el deploy? |
+|-------|---------------|---------------------|
+| 🔴 Crítico | Explotable en minutos por cualquiera con acceso al repo | Sí |
+| 🟠 Alto | Riesgo real, debe resolverse antes de lanzar | Sí |
+| 🟡 Medio | Mejora recomendada, no bloquea | No |
 
 ---
 
-## Próximos pasos típicos
+## Qué hacer cuando el pipeline encuentra algo
 
-### Si el informe dice "NO DESPLEGAR"
+### Familia 1 — Credencial expuesta
 
-1. **Abre el informe** (`security-report.md`)
-2. **Enfócate en CRÍTICOS** (ignora MEDIOS por ahora)
-3. **Por cada hallazgo**:
-   - Lee "Por qué importa" (entender el riesgo)
-   - Sigue "Qué hacer" (pasos concretos)
-   - Ejecuta los pasos
-4. **Vuelve a ejecutar el pipeline**:
-   ```bash
-   node dist/index.js --repo .
-   ```
-5. **Repite** hasta que el informe diga "DESPLIEGUE SEGURO"
+1. **Rota la clave inmediatamente** en el panel del proveedor (OpenAI, Stripe, Google...). No investigues primero.
+2. Añade `.env` a `.gitignore` si no está.
+3. Mueve la clave a los Secrets de tu plataforma de deploy (Cloudflare Pages, Vercel, GitHub Actions).
 
-### Si el informe dice "REVISAR ANTES DE DESPLEGAR"
+### Familia 2 — RLS desactivado
 
-- Tienes hallazgos ALTOS pero sin CRÍTICOS
-- Arregla los ALTOS antes de hacer push a producción
-- Los MEDIOS pueden esperar
+1. Activa RLS en la tabla afectada desde el panel de Supabase → Table Editor → RLS.
+2. Verifica que la política filtra por usuario real, no `USING (true)` (que permite todo).
+3. Comprueba que la `service_role` key no aparece en código de cliente (frontend).
 
-### Si el informe dice "DESPLIEGUE SEGURO"
+### Familia 3 — Datos reales o logs con PII
 
-- ✅ Estás listo para producción
-- Aún así, revisa que los MEDIOS se solucionen pronto
-- Ejecuta el pipeline regularmente (cada semana, cada mes)
+1. Sustituye los datos reales en archivos de test por datos sintéticos (`user@example.com`, nombres ficticios).
+2. Elimina los logs que imprimen el objeto completo del usuario antes del siguiente commit.
+3. Si los datos reales ya están en el historial Git, trátalo como una brecha: evalúa si notificar.
+
+### Familia 4 — Configuración insegura
+
+1. Cambia el CORS wildcard (`*`) por la lista exacta de dominios permitidos.
+2. Elimina o protege con autenticación los endpoints de debug antes del deploy.
+3. Revisa que las variables de entorno de producción fallen ruidosamente si falta alguna crítica.
 
 ---
 
-## Ejemplos de correcciones rápidas
+## Cómo adaptar los agentes a tu stack
 
-### Fallo: API key hardcodeada
+Los agentes son archivos de texto en `.claude/agents/`. Puedes abrirlos, leerlos y modificarlos.
 
-**Antes** (❌ MAL):
-```javascript
-const GEMINI_API_KEY = "AIzaSyD-9tSrke72...";
-```
+**Casos frecuentes de personalización:**
 
-**Después** (✅ BIEN):
-```javascript
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-// En .env: GEMINI_API_KEY=AIzaSyD-9tSrke72...
-// Y en .gitignore: .env
-```
+**Añadir un patrón de credencial que el agente no detecta:**
+Abre `.claude/agents/family-1-credentials.md`, localiza la sección "Proceso de trabajo" y añade el prefijo de la clave que quieres buscar bajo el paso de Grep.
 
----
+**Ajustar qué tablas de Supabase revisa el agente de base de datos:**
+Abre `.claude/agents/family-2-database.md` y añade en el contexto el nombre de las tablas críticas de tu proyecto para que el agente las priorice.
 
-### Fallo: Tabla sin RLS
-
-**Antes** (❌ MAL):
-```sql
-CREATE TABLE users (
-  id UUID PRIMARY KEY,
-  email TEXT NOT NULL
-);
-```
-
-**Después** (✅ BIEN):
-```sql
-CREATE TABLE users (
-  id UUID PRIMARY KEY,
-  email TEXT NOT NULL
-);
-
-ALTER TABLE users ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Users can see their own data"
-ON users
-FOR SELECT
-USING (auth.uid() = id);
-```
-
----
-
-### Fallo: console.log de usuario
-
-**Antes** (❌ MAL):
-```javascript
-console.log("Usuario:", req.user);
-```
-
-**Después** (✅ BIEN):
-```javascript
-console.log("Usuario autenticado con ID:", req.user.id);
-```
-
----
-
-### Fallo: CORS wildcard
-
-**Antes** (❌ MAL):
-```javascript
-app.use(cors({ origin: '*' }));
-```
-
-**Después** (✅ BIEN):
-```javascript
-app.use(cors({
-  origin: ['https://tundominio.com', 'https://app.tundominio.com']
-}));
-```
+**Cambiar el idioma del informe:**
+El orquestador (`.claude/commands/security-audit.md`) genera el informe en español. Si trabajas con un equipo angloparlante, puedes pedir al final del archivo que genere en inglés.
 
 ---
 
 ## Preguntas frecuentes
 
-**P: ¿Por qué dice que mi .env está mal si está en .gitignore?**  
-R: Porque Git ya has commiteado. Aunque lo pongas en .gitignore ahora, sigue en el historial. Solución: `git rm --cached .env && git commit -m "Remove .env from tracking"`
+**¿Puedo ejecutarlo en cualquier repositorio, no solo los del curso?**
+Sí. Funciona en cualquier proyecto que tengas en local. Pasa la ruta relativa o absoluta con `--repo`.
 
-**P: ¿Qué pasa si mi tabla de Supabase sí tiene RLS pero el pipeline dice que no?**  
-R: El pipeline busca `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` en el SQL. Si activaste RLS a través del dashboard de Supabase, no aparecerá en tu código SQL. Solución: Añade la línea SQL al archivo `schema.sql` para que el pipeline la detecte.
+**¿Los agentes ven mis datos o los envían a algún sitio?**
+Los agentes leen tu código local con las mismas herramientas que usas tú en Claude Code. El análisis se procesa en el contexto de tu sesión de Claude Code y no se almacena fuera de ella.
 
-**P: ¿Es obligatorio arreglar todos los hallazgos antes de desplegar?**  
-R: Los CRÍTICOS sí. Los ALTOS deberían arreglarse antes de ir a producción. Los MEDIOS pueden esperar pero hazlo pronto.
+**¿Cada cuánto debo ejecutarlo?**
+Como mínimo antes de cada despliegue a producción. Idealmente lo integras como un paso habitual: codeas, revisas con el pipeline, despliegas.
 
-**P: ¿Puedo ignorar algunos hallazgos?**  
-R: Solo si tienes razones muy específicas. Documéntalo y avisa al equipo. Mejor: usa el pipeline regularmente para reducir deuda de seguridad.
+**El agente encontró algo que creo que es un falso positivo. ¿Qué hago?**
+Lee la evidencia que reporta (archivo + línea). Si confirmas que es falso positivo, puedes añadir una nota en el contexto del agente correspondiente para que lo ignore en futuras ejecuciones.
 
----
-
-## Recursos adicionales
-
-- **Guía completa de seguridad**: `../TheHeroCamp/Entregables/guia_seguridad_alumnos.md`
-- **Bloques teóricos profundos**: `../TheHeroCamp/Bloque Teorico/familia*_profundo.md`
-- **Supabase RLS docs**: https://supabase.com/docs/guides/database/postgres/row-level-security
-- **OWASP Top 10**: https://owasp.org/Top10/
+**¿Qué pasa si tengo un proyecto que no usa Supabase?**
+Las familias 1, 3 y 4 funcionan con cualquier stack. La familia 2 está optimizada para Supabase pero detecta patrones generales de base de datos que aplican a cualquier proyecto.
 
 ---
 
-## Reportar problemas
+## Referencia rápida de comandos
 
-Si el pipeline detecta algo que crees que está bien, o no detecta algo que debería detectar:
+```bash
+# Auditoría completa (recomendado antes de cada deploy)
+/security-audit --repo ./mi-proyecto
 
-1. Crea un issue en el repositorio
-2. Include:
-   - Tu `security-report.md`
-   - Snippet del código que lo causa
-   - Por qué crees que está incorrecto
+# Solo credenciales
+/security-audit --repo ./mi-proyecto --family 1
 
----
+# Solo base de datos
+/security-audit --repo ./mi-proyecto --family 2
 
-## Para desarrolladores
+# Solo datos sensibles y privacidad
+/security-audit --repo ./mi-proyecto --family 3
 
-¿Quieres modificar o extender el pipeline?
-
-- Lee `CLAUDE.md` (documentación técnica)
-- Modifica las skills en `/src/skills/skill-*/index.ts`
-- Ajusta patrones regex según necesites
-- Ejecuta `npm run build` y testea contra tu repositorio
+# Solo configuración
+/security-audit --repo ./mi-proyecto --family 4
+```
 
 ---
 
-**Última actualización**: 18 de junio de 2026  
-**Sesión**: AI PM Pro · The Hero Camp  
-**Versión**: 1.0.0
+## Archivos de este pipeline
+
+```
+.claude/
+├── commands/
+│   └── security-audit.md     ← El orquestador. Define el flujo completo.
+└── agents/
+    ├── family-1-credentials.md    ← Agente de credenciales
+    ├── family-2-database.md       ← Agente de base de datos
+    ├── family-3-privacy.md        ← Agente de privacidad y RGPD
+    └── family-4-configuration.md  ← Agente de configuración
+```
+
+---
+
+*HeroCamp · AI PM Pro · Sesión de Seguridad para Agentes IA*
+*Para dudas o problemas: abre un issue en el repositorio del curso*

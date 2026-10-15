@@ -1,4 +1,4 @@
-# 🎬 GUION COMPLETO - Sesión "Seguridad y Buenas Prácticas con IA"
+# 🎬 Sesión "Seguridad y Buenas Prácticas con IA"
 
 **3 HORAS SEGUIDAS (17:00-20:00). Todo el mismo día. Pedagógico. Para PMs poco tech.**
 
@@ -177,7 +177,7 @@ node dist/index.js --repo ../HeroCamp-Product/feedbackhub  # ✅ Test rápido
 
 **Tú (en cámara, serio pero cálido):**
 
-> "Aquí viene lo importante. Esto que vais a aprender hoy no es 'si no hacéis esto, faillais.' Es 'si no tenéis defensas automáticas, va a pasar.'
+> "Aquí viene lo importante. Esto que vais a aprender hoy no es 'si no hacéis esto, fallais.' Es 'si no tenéis defensas automáticas, va a pasar.'
 >
 > No confíeis en vuestro check mental cuando estáis apurados. Confiad en herramientas.
 >
