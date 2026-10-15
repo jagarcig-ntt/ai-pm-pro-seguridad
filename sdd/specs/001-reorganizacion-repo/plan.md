@@ -1,6 +1,6 @@
 # PLAN · SPEC-001 · Reorganización del repo por sesiones + hub de portales
 
-*Spec: [spec.md](spec.md) (v2) · Estado del plan: borrador v2*
+*Spec: [spec.md](spec.md) (v2) · Estado del plan: aprobado v2 (15-oct) · [tasks](tasks.md)*
 
 ## 1. Enfoque
 1. **Congelar junio con un tag** (`sesion-2026-06`). Es la única copia de archivo, y no hay duplicados en carpetas.

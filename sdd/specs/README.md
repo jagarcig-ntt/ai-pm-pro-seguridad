@@ -5,7 +5,7 @@ Fuente de verdad del estado de cada spec. La actualizan los comandos `/sdd-*`.
 | Spec | Título | Sesión | Fecha límite | Estado |
 |---|---|---|---|---|
 | [SPEC-000](000-constitution-sdd/spec.md) | Constitution, templates y comandos SDD | infra | 2026-10-19 | en curso |
-| [SPEC-001](001-reorganizacion-repo/spec.md) | Reorganización del repo por sesiones + hub de portales ([plan](001-reorganizacion-repo/plan.md)) | infra | 2026-10-19 | borrador v2 · plan v2 en borrador |
+| [SPEC-001](001-reorganizacion-repo/spec.md) | Reorganización del repo por sesiones + hub de portales ([plan](001-reorganizacion-repo/plan.md)) | infra | 2026-10-19 | en curso ([tasks](001-reorganizacion-repo/tasks.md)) |
 | [SPEC-010](010-git-deploy-objetivos-estructura/spec.md) | Git/Deploy: objetivos de aprendizaje y estructura de 4h | 2026-11 | 2026-10-26 | borrador |
 | SPEC-011 | Lab de práctica (producto desplegable con login, endpoints y UI) | 2026-11 | 2026-11-02 | pendiente |
 | SPEC-012 | Flujo Git profesional + CI/CD con GitHub Actions | 2026-11 | 2026-11-02 | pendiente |

@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | borrador v2 (v1 aprobada el 15-oct; v2 tras la revisión de Jaime del 15-oct) |
+| Estado | en curso (v2 aprobada el 15-oct, con su plan y la constitution v1.3) |
 | Sesión | infraestructura |
 | Fecha límite | 2026-10-19 |
 | Depende de | SPEC-000 · constitution v1.3 |
