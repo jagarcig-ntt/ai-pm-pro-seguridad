@@ -1,6 +1,6 @@
 # RETRO · Seguridad para PMs · 26 jun 2026
 
-*Spec: SPEC-020 · Fuentes: [E] encuesta y feedback de Maribel (`HeroCamp-Teoria/Feedback-Sesion.md`) · [G] guion (`HeroCamp-Teoria/GUION-SESION-COMPLETO.md`) · [F] percepción del formador*
+*Spec: SPEC-020 · Fuentes: [E] encuesta y feedback de Maribel (`sesiones/2026-12-seguridad-v2/HeroCamp-Teoria/Feedback-Sesion.md`) · [G] guion (`sesiones/2026-12-seguridad-v2/HeroCamp-Teoria/GUION-SESION-COMPLETO.md`) · [F] percepción del formador*
 
 > **Borrador.** Pendiente de validación de Jaime (SPEC-020 CA4).
 
@@ -54,7 +54,7 @@ Es el contenido más técnico (CORS y cabeceras) metido en el menor tiempo y al 
 
 ## 5. Qué ha quedado obsoleto (a verificar en SPEC-021 y SPEC-022)
 - Cifras y casos con fecha (Samsung, CBIZ, CVE-2025-48757, 82K$ en 48h): verificar su vigencia y si hay casos más recientes.
-- `HeroCamp-Product/.claude/CLAUDE.md`: desde la línea 63 describe un CLI en TypeScript que no existe.
+- `sesiones/2026-12-seguridad-v2/HeroCamp-Product/.claude/CLAUDE.md`: desde la línea 63 describe un CLI en TypeScript que no existe.
 - `feedbackhub/README` apunta a `/docs/repo-trampa.md`, que no existe.
 - Los modelos y la configuración de los agentes (`model: sonnet`): revisar si conviene actualizarlos.
 

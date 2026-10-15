@@ -56,7 +56,7 @@
 - R4. El `index.html` de la raíz sigue la identidad visual de la constitution (3.6) y muestra las sesiones con fecha y estado.
 - R5. Todas las descargas del portal resuelven a ficheros existentes en `descargas/`.
 - R6. El pipeline `/security-audit` funciona desde `sesiones/2026-12-seguridad-v2/HeroCamp-Product/`.
-- R7. El zip de práctica se regenera con un script, no a mano.
+- ~~R7. El zip de práctica se regenera con un script, no a mano.~~ → **Aplazado a SPEC-022** (recorte del 15-oct). El zip actual sirve hasta que cambie el pipeline.
 - R8. `git checkout sesion-2026-06` reproduce exactamente el material y el portal impartidos.
 
 ## 6. Criterios de aceptación

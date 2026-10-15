@@ -11,7 +11,7 @@
 ## 1. Problema / necesidad
 La sesión del 26-jun se preparó directamente sobre los materiales, sin especificaciones previas. Eso dejó estas incoherencias:
 - los timings del guion, la cheat sheet y el índice no coinciden;
-- `HeroCamp-Product/.claude/CLAUDE.md` describe un pipeline TypeScript que no existe;
+- `sesiones/2026-12-seguridad-v2/HeroCamp-Product/.claude/CLAUDE.md` describe un pipeline TypeScript que no existe;
 - enlaces a documentos inexistentes.
 
 Ahora hay dos sesiones nuevas (21-nov y 11-dic) que se quieren desarrollar con trazabilidad.
@@ -56,6 +56,6 @@ Regla 5.5: el agente no hace commits.
 - [ ] ¿Algún criterio pedagógico adicional de la coordinación de Hero Camp que deba entrar en la constitution?
 
 ## 9. Hallazgos fuera de alcance
-- `HeroCamp-Product/.claude/CLAUDE.md` incluye un diseño TypeScript CLI obsoleto a partir de la línea 63. Se tratará en SPEC-022.
+- `sesiones/2026-12-seguridad-v2/HeroCamp-Product/.claude/CLAUDE.md` incluye un diseño TypeScript CLI obsoleto a partir de la línea 63. Se tratará en SPEC-022.
 - `feedbackhub/README` enlaza `/docs/repo-trampa.md`, que no existe. Se tratará en SPEC-022.
 - Timings incoherentes en `GUION-SESION-COMPLETO.md`. Se tratará en SPEC-020 y SPEC-023.

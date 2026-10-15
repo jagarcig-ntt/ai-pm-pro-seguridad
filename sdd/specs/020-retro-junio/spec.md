@@ -10,7 +10,7 @@
 
 ## 1. Problema / necesidad
 La v2 del 11-dic debe partir de evidencias, no de impresiones. Hay tres fuentes:
-- el feedback de coordinación y la encuesta en bruto (`HeroCamp-Teoria/Feedback-Sesion.md`, 7 respuestas);
+- el feedback de coordinación y la encuesta en bruto (`sesiones/2026-12-seguridad-v2/HeroCamp-Teoria/Feedback-Sesion.md`, 7 respuestas);
 - la percepción del formador (las familias 3 y 4 se entendieron peor);
 - el propio guion de junio.
 

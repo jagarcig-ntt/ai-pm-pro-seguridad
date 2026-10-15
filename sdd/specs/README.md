@@ -16,7 +16,7 @@ Fuente de verdad del estado de cada spec. La actualizan los comandos `/sdd-*`.
 | SPEC-017 | Deployment Agent Squad (agentes de Claude Code que automatizan rama → PR → staging → prod) | 2026-11 | 2026-11-09 | pendiente |
 | [SPEC-020](020-retro-junio/spec.md) | Retro sesión 26-jun ([retro](020-retro-junio/retro.md)) | 2026-12 | 2026-11-09 | borrador |
 | SPEC-021 | Rediseño familias 3 y 4 | 2026-12 | 2026-11-30 | pendiente |
-| SPEC-022 | Evolución del pipeline de agentes (+ check en CI) | 2026-12 | 2026-11-30 | pendiente |
+| SPEC-022 | Evolución del pipeline de agentes (+ check en CI; + script que regenera el zip, aplazado desde SPEC-001) | 2026-12 | 2026-11-30 | pendiente |
 | SPEC-023 | Guion de 4h Seguridad v2 | 2026-12 | 2026-12-07 | pendiente |
 | SPEC-024 | Portal Seguridad v2 | 2026-12 | 2026-12-07 | pendiente |
 

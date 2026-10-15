@@ -111,3 +111,41 @@ Ruta completa del scratchpad de esta sesión: `C:\Users\jagarcig\AppData\Local\T
 
 ## 6. Resultados posteriores
 <!-- T07: comparación visual · T11: diff del zip · T14: verificación local · T17: Pages -->
+
+### T06 · Fontanería del portal (2026-10-15)
+`git diff`: **+10 / −580**. Las 10 líneas nuevas son 1 `<link>` CSS, 1 `<script src>`, 2 `<img>` del logo y 6 `href` de descarga. Las −580 son el CSS y el JS en línea, más los dos base64. El portal pasa de 2063 a 1493 líneas. Los 9 enlaces locales resuelven a ficheros existentes.
+
+### T07 · Comparación visual y de comportamiento (2026-10-15) → **CA2 ✅**
+**Píxeles** (capturas a página completa, `antes_*` frente a `despues_*`):
+
+| Modo | Tamaño antes / después | Píxeles con diferencia > 16 | Zona |
+|---|---|---|---|
+| normal | 1440×11019 / 1440×11019 | 0 de 15,9 M | 18×18 px en (125,178) |
+| `?notas` | 1440×12749 / 1440×12749 | 26 de 18,4 M | 31×31 px en (119,148) |
+
+La única zona distinta es el punto lima de "SESIÓN FINAL · AI PM PRO", que tiene la animación `pulse` (`.hero-label::before`, `portal.css` L132–133). Cada captura lo pilla en un momento distinto de la animación. No es una diferencia real.
+
+**Comportamiento** (`behave.mjs` vía CDP, el original del tag frente al nuevo; resultados idénticos):
+
+| Prueba | Antes | Después |
+|---|---|---|
+| Funciones globales (`toggleDato`, `toggleFamily`, `showFamily`, `revealAnswer`, `resetQuestion`) | 5/5 | 5/5 |
+| Token `--accent` aplicado | `#DCEE3C` | `#DCEE3C` |
+| Logos cargados (2) | 508×144 ×2 | 508×144 ×2 |
+| Tecla `N` (alterna las notas) | false→true→false | false→true→false |
+| `?notas` en la URL | true | true |
+| Acordeón de familias (abrir la 3.ª) | 0010 | 0010 |
+| Tarjetas de dato (abrir la 2.ª) | 0100 | 0100 |
+| Quiz F3: revelar y reiniciar | ok / ok | ok / ok |
+| Nav activa tras el scroll | `#impacto` | `#impacto` |
+| `.reveal.in` tras el recorrido | 27/52 | 27/52 |
+| Errores de consola o JS | 0 | 0 |
+
+El progreso de scroll dio 13,0 % frente a 15,1 %. Es un efecto de medir a mitad del scroll suave (300 ms de espera), no de la extracción.
+
+### T14 · Verificación local (2026-10-15) → **CA1 ✅ · R8 ✅**
+- `python scripts/check_links.py` → 16 enlaces locales en 3 ficheros (hub, redirección y portal), 0 rotos.
+- Tag: `git show sesion-2026-06:portal_sesion.html` → `DEDE0CF912BA2B5E`, igual que la línea base.
+- Redirección en local: `portal_sesion.html?notas#familias` → `sesiones/2026-12-seguridad-v2/index.html?notas#familias`, con `show-notes` activo y scroll en #familias (scrollY 4335).
+
+**Pendiente de Jaime (constitution 5.6):** abrir `sesiones/2026-12-seguridad-v2/index.html` en el navegador, pasar por encima y descargar un PDF. Son 2 minutos.
