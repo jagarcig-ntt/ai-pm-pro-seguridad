@@ -1,6 +1,6 @@
 # Constitution · Hero Camp AI PM Pro
 
-*Versión 1.2 · 15 de octubre de 2026 · Responsable: Jaime García*
+*Versión 1.3 · 15 de octubre de 2026 · Responsable: Jaime García*
 
 Principios y reglas que gobiernan todo el material formativo de este repositorio.
 Ninguna spec, plan o tarea puede contradecirla. Si algo choca con ella, se cambia la constitution primero (con su propia versión y fecha), nunca se ignora.
@@ -11,9 +11,9 @@ Ninguna spec, plan o tarea puede contradecirla. Si algo choca con ella, se cambi
 
 | Sesión | Fecha | Horario | Estado |
 |---|---|---|---|
-| Seguridad para PMs (v1) | 26 jun 2026 | 17:00–20:00 (3h, Zoom) | Impartida · 9,29/10 · **archivo** |
+| Seguridad para PMs (v1) | 26 jun 2026 | 17:00–20:00 (3h, Zoom) | Impartida · 9,29/10 · conservada en el tag de git `sesion-2026-06` |
 | Git, Deployment y Producción | 21 nov 2026 | 10:00–14:00 (4h, Zoom) | En diseño · **prioridad** |
-| Seguridad y buenas prácticas con IA (v2) | 11 dic 2026 | 17:00–21:00 (4h) | En evolución desde v1 |
+| Seguridad y buenas prácticas con IA (v2) | 11 dic 2026 | 17:00–21:00 (4h) | Evoluciona directamente el material de junio |
 
 Audiencia: unos 12 Product Managers Senior del curso AI PM Pro (The Hero Camp). Perfiles heterogéneos, parte sin background técnico. Construyen con Lovable, Supabase, GitHub, Cloudflare Pages / Vercel y Claude Code. Llegan con un producto propio funcional en GitHub.
 
@@ -26,7 +26,7 @@ Coordinación: Maribel Fernández (sesión de junio) · Gema (sesión del 21-nov
 1. **Spec antes que material.** Todo cambio relevante (bloque, ejercicio, producto de prueba, sección de portal, agente) nace de una spec en `sdd/specs/`. Cambios triviales (erratas, enlaces rotos, formato) no requieren spec.
 2. **Flujo fijo:** `spec → plan → tasks → implementación → review`. No se empieza el plan sin la spec aprobada, ni las tareas sin el plan aprobado.
 3. **Trazabilidad.** Cada commit que implementa una tarea lleva el identificador en el mensaje: `[SPEC-010] T03 Añade escaleta del bloque 2`. El registro de specs (`sdd/specs/README.md`) refleja el estado real.
-4. **Lo impartido es archivo.** El material de la sesión del 26-jun (`sesiones/2026-06-seguridad/`) no se reescribe. La v2 trabaja sobre una copia. Solo se permiten arreglos de enlaces.
+4. **Lo impartido vive en git, no en carpetas.** Al cerrar una sesión se marca con un tag (`sesion-AAAA-MM`, p. ej. `sesion-2026-06`). El material de una sesión que se repite evoluciona en su sitio: el de junio está en `sesiones/2026-12-seguridad-v2/` y es la base de diciembre. Nunca se duplica material para archivarlo. Para ver lo impartido, se consulta el tag.
 5. **Fecha manda.** Cada spec declara la sesión a la que sirve y su fecha límite. Si no llega, se recorta alcance, no calidad: mejor un bloque menos que un bloque a medias.
 6. **Una sola fuente de verdad.** Los timings viven en el guion. La cheat sheet, el portal y las notas del orador se derivan de él y nunca lo contradicen.
 
@@ -58,7 +58,7 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 3. **Plan B probado.** Toda demo o práctica en vivo tiene una alternativa ensayada: repo de prueba, captura, informe pregenerado.
 4. **Nada de secretos reales.** Las claves de los productos trampa son falsas o están revocadas. Los secretos reales van en variables de entorno o secrets de GitHub, nunca en el repo.
 5. **Reproducible desde cero.** Cada lab se valida desde una cuenta limpia siguiendo solo la guía del alumno, cronometrado.
-6. **Portal autocontenido.** Los portales son HTML estático servidos por GitHub Pages. Se mantiene la identidad visual de junio: fondo oscuro, acento lima `#DCEE3C`, Fraunces, Manrope y JetBrains Mono, logo oficial de Hero Camp sin modificar. Las notas del orador van con `?notas` o la tecla `N`.
+6. **Portales estáticos con base común.** Los portales son HTML estático servidos por GitHub Pages. Comparten `assets/` (CSS, JS y logo), que es la única fuente del estilo y del comportamiento común. El contenido de cada sesión va en su propio `index.html`. Se mantiene la identidad visual de junio: fondo oscuro, acento lima `#DCEE3C`, Fraunces, Manrope y JetBrains Mono, logo oficial de Hero Camp sin modificar. Las notas del orador van con `?notas` o la tecla `N`.
 
 ---
 
@@ -73,8 +73,13 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 │  ├─ constitution.md       # este documento
 │  ├─ templates/            # plantillas de spec, plan, tasks y material
 │  └─ specs/NNN-slug/       # spec.md, plan.md, tasks.md (+ notas)
-└─ sesiones/AAAA-MM-tema/   # material de cada sesión (Teoria/, Product/ o Lab/, portal.html)
+└─ sesiones/AAAA-MM-tema/   # material de cada sesión
+   ├─ index.html            # portal de la sesión → URL limpia <pages>/sesiones/AAAA-MM-tema/
+   ├─ descargas/            # lo que se enlaza a alumnos (PDF, zip), nombres sin espacios
+   └─ Teoria/, Product/ o Lab/ …
 ```
+
+- **URLs estables.** Todo enlace que se reparta a alumnos (portal y descargas) se considera permanente desde que se comparte. Las descargas viven en `descargas/` con nombres en `snake_case` sin espacios, y no se mueven ni se renombran. Si hay que moverlas, se deja una redirección (HTML) o una copia.
 
 - **Numeración de specs:**
   - `000–009` infraestructura del repo y SDD.
@@ -107,3 +112,5 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 |---|---|---|
 | 1.0 | 2026-10-15 | Versión inicial (SPEC-000) |
 | 1.1 | 2026-10-15 | Audiencia (~12, producto propio en GitHub), coordinación de Gema, criterios 2.10–2.12 a partir del feedback de junio (SPEC-020) |
+| 1.2 | 2026-10-15 | 2.9: la sesión de Git es guiada por el formador (Zoom); éxito = flujo entendido + guía y squad + primer PR; el deploy completo pasa a un reto posterior |
+| 1.3 | 2026-10-15 | 1.4: junio evoluciona en su sitio hacia diciembre y lo impartido se conserva con un tag de git · 3.6: `assets/` compartido · 4: portal = `index.html` de la sesión, `descargas/` y URLs estables (SPEC-001 v2) |
