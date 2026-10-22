@@ -1,6 +1,6 @@
 # Constitution · Hero Camp AI PM Pro
 
-*Versión 1.3 · 15 de octubre de 2026 · Responsable: Jaime García*
+*Versión 1.4 · 20 de octubre de 2026 · Responsable: Jaime García*
 
 Principios y reglas que gobiernan todo el material formativo de este repositorio.
 Ninguna spec, plan o tarea puede contradecirla. Si algo choca con ella, se cambia la constitution primero (con su propia versión y fecha), nunca se ignora.
@@ -41,10 +41,10 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 3. **Máximo 3 ideas por bloque.** Lección de las familias 3 y 4 de junio: la densidad mata la comprensión. Si un bloque necesita más de 3 ideas, se divide o se recorta.
 4. **Patrón de bloque:** concepto en cámara → caso real → momento interactivo → demo o práctica → cómo se arregla o se hace bien → "lo que el PM se lleva".
 5. **Lenguaje de PM, no de ingeniero.** El output de cualquier práctica es una decisión o un criterio, no código. Se explica el comando, pero no se exige dominarlo.
-6. **Práctica sobre lo suyo cuando sea posible.** Si los alumnos tienen producto propio, se practica sobre él. Siempre existe un producto de prueba como plan B.
+6. **Práctica sobre lo suyo cuando sea posible.** Si los alumnos tienen producto propio, se practica sobre él. Siempre existe un producto de prueba como plan B. **Excepción:** cuando trabajar sobre 12 productos distintos en directo hace inviable la sesión (por ejemplo, en Git/Deploy por Zoom), se practica sobre un producto de ejemplo común y la herramienta que se entrega debe ser genérica, aplicable después a su producto.
 7. **Ritmo.** Pausa real cada 60–75 min. Ningún bloque expositivo de más de 12 min sin interacción.
 8. **Timings honestos.** Los minutos del guion suman exactamente la duración de la sesión (240 min en las sesiones de 4h), con al menos un 10 % de colchón distribuido.
-9. **Comprobación de aprendizaje.** Cada bloque tiene una verificación ligera (quiz, mano alzada, entregable visible). En la sesión de Git, el criterio de éxito es que **cada alumno salga con el flujo entendido, la guía y el Deployment Agent Squad instalados en su repo y su primer PR abierto**. El despliegue completo se cierra después, con un reto asíncrono.
+9. **Comprobación de aprendizaje.** Cada bloque tiene una verificación ligera (quiz, mano alzada, entregable visible). En la sesión de Git, el criterio de éxito es que **cada alumno salga entendiendo el flujo completo sobre el producto de ejemplo, habiendo abierto su propio PR en él, y con la guía y el Deployment Agent Squad listos para aplicarlos a su producto**. El despliegue de su producto se hace después, con un reto asíncrono.
 10. **Herramienta que funciona a la primera.** Lo más valorado en junio fue el pipeline de agentes ("funcionó a la primera"). Cada sesión entrega una herramienta ejecutable (pipeline, workflow, plantilla de repo) probada desde cero antes de la sesión.
 11. **Kit listo para aplicar.** El segundo punto más valorado fue el kit de seguridad. Cada sesión cierra con un entregable accionable al día siguiente (checklist, guía, plantillas), no solo con teoría.
 12. **Dinamismo sin perder la guía.** Lo guiado y paso a paso funcionó, pero hubo un comentario de "poco dinámico". En las sesiones de 4h, al menos el 40 % del tiempo es práctica o interacción.
@@ -114,3 +114,4 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 | 1.1 | 2026-10-15 | Audiencia (~12, producto propio en GitHub), coordinación de Gema, criterios 2.10–2.12 a partir del feedback de junio (SPEC-020) |
 | 1.2 | 2026-10-15 | 2.9: la sesión de Git es guiada por el formador (Zoom); éxito = flujo entendido + guía y squad + primer PR; el deploy completo pasa a un reto posterior |
 | 1.3 | 2026-10-15 | 1.4: junio evoluciona en su sitio hacia diciembre y lo impartido se conserva con un tag de git · 3.6: `assets/` compartido · 4: portal = `index.html` de la sesión, `descargas/` y URLs estables (SPEC-001 v2) |
+| 1.4 | 2026-10-20 | 2.6: excepción de producto de ejemplo común + herramienta genérica · 2.9: nuevo criterio de éxito de Git/Deploy (SPEC-010 v3) |

@@ -148,4 +148,18 @@ El progreso de scroll dio 13,0 % frente a 15,1 %. Es un efecto de medir a mitad 
 - Tag: `git show sesion-2026-06:portal_sesion.html` → `DEDE0CF912BA2B5E`, igual que la línea base.
 - Redirección en local: `portal_sesion.html?notas#familias` → `sesiones/2026-12-seguridad-v2/index.html?notas#familias`, con `show-notes` activo y scroll en #familias (scrollY 4335).
 
+### T17 · GitHub Pages (2026-10-15, tras `d7a0d6e`) → **CA3 ✅**
+Despliegue visible unos 120 s después del push.
+
+| URL (`https://jagarcig-ntt.github.io/ai-pm-pro-seguridad` + …) | Resultado |
+|---|---|
+| `/` (hub) | 200 · 4334 B |
+| `/portal_sesion.html` | 200 · 1020 B. En Chrome redirige a `/sesiones/2026-12-seguridad-v2/?notas#familias`, con notas activas y scroll en #familias |
+| `/sesiones/2026-12-seguridad-v2/` | 200 · 127 187 B (portal nuevo) |
+| `/assets/portal.css`, `/assets/portal.js`, `/assets/logo-herocamp.jpg` | 200 · 31 130 / 3578 / 8603 B |
+| `/sesiones/2026-12-seguridad-v2/descargas/*.pdf` y `materiales_practica.zip` | 200 · tamaños idénticos a la línea base |
+| `/HeroCamp-Teoria/…` (ruta antigua) | 404, esperado: se acordó que no hacía falta mantenerla |
+
+**Revisión de Jaime (navegador):** el hub está bien, pero en local la tarjeta de seguridad no abría el portal porque una carpeta en `file://` no carga su `index.html`. Se corrige enlazando a `sesiones/2026-12-seguridad-v2/index.html`, que funciona en local y en Pages.
+
 **Pendiente de Jaime (constitution 5.6):** abrir `sesiones/2026-12-seguridad-v2/index.html` en el navegador, pasar por encima y descargar un PDF. Son 2 minutos.

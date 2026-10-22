@@ -27,8 +27,8 @@ Orden: primero lo que bloquea (movimientos y su commit), después lo más arries
 | T13 | **Referencias.** `CLAUDE.md`: tabla de sesiones y ruta de `Contexto-Proyecto.md`. Rutas de texto `HeroCamp-Teoria/…` y `HeroCamp-Product/…` → `sesiones/2026-12-seguridad-v2/…` en `sdd/specs/000-*`, `010-*` y `020-*` (`spec.md` y `retro.md`). No tocar el material de la sesión. *Resultado: también se corrige la regla de `CLAUDE.md` que aún decía "junio es archivo" (constitution v1.3).* | `CLAUDE.md`, `sdd/specs/000-constitution-sdd/spec.md`, `sdd/specs/010-git-deploy-objetivos-estructura/spec.md`, `sdd/specs/020-retro-junio/spec.md`, `sdd/specs/020-retro-junio/retro.md` | T04 | ☑ |
 | T14 | **Verificación local.** `check_links.py` sin errores (CA1). Comprobar con el hash de `git show sesion-2026-06:portal_sesion.html` que el tag conserva el original (R8). Abrir en local `portal_sesion.html?notas#familias` y verificar que redirige conservando la query y el ancla. *Resultado: 0 enlaces rotos; el hash del tag coincide (`DEDE0CF9…`); `portal_sesion.html?notas#familias` → `sesiones/2026-12-seguridad-v2/index.html?notas#familias`, con notas activas y scroll en #familias.* | — (anota en `baseline.md`) | T07–T13 | ☑ |
 | T15 🧑 | **Verificación del pipeline (CA5).** Abrir Claude Code en `sesiones/2026-12-seguridad-v2/HeroCamp-Product/` y ejecutar `/security-audit --repo feedbackhub --family 1`. Descartar el informe generado. | — | T04 | ☐ |
-| T16 🧑 | **Commit(s) y push** de T05–T14. | — | T14 | ☐ |
-| T17 | **Verificación en GitHub Pages (CA3).** Tras el despliegue: `Invoke-WebRequest` a la raíz, a `/sesiones/2026-12-seguridad-v2/` y a las 6 descargas (200). En el navegador, `/portal_sesion.html?notas` aterriza en el portal con las notas visibles. | — (anota en `baseline.md`) | T16 | ☐ |
+| T16 🧑 | **Commit(s) y push** de T05–T14. *Resultado: `d7a0d6e` subido. Pages tardó unos 2 min en desplegar.* | — | T14 | ☑ |
+| T17 | **Verificación en GitHub Pages (CA3).** Tras el despliegue: `Invoke-WebRequest` a la raíz, a `/sesiones/2026-12-seguridad-v2/` y a las 6 descargas (200). En el navegador, `/portal_sesion.html?notas` aterriza en el portal con las notas visibles. *Resultado: 9/9 URLs con 200; la redirección real conserva `?notas#familias`. El enlace de la tarjeta del hub se cambia a `…/index.html` (en local la carpeta no abría el portal).* | — (anota en `baseline.md`) | T16 | ☑ |
 | T18 | **`/sdd-review 001`** → `review.md`. Propuesta de estado `hecha`. | `sdd/specs/001-reorganizacion-repo/review.md` | T15, T17 | ☐ |
 
 Estados: ☐ pendiente · ◐ en curso · ☑ hecha · ✕ descartada
@@ -47,3 +47,4 @@ Estados: ☐ pendiente · ◐ en curso · ☑ hecha · ✕ descartada
 - T05 → `[SPEC-001] T05 Extrae CSS, JS y logo del portal a assets/` (*el commit `344ab07` no incluía `assets/`: hay que hacer `git add assets/` + `--amend`*)
 - T06+T07 → `[SPEC-001] T06 El portal carga assets/ y enlaza descargas/ · T07 comparación visual OK`
 - T08–T14 → `[SPEC-001] T08–T14 Hub, redirección, .nojekyll, check_links, esqueleto nov y rutas actualizadas`
+- Ajuste tras la revisión de Jaime → `[SPEC-001] Hub: la tarjeta de seguridad enlaza a index.html (también funciona en local)`
