@@ -101,3 +101,31 @@ Ficheros en el demo: `supabase/schema.sql` (idempotente) y `supabase/seed.sql` (
 - Queda **una fila de prueba en cada entorno** (`Prueba T05 (borrar)`, `prueba-t05@example.com`). Se puede borrar desde el *Table Editor*.
 - Incidencia: el `seed.sql` falló la primera vez con "syntax error at end of input" porque en el SQL Editor estaba **seleccionada** solo una parte del texto (Supabase ejecuta únicamente la selección). Con el fichero completo y sin selección, funcionó.
 - El login del administrador y del usuario no administrador se verifica en T09, con el panel ya construido (T07).
+
+## T09 · Verificación en los 3 entornos (28-oct)
+
+Despliegues de Jaime desde `main` en `386f073` (T08): producción (`--branch main`) y staging (`--branch staging-prueba`).
+
+**Verificación del agente (API y navegador headless):**
+
+| Comprobación | Producción | Staging | CA |
+|---|---|---|---|
+| `/api/config`: entorno, flag, proyecto | `production`, flag off, `jezrt…` ✅ | `staging`, flag on, `dhmau…` ✅ | CA4 |
+| La clave servida es *publishable* y no hay `errorConfig` | ✅ | ✅ | — |
+| `/api/health`, `/`, `/admin.html`, JS y CSS | 200 ✅ | 200 ✅ | — |
+| Aviso STAGING en la portada | no ✅ | sí ✅ | CA4 |
+| Campo de valoración en la portada | oculto ✅ | visible ✅ | CA4 |
+| `/api/admin/feedback` sin sesión | 401 ✅ | 401 ✅ | CA2 |
+| Feedback inválido | 400 ✅ | 400 ✅ | — |
+| Errores de consola / scroll horizontal | 0 / no ✅ | 0 / no ✅ | — |
+| Local (`npm run dev`, 28-oct) | — | — | development, flag on ✅ |
+
+**CA3 (separación de datos):** el agente ha enviado a **staging** un feedback marcado "Solo en STAGING (T09)" (`solo-staging-t09@example.com`). Debe verse en el panel de staging y **no** en el de producción.
+
+**Pendiente de Jaime (navegador)** → ver la lista del mensaje del 28-oct:
+- [ ] Producción: login con el administrador → panel con datos; el feedback "Solo en STAGING" **no** aparece (CA3).
+- [ ] Staging: login con el administrador → aparecen las 5 semillas, las pruebas T05/T06 y "Solo en STAGING" (CA2, CA3).
+- [ ] Staging: login con `…+noadmin@…` → "Tu usuario no es administrador." (CA2).
+- [ ] Contraseña incorrecta → "Email o contraseña incorrectos.".
+- [ ] Enviar un feedback desde la portada de producción y verlo en su panel.
+
