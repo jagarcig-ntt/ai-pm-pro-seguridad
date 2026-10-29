@@ -95,6 +95,8 @@ Esto tiene dos consecuencias:
 > 🎓 **Puente con la Familia 1:** señala `FEATURE_NUEVO_CHECKOUT` en la tabla y recuerda el caso Google: "esto es el interruptor que les faltó". Es el momento en que F1 y F2 encajan; dedícale 30 segundos.
 >
 > **Error esperado:** *"Entonces hago una versión del código para cada entorno".* → No: una sola versión, tres configuraciones. Si el código cambia entre staging y producción, staging deja de servir.
+>
+> **Error esperado (visto al preparar el demo, 22-oct):** crear variables con sufijo por entorno (`SUPABASE_URL_PROD`, `SUPABASE_URL_STG`) en una misma lista. Así el código tiene que saber en qué entorno está para elegir cuál leer. Lo correcto es **el mismo nombre en todos los entornos, con distinto valor**: la separación la pone el selector *Production / Preview* de la plataforma.
 
 ---
 
@@ -117,24 +119,24 @@ Y cada entorno tiene **sus propios secretos**: la clave de pagos de staging no e
 > 🎓 **Delimitación con el 11-dic (CA7):** aquí solo se trata **dónde vive** cada secreto. Si preguntan "¿y si ya subí una clave a GitHub?", la respuesta es: "trátala como comprometida y cámbiala. El porqué y el cómo detectarlo lo vemos el 11 de diciembre". No abras esa conversación aquí: es otra sesión entera.
 >
 > **En la demo:** enseña `.gitignore` con `.env` dentro, el `.env.example` y la pantalla de *Secrets* de GitHub (sin revelar valores). Que vean que ni el propio dueño puede leer un secreto una vez guardado.
+>
+> **Caso propio (preparando este demo, 22-oct-2026):** al configurar Cloudflare se copió la clave **secreta** de Supabase en lugar de la **pública**, y `/api/config` la estaba enviando a cualquier navegador. Se detectó comprobando solo el prefijo de la clave, se revocó y se añadió una protección y una prueba automática. Cuéntalo en una frase: es el error más fácil del mundo y la razón de que existan las pruebas. El detalle va al 11-dic.
 
 ---
 
 ## 6. Cómo se ve en el producto demo
 
-<!-- ajustar tras SPEC-011/013: plataforma de despliegue, nombres de variables y proyectos de base de datos reales -->
-
 El producto demo tiene tres entornos:
 
-- **Development:** se ejecuta en local con un `.env` propio y datos de ejemplo.
-- **Staging:** una versión de previsualización que se publica automáticamente con su propia base de datos de pruebas.
-- **Production:** la URL pública, con su propia base de datos.
+- **Development:** en tu ordenador (`npm run dev`), con un fichero `.env` propio y la base de datos de staging.
+- **Staging:** las versiones de previsualización de **Cloudflare Pages** (por ejemplo `staging-prueba.feedbackhub-demo.pages.dev`, y una por cada PR), con su propio proyecto de base de datos (`feedbackhub-staging`, con datos de ejemplo).
+- **Production:** `feedbackhub-demo.pages.dev`, con su propio proyecto de base de datos (`feedbackhub-prod`).
 
 En la demo veremos:
 - el `.env.example` del repositorio;
-- las variables configuradas en la plataforma de despliegue, separadas por entorno;
-- los *secrets* de GitHub;
-- un *feature flag* encendido en staging y apagado en producción.
+- las variables en Cloudflare Pages (*Settings → Variables and secrets*), con el mismo nombre en *Production* y en *Preview*: `APP_ENV`, `FEATURE_VALORACION`, `SUPABASE_URL` y `SUPABASE_ANON_KEY` (esta, como *Secret*);
+- los *secrets* de GitHub que usa el despliegue automático (`CLOUDFLARE_API_TOKEN`);
+- el *feature flag* `FEATURE_VALORACION`: el campo "valoración de 1 a 5" aparece en staging y no en producción.
 
 **Tu práctica: el mapa de entornos.** Primero lo rellenas para el producto demo y después, en 5 minutos, para **tu propio producto**:
 

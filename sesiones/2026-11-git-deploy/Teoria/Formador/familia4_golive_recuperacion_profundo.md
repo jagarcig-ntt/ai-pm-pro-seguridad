@@ -110,20 +110,22 @@ Las dos primeras las ve una herramienta. **La tercera la ve, sobre todo, el PM**
 > 🎓 **Si vas justo de tiempo:** quédate con la tabla y la frase "la tercera señal la ve el PM". Es lo esencial.
 >
 > **Para quien quiera más:** las tres señales simplifican las "cuatro señales doradas" del Google SRE Book (latencia, tráfico, errores y saturación) a lo que un PM puede vigilar. Está en Fuentes.
+>
+> **Error esperado en la prueba de humo (visto al preparar el demo, 28-oct):** tras un rollback a una versión antigua, `/admin` y `/app.js` respondían **200**… porque Cloudflare Pages sirve la portada para cualquier ruta que no existe. Una prueba de humo que solo mira "¿responde?" lo habría dado por bueno. **Hay que mirar el contenido.**
 
 ---
 
 ## 6. Cómo se ve en el producto demo
 
-<!-- ajustar tras SPEC-011/013: plataforma de despliegue (botón de rollback), herramienta de monitorización y flag reales -->
-
 En la demo hacemos un **simulacro de incidente**:
 
-1. Recorremos la checklist de go-live con un cambio del producto demo y salimos.
+1. Recorremos la checklist de go-live (`docs/checklist-go-live.md` del repo) con el cambio de la rama `demo/f4-rompe-portada` y salimos.
 2. Ese cambio rompe algo en producción a propósito.
-3. Lo detectamos en las señales: errores en el registro de la plataforma y la URL fallando.
-4. **Rollback** en un clic desde la plataforma de despliegue: producción vuelve a funcionar.
+3. Lo detectamos en las señales: la portada falla y los registros en tiempo real de Cloudflare (`npx wrangler pages deployment tail`) muestran los errores.
+4. **Rollback** en un clic en Cloudflare (*Deployments* → despliegue anterior → *Rollback to this deployment*): producción vuelve a funcionar en unos 5 segundos.
 5. Después, el arreglo de verdad entra por el flujo normal: **revert** o corrección, con su PR.
+
+En Cloudflare Pages, apagar el *feature flag* (`FEATURE_VALORACION`) no cambia el código, pero sí exige volver a desplegar la misma versión (*Retry deployment*). También son segundos.
 
 **Tu práctica:** aplica la checklist al cambio del producto demo y, en una columna aparte, **marca qué puntos no podrías responder hoy con tu propio producto**. Esa columna es tu lista de trabajo.
 

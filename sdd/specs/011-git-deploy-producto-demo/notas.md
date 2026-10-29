@@ -122,10 +122,17 @@ Despliegues de Jaime desde `main` en `386f073` (T08): producción (`--branch mai
 
 **CA3 (separación de datos):** el agente ha enviado a **staging** un feedback marcado "Solo en STAGING (T09)" (`solo-staging-t09@example.com`). Debe verse en el panel de staging y **no** en el de producción.
 
-**Pendiente de Jaime (navegador)** → ver la lista del mensaje del 28-oct:
-- [ ] Producción: login con el administrador → panel con datos; el feedback "Solo en STAGING" **no** aparece (CA3).
-- [ ] Staging: login con el administrador → aparecen las 5 semillas, las pruebas T05/T06 y "Solo en STAGING" (CA2, CA3).
-- [ ] Staging: login con `…+noadmin@…` → "Tu usuario no es administrador." (CA2).
-- [ ] Contraseña incorrecta → "Email o contraseña incorrectos.".
-- [ ] Enviar un feedback desde la portada de producción y verlo en su panel.
+**Verificación de Jaime en el navegador (28-oct): "datos separados, todo correcto con el acceso al panel"** ✅
+- [x] Producción: login con el administrador → panel con datos; el feedback "Solo en STAGING" **no** aparece (CA3).
+- [x] Staging: login con el administrador → aparecen las 5 semillas, las pruebas T05/T06 y "Solo en STAGING" (CA2, CA3).
+- [x] Staging: login con `…+noadmin@…` → "Tu usuario no es administrador." (CA2).
+- [x] Contraseña incorrecta → "Email o contraseña incorrectos.".
+- [x] Enviar un feedback desde la portada de producción y verlo en su panel.
+
+## T14 · Prueba de rollback (28-oct)
+
+- **Rollback desde el panel de Cloudflare** (*Deployments → despliegue anterior → Rollback*) en un proyecto **Direct Upload**: funciona ✅. Riesgo 3 del plan descartado.
+- **Tiempo:** unos **5 segundos** hasta que producción sirve la versión anterior (cronometrado por Jaime).
+- **Detalle para la demo de F4:** tras el rollback a la versión del esqueleto, `/admin.html` y `/app.js` no daban 404, sino la portada (1.610 bytes). Cloudflare Pages sirve `index.html` para las rutas que no existen. En el simulacro hay que comprobar **el contenido**, no solo que la URL responda 200. Es un buen ejemplo de "prueba de humo" mal hecha para la versión formador de F4, idea 3.
+- [x] 28-oct · Producción ha vuelto a la última versión: `/admin` vuelve a ser el panel. Nota: Cloudflare redirige `/admin.html` → `/admin` con un 308 (URLs sin extensión).
 

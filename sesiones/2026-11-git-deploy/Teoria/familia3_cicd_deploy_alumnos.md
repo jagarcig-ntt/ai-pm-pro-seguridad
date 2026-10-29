@@ -105,19 +105,19 @@ Y una regla sin excepciones: **nunca se despliega a mano desde un ordenador**. S
 
 ## 6. Cómo se ve en el producto demo
 
-<!-- ajustar tras SPEC-012/013: nombre de los workflows, plataforma de despliegue y URLs de preview reales -->
+<!-- ajustar tras SPEC-012: nombres reales de los workflows -->
 
 El repositorio del producto demo tiene dos workflows:
 
 - **"Comprobar el PR"**, que se ejecuta en cada PR: construye y pasa las pruebas.
 - **"Desplegar"**, que se ejecuta al hacer merge a `main`: publica en producción.
 
-La plataforma de despliegue añade la **URL de preview** de cada PR.
+Cada rama o PR se publica en **Cloudflare Pages** en su propia **URL de preview** (`<rama>.feedbackhub-demo.pages.dev`), con la configuración de staging.
 
 En la demo veremos:
 1. Abrir un PR → el check se pone en marcha → ✅ verde.
 2. Abrir la URL de preview y probar el cambio.
-3. Romper una prueba a propósito → ❌ rojo → el botón de merge queda bloqueado.
+3. Romper a propósito la prueba "la portada muestra el título del producto" (`tests/portada.test.js`) → ❌ rojo → el botón de merge queda bloqueado.
 4. Arreglarlo, hacer merge y ver cómo el cambio llega a producción solo.
 
 **Tu práctica:** en tu fork del producto demo, activa GitHub Actions (en los forks viene desactivado por defecto: pestaña *Actions* → *Enable workflows*) y mira cómo el check se ejecuta sobre **tu PR** de la Familia 1.

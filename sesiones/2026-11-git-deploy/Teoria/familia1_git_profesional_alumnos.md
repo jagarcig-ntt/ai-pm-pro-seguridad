@@ -94,14 +94,14 @@ Solo cuando las tres cosas están en verde se hace el *merge*: los cambios entra
 
 ## 6. Cómo se ve en el producto demo
 
-<!-- ajustar tras SPEC-011: nombres de ramas, ficheros y plantilla de PR reales del producto demo -->
+<!-- ajustar tras SPEC-012: contenido final de la plantilla de PR -->
 
-En la sesión trabajamos sobre un producto de ejemplo con las piezas de cualquier producto real: una **interfaz** (frontend), una **API** (backend) y una **base de datos** con login. En esta familia:
+En la sesión trabajamos sobre **FeedbackHub**, un producto de ejemplo con las piezas de cualquier producto real: una **interfaz** (formulario y panel de administración), una **API** (Cloudflare Pages Functions) y una **base de datos** con login (Supabase). Su repositorio es público: `github.com/jagarcig-ntt/feedbackhub-demo`. En esta familia:
 
 - Partimos de `main`, que funciona y está desplegada.
-- Creamos una rama para un cambio pequeño y visible, por ejemplo cambiar un texto de la página de inicio.
+- Creamos la rama `feature/texto-portada` para un cambio pequeño y visible: el texto de la portada (`public/index.html`).
 - Hacemos un commit con un mensaje con sentido.
-- Abrimos un PR usando la **plantilla** del repositorio, que nos pide qué cambia, por qué, cómo se ha probado y qué pasa si falla.
+- Abrimos un PR usando la **plantilla** del repositorio (`.github/pull_request_template.md`), que nos pide qué cambia, por qué, cómo se ha probado y qué pasa si falla.
 - Lo revisamos y hacemos el merge.
 
 **Tú lo repites en tu copia (fork) del producto demo**, desde la web de GitHub, sin instalar nada: rama → cambio → commit → PR. Al final de este bloque, cada uno tiene **su propio PR abierto**.
