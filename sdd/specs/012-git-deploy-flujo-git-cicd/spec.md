@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | borrador |
+| Estado | **aprobada** (29-oct, con las respuestas del apartado 8) |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-02 |
 | Depende de | SPEC-011 (hecha: producto, entornos, ramas `demo/…`) · SPEC-014 (mapas F1 y F3) |
@@ -59,9 +59,9 @@ En `jagarcig-ntt/feedbackhub-demo`:
 - **R1. Workflows legibles.** Ficheros cortos y comentados en castellano, que se puedan leer en voz alta como el ejemplo de F3 (idea 1). Nombres visibles: "Comprobar el PR" y "Desplegar".
 - **R2. Check sin secretos ni red.** Funciona igual en un fork (mapa F3 "fork-friendly").
 - **R3. Despliegue solo en el repo original.** En los forks, el workflow de despliegue se salta sin fallar (no aparece en rojo).
-- **R4. Preview por PR:** URL `<rama>.feedbackhub-demo.pages.dev` con las variables *Preview*, visible en el PR (comentario o *environment* de GitHub).
+- **R4. Preview por PR:** URL `<rama>.feedbackhub-demo.pages.dev` con las variables *Preview*, publicada como **comentario automático** en el PR. Push a la rama `staging` → alias fijo `staging-prueba` *(ver plan)*.
 - **R5. Merge = producción**, sin pasos manuales. Ningún despliegue más desde el ordenador de Jaime, salvo como plan B documentado.
-- **R6. Ruleset de `main`:** bloquea push directo y force push; exige PR y el check "Comprobar el PR" en verde.
+- **R6. Ruleset de `main`:** bloquea push directo y force push; exige PR y el check "Comprobar el PR" en verde. **Sin aprobación obligatoria** (respuesta 1).
 - **R7. Plantilla de PR** con: qué cambia, por qué, cómo se ha probado, **qué pasa si falla**, **cómo se apaga** (F1, idea 3).
 - **R8. Ramas de demo:** `demo/f3-checks` (check en rojo y merge bloqueado) y el PR de `demo/f1-pr-listo` abierto con la plantilla rellena.
 - **R9. Token de Cloudflare con mínimo privilegio** (solo *Cloudflare Pages: Edit* sobre la cuenta). Nunca en el repo ni en el chat.
@@ -83,15 +83,14 @@ En `jagarcig-ntt/feedbackhub-demo`:
 - 5.5: Jaime hace commits, push, crea el token y configura el ruleset.
 - 2.5: lenguaje de PM en los comentarios de los workflows.
 
-## 8. Preguntas abiertas
-- [ ] **¿Aprobación obligatoria en los PR?** GitHub **no deja aprobar tu propio PR**, y en el repo solo está Jaime. Opciones:
-  - **(a) Propuesta:** el ruleset exige PR y check en verde, pero **0 aprobaciones**. En la demo la revisión se hace en voz alta, con la plantilla.
-  - (b) Exigir 1 aprobación y que Jaime use una segunda cuenta de GitHub como revisora (la misma que la del fork de CA4).
-  - (c) Exigir 1 aprobación con *bypass* para el administrador.
-- [ ] **¿Cómo se ve la URL de preview en el PR?** Propuesta: un comentario automático del workflow con la URL. Requiere el permiso `pull-requests: write`, solo en el repo original. Alternativa: solo el *environment* "Preview" de GitHub, más sobrio.
-- [ ] **¿Se mantiene el alias `staging-prueba`?** Propuesta: sí, como "staging fijo" (lo usan la teoría, el Lab y las notas), desplegado desde una rama `staging`. Alternativa: retirarlo y quedarse solo con las previews por PR, actualizando la teoría.
-- [ ] **Segunda cuenta de GitHub para CA4.** ¿Tienes una cuenta personal distinta de `jagarcig-ntt` para hacer de alumno? Si no, hay que crear una (gratis).
-- [ ] **El paso 3 de T04 sigue pendiente:** crear el token de Cloudflare y los 2 secrets (`sdd/specs/011-git-deploy-producto-demo/notas.md`). Es lo primero que bloquea esta spec.
+## 8. Preguntas abiertas (respondidas por Jaime el 29-oct)
+- [x] **Aprobación en los PR → opción (a):** el ruleset exige PR y check en verde, **sin aprobación obligatoria**.
+  - Jaime dudaba entre (a) y (c). Se elige (a) porque con (c) cada merge de la demo pasaría por "saltarse los requisitos como administrador", justo el gesto que la sesión enseña a no normalizar.
+  - Si más adelante hay un segundo revisor, se cambia el ruleset a 1 aprobación.
+- [x] **URL de preview:** comentario automático del workflow en el PR (`pull-requests: write`, solo en el repo original).
+- [x] **`staging-prueba`:** se mantiene como staging fijo, desplegado desde una rama `staging`.
+- [x] **Segunda cuenta de GitHub:** Jaime la crea para CA4 (fork como alumno).
+- [x] **Token de Cloudflare y secrets:** creados en GitHub el 29-oct (`notas.md`).
 
 ## 9. Hallazgos fuera de alcance
 - Cloudflare convierte los nombres de rama con `/` en alias con `-` (`feature/texto-portada` → `feature-texto-portada.feedbackhub-demo.pages.dev`). Hay que verificarlo en el plan y reflejarlo en F3 si la URL se enseña.
