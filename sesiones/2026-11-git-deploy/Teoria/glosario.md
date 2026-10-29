@@ -30,7 +30,7 @@ Los términos de las cuatro familias, con la misma definición que en cada guía
 | **Production** (F2) | El entorno que usan los clientes, con datos reales. También se le llama **PRO**. |
 | **Preview** (F2, F3) | Una versión del producto publicada automáticamente para un PR o una rama, en su propia URL. En los planes gratuitos hace de staging. |
 | **Variable de entorno** (F2) | Un ajuste que el producto lee al arrancar y que cambia según el entorno: base de datos, funcionalidades encendidas, servicios externos. |
-| **Feature flag** (F1, F2, F4) | Un interruptor (normalmente una variable de entorno) para encender o apagar una funcionalidad sin desplegar de nuevo. |
+| **Feature flag** (F1, F2, F4) | Un interruptor (normalmente una variable de entorno) para encender o apagar una funcionalidad sin cambiar el código. |
 | **Secreto** (F2) | Una variable de entorno que no puede ver cualquiera: contraseñas y claves. Vive en la plataforma, nunca en el código. |
 | **`.env`** (F2) | El fichero con las variables y secretos en tu ordenador. Nunca se sube al repositorio. |
 | **`.gitignore`** (F2) | La lista de ficheros que Git ignora. `.env` tiene que estar en ella. |

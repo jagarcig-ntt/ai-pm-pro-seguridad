@@ -101,7 +101,7 @@ El PR es **el punto de control** entre el trabajo en la rama y el producto. Tien
 1. **La descripción.** Qué cambia, por qué y cómo se ha probado. Es lo que lee quien revisa. Si no se entiende la descripción, no se aprueba.
 2. **La revisión.** Otra persona (o un agente revisor, pero con una persona que decide) mira el cambio y hace preguntas. No solo "¿funciona?", sino también:
    - **¿Qué pasa si falla?** ¿Hay manejo de errores?
-   - **¿Se puede apagar?** ¿Hay forma de desactivarlo sin desplegar de nuevo?
+   - **¿Se puede apagar?** ¿Hay forma de desactivarlo sin cambiar el código?
    - **¿Toca algo que no debería?** ¿Datos, permisos, configuración?
 3. **Las comprobaciones automáticas.** Pruebas y verificaciones que se ejecutan solas en cada PR. Las veremos en la Familia 3.
 
@@ -152,7 +152,7 @@ En la sesión trabajamos sobre **FeedbackHub**, un producto de ejemplo con las p
 El 29 de mayo de 2025, Google añadió una funcionalidad nueva a *Service Control*, un servicio interno de Google Cloud que comprueba cuotas y políticas en cada petición. El código nuevo tenía dos carencias:
 
 - **no manejaba bien los errores**, y
-- **no estaba detrás de un *feature flag*** (un interruptor que permite encender o apagar una funcionalidad sin desplegar de nuevo).
+- **no estaba detrás de un *feature flag*** (un interruptor que permite encender o apagar una funcionalidad sin cambiar el código).
 
 El despliegue se hizo región a región, como manda el buen proceso, pero el código defectuoso no se activó durante ese despliegue y nadie lo vio.
 

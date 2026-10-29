@@ -52,7 +52,7 @@ Antes de salir, alguien recorre una lista y responde **sí o no** a cada punto. 
 | 3 | ¿Están configuradas en producción todas las variables y secretos que necesita? | F2 |
 | 4 | ¿Cambia algo en la base de datos? Si es así, ¿se puede deshacer? | F2, F4 |
 | 5 | ¿Sabemos cómo volver atrás y cuánto se tarda? | F4 |
-| 6 | ¿Hay forma de apagarlo sin desplegar (*feature flag*)? | F1, F2 |
+| 6 | ¿Hay forma de apagarlo sin cambiar el código (*feature flag*)? | F1, F2 |
 | 7 | ¿Alguien estará mirando las señales durante la primera hora tras salir? | F4 |
 | 8 | ¿Saben soporte y los usuarios afectados lo que cambia? | F4 |
 
