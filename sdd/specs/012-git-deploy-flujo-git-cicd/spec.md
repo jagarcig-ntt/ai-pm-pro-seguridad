@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **aprobada** (29-oct, con las respuestas del apartado 8) |
+| Estado | **en curso** (aprobada el 29-oct; [plan](plan.md) y [tareas](tasks.md)) |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-02 |
 | Depende de | SPEC-011 (hecha: producto, entornos, ramas `demo/…`) · SPEC-014 (mapas F1 y F3) |

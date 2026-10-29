@@ -1,6 +1,6 @@
 # PLAN · SPEC-012 · Flujo Git profesional y CI/CD (feedbackhub-demo)
 
-*Spec: [spec.md](spec.md) (aprobada el 29-oct) · Estado del plan: borrador · 29-oct*
+*Spec: [spec.md](spec.md) (aprobada el 29-oct) · Estado del plan: **aprobado** el 29-oct*
 
 ## 1. Enfoque
 - **El primer PR se enseña a sí mismo.** Los workflows y la plantilla entran en `main` mediante un PR (`feature/ci-cd`). En un PR del propio repo, GitHub ejecuta los workflows de la rama del PR. Ese mismo PR muestra el check en verde y deja el primer comentario con la URL de preview. Es una buena captura para el plan B de F3.
