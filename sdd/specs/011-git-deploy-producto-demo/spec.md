@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **en curso** (aprobada el 21-oct; [plan](plan.md) aprobado el 22-oct; [tareas](tasks.md)) |
+| Estado | **hecha** (29-oct; [review](review.md)) |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-02 (semana 2 del calendario del 20-oct) |
 | Depende de | SPEC-010 v3 · SPEC-014 (hecha: sus mapas son los requisitos) |

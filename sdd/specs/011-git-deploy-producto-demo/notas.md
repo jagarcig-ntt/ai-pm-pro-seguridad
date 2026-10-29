@@ -45,7 +45,7 @@ Registro de lo hecho fuera de los repos (paneles de GitHub, Supabase y Cloudflar
 
 **Pendiente en T04:**
 - [x] 22-oct · Verificado por el agente: los dos entornos sirven una clave `sb_publishable_` (distinta en cada uno), `errorConfig: null`, y la protección ya está desplegada (commit `c01e78d`).
-- [ ] Jaime confirma que **revocó** las dos claves secretas en Supabase (el agente no lo puede comprobar sin el valor).
+- [x] 29-oct · Jaime confirma que **revocó** las dos claves secretas en Supabase.
 - [ ] Paso 3 🧑 (no bloquea SPEC-011; lo necesita SPEC-012): token de Cloudflare con permiso *Account → Cloudflare Pages → Edit*, y los secretos `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` en GitHub (los usa SPEC-012).
 - [x] Primer despliegue a producción y a preview: `/api/config` devuelve `production` en uno y `staging` en el otro ✅.
 
