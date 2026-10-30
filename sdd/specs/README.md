@@ -14,7 +14,7 @@ Fuente de verdad del estado de cada spec. La actualizan los comandos `/sdd-*`.
 | SPEC-015 | Guion minuto a minuto + cheat sheet + kit (checklist go-live, chuleta Git) | 2026-11 | 2026-11-16 | pendiente |
 | SPEC-016 | Portal de la sesión Git/Deploy | 2026-11 | 2026-11-16 | pendiente |
 | SPEC-017 | Deployment Agent Squad **genérico** (agentes de Claude Code para cada fase del CI/CD, aplicables a cualquier producto) | 2026-11 | 2026-11-09 | pendiente |
-| [SPEC-018](018-git-deploy-flujo-lovable/spec.md) | **Validar el flujo Lovable → GitHub → Cloudflare Pages** (+ Supabase por entorno) y propuesta para Gema y el entrenador | 2026-11 | 2026-11-06 | borrador |
+| [SPEC-018](018-git-deploy-flujo-lovable/spec.md) | **Validar el flujo Lovable → GitHub → Cloudflare Pages** (+ Supabase por entorno) y propuesta para Gema y el entrenador | 2026-11 | 2026-11-06 | aprobada · [plan](018-git-deploy-flujo-lovable/plan.md) en borrador |
 | [SPEC-020](020-retro-junio/spec.md) | Retro sesión 26-jun ([retro](020-retro-junio/retro.md)) | 2026-12 | 2026-11-09 | borrador |
 | SPEC-021 | Rediseño familias 3 y 4 | 2026-12 | 2026-11-30 | pendiente |
 | SPEC-022 | Evolución del pipeline de agentes (+ check en CI; + script que regenera el zip, aplazado desde SPEC-001) | 2026-12 | 2026-11-30 | pendiente |

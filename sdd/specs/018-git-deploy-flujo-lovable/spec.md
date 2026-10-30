@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | borrador |
+| Estado | **aprobada** (30-oct, con las respuestas del apartado 8) |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-06 (antes de la reunión con Gema y el entrenador, la semana del 2-nov) |
 | Depende de | SPEC-011 (demo y Cloudflare Pages, hecha) · SPEC-012 (workflows y ruleset, en curso) |
@@ -74,17 +74,12 @@ Un flujo **probado de extremo a extremo** con un proyecto real de Lovable (const
 ## 7. Restricciones (constitution)
 3.1 stack del alumno (Lovable entra como herramienta del curso) · 3.2 coste 0 · 3.4 nada de secretos · 5.4 nada de inventar datos (Lovable cambia rápido: todo con fecha de comprobación) · 5.5 Jaime crea cuentas, proyectos y commits · 2.5 lenguaje de PM.
 
-## 8. Preguntas abiertas
-- [ ] **¿Tienes cuenta de Lovable? ¿En qué plan?** Algunas funciones (exportar o integraciones) podrían requerir plan de pago. Hay que saberlo para R6.
-- [ ] **¿Con qué cuenta de GitHub conectamos el proyecto de prueba?** Propuesta: `jagarcig-ntt`, repo nuevo `lovable-prueba`, separado de `feedbackhub-demo`.
-- [ ] **Supabase:** el plan gratuito permite 2 proyectos activos por organización y ya los usa el demo. Opciones:
-  - (a) crear una segunda organización de Supabase para la prueba;
-  - (b) reutilizar los proyectos del demo con tablas aparte;
-  - (c) pausar uno temporalmente.
-
-  Propuesta: (a).
-- [ ] **¿Qué sabes de cómo trabaja el entrenador con los alumnos?** ¿Usan solo Lovable o también editan en GitHub o en un editor? ¿Un proyecto de Supabase por alumno? Si no lo sabes, va como pregunta en la reunión.
-- [ ] **Fecha de la reunión:** pendiente de la respuesta de Gema a los huecos que propongas. Ajusta la fecha límite de esta spec.
+## 8. Preguntas abiertas (respondidas por Jaime el 30-oct)
+- [x] **Cuenta de Lovable:** sí, ya conectada con GitHub. Plan sin confirmar: se anotará qué funciones piden pago durante la prueba (R6).
+- [x] **Repo de prueba:** `jagarcig-ntt/lovable-prueba`, nuevo y separado de `feedbackhub-demo`.
+- [x] **Supabase:** una **segunda organización** solo para la prueba. Así no toca los 2 proyectos del demo.
+- [x] **Cómo trabaja el entrenador con los alumnos:** se pregunta en la reunión. Va al documento de la reunión como pregunta abierta.
+- [ ] **Fecha de la reunión:** la semana del 2 al 6 de noviembre, día por concretar con Gema (30-oct). La fecha límite del 6-nov se mantiene; si la reunión cae antes, el documento de la reunión (CA5) se adelanta a esa fecha.
 
 ## 9. Hallazgos fuera de alcance
 - Si la conclusión es que Lovable obliga a trabajar sobre `main`, habrá que decidir si en la sesión se enseña "Lovable escribe en una rama de trabajo y tú abres el PR", o se acepta `main` sin protección con despliegue a staging como red. Es una decisión pedagógica que afecta a F1 (SPEC-014).
