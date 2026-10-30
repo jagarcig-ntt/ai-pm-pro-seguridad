@@ -94,15 +94,13 @@ Solo cuando las tres cosas están en verde se hace el *merge*: los cambios entra
 
 ## 6. Cómo se ve en el producto demo
 
-<!-- ajustar tras SPEC-012: contenido final de la plantilla de PR -->
-
 En la sesión trabajamos sobre **FeedbackHub**, un producto de ejemplo con las piezas de cualquier producto real: una **interfaz** (formulario y panel de administración), una **API** (Cloudflare Pages Functions) y una **base de datos** con login (Supabase). Su repositorio es público: `github.com/jagarcig-ntt/feedbackhub-demo`. En esta familia:
 
 - Partimos de `main`, que funciona y está desplegada.
 - Creamos la rama `feature/texto-portada` para un cambio pequeño y visible: el texto de la portada (`public/index.html`).
 - Hacemos un commit con un mensaje con sentido.
-- Abrimos un PR usando la **plantilla** del repositorio (`.github/pull_request_template.md`), que nos pide qué cambia, por qué, cómo se ha probado y qué pasa si falla.
-- Lo revisamos y hacemos el merge.
+- Abrimos un PR. GitHub rellena sola la **plantilla** del repositorio (`.github/pull_request_template.md`) con cinco apartados: **qué cambia**, **por qué**, **cómo se ha probado** (dos casillas: check en verde y probado en la URL de preview), **¿qué pasa si falla?** y **¿cómo se apaga?**.
+- Lo revisamos y hacemos el merge. `main` está protegida: GitHub no deja entrar nada que no venga por PR y con el check en verde. Ni siquiera al dueño del repositorio.
 
 **Tú lo repites en tu copia (fork) del producto demo**, desde la web de GitHub, sin instalar nada: rama → cambio → commit → PR. Al final de este bloque, cada uno tiene **su propio PR abierto**.
 

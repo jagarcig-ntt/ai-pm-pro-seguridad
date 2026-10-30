@@ -105,14 +105,15 @@ Y una regla sin excepciones: **nunca se despliega a mano desde un ordenador**. S
 
 ## 6. Cómo se ve en el producto demo
 
-<!-- ajustar tras SPEC-012: nombres reales de los workflows -->
-
 El repositorio del producto demo tiene dos workflows:
 
-- **"Comprobar el PR"**, que se ejecuta en cada PR: construye y pasa las pruebas.
-- **"Desplegar"**, que se ejecuta al hacer merge a `main`: publica en producción.
+- **"Comprobar el PR"** (`.github/workflows/comprobar-pr.yml`): en cada PR y en cada push a una rama, pasa las pruebas. No usa secretos.
+- **"Desplegar"** (`.github/workflows/desplegar.yml`): vuelve a pasar las pruebas y, solo si están en verde, publica:
+  - en cada **PR** → su URL de preview, que deja en un **comentario automático** del PR;
+  - al hacer **merge a `main`** → **producción** (`feedbackhub-demo.pages.dev`);
+  - en cada push a la rama **`staging`** → el staging fijo (`staging-prueba.feedbackhub-demo.pages.dev`).
 
-Cada rama o PR se publica en **Cloudflare Pages** en su propia **URL de preview** (`<rama>.feedbackhub-demo.pages.dev`), con la configuración de staging.
+La URL de preview lleva el nombre de la rama, con las `/` cambiadas por `-`: la rama `feature/texto-portada` se publica en `feature-texto-portada.feedbackhub-demo.pages.dev`, con la configuración de staging. Un PR con el check en rojo **ni siquiera se publica** en preview.
 
 En la demo veremos:
 1. Abrir un PR → el check se pone en marcha → ✅ verde.

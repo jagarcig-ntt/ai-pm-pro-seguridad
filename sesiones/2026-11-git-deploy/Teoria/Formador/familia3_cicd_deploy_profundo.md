@@ -124,14 +124,15 @@ Y una regla sin excepciones: **nunca se despliega a mano desde un ordenador**. S
 
 ## 6. Cómo se ve en el producto demo
 
-<!-- ajustar tras SPEC-012: nombres reales de los workflows -->
-
 El repositorio del producto demo tiene dos workflows:
 
-- **"Comprobar el PR"**, que se ejecuta en cada PR: construye y pasa las pruebas.
-- **"Desplegar"**, que se ejecuta al hacer merge a `main`: publica en producción.
+- **"Comprobar el PR"** (`.github/workflows/comprobar-pr.yml`): en cada PR y en cada push a una rama, pasa las pruebas. No usa secretos.
+- **"Desplegar"** (`.github/workflows/desplegar.yml`): vuelve a pasar las pruebas y, solo si están en verde, publica:
+  - en cada **PR** → su URL de preview, que deja en un **comentario automático** del PR;
+  - al hacer **merge a `main`** → **producción** (`feedbackhub-demo.pages.dev`);
+  - en cada push a la rama **`staging`** → el staging fijo (`staging-prueba.feedbackhub-demo.pages.dev`).
 
-Cada rama o PR se publica en **Cloudflare Pages** en su propia **URL de preview** (`<rama>.feedbackhub-demo.pages.dev`), con la configuración de staging.
+La URL de preview lleva el nombre de la rama, con las `/` cambiadas por `-`: la rama `feature/texto-portada` se publica en `feature-texto-portada.feedbackhub-demo.pages.dev`, con la configuración de staging. Un PR con el check en rojo **ni siquiera se publica** en preview.
 
 En la demo veremos:
 1. Abrir un PR → el check se pone en marcha → ✅ verde.
@@ -153,7 +154,8 @@ En la demo veremos:
 > **B3b, squad (25 min, tras la pausa):** el squad ejecuta fase a fase sobre el producto demo. Su guion vive en SPEC-017. Aquí solo: preguntas guiadas "¿qué revisaríais en este paso?".
 >
 > **Plan B**
-> - **GitHub Actions lento o caído:** PR `demo/f3-checks` con los checks ya ejecutados (verde y rojo) y capturas.
+> - **GitHub Actions lento o caído:** el PR de `demo/f3-checks` (rojo, merge bloqueado) y el PR #2 (verde, con preview) ya están ejecutados, más capturas.
+> - **Si preguntan por qué salen dos "Comprobar el PR":** es el mismo control lanzado por dos motivos (el push a la rama y el PR). Normal.
 > - **En los forks de los alumnos Actions no arranca:** que lo vean en tu pantalla. No es imprescindible para el objetivo del bloque (leer y entender el flujo).
 > - **El deploy de la pausa falla:** perfecto para la Familia 4; úsalo como incidente real, con el rollback preparado.
 
@@ -199,6 +201,8 @@ En esta fase intervienen dos agentes del **Deployment Agent Squad**:
 - **cambiar las reglas del repositorio** (protección de `main`, checks obligatorios). Son las reglas del juego y las decide una persona;
 - **desplegar a producción saltándose staging.** "Es un cambio pequeño" es exactamente lo que se pensó en el caso CrowdStrike.
 
+> **Error esperado (visto al preparar el demo, 29-oct):** guardar los secretos del despliegue (`CLOUDFLARE_API_TOKEN`) en las variables de **Cloudflare** en lugar de en los *Secrets* de **GitHub**. Los de la plataforma los usa la app; los de GitHub, el workflow que despliega. Son dos cajas fuertes distintas.
+>
 > 🎓 **Momento a vigilar en B3b:** si en la demo el squad propone desactivar un check (puede pasar), es oro. Páralo y pregunta a la sala: "¿lo aprobaríais?". Es la regla "un check en rojo se arregla, no se apaga" en vivo.
 
 ---

@@ -24,7 +24,7 @@ Reglas:
 | T07 | **Ramas de demo:** script para Jaime con `staging`, `demo/f3-checks` y el rebase de `demo/f1-pr-listo` y `demo/f4-rompe-portada` sobre el `main` nuevo. Instrucciones para abrir los PR de F1 y F3. *Resultado (29-oct): script en `notas.md` (staging, demo/f3-checks y rebase de f1/f4 sobre `855fcb7`). F3 rompe `<h1>FeedbackHub</h1>` → la prueba "la portada muestra el título del producto" falla.* | `notas.md` | T06 | ☑ |
 | T08 🧑 | Ejecutar T07: push de las ramas; abrir PR de `demo/f1-pr-listo` (plantilla rellena) y de `demo/f3-checks`. *Resultado (29-oct): ramas subidas; PR #2 (F1) y PR de F3 abiertos.* | — | T07 | ☑ |
 | T09 | **Verificar las ramas** (CA3, CA5): staging fijo actualizado; PR F1 en verde con preview; PR F3 en rojo y "Merging is blocked". *Resultado (29-oct) · **CA3 y CA5 ✅**: `staging-prueba` actualizado solo; PR F1 en verde con preview que sirve el cambio (prod intacta); PR F3 en rojo, sin preview publicada y merge bloqueado. Detalle en `notas.md`.* | `notas.md` | T08 | ☑ |
-| T10 [P] | **Resolver las 2 marcas** de la teoría (F1 plantilla, F3 workflows, comentario, alias con guiones, rama `staging`). | `sesiones/2026-11-git-deploy/Teoria/familia1_*`, `familia3_*` (alumnos y formador) | T09 | ☐ |
+| T10 [P] | **Resolver las 2 marcas** de la teoría (F1 plantilla, F3 workflows, comentario, alias con guiones, rama `staging`). *Resultado (29-oct) · **CA7 ✅**: 0 marcas "ajustar" en toda la teoría. F1: plantilla real de 5 apartados y protección de `main`. F3: nombres y ficheros de los workflows, comentario automático, alias con `-`, rama `staging` y "en rojo no se publica ni la preview". En el formador: 4 errores esperados reales (GH013 frente a non-fast-forward, ruleset sin aplicar, secrets en Cloudflare frente a GitHub, dos checks "Comprobar el PR") y planes B con los PR #2 y F3 ya ejecutados.* | `sesiones/2026-11-git-deploy/Teoria/familia1_*`, `familia3_*` (alumnos y formador) | T09 | ☑ |
 | T11 🧑 | **Fork como alumno** (CA4) con la segunda cuenta: fork → Enable workflows → editar la portada desde la web → PR en el fork → check verde, "Desplegar" saltado. Cronometrado. | — | T08 | ☐ |
 | T12 | **Revisión** `/sdd-review 012`: CA1–CA8, logs sin secretos (CA6), cobertura de los mapas (CA8). | `review.md` | T09–T11 | ☐ |
 
@@ -34,3 +34,4 @@ Estados: ☐ pendiente · ◐ en curso · ☑ hecha · ✕ descartada
 
 ## Commits propuestos
 - T01 (repo demo, rama `feature/ci-cd`) → `[SPEC-012] T01 Workflows de comprobación y despliegue, plantilla de PR`
+- T10 (este repo) → `[SPEC-012] T10 Teoría F1 y F3 ajustada al CI/CD real`

@@ -118,15 +118,13 @@ Solo cuando las tres cosas están en verde se hace el *merge*: los cambios entra
 
 ## 6. Cómo se ve en el producto demo
 
-<!-- ajustar tras SPEC-012: contenido final de la plantilla de PR -->
-
 En la sesión trabajamos sobre **FeedbackHub**, un producto de ejemplo con las piezas de cualquier producto real: una **interfaz** (formulario y panel de administración), una **API** (Cloudflare Pages Functions) y una **base de datos** con login (Supabase). Su repositorio es público: `github.com/jagarcig-ntt/feedbackhub-demo`. En esta familia:
 
 - Partimos de `main`, que funciona y está desplegada.
 - Creamos la rama `feature/texto-portada` para un cambio pequeño y visible: el texto de la portada (`public/index.html`).
 - Hacemos un commit con un mensaje con sentido.
-- Abrimos un PR usando la **plantilla** del repositorio (`.github/pull_request_template.md`), que nos pide qué cambia, por qué, cómo se ha probado y qué pasa si falla.
-- Lo revisamos y hacemos el merge.
+- Abrimos un PR. GitHub rellena sola la **plantilla** del repositorio (`.github/pull_request_template.md`) con cinco apartados: **qué cambia**, **por qué**, **cómo se ha probado** (dos casillas: check en verde y probado en la URL de preview), **¿qué pasa si falla?** y **¿cómo se apaga?**.
+- Lo revisamos y hacemos el merge. `main` está protegida: GitHub no deja entrar nada que no venga por PR y con el check en verde. Ni siquiera al dueño del repositorio.
 
 **Tú lo repites en tu copia (fork) del producto demo**, desde la web de GitHub, sin instalar nada: rama → cambio → commit → PR. Al final de este bloque, cada uno tiene **su propio PR abierto**.
 
@@ -140,10 +138,14 @@ En la sesión trabajamos sobre **FeedbackHub**, un producto de ejemplo con las p
 > **Práctica guiada (25 min):** fork → rama → cambio → PR en su fork. Ve paso a paso, con el paso actual en pantalla. Pide que peguen **el enlace de su PR en el chat**: es la verificación del bloque (constitution 2.9).
 >
 > **Plan B**
-> - **La demo falla** (GitHub caído o lento): rama `demo/f1-pr-listo` ya preparada con el PR abierto, más capturas de cada paso.
+> - **La demo falla** (GitHub caído o lento): el PR #2 (`demo/f1-pr-listo`) ya está abierto, en verde y con su URL de preview, más capturas de cada paso.
 > - **Un alumno sin cuenta de GitHub o con el fork bloqueado:** que siga la demo y lo haga después con la guía. No pares la sala por una persona.
 > - **Alguien se queda atrás:** que se una en el paso actual. El PR no tiene que ser perfecto, tiene que existir.
 > - **Si ves un nivel muy bajo en la pregunta del 1 al 5:** recorta la idea 2 a la tabla y dedica ese tiempo a la práctica.
+>
+> **Momento para enseñar la protección de `main`** (visto al preparar el demo, 29-oct): un `git push` directo a `main`, incluso del dueño del repo, lo rechaza GitHub con `GH013: Repository rule violations` · *Changes must be made through a pull request*. Tienes la captura.
+> - **Error esperado:** confundir ese rechazo con el aviso local de Git *"rejected (non-fast-forward) … behind"*, que solo significa que tu copia está desactualizada. El de la regla siempre dice `GH013` y `remote rejected`.
+> - **Error esperado:** crear el ruleset y no aplicarlo (sin pulsar *Create*, en estado *Disabled* o sin *Target branches*). Se comprueba en *Settings → Rules* o intentando el push.
 
 ---
 
