@@ -56,3 +56,34 @@ Commits en `main` (API de GitHub):
 - Merge del PR #1 (`lovable-cambios` → `main`) en GitHub → en el chat de Lovable aparece **"Merge pull request #1 from jagarcig-ntt/lova…"** como un paso más del historial, con su *Preview*, y la vista previa pasa a **"Enviar opinión"**.
 - Lovable recoge los merges hechos en GitHub y los muestra en su propio historial.
 - **Detalle útil para la sesión:** cambiar de rama en Lovable cambia la vista previa. Es otra forma de "previsualizar antes de salir".
+
+## Fase 2 · Despliegue de un proyecto Lovable en Cloudflare (30-oct, tras el cambio de enfoque de la sesión)
+
+**Validado en local por el agente** (clon de `feedback-hub` en `b0ffd5c`, carpeta temporal; sin publicar nada):
+- `npm install` (582 paquetes; el repo trae `bun.lock`, no `package-lock.json`, así que en CI va `npm install` y no `npm ci`, o bien Bun) → `npm run build` ✅ en menos de 1 s.
+- El build genera un **Cloudflare Worker**, no una web estática:
+  - `.output/nitro.json` → `"preset": "cloudflare-module"`, con `deploy: "npx wrangler --cwd ./ deploy"`;
+  - `.output/server/wrangler.json` (generado): Worker `jagarcig-ntt-feedback-hub`, `main: index.mjs`, `assets` en `.output/public` con binding `ASSETS`, `nodejs_compat`;
+  - `.wrangler/deploy/config.json` redirige a ese `wrangler.json`, así que `npx wrangler deploy` funciona **desde la raíz del repo, sin configuración extra**.
+- `npx wrangler@4.151.3 deploy --dry-run` ✅: 18 módulos, 1.064 KiB (gzip 237 KiB) más 7 assets. Solo binding `ASSETS`.
+- `wrangler versions upload` admite **`--preview-alias <nombre>`**: el equivalente en Workers a las previews por rama de Pages.
+- **Conclusión:** Lovable genera proyectos **listos para Cloudflare Workers**. El CI/CD de los alumnos es el patrón de `desplegar.yml` con 3 cambios:
+  1. `npm install && npm run build`;
+  2. producción con `wrangler deploy`;
+  3. preview y staging con `wrangler versions upload --preview-alias <rama>`.
+
+  **No usa Cloudflare Pages.**
+- **2-nov · Publicación real de Jaime** (comprobado por el agente con `wrangler deployments list` y `versions list`, solo lectura):
+  - Worker `jagarcig-ntt-feedback-hub` creado. Despliegue de **producción** el 2-nov a las 08:55 UTC con la versión `54d72aac…` al **100 %**.
+  - **Versión de preview** subida a las 08:56 UTC con `versions upload` (`d863a643…`, *Source: version_upload*). No está desplegada: vive solo en su URL de preview.
+  - **URL verificadas por el agente (2-nov):**
+    - **Producción:** `https://jagarcig-ntt-feedback-hub.jagarcig.workers.dev/` → 200;
+    - **Staging (alias de preview):** `https://staging-jagarcig-ntt-feedback-hub.jagarcig.workers.dev/` → 200.
+  - Las dos sirven la app **renderizada en el servidor** (el HTML ya trae el formulario), con "FeedbackHub Lovable", "Lo leemos todo, de verdad" y "Enviar opinión" = `main` en `b0ffd5c`.
+  - El formato del alias es `<alias>-<worker>.<subdominio>.workers.dev`. Las URL de preview vienen activas por defecto (no hizo falta tocar el panel).
+  - **CA2 de SPEC-018 (parte de despliegue) ✅:** un proyecto real de Lovable se publica en Cloudflare con staging y producción separados, sin tocar su código.
+  - **Pendiente:**
+    - el workflow de GitHub Actions que lo automatiza (patrón de `desplegar.yml` + compilación + `wrangler deploy` / `versions upload --preview-alias`);
+    - las variables de Supabase por entorno cuando el proyecto use Supabase (hoy no lo usa);
+    - probar el rollback de Workers (`wrangler rollback` o panel).
+
