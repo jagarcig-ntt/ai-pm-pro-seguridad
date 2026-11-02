@@ -2,134 +2,139 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **aprobada** v3 (20-oct) |
+| Estado | borrador **v4** (2-nov) · la v3 aprobada el 20-oct queda sustituida |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
-| Fecha límite | 2026-10-26 |
-| Depende de | SPEC-000 · constitution v1.4 · alimenta SPEC-011 a SPEC-017 |
-| Responsable | Jaime García · coordinación: Gema |
+| Fecha límite | 2026-11-06 (antes de la reunión con Gema y el entrenador) |
+| Depende de | SPEC-018 (flujo Lovable validado) · SPEC-014 (teoría) · SPEC-011/012 (demo y CI/CD de referencia) · constitution v1.5 |
+| Alimenta | SPEC-013 (requisitos previos), SPEC-015 (guion), SPEC-016 (portal), SPEC-017 (squad) |
+| Responsable | Jaime García · coordinación: Gema y el entrenador de las sesiones de construcción |
 
-> **Cambios de la v3:**
-> - La sesión gira en torno a un **producto de ejemplo común** (frontend, backend y modelo de datos), no al repo de cada alumno. Trabajar con 12 repos distintos en directo sería inmanejable.
-> - El **Deployment Agent Squad es genérico**: acompaña cada fase del CI/CD en cualquier producto.
-> - No hay encuesta previa. A Gema se le envía la propuesta como email (ver anexo B).
+> **Cambios de la v4 (2-nov):**
+> - **La práctica pasa a hacerse sobre el producto de Lovable de cada alumno.** El objetivo es que todos salgan con **su producto en staging y en producción**.
+> - Lo hace viable SPEC-018: todos construyen con **Lovable** (misma plantilla), y se ha probado de punta a punta un proyecto real:
+>   - Lovable trabaja por ramas y, con `main` protegida, desvía los cambios a `lovable-sync`;
+>   - el CI/CD (Bun, compilación y Cloudflare Workers) publica cada PR en una preview y cada merge en producción.
+>
+>   Ver `sdd/specs/018-git-deploy-flujo-lovable/notas.md`.
+> - **Estructura:** primero la teoría de las 4 familias (SPEC-014) y después dos prácticas: gestión de cambios y CI/CD.
+> - **FeedbackHub (SPEC-011/012)** pasa a ser el **ejemplo en pantalla durante la teoría** y el **plan B** de la práctica.
+> - Constitution v1.5: criterios 2.6 y 2.9.
 
 ## 1. Problema / necesidad
-- Es una sesión nueva desde cero. Es la bisagra del programa entre construir el producto y lanzarlo.
-- Unos 12 PMs llegan con un producto funcional en GitHub, cada uno con su propio stack y su propia configuración.
-- Les falta el criterio profesional para llevarlo a producción: trabajar con ramas y PR, separar entornos, gestionar secretos, automatizar el deploy y decidir cuándo algo está listo para salir.
-- En Zoom y en 4 horas no es viable trabajar sobre 12 productos distintos. La sesión es una **demo guiada sobre un producto de ejemplo**, y lo que se llevan (la guía y el squad) está pensado para aplicarlo después a su producto.
+- Es la bisagra del programa entre construir el producto y lanzarlo. Unos 12 PMs llegan con un producto propio **construido en Lovable**, con GitHub y Supabase (propuesta del entrenador, correo de Gema del 30-oct).
+- Hoy Lovable escribe directamente en `main`, sin PR ni revisión, con commits tipo "Changes", y publica con su botón *Publish* en un solo entorno (`notas.md` de SPEC-018, O1).
+- Les falta el criterio y el montaje profesional:
+  - trabajar con ramas y PR;
+  - separar entornos;
+  - automatizar el despliegue;
+  - decidir cuándo algo sale.
+- Con un stack común, el montaje se puede hacer **en la sesión, sobre su producto**, con una única herramienta probada por el formador.
 
 ## 2. Objetivo
-Dejar aprobados los objetivos de aprendizaje y la escaleta de 240 min.
+Dejar aprobados los objetivos de aprendizaje y la escaleta de 240 min de la nueva estructura.
 
-Criterio de éxito de la sesión (constitution 2.9):
-- **Cada alumno sale entendiendo el flujo completo** sobre el producto de ejemplo: rama → PR → CI → staging → producción.
-- **Ha abierto su propio PR** en su copia del producto de ejemplo.
-- **Se lleva la guía y el Deployment Agent Squad** listos para aplicarlos a su producto.
+**Criterio de éxito de la sesión** (constitution 2.9):
+- cada alumno sale con **su producto de Lovable en staging y en producción**;
+- publicado por **CI/CD desde GitHub**;
+- con **`main` protegida**;
+- y con **su primer cambio entrado por Pull Request**.
 
-El despliegue de su propio producto se hace después, con un reto asíncrono coordinado con Gema.
+Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía y el squad.
 
 ## 3. Para quién
-- **Alumnos (PMs):** necesitan entender el flujo y saber qué decidir, no memorizar comandos.
-- **Jaime:** necesita una estructura sobre la que escribir el guion y montar la demo.
-- **Gema:** necesita saber qué se cubre, qué tienen que traer los alumnos y cómo hacer el seguimiento del reto.
+- **Alumnos (PMs):** salir con su producto profesionalizado y entendiendo cada paso. No memorizar comandos.
+- **Jaime:** una estructura viable en Zoom para 12 personas a la vez, con planes B claros.
+- **Gema y el entrenador:** saber qué deben traer los alumnos (requisitos previos) y qué cambia en sus sesiones de construcción.
 
 ## 4. Alcance
-**Incluye:** objetivos, escaleta, reparto entre demo, práctica e interacción, momentos de verificación, entregables por bloque, el papel del squad en la sesión, el reto posterior y el puente con el 11-dic.
+**Incluye:**
+- objetivos;
+- escaleta (anexo A);
+- reparto entre teoría, demo y práctica;
+- entregable visible por bloque;
+- requisitos previos que la sesión necesita (el detalle va en SPEC-013);
+- el papel del squad;
+- planes B;
+- reto posterior y puente al 11-dic.
 
-**No incluye:**
-- El producto de ejemplo (SPEC-011).
-- Los workflows (SPEC-012).
-- La plataforma, los entornos y el coste (SPEC-013).
-- La teoría y la guía (SPEC-014).
-- El guion (SPEC-015).
-- El portal (SPEC-016).
-- El squad (SPEC-017).
+**No incluye:** el texto de la teoría (SPEC-014, hecha), el guion minuto a minuto (SPEC-015), el portal (SPEC-016), el squad (SPEC-017) ni la guía de requisitos previos (SPEC-013).
 
 ## 5. Requisitos
 
 ### Objetivos de aprendizaje (al terminar, el alumno es capaz de…)
-- **R1. Git profesional.** Trabajar en una rama, hacer commits con mensajes con sentido, abrir un Pull Request con descripción y revisarlo antes de integrarlo en `main`.
-- **R2. Entornos.** Explicar para qué sirve cada entorno (development, staging, production) y qué variables y secretos van en cada uno, sin que ninguno quede en el código.
-- **R3. CI/CD.** Leer un workflow de GitHub Actions y explicar qué ocurre desde que se abre un PR hasta que el cambio llega a producción.
-- **R4. Decisión de go-live.** Aplicar una checklist de "¿listo para producción?" y decidir si sale o no.
-- **R5. Recuperarse.** Saber qué hacer si un deploy rompe producción: rollback o revert.
-- **R6. Delegar con criterio.** Usar el Deployment Agent Squad sabiendo qué hace cada agente en cada fase, qué revisar de su trabajo y qué decisiones no delegar.
-- **R7. Transferir.** Identificar en su propio producto el frontend, el backend, el modelo de datos y los secretos, y saber por dónde empezar a aplicar la guía.
+- **R1. Git profesional:** trabajar en una rama, entender la historia de commits y abrir, revisar y aprobar un Pull Request.
+- **R2. Lovable por ramas:** conectar una rama de trabajo en Lovable y entender qué hace Lovable cuando `main` está protegida (`lovable-sync`).
+- **R3. Entornos:** explicar development, staging y production y dónde viven las variables y los secretos de su producto, sin que ninguno quede en el código.
+- **R4. CI/CD:** leer los dos workflows y explicar qué pasa desde que abre un PR hasta que el cambio llega a producción.
+- **R5. Go-live y recuperación:** aplicar la checklist de "¿listo para producción?" a su producto y saber volver atrás (rollback o revert).
+- **R6. Delegar con criterio:** usar el squad para montar el repo y el despliegue, sabiendo qué hace y qué no delegar.
+- **R7. Hacerlo en su producto:** su repo con `main` protegida, los workflows, los secretos y sus URL de staging y producción.
 
 ### Estructura
-- R8. La escaleta suma 240 min, con al menos un 10 % de colchón, pausas que no dejan tramos de más de 75 min y un 40 % o más de práctica o interacción (criterios 2.7, 2.8 y 2.12).
-- R9. Ningún bloque tiene más de 3 ideas (criterio 2.3). Cada bloque tiene un "Antes de entrar" y una verificación (criterio 2.9).
-- R10. **Formato demo + seguimiento sobre el producto de ejemplo** (constitution 2.6, excepción):
-  - Jaime ejecuta cada fase en vivo.
-  - Los alumnos siguen sobre su **fork** del producto de ejemplo, con pasos de bajo riesgo hechos desde la web de GitHub: rama, cambio, PR y ver el CI.
-  - Los pasos que dependen de cuentas externas (secretos, deploy a staging y producción) solo se ven en la demo.
-- R11. **Producto de ejemplo con las piezas mínimas reales:** frontend, backend (API) y modelo de datos con login. Lo resuelve SPEC-011.
-- R12. **Squad genérico.** Cubre las fases rama/PR → CI → entornos y secretos → deploy → go-live. No depende del producto de ejemplo: lo diseña SPEC-017.
-- R13. Se entrega una herramienta que funciona a la primera (criterio 2.10), que es el squad y la plantilla de workflows. También un kit para aplicar al día siguiente (criterio 2.11): la guía paso a paso, la checklist de go-live y una chuleta de Git.
-- R14. **Reto posterior.** Fecha límite y canal para compartir la URL de producción de su producto. Conecta con el 11-dic: "el día 11 añadimos el check de seguridad a vuestro CI".
+- R8. La escaleta suma 240 min, con al menos un 10 % de colchón, tramos de un máximo de 75 min sin pausa, un 40 % o más de práctica o interacción, como máximo 3 ideas por bloque y ningún tramo expositivo de más de 12 min sin interacción (criterios 2.3, 2.7, 2.8 y 2.12).
+- R9. **Teoría con ejemplo real:** cada familia se ilustra en pantalla con FeedbackHub (demo con checks, preview y rollback) y con el proyecto de Lovable `feedback-hub`.
+- R10. **Práctica sobre su producto, con pasos cerrados y verificables.** Cada paso tiene un "¿lo tienes?" en el chat y un punto de control. Lo que dependa de cuentas externas (Cloudflare, token, secretos) debe llegar **preparado de casa** (requisitos previos).
+- R11. **Una sola herramienta para todos:**
+  - los 2 workflows probados en SPEC-018 (Bun, compilación, `wrangler deploy` y `versions upload --preview-alias`);
+  - la plantilla de PR;
+  - la guía.
+
+  El squad (SPEC-017) los instala por el alumno si lo pide.
+- R12. Herramienta que funciona a la primera y kit para el día siguiente (criterios 2.10 y 2.11): workflows, guía paso a paso, checklist de go-live y chuleta de Git.
+- R13. **Reto posterior:** cerrar lo que no dé tiempo y separar la base de datos de staging si no se hizo. Puente al 11-dic: "el día 11 añadimos el check de seguridad a vuestro CI".
 
 ## 6. Criterios de aceptación
 - [ ] CA1. Cada objetivo R1–R7 está asignado a al menos un bloque con demo o práctica y una verificación.
-- [ ] CA2. La escaleta suma exactamente 240 min y cumple R8–R9. Lo comprueba `/sdd-review`.
-- [ ] CA3. Cada bloque declara qué hace Jaime en vivo, qué hace el alumno y su entregable visible.
-- [ ] CA4. Hay un plan B definido para los cuatro puntos de fallo más probables:
-  - falla la demo en vivo → grabación o capturas de cada fase y una rama con el estado final ya preparada;
-  - el alumno no puede hacer fork o no tiene cuenta → sigue la demo y hace el PR después con la guía;
-  - el squad falla → ejecución pregrabada e informe pregenerado;
-  - el alumno se queda atrás en Zoom → cada fase empieza desde una rama "punto de control" del producto de ejemplo.
-- [ ] CA5. Jaime valida la escaleta. Se envía la propuesta a Gema (anexo B).
+- [ ] CA2. La escaleta suma exactamente 240 min y cumple R8. Lo comprueba `/sdd-review`.
+- [ ] CA3. Cada bloque declara qué hace Jaime, qué hace el alumno y su entregable visible.
+- [ ] CA4. Hay un plan B para los fallos más probables:
+  - el alumno llega sin requisitos previos → sigue la práctica sobre su fork de FeedbackHub y monta su producto en el reto;
+  - falla el CI/CD en su repo → el squad diagnostica, o se usa el despliegue manual con `wrangler` como paso intermedio;
+  - falla la demo en vivo → PR y despliegues ya ejecutados en `feedbackhub-demo` y `feedback-hub`, más capturas;
+  - el alumno se queda atrás → cada práctica tiene un punto de control (por ejemplo, "PR fusionado") desde el que retomar.
+- [ ] CA5. Las decisiones abiertas del apartado 8 están cerradas o tienen plan, incluidas las que dependen de la reunión con Gema y el entrenador.
+- [ ] CA6. Jaime valida la escaleta, y es coherente con `propuesta-reunion.md`.
 
 ## 7. Restricciones (constitution)
-Excepción de 2.6 (producto de ejemplo común y herramienta genérica), coste 0 € (3.2), stack del curso (3.1), plan B probado (3.3), reproducible desde cero (3.5), lenguaje de PM (2.5).
+2.6 (práctica sobre su producto, con stack común) · 2.9 (nuevo criterio de éxito) · 3.1 (Lovable, GitHub, Supabase y Cloudflare) · 3.2 coste 0 · 3.3 plan B probado · 2.5 lenguaje de PM.
 
 ## 8. Preguntas abiertas
-- [x] ~~Formato~~ → **Zoom**.
-- [x] ~~Encuesta de stack a los alumnos~~ → **descartada**: la sesión trabaja sobre el producto de ejemplo.
-- [x] **¿Los alumnos siguen la demo en su fork o solo miran?** → **Fork** (aprobado el 20-oct). Propuesta: fork, porque mantiene la interacción en el 40 % y les deja un PR propio. Riesgo: en los forks, GitHub Actions viene desactivado por defecto y hay que activarlo (lo resuelve SPEC-012). Alternativa: solo demo con preguntas guiadas en el chat, con un 25–30 % de interacción, por debajo del criterio 2.12.
-- [ ] ¿El producto de ejemplo es feedbackhub corregido (continuidad con el 11-dic) o uno nuevo? Lo resuelve SPEC-011.
-- [ ] ¿Hay un ayudante en el Zoom? Ayudaría a atender el chat durante la demo.
-- [ ] ¿Qué cubrió Fito en "Autenticación y APIs"? Hay que saberlo para no repetir lo básico de Git.
+- [ ] **⚠️ Repos privados y protección de `main`.** Lovable crea el repo **privado** por defecto (visto en SPEC-018). En el plan gratuito de GitHub, los *rulesets* en repos privados pueden no estar disponibles; en la prueba se usó un repo público. Opciones:
+  - (a) pedir que hagan el repo **público**, si el producto no tiene secretos en el código (debe ser así: constitution 3.4);
+  - (b) proteger `main` solo si su plan lo permite y, si no, trabajar por ramas por disciplina, sin bloqueo técnico.
+
+  **Hay que verificarlo antes de cerrar los requisitos previos (SPEC-013).**
+- [ ] **Base de datos de staging.** ¿En la sesión staging y producción comparten Supabase, y separarla queda para el reto, o cada alumno trae dos proyectos de Supabase? Depende del siguiente paso (Supabase conectado al proyecto de Lovable de prueba) y de la pregunta 2 al entrenador (¿Supabase propio o el backend de Lovable?).
+- [ ] **Cuenta de Cloudflare y token:** ¿llegan con la cuenta creada y el token hecho (guía), o el token se crea en la sesión? Propuesta: cuenta y token **de casa**; los secretos de GitHub, en la sesión.
+- [ ] ¿Hay un ayudante en el Zoom? Con 12 personas montando su repo a la vez es lo más valioso.
 - [ ] Fecha y canal del reto posterior. Propuesta: Slack del curso, hasta el 5-dic.
 
 ## 9. Hallazgos fuera de alcance
-- (vacío)
+- Los proyectos de Lovable deben instalarse con **Bun** y su `bun.lock`: npm 10 falla con sus `overrides` (SPEC-018, fase 2c). Va al squad (SPEC-017) y a la guía.
+- `AGENTS.md` de Lovable: no reescribir el historial de la rama conectada. El ruleset ya bloquea el force push; va también a las reglas del squad.
 
 ---
 
-## Anexo A · Escaleta propuesta (v3)
+## Anexo A · Escaleta v4
 
-| Hora | Min | Bloque | Ideas (≤3) | Jaime en vivo | El alumno | Entregable |
+| Hora | Min | Bloque | Ideas (≤3) | Jaime | El alumno | Entregable |
 |---|---|---|---|---|---|---|
-| 10:00 | 15 | **B0 Apertura.** De "funciona en mi máquina" a "está en producción" | Por qué importa · el mapa del día · el producto de ejemplo | Presenta el producto: frontend, backend, datos | Mano alzada en el chat: ¿dónde está hoy tu producto? | — |
-| 10:15 | 50 | **B1 Git profesional** | Rama · commit con sentido · Pull Request como conversación | Rama → cambio → PR con plantilla → revisión | Fork → rama → cambio pequeño → **su PR** (25 min guiados, desde la web) | Enlace a su PR en el chat |
-| 11:05 | 10 | **Pausa 1** | | | | |
-| 11:15 | 40 | **B2 Entornos y secretos** | Dev / staging / prod · variables por entorno · secretos nunca en el código | Configura staging y prod con secretos separados | Rellena el "mapa de entornos" **del producto de ejemplo** y después, en 5 min, el de su producto (R7) | Dos mapas de entornos |
-| 11:55 | 35 | **B3a CI/CD: la receta automática** | Workflow = receta · preview por PR · merge = producción | Añade el workflow → PR → CI verde → URL de preview → merge | Activa Actions en su fork y ve pasar el CI en su PR | CI verde en su PR |
-| 12:30 | 10 | **Pausa 2** (el deploy a prod de la demo corre durante la pausa) | | | | |
-| 12:40 | 25 | **B3b Deployment Agent Squad** | Qué hace cada agente en cada fase · qué revisas tú · qué no delegas | Ejecuta el squad fase a fase sobre el producto de ejemplo | Preguntas guiadas: "¿qué revisarías aquí?" | — |
-| 13:05 | 30 | **B4 ¿Listo para producción?** | Checklist go-live · rollback · qué vigilar tras salir | Simulacro: rompe prod y hace rollback | Aplica la checklist al producto de ejemplo y marca qué le falta al suyo | Checklist rellena |
-| 13:35 | 15 | **B5 Cierre** | Guía + squad + reto · puente al 11-dic | Cómo aplicar el squad a tu producto; reto y fecha | Ronda: "mi primer paso con mi producto es…" | Kit descargado |
+| 10:00 | 15 | **B0 Apertura.** De "lo tengo en Lovable" a "está en producción" | Por qué importa · el mapa del día · qué os lleváis | Enseña el resultado final (un producto de Lovable con staging y producción) | En el chat: ✅ repo conectado · ✅ cuenta de Cloudflare · ✅ token | Recuento de requisitos |
+| 10:15 | 25 | **T1 · F1 Git profesional** | Rama · commit con sentido · PR como punto de control | Demo: historial de commits de Lovable ("Changes") frente a uno bueno; PR en FeedbackHub | Preguntas en el chat (2) | — |
+| 10:40 | 20 | **T2 · F2 Entornos y secretos** | Tres entornos · misma app, distinta configuración · secretos en la plataforma | Demo: variables por entorno y secretos de GitHub | Mapa de entornos de **su** producto (5 min) | Mapa de entornos |
+| 11:00 | 10 | **Pausa 1** | | | | |
+| 11:10 | 20 | **T3 · F3 CI/CD** | Workflow = receta · cada PR se comprueba y previsualiza · merge = producción | Demo con `feedback-hub` (Lovable): PR → check → preview → merge → producción | Preguntas en el chat | — |
+| 11:30 | 15 | **T4 · F4 Go-live y volver atrás** | Checklist · rollback / revert · vigilar tras salir | Demo: rollback en Cloudflare | Checklist sobre su producto: ¿qué le falta? | Su columna de "noes" |
+| 11:45 | 40 | **P1 · Gestión de cambios en su producto** | — | Guía paso a paso en pantalla | Proteger `main` → rama de trabajo en Lovable (o `lovable-sync`) → un cambio → **PR → revisar → merge** | Su primer PR fusionado |
+| 12:25 | 10 | **Pausa 2** | | | | |
+| 12:35 | 35 | **P2a · CI/CD en su producto** | — | Guía en pantalla; el squad, para quien lo pida | Añadir los 2 workflows (por PR) → secretos de Cloudflare en GitHub → PR → check y preview | Su URL de preview / staging |
+| 13:10 | 5 | **Pausa activa** (mientras corren los primeros despliegues) | | | | |
+| 13:15 | 20 | **P2b · A producción** | — | Desatasca alumno a alumno | Merge → producción → comprobar el contenido | **Su URL de producción** |
+| 13:35 | 15 | **B5 Cierre** | Ronda de URL · reto · puente al 11-dic | Explica el reto y la fecha | Pega sus 2 URL en el chat | Kit descargado |
 | 13:50 | 10 | **Colchón** | | | | |
-| | **240** | | | | Práctica e interacción: B0 5 + B1 25 + B2 15 + B3a 15 + B3b 10 + B4 15 + B5 10 = **95 min (≈40 %), justo en el límite del criterio 2.12**. Se gana margen con preguntas en el chat durante las demos. Tramos sin pausa: 65 / 75 / 70 min | |
+| | **240** | | | | Práctica e interacción: unos 135 min (**≈56 %**). Tramos sin pausa: 60 / 75 / 35 / 45 min | |
 
-## Anexo B · Email a Gema (propuesta, enviado por Jaime)
+**Plan B transversal:** quien no tenga requisitos previos o se atasque sigue P1 y P2 sobre su **fork de FeedbackHub** (SPEC-011/012, ya probado) y lleva su producto en el reto.
 
-> **Asunto:** Propuesta sesión 21-nov · Git, Deployment y Producción
->
-> Hola Gema:
->
-> Te adelanto cómo estoy planteando la sesión del sábado 21 de noviembre (10:00–14:00, Zoom).
->
-> La idea es que cada alumno entienda el camino profesional de un producto hasta producción:
-> - ramas;
-> - Pull Requests;
-> - entornos de desarrollo, pruebas y producción;
-> - despliegue automático con GitHub.
->
-> Lo veremos en una demo guiada sobre un producto de ejemplo con las piezas básicas de cualquier producto real: frontend, backend y modelo de datos. Se llevarán una guía y un equipo de agentes de IA que les ayuda a recorrer cada fase del proceso. Los agentes están pensados para aplicarse después sobre su propio producto.
->
-> Cualquier comentario, me dices.
->
-> ¡Gracias!
-> Jaime
+## Anexo B · Coherencia con la propuesta de la reunión
+La propuesta para Gema y el entrenador (`sdd/specs/018-git-deploy-flujo-lovable/propuesta-reunion.md`) recoge esta estructura en su apartado 3. Si la reunión cambia algo (repos públicos, Supabase, ayudante), se actualiza esta spec antes de aprobarla.

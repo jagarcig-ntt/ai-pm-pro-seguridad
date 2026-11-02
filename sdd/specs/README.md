@@ -6,7 +6,7 @@ Fuente de verdad del estado de cada spec. La actualizan los comandos `/sdd-*`.
 |---|---|---|---|---|
 | [SPEC-000](000-constitution-sdd/spec.md) | Constitution, templates y comandos SDD | infra | 2026-10-19 | en curso |
 | [SPEC-001](001-reorganizacion-repo/spec.md) | Reorganización del repo por sesiones + hub de portales ([plan](001-reorganizacion-repo/plan.md)) | infra | 2026-10-19 → tras el 21-nov | en pausa: falta T15 (probar `/security-audit`) y T18 (review). Se retoma con las specs 02x ([tasks](001-reorganizacion-repo/tasks.md)) |
-| [SPEC-010](010-git-deploy-objetivos-estructura/spec.md) | Git/Deploy: objetivos de aprendizaje y estructura de 4h | 2026-11 | 2026-10-26 | aprobada (v3) |
+| [SPEC-010](010-git-deploy-objetivos-estructura/spec.md) | Git/Deploy: objetivos y estructura de 4h · **v4: práctica sobre el producto de Lovable de cada alumno** (staging + producción) | 2026-11 | 2026-11-06 | borrador v4 |
 | [SPEC-011](011-git-deploy-producto-demo/spec.md) | **Producto demo** a partir de FeedbackHub (frontend, API, datos y login) sobre GitHub + Cloudflare Pages + Supabase | 2026-11 | 2026-11-02 | **hecha** ([review](011-git-deploy-producto-demo/review.md)) · demo en `jagarcig-ntt/feedbackhub-demo` |
 | [SPEC-012](012-git-deploy-flujo-git-cicd/spec.md) | **Flujo Git + CI/CD** en feedbackhub-demo: workflows "Comprobar el PR" y "Desplegar", ruleset de `main`, plantilla de PR, fork con check en verde | 2026-11 | 2026-11-02 | en curso ([tasks](012-git-deploy-flujo-git-cicd/tasks.md)) |
 | SPEC-013 | Requisitos previos de los alumnos + verificación de límites gratuitos (GitHub, Cloudflare Pages, Supabase). La plataforma ya se decidió en SPEC-011 | 2026-11 | 2026-11-09 | pendiente |

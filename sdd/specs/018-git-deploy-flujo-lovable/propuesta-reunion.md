@@ -68,4 +68,5 @@ Os paso una guía de una página para enviarla 48 horas antes.
 2. ¿Usan **Supabase propio** o el backend integrado de Lovable?
 3. ¿En qué plan de Lovable están? ¿Pueden conectar GitHub sin coste?
 4. ¿Se puede pedir en vuestras sesiones que **conecten GitHub y creen la cuenta de Cloudflare** antes del 21-nov?
-5. ¿Hay algo del flujo que choque con cómo trabajáis en vuestras sesiones?
+5. Los repos que crea Lovable son **privados** por defecto. ¿Es un problema que los alumnos los hagan **públicos**? Es lo más sencillo para poder proteger `main` en el plan gratuito de GitHub, y el código no debe llevar secretos.
+6. ¿Hay algo del flujo que choque con cómo trabajáis en vuestras sesiones?
