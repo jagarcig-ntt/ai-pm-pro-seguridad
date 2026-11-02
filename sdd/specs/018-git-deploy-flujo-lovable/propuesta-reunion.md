@@ -32,7 +32,7 @@ El botón *Publish* de Lovable publica un único entorno. Para salir a producci�
 - **Producción:** `jagarcig-ntt-feedback-hub.jagarcig.workers.dev`;
 - **Pruebas (staging):** `staging-jagarcig-ntt-feedback-hub.jagarcig.workers.dev`.
 
-Lovable ya genera sus proyectos preparados para Cloudflare. Como todos los alumnos parten de la misma plantilla, se prepara **un único proceso automático, probado por nosotros**, que cada alumno copia en su proyecto.
+Lovable ya genera sus proyectos preparados para Cloudflare. **El proceso automático también está probado (2-nov):** cada Pull Request se comprueba y se publica solo en su URL de pruebas, y al aprobarlo sale solo a producción. Como todos los alumnos parten de la misma plantilla, **ese mismo proceso es el que cada alumno copiará en su proyecto**.
 
 ### 3. Estructura de la sesión: **cada alumno sale con su propio producto en staging y en producción**
 

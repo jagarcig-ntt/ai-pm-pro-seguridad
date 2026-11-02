@@ -87,3 +87,32 @@ Commits en `main` (API de GitHub):
     - las variables de Supabase por entorno cuando el proyecto use Supabase (hoy no lo usa);
     - probar el rollback de Workers (`wrangler rollback` o panel).
 
+## Fase 2b · Workflows de GitHub Actions para el proyecto Lovable (2-nov, escritos por el agente)
+Ficheros en el clon de Jaime (`~/theherocamp/feedback-hub/.github/workflows/`):
+- **`comprobar-pr.yml` · "Comprobar el PR":** `npm install` → `npm test` (vitest; 1/1 en verde en local) → `npm run build`. Sin secretos.
+- **`desplegar.yml` · "Desplegar":**
+  - paso 0: falla con un mensaje claro si faltan los secretos de Cloudflare;
+  - después: instalar → pruebas → compilar;
+  - publicar:
+    - `main` → `wrangler deploy` (producción);
+    - `staging` → `versions upload --preview-alias staging`;
+    - PR del propio repo → `versions upload --preview-alias <rama saneada>` y comentario con la URL.
+  - Las URL se leen de las líneas de Wrangler 4.151.3 `Version Preview Alias URL:` / `Version Preview URL:` (comprobado en su código) y, en producción, de la URL `*.workers.dev`.
+- **Genérico para los alumnos:** no lleva el nombre del repo escrito. El nombre del Worker lo genera nitro a partir del `origin` de git (`owner/repo`; `generateWorkerName` en `nitro/dist/_presets.mjs`), así que en el repo de cada alumno sale su propio Worker.
+- **Alias saneado** (minúsculas, `[a-z0-9-]`, máximo 30 caracteres; probado): `feature/Nuevo-Botón` → `feature-nuevo-bot-n`; `lovable-sync` → `lovable-sync`.
+- YAML válido (PyYAML).
+- **Cuidado:** compilar en local deja cambios que **no hay que subir**: `src/routeTree.gen.ts` (regenerado) y `package-lock.json` (el repo usa `bun.lock`).
+
+### Fase 2c · Primer PR del CI/CD (#3, `ci-cd`) · 2-nov
+- **Los 3 checks en rojo en el paso "3. Instalar dependencias"** (`npm install`).
+- **Causa** (reproducida en local): **npm 10**, el de Node 22 en GitHub, falla con `Cannot read properties of null (reading 'edgesOut')` por el bloque `overrides` (`rolldown`) del `package.json` de Lovable. Con npm 11 (local, Node 24) funcionaba; por eso no se vio antes.
+- **Arreglo:** instalar con **Bun**, como el propio Lovable (`bun.lock`; `bunfig.toml` con una protección de 24 h contra paquetes recién publicados): `oven-sh/setup-bun@v2` (Bun 1.3.1) + `bun install --frozen-lockfile` + `bun run test` + `bun run build`. Node 22 se mantiene para Wrangler.
+- **Probado en local con Bun 1.3.1:** 515 paquetes desde el lockfile, prueba 1/1 en verde y compilación OK.
+- **Para la sesión y el squad (SPEC-017):** en proyectos de Lovable, **instalar siempre con Bun y su lockfile**, no con npm.
+- **Tras el arreglo con Bun (`8a8979a`) → los 3 checks en verde:** "Comprobar el PR" (pull_request 15 s, push 17 s) y "Desplegar / Publicar en Cloudflare Workers" (39 s).
+- El bot comentó la preview `https://ci-cd-jagarcig-ntt-feedback-hub.jagarcig.workers.dev`, que responde 200 con el contenido de la app (verificado por el agente). Alias `ci-cd` desde la rama `ci-cd`, y producción intacta.
+- **CI/CD automático de un proyecto Lovable: PR → check → preview con comentario ✅.**
+- **Merge del PR #3 → `72663e6` → "Desplegar" en `main` ✅** (sin intervención). Cloudflare: nuevo despliegue de producción a las 09:31 UTC del 2-nov (*Source: deployment*, versión `0936916d…` al 100 %, hecho por el token de GitHub Actions). Producción responde 200 con la app.
+- **🎯 Flujo de la nueva sesión probado de punta a punta con un proyecto real de Lovable:** construir en Lovable → rama o `lovable-sync` → PR con check → preview (staging) → merge → producción en Cloudflare Workers.
+- **Lovable sigue sincronizado (2-nov):** con los workflows ya en `main`, *Settings → Git* muestra **"In sync with GitHub · Lovable and GitHub are on the same commit"**, rama `main`, Connected. El historial de Lovable recoge los merges del PR #1 y del PR #2 como pasos propios. Añadir `.github/workflows/` no molesta a Lovable ✅.
+- **Pendiente (opcional):** probar el rollback de Workers; variables de Supabase por entorno cuando el proyecto use Supabase.
