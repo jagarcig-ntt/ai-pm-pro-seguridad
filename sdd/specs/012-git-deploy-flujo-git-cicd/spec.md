@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **en curso** (aprobada el 29-oct; [plan](plan.md) y [tareas](tasks.md)) |
+| Estado | **retirada** (3-nov) con T01–T10 hechas. T11 y T12 descartadas: el demo pasa a ser el proyecto de Lovable. Su patrón de workflows, ruleset y plantilla se reutilizó en SPEC-018/019 |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-02 |
 | Depende de | SPEC-011 (hecha: producto, entornos, ramas `demo/…`) · SPEC-014 (mapas F1 y F3) |

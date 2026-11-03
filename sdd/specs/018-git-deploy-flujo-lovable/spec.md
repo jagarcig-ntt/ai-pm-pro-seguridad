@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **aprobada** (30-oct, con las respuestas del apartado 8) |
+| Estado | **hecha** (3-nov; [review](review.md)) |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-06 (antes de la reunión con Gema y el entrenador, la semana del 2-nov) |
 | Depende de | SPEC-011 (demo y Cloudflare Pages, hecha) · SPEC-012 (workflows y ruleset, en curso) |

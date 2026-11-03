@@ -5,7 +5,7 @@
 | Estado | borrador **v4** (2-nov) · la v3 aprobada el 20-oct queda sustituida |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-06 (antes de la reunión con Gema y el entrenador) |
-| Depende de | SPEC-018 (flujo Lovable validado) · SPEC-014 (teoría) · SPEC-011/012 (demo y CI/CD de referencia) · constitution v1.5 |
+| Depende de | SPEC-018 (flujo Lovable validado) · SPEC-019 (producto Lovable de la sesión) · SPEC-014 (teoría) · constitution v1.5 |
 | Alimenta | SPEC-013 (requisitos previos), SPEC-015 (guion), SPEC-016 (portal), SPEC-017 (squad) |
 | Responsable | Jaime García · coordinación: Gema y el entrenador de las sesiones de construcción |
 
@@ -17,7 +17,7 @@
 >
 >   Ver `sdd/specs/018-git-deploy-flujo-lovable/notas.md`.
 > - **Estructura:** primero la teoría de las 4 familias (SPEC-014) y después dos prácticas: gestión de cambios y CI/CD.
-> - **FeedbackHub (SPEC-011/012)** pasa a ser el **ejemplo en pantalla durante la teoría** y el **plan B** de la práctica.
+> - **El producto de demo es el proyecto de Lovable `feedback-hub`** (SPEC-019). FeedbackHub (SPEC-011/012) se retira el 3-nov.
 > - Constitution v1.5: criterios 2.6 y 2.9.
 
 ## 1. Problema / necesidad
@@ -72,7 +72,7 @@ Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía y
 
 ### Estructura
 - R8. La escaleta suma 240 min, con al menos un 10 % de colchón, tramos de un máximo de 75 min sin pausa, un 40 % o más de práctica o interacción, como máximo 3 ideas por bloque y ningún tramo expositivo de más de 12 min sin interacción (criterios 2.3, 2.7, 2.8 y 2.12).
-- R9. **Teoría con ejemplo real:** cada familia se ilustra en pantalla con FeedbackHub (demo con checks, preview y rollback) y con el proyecto de Lovable `feedback-hub`.
+- R9. **Teoría con ejemplo real:** cada familia se ilustra en pantalla con el proyecto de Lovable `feedback-hub` (SPEC-019): checks, preview, rollback y ramas de demo.
 - R10. **Práctica sobre su producto, con pasos cerrados y verificables.** Cada paso tiene un "¿lo tienes?" en el chat y un punto de control. Lo que dependa de cuentas externas (Cloudflare, token, secretos) debe llegar **preparado de casa** (requisitos previos).
 - R11. **Una sola herramienta para todos:**
   - los 2 workflows probados en SPEC-018 (Bun, compilación, `wrangler deploy` y `versions upload --preview-alias`);
@@ -88,9 +88,9 @@ Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía y
 - [ ] CA2. La escaleta suma exactamente 240 min y cumple R8. Lo comprueba `/sdd-review`.
 - [ ] CA3. Cada bloque declara qué hace Jaime, qué hace el alumno y su entregable visible.
 - [ ] CA4. Hay un plan B para los fallos más probables:
-  - el alumno llega sin requisitos previos → sigue la práctica sobre su fork de FeedbackHub y monta su producto en el reto;
+  - el alumno llega sin requisitos previos → sigue la práctica sobre su copia (fork) de `feedback-hub` (el check funciona sin secretos) y monta su producto en el reto;
   - falla el CI/CD en su repo → el squad diagnostica, o se usa el despliegue manual con `wrangler` como paso intermedio;
-  - falla la demo en vivo → PR y despliegues ya ejecutados en `feedbackhub-demo` y `feedback-hub`, más capturas;
+  - falla la demo en vivo → PR y despliegues ya ejecutados en `feedback-hub` (ramas de demo de SPEC-019), más capturas;
   - el alumno se queda atrás → cada práctica tiene un punto de control (por ejemplo, "PR fusionado") desde el que retomar.
 - [ ] CA5. Las decisiones abiertas del apartado 8 están cerradas o tienen plan, incluidas las que dependen de la reunión con Gema y el entrenador.
 - [ ] CA6. Jaime valida la escaleta, y es coherente con `propuesta-reunion.md`.
@@ -104,7 +104,14 @@ Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía y
   - (b) proteger `main` solo si su plan lo permite y, si no, trabajar por ramas por disciplina, sin bloqueo técnico.
 
   **Hay que verificarlo antes de cerrar los requisitos previos (SPEC-013).**
-- [ ] **Base de datos de staging.** ¿En la sesión staging y producción comparten Supabase, y separarla queda para el reto, o cada alumno trae dos proyectos de Supabase? Depende del siguiente paso (Supabase conectado al proyecto de Lovable de prueba) y de la pregunta 2 al entrenador (¿Supabase propio o el backend de Lovable?).
+  - *Investigación (2-nov):*
+    - GitHub Docs (versión Enterprise Server 3.17): los rulesets están *"available in public repositories with GitHub Free… and in public and private repositories with GitHub Pro, GitHub Team…"* (https://docs.github.com/en/enterprise-server@3.17/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets).
+    - La versión github.com de la página no lo dice de forma explícita.
+    - En el foro de GitHub, un usuario cuenta que en privado con Free se pueden crear pero **no se aplican** (https://github.com/orgs/community/discussions/184363).
+    - **Conclusión provisional:** en repos privados con GitHub Free, la protección de `main` probablemente **no se aplica**. **Confirmación práctica pendiente:** crear un ruleset en un repo privado de prueba y ver si GitHub avisa de que no se aplicará.
+- [x] **Base de datos de staging → compartida en la sesión** (decisión de Jaime, 2-nov). Staging y producción usan **el mismo proyecto de Supabase** para que la sesión quepa en 4 horas. **Separarla es parte del reto posterior** (R13).
+  - Se presenta como **deuda consciente**: F2 enseña que cada entorno debería tener sus datos, y en la sesión se dice explícitamente "hoy compartimos y lo separáis en el reto". Es una buena lección de PM: decidir una deuda y apuntarla, no tenerla sin saberlo.
+  - **Para la teoría (SPEC-014):** añadir esa nota en F2 (formador y alumnos) cuando se ajuste a la v4.
 - [ ] **Cuenta de Cloudflare y token:** ¿llegan con la cuenta creada y el token hecho (guía), o el token se crea en la sesión? Propuesta: cuenta y token **de casa**; los secretos de GitHub, en la sesión.
 - [ ] ¿Hay un ayudante en el Zoom? Con 12 personas montando su repo a la vez es lo más valioso.
 - [ ] Fecha y canal del reto posterior. Propuesta: Slack del curso, hasta el 5-dic.
@@ -112,6 +119,11 @@ Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía y
 ## 9. Hallazgos fuera de alcance
 - Los proyectos de Lovable deben instalarse con **Bun** y su `bun.lock`: npm 10 falla con sus `overrides` (SPEC-018, fase 2c). Va al squad (SPEC-017) y a la guía.
 - `AGENTS.md` de Lovable: no reescribir el historial de la rama conectada. El ruleset ya bloquea el force push; va también a las reglas del squad.
+- **Repos privados (2-nov):** los agentes no pueden saltarse el límite del plan (lo aplica GitHub). Para SPEC-017, el squad detecta si el repo es privado y ofrece dos salidas:
+  - (1) revisar que no hay secretos en el código ni en el historial → **confirmación del alumno** → hacerlo público → proteger `main`;
+  - (2) mantenerlo privado: `main` → staging automático, y **producción solo al publicar una *Release*** (gratis en privados).
+
+  Se decide tras la respuesta del entrenador.
 
 ---
 
@@ -120,7 +132,7 @@ Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía y
 | Hora | Min | Bloque | Ideas (≤3) | Jaime | El alumno | Entregable |
 |---|---|---|---|---|---|---|
 | 10:00 | 15 | **B0 Apertura.** De "lo tengo en Lovable" a "está en producción" | Por qué importa · el mapa del día · qué os lleváis | Enseña el resultado final (un producto de Lovable con staging y producción) | En el chat: ✅ repo conectado · ✅ cuenta de Cloudflare · ✅ token | Recuento de requisitos |
-| 10:15 | 25 | **T1 · F1 Git profesional** | Rama · commit con sentido · PR como punto de control | Demo: historial de commits de Lovable ("Changes") frente a uno bueno; PR en FeedbackHub | Preguntas en el chat (2) | — |
+| 10:15 | 25 | **T1 · F1 Git profesional** | Rama · commit con sentido · PR como punto de control | Demo en `feedback-hub`: historial de commits de Lovable ("Changes") frente a uno bueno; PR con plantilla | Preguntas en el chat (2) | — |
 | 10:40 | 20 | **T2 · F2 Entornos y secretos** | Tres entornos · misma app, distinta configuración · secretos en la plataforma | Demo: variables por entorno y secretos de GitHub | Mapa de entornos de **su** producto (5 min) | Mapa de entornos |
 | 11:00 | 10 | **Pausa 1** | | | | |
 | 11:10 | 20 | **T3 · F3 CI/CD** | Workflow = receta · cada PR se comprueba y previsualiza · merge = producción | Demo con `feedback-hub` (Lovable): PR → check → preview → merge → producción | Preguntas en el chat | — |
@@ -134,7 +146,7 @@ Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía y
 | 13:50 | 10 | **Colchón** | | | | |
 | | **240** | | | | Práctica e interacción: unos 135 min (**≈56 %**). Tramos sin pausa: 60 / 75 / 35 / 45 min | |
 
-**Plan B transversal:** quien no tenga requisitos previos o se atasque sigue P1 y P2 sobre su **fork de FeedbackHub** (SPEC-011/012, ya probado) y lleva su producto en el reto.
+**Plan B transversal:** quien no tenga requisitos previos o se atasque sigue P1 y P2 sobre su **copia de `feedback-hub`** (SPEC-019) y lleva su producto en el reto.
 
 ## Anexo B · Coherencia con la propuesta de la reunión
 La propuesta para Gema y el entrenador (`sdd/specs/018-git-deploy-flujo-lovable/propuesta-reunion.md`) recoge esta estructura en su apartado 3. Si la reunión cambia algo (repos públicos, Supabase, ayudante), se actualiza esta spec antes de aprobarla.

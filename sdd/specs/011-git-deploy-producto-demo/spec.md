@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **hecha** (29-oct; [review](review.md)) |
+| Estado | **hecha · retirada** (3-nov: el demo de la sesión pasa a ser el proyecto de Lovable, SPEC-019). El repo `feedbackhub-demo` se conserva como referencia y no se usa en la sesión |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-02 (semana 2 del calendario del 20-oct) |
 | Depende de | SPEC-010 v3 · SPEC-014 (hecha: sus mapas son los requisitos) |
