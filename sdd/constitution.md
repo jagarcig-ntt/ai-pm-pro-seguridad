@@ -1,6 +1,6 @@
 # Constitution · Hero Camp AI PM Pro
 
-*Versión 1.5 · 2 de noviembre de 2026 · Responsable: Jaime García*
+*Versión 1.6 · 5 de noviembre de 2026 · Responsable: Jaime García*
 
 Principios y reglas que gobiernan todo el material formativo de este repositorio.
 Ninguna spec, plan o tarea puede contradecirla. Si algo choca con ella, se cambia la constitution primero (con su propia versión y fecha), nunca se ignora.
@@ -15,9 +15,9 @@ Ninguna spec, plan o tarea puede contradecirla. Si algo choca con ella, se cambi
 | Git, Deployment y Producción | 21 nov 2026 | 10:00–14:00 (4h, Zoom) | En diseño · **prioridad** |
 | Seguridad y buenas prácticas con IA (v2) | 11 dic 2026 | 17:00–21:00 (4h) | Evoluciona directamente el material de junio |
 
-Audiencia: unos 12 Product Managers Senior del curso AI PM Pro (The Hero Camp). Perfiles heterogéneos, parte sin background técnico. Construyen con **Lovable** (herramienta principal, acordada con el entrenador de las sesiones de construcción), Supabase y GitHub, y publican en Cloudflare. Llegan con un producto propio de Lovable conectado a GitHub.
+Audiencia de la promoción actual: **18 alumnos**, con una edad media de más de 40 años. La mitad son ingenieros y perfiles tecnológicos de empresas tradicionales; la otra mitad, perfiles de diseño y negocio. Cada uno desarrolla un side project individual que presenta ante un jurado en el **Demo Day (12-dic)**. Construyen con **Lovable** (plan Pro), GitHub y su propio proyecto de Supabase, y publican en Cloudflare.
 
-Coordinación: Maribel Fernández (sesión de junio) · Gema y el entrenador de las sesiones de construcción (sesión del 21-nov).
+Coordinación: Maribel Fernández (sesión de junio) · Gema (coordinación) · Jose (sesiones de construcción del 7, 13, 14 y 20-nov) · Fer Guirao (sesión de dudas antes del Demo Day).
 
 ---
 
@@ -41,10 +41,10 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 3. **Máximo 3 ideas por bloque.** Lección de las familias 3 y 4 de junio: la densidad mata la comprensión. Si un bloque necesita más de 3 ideas, se divide o se recorta.
 4. **Patrón de bloque:** concepto en cámara → caso real → momento interactivo → demo o práctica → cómo se arregla o se hace bien → "lo que el PM se lleva".
 5. **Lenguaje de PM, no de ingeniero.** El output de cualquier práctica es una decisión o un criterio, no código. Se explica el comando, pero no se exige dominarlo.
-6. **Práctica sobre lo suyo cuando sea posible.** Si los alumnos tienen producto propio, se practica sobre él. Siempre existe un producto de prueba como plan B. Lo que hace viable practicar sobre 12 productos distintos en directo es que **compartan stack y plantilla** (en Git/Deploy, todos construyen con Lovable): así una única herramienta, probada por el formador, sirve para todos. Si no comparten stack, se practica sobre un producto de ejemplo común y la herramienta que se entrega debe ser genérica.
+6. **Práctica sobre lo suyo cuando sea posible.** Si los alumnos tienen producto propio, se practica sobre él. Siempre existe un producto de prueba como plan B. Lo que hace viable practicar sobre 18 productos distintos en directo es que **compartan stack y plantilla** (en Git/Deploy, todos construyen con Lovable): así una única herramienta, probada por el formador, sirve para todos. Si no comparten stack, se practica sobre un producto de ejemplo común y la herramienta que se entrega debe ser genérica.
 7. **Ritmo.** Pausa real cada 60–75 min. Ningún bloque expositivo de más de 12 min sin interacción.
 8. **Timings honestos.** Los minutos del guion suman exactamente la duración de la sesión (240 min en las sesiones de 4h), con al menos un 10 % de colchón distribuido.
-9. **Comprobación de aprendizaje.** Cada bloque tiene una verificación ligera (quiz, mano alzada, entregable visible). En la sesión de Git, el criterio de éxito es que **cada alumno salga con su propio producto de Lovable en staging y en producción, publicado por CI/CD desde GitHub, con `main` protegida y su primer cambio entrado por Pull Request**. Quien no lo consiga en la sesión, lo cierra en el reto posterior con la guía y el squad.
+9. **Comprobación de aprendizaje.** Cada bloque tiene una verificación ligera (quiz, mano alzada, entregable visible). En la sesión de Git, el criterio de éxito es que **cada alumno salga con su propio producto de Lovable en producción, con la preview de su PR como staging, publicado por CI/CD desde GitHub, con `main` protegida y su primer cambio entrado por Pull Request**. Quien no lo consiga en la sesión, lo cierra en el reto posterior con la guía.
 10. **Herramienta que funciona a la primera.** Lo más valorado en junio fue el pipeline de agentes ("funcionó a la primera"). Cada sesión entrega una herramienta ejecutable (pipeline, workflow, plantilla de repo) probada desde cero antes de la sesión.
 11. **Kit listo para aplicar.** El segundo punto más valorado fue el kit de seguridad. Cada sesión cierra con un entregable accionable al día siguiente (checklist, guía, plantillas), no solo con teoría.
 12. **Dinamismo sin perder la guía.** Lo guiado y paso a paso funcionó, pero hubo un comentario de "poco dinámico". En las sesiones de 4h, al menos el 40 % del tiempo es práctica o interacción.
@@ -53,10 +53,10 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 
 ## 3. Criterios técnicos
 
-1. **Stack del alumno primero.** Ejemplos, labs y demos usan el stack del curso: Lovable, GitHub, Supabase, Cloudflare (Workers para los proyectos de Lovable, Pages para el demo estático) y Claude Code. No se introduce tecnología nueva sin justificar en la spec.
-2. **Coste 0 €.** Todo lo que el alumno haga debe funcionar en planes gratuitos. Los límites relevantes (minutos de CI, proyectos, builds) se documentan en la spec correspondiente con fecha de verificación.
+1. **Stack del alumno primero.** Ejemplos, labs y demos usan el stack del curso: Lovable, GitHub, Supabase propio conectado desde Lovable, Cloudflare Workers y Claude Code. No se introduce tecnología nueva sin justificar en la spec.
+2. **Coste 0 € adicional.** Más allá del plan Pro de Lovable (25 €/mes, que contrata cada alumno por acuerdo con Hero Camp), todo debe funcionar en planes gratuitos. Los límites relevantes (minutos de CI, proyectos, builds) se documentan en la spec correspondiente con fecha de verificación.
 3. **Plan B probado.** Toda demo o práctica en vivo tiene una alternativa ensayada: repo de prueba, captura, informe pregenerado.
-4. **Nada de secretos reales.** Las claves de los productos trampa son falsas o están revocadas. Los secretos reales van en variables de entorno o secrets de GitHub, nunca en el repo.
+4. **Nada de secretos reales, tampoco en pantalla.** Las clases se graban y los repos son públicos: ningún token ni clave se muestra en la sesión. Las claves de los productos trampa son falsas o están revocadas. Los secretos reales van en variables de entorno o secrets de GitHub, nunca en el repo.
 5. **Reproducible desde cero.** Cada lab se valida desde una cuenta limpia siguiendo solo la guía del alumno, cronometrado.
 6. **Portales estáticos con base común.** Los portales son HTML estático servidos por GitHub Pages. Comparten `assets/` (CSS, JS y logo), que es la única fuente del estilo y del comportamiento común. El contenido de cada sesión va en su propio `index.html`. Se mantiene la identidad visual de junio: fondo oscuro, acento lima `#DCEE3C`, Fraunces, Manrope y JetBrains Mono, logo oficial de Hero Camp sin modificar. Las notas del orador van con `?notas` o la tecla `N`.
 
@@ -116,3 +116,4 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 | 1.3 | 2026-10-15 | 1.4: junio evoluciona en su sitio hacia diciembre y lo impartido se conserva con un tag de git · 3.6: `assets/` compartido · 4: portal = `index.html` de la sesión, `descargas/` y URLs estables (SPEC-001 v2) |
 | 1.4 | 2026-10-20 | 2.6: excepción de producto de ejemplo común + herramienta genérica · 2.9: nuevo criterio de éxito de Git/Deploy (SPEC-010 v3) |
 | 1.5 | 2026-11-02 | Audiencia y 3.1: Lovable como herramienta principal y Cloudflare Workers · 2.6: se practica sobre el producto propio cuando el stack es común · 2.9: éxito de Git/Deploy = su producto en staging y producción por CI/CD (SPEC-010 v4, a partir de SPEC-018) |
+| 1.6 | 2026-11-05 | Tras el correo de Gema: audiencia (18, perfil mixto, Demo Day), coordinación, 2.9 la preview del PR cuenta como staging, 2.6 18 productos, 3.1 Supabase propio de cada alumno conectado desde Lovable (decisión de Jaime, 5-nov), 3.2 coste 0 salvo Lovable Pro, 3.4 clases grabadas |

@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | borrador |
+| Estado | **aprobada** (3-nov) |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-12 (antes del guion y el portal; ensayo la semana del 16-nov) |
 | Depende de | SPEC-018 (hecha: flujo y CI/CD validados) · SPEC-010 v4 · constitution v1.5 |
@@ -37,7 +37,10 @@
 
 ## 4. Alcance
 **Incluye (repo `feedback-hub`):**
-- **Supabase:** organización nueva `lovable-prueba`, proyecto `feedback-hub` (uno solo, compartido entre entornos), conectado desde Lovable, con la tabla de feedback y RLS.
+- **Supabase (reutilizado, decisión de Jaime del 3-nov):** se reutilizan los proyectos del demo retirado (SPEC-011), que ya tienen la tabla `feedback` (nombre, email, mensaje, valoración), RLS probado (insert público, lectura solo administradores) y usuarios administradores.
+  - **`feedbackhub-prod`** → base de datos **compartida** del proyecto de Lovable (staging y producción).
+  - **`feedbackhub-staging`** → libre: se usa como el Supabase del ensayo solo con navegador (CA9).
+  - Lovable se conecta a la tabla existente, sin crear una nueva. Sin organización nueva y dentro de los 2 proyectos gratuitos.
 - **Observaciones que siguen abiertas en SPEC-018:**
   - O5 · dónde guarda Lovable la URL y la clave (¿variables `VITE_*` o escritas en el código? ¿clave pública?);
   - O6 · si deja conectar un Supabase propio o empuja a su backend.
@@ -52,7 +55,7 @@
 - Actualizar `sesiones/2026-11-git-deploy/Lab/README.md` (hoy apunta a `feedbackhub-demo`).
 
 **No incluye:**
-- Separar staging y producción en la base de datos (reto posterior).
+- Separar staging y producción en la base de datos (fuera del MVP: acuerdo con Jose del 5-nov).
 - La teoría (SPEC-014 v2).
 - El squad (SPEC-017).
 - Requisitos previos (SPEC-013).
@@ -72,13 +75,16 @@
 - [ ] CA4. `demo/f4-rompe-produccion` pasa los checks y falla de forma visible en producción. El rollback la recupera y está cronometrado.
 - [ ] CA5. Plantilla de PR, README y checklist en `main`. `Lab/README.md` apunta a `feedback-hub`.
 - [ ] CA6. 0 claves secretas en el historial. Lovable sigue "In sync".
+- [ ] CA7. Con Supabase conectado, una tabla nueva pedida en el chat de Lovable llega a Supabase tras aprobar el SQL. Queda anotado si el cambio afecta a la base de datos antes del merge de la rama.
+- [ ] CA8. Un usuario inicia sesión y lee sus datos desde la app publicada en Cloudflare.
+- [ ] CA9. Ensayo solo con navegador: un proyecto nuevo de Lovable llega a staging y producción con `main` protegida siguiendo la guía, sin clonar nada, cronometrado y con capturas para SPEC-013. Valida el orden: workflows en `main`, primera publicación y protección de `main`.
 
 ## 7. Restricciones (constitution)
 3.1 stack · 3.2 coste 0 · 3.3 plan B probado · 3.4 nada de secretos · 5.5 Jaime hace commits, merges y paneles · 2.6 (stack común) · 2.9 (este repo es el modelo del éxito del alumno).
 
 ## 8. Preguntas abiertas
 - [ ] ¿Archivar `feedbackhub-demo` en GitHub (*Settings → Archive*: queda de solo lectura y visible) o dejarlo como está? ¿Pausar sus proyectos de Supabase y el proyecto de Cloudflare Pages? Propuesta: **archivar el repo** y dejar que Supabase pause solo sus proyectos.
-- [ ] ¿Qué cambio usamos para `demo/f4-rompe-produccion` en una app de Lovable? Propuesta: un cambio de Lovable que llama a algo que solo existe en producción, o un error en la ruta de la portada. Se decide en el plan.
+- [x] **Cambio de `demo/f4-rompe-produccion`:** se decide en el plan (Jaime, 3-nov).
 
 ## 9. Hallazgos fuera de alcance
 - (vacío)
