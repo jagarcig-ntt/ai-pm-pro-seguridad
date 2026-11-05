@@ -19,6 +19,7 @@ on:
     branches: [main, staging]
   pull_request:
 
+
 permissions:
   contents: read
 
@@ -97,13 +98,20 @@ jobs:
           ALIAS: ${{ steps.destino.outputs.alias }}
         run: |
           set -o pipefail
+          # El servidor de la app también necesita los valores públicos de Supabase
+          # que Lovable guarda en .env. Sin ellos, la web publicada da error 500.
+          VARS=()
+          for nombre in SUPABASE_URL SUPABASE_PUBLISHABLE_KEY; do
+            valor=$(grep -E "^$nombre=" .env 2>/dev/null | cut -d= -f2- | tr -d '"\r' || true)
+            if [ -n "$valor" ]; then VARS+=(--var "$nombre:$valor"); fi
+          done
           if [ "$MODO" = "produccion" ]; then
             # Producción: publica la nueva versión para todos los usuarios
-            npx --yes wrangler@4.151.3 deploy | tee salida.txt
+            npx --yes wrangler@4.151.3 deploy "${VARS[@]}" | tee salida.txt
             url=$(grep -oE 'https://[^ ]+\.workers\.dev' salida.txt | head -1)
           else
             # Staging / preview: sube una versión SIN tocar producción, con su propia URL
-            npx --yes wrangler@4.151.3 versions upload --preview-alias "$ALIAS" | tee salida.txt
+            npx --yes wrangler@4.151.3 versions upload --preview-alias "$ALIAS" "${VARS[@]}" | tee salida.txt
             url=$(grep -oE 'Version Preview Alias URL: https://[^ ]+' salida.txt | sed 's/.*: //' || true)
             if [ -z "$url" ]; then
               url=$(grep -oE 'Version Preview URL: https://[^ ]+' salida.txt | sed 's/.*: //')
@@ -131,3 +139,19 @@ jobs:
             } else {
               await github.rest.issues.createComment({ owner, repo, issue_number, body: cuerpo });
             }
+
+      - name: 9. Comprobar que la web responde
+        env:
+          URL: ${{ steps.publicar.outputs.url }}
+        run: |
+          # Verde no significa que funcione: si la web publicada da error, el check sale en rojo.
+          for intento in 1 2 3 4 5 6; do
+            codigo=$(curl -s -o /dev/null -m 15 -w '%{http_code}' "$URL/" || true)
+            if [ "$codigo" -ge 200 ] && [ "$codigo" -lt 500 ]; then
+              echo "La web responde ($codigo): $URL"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::La web se ha publicado, pero da error ($codigo): $URL"
+          exit 1

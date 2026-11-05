@@ -53,3 +53,60 @@ Registro de pasos y observaciones con fecha. **Nunca se anotan valores de claves
 - **Los secretos solo se aplican en el siguiente despliegue.**
 - **En un PR salen dos "Comprobar el PR"** (uno por el push y otro por el PR). Es normal.
 - **El detalle completo** sigue en git: `git show 07702b3:sdd/specs/011-git-deploy-producto-demo/notas.md` y `…/012-git-deploy-flujo-git-cicd/notas.md`.
+
+## Ensayo solo con navegador · bloque A · 5-nov
+**13 minutos, sin atascos**, con una cuenta nueva de Cloudflare (Jaime conoce el flujo; un alumno tardará más). Repo `jagarcig-ntt/notas-al-d-a`, público.
+
+Comprobado por el agente en el repo y en las capturas:
+- **Cloudflare nuevo:** el subdominio `workers.dev` ya aparece en *Workers & Pages*, sin pedir elegirlo.
+- **Supabase:** se creó el proyecto `notas-al-d-a` desde *Connect project → Create Project*, en lugar de `feedbackhub-staging`. Es más realista. Con Supabase conectado, *Database*, *Users* y *Storage* salen en gris.
+- **Tabla desde el chat:** Lovable enseña el SQL en *Modify Supabase database* (*Allow* / *Skip*), la crea tras aprobar y guarda la migración en `supabase/migrations/`. Cubre parte de CA7, en `main`: falta verlo en una rama.
+- **`.env` en el repo:** las 6 variables habituales, con clave `sb_publishable_`. Ninguna clave secreta en el código.
+- **El plan gratuito de Lovable basta para todo el bloque.**
+
+Para la guía (SPEC-013):
+- **Nombre del proyecto sin tildes:** "Notas al Día" generó el repo `notas-al-d-a`. No rompe nada, pero queda feo y no se debe renombrar después.
+- **Lovable empezó guardando en el navegador:** sin pedir backend usó `localStorage`. Los datos solo existen en Supabase si se conecta y se pide. Mensaje para Jose: conectar antes de crear tablas.
+- **Token:** se creó sin caducidad. En la guía, decidir cuál se recomienda.
+- **Capturas:** en la de *Workers & Pages* se ve el Account ID. No es una clave, pero se tapa en la guía.
+- **Commits reales para F1:** `Changes`, `Work in progress`, `Lovable update`, junto a otros útiles como `Guardó notas en tabla pública`.
+
+El aviso de `feedbackhub-prod` en *Connect project* indica que ese proyecto ya está en uso (Jaime, 5-nov). Sigue respondiendo (auth 200) y la lectura sin sesión sigue bloqueada (401). Lovable también menciona "dos avisos de seguridad" de Supabase: revisarlos para el 11-dic.
+
+## Ensayo solo con navegador · bloque B · 5-nov
+**Workflows desde Lovable: funciona.** Se pidió a Lovable crear los dos ficheros con su contenido exacto. Llegaron a `main` en GitHub, idénticos byte a byte a los originales (comprobado por hash). Lovable sí puede escribir en `.github/workflows`, así que el alumno quizá no necesite tocar GitHub para esto.
+
+**Worker en cuenta nueva: funciona.** La Action "Desplegar" (run `42029907392`, 38 s, en verde) creó `jagarcig-ntt-notas-al-d-a` sin ninguna publicación previa desde local.
+
+**⚠️ Pero la web daba 500, con todo en verde.** Es el hallazgo más importante del ensayo:
+- **Causa:** esta app lee Supabase desde el **servidor** (`createServerFn`, `process.env.SUPABASE_URL`), y el Worker no tiene esas variables. `feedback-hub` no falló porque su formulario llama a Supabase desde el navegador, con las variables `VITE_*` del build.
+- **Reproducido en local** (`wrangler dev`, sin publicar): sin variables, 500 con "La conexión con Supabase no está configurada"; con ellas, 200 y la app carga. Ojo: `wrangler dev` carga el `.env` por su cuenta, y hubo que quitarlo de la copia para ver el fallo.
+- **Coincide con la documentación:** las variables del servidor *"are not in the repository"* como variables del host (https://docs.lovable.dev/tips-tricks/external-deployment-hosting).
+- **Arreglo en `desplegar.yml`:** lee `SUPABASE_URL` y `SUPABASE_PUBLISHABLE_KEY` del `.env` del repo y las pasa con `--var` a `wrangler deploy` y a `versions upload`. Son valores públicos y no pide nada al alumno. Probado con `--dry-run` en los dos modos: las dos variables aparecen, con el valor oculto en los logs. El código de salida 1 del dry-run es esperado: no hay URL que leer.
+
+**Consecuencias:**
+- **Para F4:** caso real y propio de "verde no significa que funcione": pruebas, build y despliegue en verde, y web caída.
+- **`feedback-hub`** debe llevar el mismo workflow, para que todos usen uno solo (T10).
+- **Riesgo que sigue abierto:** si la app de un alumno usa `SUPABASE_SERVICE_ROLE_KEY` en el servidor, esa clave es secreta y este arreglo no la cubre. La compilación previa de los 18 repos debe buscar `client.server`.
+- **Propuesta pendiente:** añadir al workflow una comprobación final de que la web responde, para que un 500 salga en rojo.
+
+**Arreglo confirmado en la web real (5-nov).** Con el `--var` en el workflow, la publicación terminó en verde, la web pasó de 500 a 200 y, en Chrome headless, una nota creada en producción sigue ahí tras recargar (0 errores). Queda una fila "Prueba agente ensayo…" en `notas_ensayo`.
+
+**Paso 9 añadido y probado:** el workflow comprueba que la web responde y sale en rojo si da 5xx o no contesta. Probado en local con web buena, con 500 y sin respuesta; en el repo, run `42053327046` en verde. Se usa después del comentario de la preview, para que la URL se publique también si falla.
+
+**Lovable y la fidelidad:** 3 de 4 pegados fueron idénticos byte a byte. El último llegó con otra codificación de fin de línea, sin ninguna diferencia de contenido y sin efecto en la ejecución. La guía debe pedir comprobar que el workflow funciona, no que sea idéntico.
+
+## Ensayo solo con navegador · bloque C · 5-nov
+**13 minutos.** Comprobado por el agente con la API de GitHub y en las URL, por contenido:
+- **Ruleset activo** sobre la rama por defecto: `deletion`, `non_fast_forward`, `pull_request` y `required_status_checks` con `Comprobar el PR`, sin excepciones.
+- **PR #1** (`lovable-sync` → `main`): checks en verde, comentario con la preview y merge.
+- **Preview:** `https://lovable-sync-jagarcig-ntt-notas-al-d-a.jaimegarcia1991.workers.dev` → 200, con el título nuevo. Confirma el arreglo de las variables también en `versions upload`.
+- **Producción:** 200, con el título nuevo, 38 s después del merge.
+- **Duración de las Actions:** unos 40 s cada publicación y unos 20 s cada comprobación.
+- **Nombres largos:** el alias más el Worker caben con este repo. Sigue sin saberse el límite con nombres más largos.
+
+**Error real, muy útil para la sesión:** el ruleset se creó sin rama objetivo, y GitHub avisó de que no protegía nada. Por eso el primer cambio de título entró directo en `main` (`735ec07`, publicado a las 15:22) sin pasar por PR. Con la rama añadida, el segundo cambio fue a `lovable-sync`. En *Enforcement status*, el valor por defecto es *Disabled*. Son los dos errores que debe prevenir la guía.
+
+**Segundo cambio tras el merge (Jaime, 5-nov):** `lovable-sync` no se borra y Lovable la reutiliza. Vuelve a salir *"Some changes were saved on a sync branch"* y, en *Settings → Git*, *"Lovable is 2 commits ahead of GitHub"*.
+- **El PR no se crea solo:** ni Lovable ni GitHub lo abren. El alumno debe abrirlo cada vez, de `lovable-sync` a `main`.
+- **Aviso de Lovable, importante para la guía:** *"Merge that branch into "main" in your Git provider using a merge commit. Do not squash or rebase: drafts need the original commits."* El botón del PR debe ser **Create a merge commit**, nunca *Squash* ni *Rebase*.

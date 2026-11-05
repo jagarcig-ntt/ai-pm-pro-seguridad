@@ -3,7 +3,7 @@
 **Guía del formador** · versión profunda
 Sesión "Git, Deployment y Producción" · AI PM Pro · The Hero Camp · 21 de noviembre de 2026
 
-> Es la misma guía que reciben los alumnos, más los bloques marcados con 🎓, que son solo para ti. Bloque B1 de la escaleta (SPEC-010): **50 min** = teoría 15 + práctica guiada 25 + verificación y preguntas 10.
+> Es la misma guía que reciben los alumnos, más los bloques marcados con 🎓, que son solo para ti. Bloque T1 de la escaleta (SPEC-010 v4.1): **20 min**, con unos 5 de demo. La práctica de esta familia va en P2, a las 12:10. Este documento es de referencia: qué se cuenta exactamente lo fija el guion (SPEC-015).
 
 ---
 
@@ -42,7 +42,7 @@ La petición formal de "quiero que mis cambios entren en `main`". No es un trám
 
 ## 2. Para qué le importa a un PM
 
-Hasta ahora, muchos habéis construido vuestro producto con Lovable, Cursor o Claude Code haciendo los commits por vosotros, directamente sobre la versión principal. Funciona mientras el producto es un prototipo y solo lo tocáis vosotros.
+Hasta ahora, Lovable ha ido haciendo los commits por vosotros, directamente sobre `main`, sin PR ni revisión. Funciona mientras el producto es un prototipo y solo lo tocáis vosotros.
 
 En cuanto hay usuarios reales, otra persona en el equipo o un agente que hace cambios por su cuenta, trabajar así es como editar el contrato firmado en lugar de un borrador. Cualquier error llega directo al producto, nadie lo ha mirado antes y es difícil saber qué cambió y cuándo.
 
@@ -60,6 +60,7 @@ La regla es sencilla: **`main` siempre funciona**. Todo cambio, por pequeño que
 - Cada rama tiene **un propósito**: una funcionalidad, un arreglo, un experimento. Su nombre lo dice: `feature/login-con-google`, `fix/precio-con-iva`.
 - Mientras trabajas en la rama, `main` sigue intacta. Si el experimento sale mal, se borra la rama y no ha pasado nada.
 - Las ramas son **de vida corta**: días, no meses. Cuanto más tiempo vive una rama, más se aleja de `main` y más difícil es juntarlas después.
+- **En Lovable,** los cambios van a la *rama conectada* (*Settings → Git → Branch*). Crear una rama en GitHub no basta: hay que conectarla en Lovable. Con `main` protegida, Lovable usa sola la rama `lovable-sync`.
 
 **Lo que esto cambia para el PM:** puedes pedir "pruébalo en una rama" sin miedo. Una idea arriesgada deja de ser un riesgo para el producto.
 
@@ -80,6 +81,8 @@ Un *commit* es una foto del producto con una explicación de qué cambió. La hi
 | `fix` | `Corrige el cálculo del total cuando hay descuento` |
 | `wip`, `asdf`, `update` | `Elimina el endpoint de pruebas /debug` |
 
+Mira tu repo: Lovable firma muchos commits como `Changes` o `Work in progress`. No eliges esos mensajes, pero sí el **título y la descripción de tu PR**. Ahí es donde cuentas la historia.
+
 Un buen commit tiene tres propiedades:
 
 1. **Dice qué cambia y por qué**, en una frase que entiende alguien que no lo hizo.
@@ -88,9 +91,9 @@ Un buen commit tiene tres propiedades:
 
 **Lo que esto cambia para el PM:** cuando algo falla en producción, la primera pregunta es "¿qué cambió?". Con una historia legible, la respuesta tarda minutos. Con `cambios`, `fix` y `update`, tarda horas.
 
-> 🎓 **En la demo:** enseña el historial de commits del producto demo (pestaña *Commits* de GitHub). Pon al lado el de una rama con commits malos (`update`, `fix`, `cambios`) y pregunta: "Producción se ha roto esta mañana. ¿En cuál de los dos encontráis antes qué cambió?".
+> 🎓 **En la demo:** enseña el historial real de `feedback-hub` (pestaña *Commits* de GitHub), con los `Changes` y `Work in progress` de Lovable, y pregunta: "Producción se ha roto esta mañana. ¿Cuál de estos commits miraríais primero?". Después enseña un PR con buena descripción: es lo que sí controlan.
 >
-> **Error esperado:** *"El mensaje lo escribe la IA, así que da igual".* → Lo escribe la IA, pero lo lees tú y lo leerá quien investigue un incidente. Un agente escribe buenos mensajes **si se le pide**: es parte de lo que configura el squad.
+> **Error esperado:** *"El mensaje lo escribe la IA, así que da igual".* → Lo escribe la IA, pero lo lees tú y lo leerá quien investigue un incidente. Por eso el título y la descripción del PR importan más con Lovable, no menos.
 
 ---
 
@@ -118,34 +121,34 @@ Solo cuando las tres cosas están en verde se hace el *merge*: los cambios entra
 
 ## 6. Cómo se ve en el producto demo
 
-En la sesión trabajamos sobre **FeedbackHub**, un producto de ejemplo con las piezas de cualquier producto real: una **interfaz** (formulario y panel de administración), una **API** (Cloudflare Pages Functions) y una **base de datos** con login (Supabase). Su repositorio es público: `github.com/jagarcig-ntt/feedbackhub-demo`. En esta familia:
+La demo de la sesión es **`feedback-hub`**, un proyecto real de Lovable con las mismas piezas que el tuyo: una **interfaz**, **datos** en Supabase y una publicación en Cloudflare. Su repositorio es público: `github.com/jagarcig-ntt/feedback-hub`. En esta familia:
 
-- Partimos de `main`, que funciona y está desplegada.
-- Creamos la rama `feature/texto-portada` para un cambio pequeño y visible: el texto de la portada (`public/index.html`).
-- Hacemos un commit con un mensaje con sentido.
-- Abrimos un PR. GitHub rellena sola la **plantilla** del repositorio (`.github/pull_request_template.md`) con cinco apartados: **qué cambia**, **por qué**, **cómo se ha probado** (dos casillas: check en verde y probado en la URL de preview), **¿qué pasa si falla?** y **¿cómo se apaga?**.
-- Lo revisamos y hacemos el merge. `main` está protegida: GitHub no deja entrar nada que no venga por PR y con el check en verde. Ni siquiera al dueño del repositorio.
+- Partimos de `main`, que funciona y está publicada. Está protegida: GitHub no deja entrar nada que no venga por PR y con el check en verde. Ni siquiera al dueño del repositorio.
+- Pedimos a Lovable un cambio pequeño y visible.
+- Lovable no puede escribir en `main`, así que no falla ni pierde el trabajo: lo guarda en la rama `lovable-sync` y avisa con *"Some changes were saved on a sync branch"*.
+- Abrimos un PR de `lovable-sync` a `main`. GitHub rellena sola la **plantilla** del repositorio (`.github/pull_request_template.md`) con cinco apartados: **qué cambia**, **por qué**, **cómo se ha probado** (dos casillas: check en verde y probado en la URL de preview), **¿qué pasa si falla?** y **¿cómo se apaga?**. <!-- ajustar tras el ensayo: confirmar si el alumno añade la plantilla a su repo -->
+- Lo revisamos y hacemos el merge. El cambio vuelve solo a Lovable.
 
-**Tú lo repites en tu copia (fork) del producto demo**, desde la web de GitHub, sin instalar nada: rama → cambio → commit → PR. Al final de este bloque, cada uno tiene **su propio PR abierto**.
+**Tú lo repites en tu propio producto en la segunda práctica**, desde el navegador y sin instalar nada: proteger `main` → cambio en Lovable → PR → merge. Al final, cada uno tiene **su primer PR fusionado**.
 
-> 🎓 **En la demo enseñas** (unos 10 min, antes de la práctica):
+> 🎓 **En la demo enseñas** (unos 5 min; el flujo completo lo verán en F3 y lo harán en P2):
 > 1. `main` en GitHub y la URL de producción funcionando.
-> 2. *Branch* → crear `feature/texto-portada` desde la web.
-> 3. Editar el texto en la web de GitHub y hacer el commit con un mensaje con sentido.
-> 4. *Compare & pull request* → la plantilla se rellena sola. Rellenar en voz alta "qué pasa si falla" y "cómo se apaga".
-> 5. Revisión (aprobar) → *merge*. Enseña que `main` ha cambiado y que la historia lo cuenta.
+> 2. Un PR ya hecho de `lovable-sync` a `main`: la plantilla rellena, sobre todo "qué pasa si falla" y "cómo se apaga".
+> 3. El *merge* y cómo aparece también en el historial de Lovable.
 >
-> **Práctica guiada (25 min):** fork → rama → cambio → PR en su fork. Ve paso a paso, con el paso actual en pantalla. Pide que peguen **el enlace de su PR en el chat**: es la verificación del bloque (constitution 2.9).
+> **Práctica:** va en P2. Pide que peguen **el enlace de su PR en el chat**: es la verificación (constitution 2.9).
 >
 > **Plan B**
-> - **La demo falla** (GitHub caído o lento): el PR #2 (`demo/f1-pr-listo`) ya está abierto, en verde y con su URL de preview, más capturas de cada paso.
-> - **Un alumno sin cuenta de GitHub o con el fork bloqueado:** que siga la demo y lo haga después con la guía. No pares la sala por una persona.
-> - **Alguien se queda atrás:** que se una en el paso actual. El PR no tiene que ser perfecto, tiene que existir.
-> - **Si ves un nivel muy bajo en la pregunta del 1 al 5:** recorta la idea 2 a la tabla y dedica ese tiempo a la práctica.
+> - **La demo falla** (GitHub caído o lento): capturas del PR #4 de `feedback-hub`, ya fusionado.
+> - **Un alumno sin requisitos previos:** que siga la demo y lo cierre en el reto con la guía. No pares la sala por una persona.
+> - **Alguien se queda atrás en P2:** que se una en el paso actual; el ayudante y el rescate de las 13:15 están para eso. El PR no tiene que ser perfecto, tiene que existir.
+> - **Si ves un nivel muy bajo en la pregunta del 1 al 5:** recorta la idea 2 a la tabla.
 >
-> **Momento para enseñar la protección de `main`** (visto al preparar el demo, 29-oct): un `git push` directo a `main`, incluso del dueño del repo, lo rechaza GitHub con `GH013: Repository rule violations` · *Changes must be made through a pull request*. Tienes la captura.
-> - **Error esperado:** confundir ese rechazo con el aviso local de Git *"rejected (non-fast-forward) … behind"*, que solo significa que tu copia está desactualizada. El de la regla siempre dice `GH013` y `remote rejected`.
-> - **Error esperado:** crear el ruleset y no aplicarlo (sin pulsar *Create*, en estado *Disabled* o sin *Target branches*). Se comprueba en *Settings → Rules* o intentando el push.
+> **Errores esperados en P2** (vistos en SPEC-018):
+> - **Crear la rama en GitHub y esperar que Lovable escriba en ella.** Hay que conectarla en *Settings → Git → Branch*. En el 30-oct, un cambio fue a `main` por esto.
+> - **Asustarse con el aviso *"Some changes were saved on a sync branch"*.** No es un error: es la protección de `main` funcionando.
+> - **Crear el ruleset y no aplicarlo:** sin pulsar *Create*, en estado *Disabled* o sin *Target branches*. Se comprueba en *Settings → Rules*.
+> - **Reescribir el historial de la rama conectada.** El `AGENTS.md` de Lovable avisa de que se pierde el historial en Lovable. El ruleset ya bloquea el force push en `main`.
 
 ---
 
@@ -174,11 +177,11 @@ En su informe, Google lo dice claramente: **si el cambio hubiera estado protegid
 
 ## 8. El factor agente IA
 
-En la sesión os llevaréis el **Deployment Agent Squad**: un equipo de agentes que os acompaña en cada fase del proceso. En esta fase, el agente de rama y PR:
+**Lovable ya es tu primer agente:** escribe el código y hace los commits por ti. En esta fase, un agente:
 
 **Hace bien:**
-- crear la rama con un nombre que describe el cambio;
-- escribir mensajes de commit claros a partir de lo que ha cambiado;
+- hacer el cambio en una rama, sin tocar `main`;
+- explicar qué ha cambiado, si se lo pides;
 - redactar la descripción del PR siguiendo la plantilla;
 - resumir el cambio para quien lo revisa y señalar qué partes son delicadas.
 
@@ -189,7 +192,7 @@ En la sesión os llevaréis el **Deployment Agent Squad**: un equipo de agentes 
 
 Los agentes generan cambios más rápido que nunca. Eso hace el punto de control **más** importante, no menos.
 
-> 🎓 **Puente:** no enseñes el squad aquí. Solo anuncia: "En el bloque B3b veréis al agente de rama y PR hacer esto mismo solo". Así el bloque se mantiene en sus 3 ideas.
+> 🎓 **Puente:** el squad es opcional, para quien trabaje desde VS Code. Menciónalo como mucho en una frase, o no lo menciones. <!-- ajustar tras SPEC-017 -->
 >
 > **Si preguntan si un agente puede aprobar PRs:** técnicamente sí, se puede configurar. La regla del curso es que **un agente propone y una persona decide**. Es la misma lógica que el "qué no delegar" de junio.
 
@@ -201,7 +204,7 @@ Los agentes generan cambios más rápido que nunca. Eso hace el punto de control
 2. **La historia de commits es el diario del producto.** Si no se puede leer, no se puede investigar ni deshacer.
 3. **El PR es tu punto de control.** Antes de aprobar, pregunta qué pasa si falla y cómo se apaga.
 
-> 🎓 **Verificación del bloque:** cuenta los enlaces de PR en el chat. Si hay menos de la mitad de la sala, dedica 3 minutos del colchón a desatascar antes de la pausa.
+> 🎓 **Verificación del bloque:** las dos preguntas para el chat de este bloque. La verificación real llega en P2, con los enlaces de PR.
 
 ---
 
@@ -225,9 +228,9 @@ Lo que el producto demo y el squad deben permitir para que esta familia se pueda
 | Concepto | Qué debe tener el producto demo (SPEC-019) | Fase del squad (SPEC-017) |
 |---|---|---|
 | `main` siempre funciona | `main` protegida (*ruleset*): no se puede hacer push directo, solo merge vía PR aprobado | El agente nunca hace commit en `main`; si se lo piden, lo rechaza y propone una rama |
-| Rama con propósito | Convención de nombres documentada en el README (`feature/`, `fix/`) | Crea ramas con nombre descriptivo a partir de la tarea |
-| Commit con sentido | Historial de `main` con mensajes ejemplares + una rama `demo/commits-malos` para el contraste | Escribe mensajes con la convención y una sola cosa por commit |
+| Rama con propósito | Rama conectada en Lovable y `lovable-sync` documentadas en el README | Crea ramas con nombre descriptivo a partir de la tarea |
+| Commit con sentido | Historial real de Lovable (`Changes`, `Work in progress`) frente a un PR con buena descripción | Escribe mensajes con la convención y una sola cosa por commit |
 | PR como punto de control | `.github/pull_request_template.md` con: qué cambia, por qué, cómo se ha probado, **qué pasa si falla**, **cómo se apaga** | Rellena la plantilla y resume el cambio y las partes delicadas para quien revisa; no aprueba |
-| "¿Se puede apagar?" (caso Google) | Al menos una funcionalidad detrás de un *feature flag* sencillo (variable de entorno). Conecta con la Familia 2 | Señala en el PR si el cambio no tiene forma de desactivarse |
-| Práctica en fork desde la web | Repo **público**, cambio de texto editable desde la web, sin build local | — |
-| Plan B de la demo | Rama `demo/f1-pr-listo` con el PR abierto y capturas del flujo | — |
+| "¿Se puede apagar?" (caso Google) | Solo concepto: `feedback-hub` no tiene *feature flag*. La respuesta práctica es rollback o revert (Familia 4) | Señala en el PR si el cambio no tiene forma de desactivarse |
+| Práctica en su producto | Repo **público** de cada alumno, todo desde el navegador | — |
+| Plan B de la demo | PR #4 de `feedback-hub`, ya fusionado, y capturas del flujo | — |

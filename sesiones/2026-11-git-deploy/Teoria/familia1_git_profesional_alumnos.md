@@ -35,7 +35,7 @@ La petición formal de "quiero que mis cambios entren en `main`". No es un trám
 
 ## 2. Para qué le importa a un PM
 
-Hasta ahora, muchos habéis construido vuestro producto con Lovable, Cursor o Claude Code haciendo los commits por vosotros, directamente sobre la versión principal. Funciona mientras el producto es un prototipo y solo lo tocáis vosotros.
+Hasta ahora, Lovable ha ido haciendo los commits por vosotros, directamente sobre `main`, sin PR ni revisión. Funciona mientras el producto es un prototipo y solo lo tocáis vosotros.
 
 En cuanto hay usuarios reales, otra persona en el equipo o un agente que hace cambios por su cuenta, trabajar así es como editar el contrato firmado en lugar de un borrador. Cualquier error llega directo al producto, nadie lo ha mirado antes y es difícil saber qué cambió y cuándo.
 
@@ -50,6 +50,7 @@ La regla es sencilla: **`main` siempre funciona**. Todo cambio, por pequeño que
 - Cada rama tiene **un propósito**: una funcionalidad, un arreglo, un experimento. Su nombre lo dice: `feature/login-con-google`, `fix/precio-con-iva`.
 - Mientras trabajas en la rama, `main` sigue intacta. Si el experimento sale mal, se borra la rama y no ha pasado nada.
 - Las ramas son **de vida corta**: días, no meses. Cuanto más tiempo vive una rama, más se aleja de `main` y más difícil es juntarlas después.
+- **En Lovable,** los cambios van a la *rama conectada* (*Settings → Git → Branch*). Crear una rama en GitHub no basta: hay que conectarla en Lovable. Con `main` protegida, Lovable usa sola la rama `lovable-sync`.
 
 **Lo que esto cambia para el PM:** puedes pedir "pruébalo en una rama" sin miedo. Una idea arriesgada deja de ser un riesgo para el producto.
 
@@ -64,6 +65,8 @@ Un *commit* es una foto del producto con una explicación de qué cambió. La hi
 | `cambios` | `Añade validación del email en el registro` |
 | `fix` | `Corrige el cálculo del total cuando hay descuento` |
 | `wip`, `asdf`, `update` | `Elimina el endpoint de pruebas /debug` |
+
+Mira tu repo: Lovable firma muchos commits como `Changes` o `Work in progress`. No eliges esos mensajes, pero sí el **título y la descripción de tu PR**. Ahí es donde cuentas la historia.
 
 Un buen commit tiene tres propiedades:
 
@@ -94,15 +97,15 @@ Solo cuando las tres cosas están en verde se hace el *merge*: los cambios entra
 
 ## 6. Cómo se ve en el producto demo
 
-En la sesión trabajamos sobre **FeedbackHub**, un producto de ejemplo con las piezas de cualquier producto real: una **interfaz** (formulario y panel de administración), una **API** (Cloudflare Pages Functions) y una **base de datos** con login (Supabase). Su repositorio es público: `github.com/jagarcig-ntt/feedbackhub-demo`. En esta familia:
+La demo de la sesión es **`feedback-hub`**, un proyecto real de Lovable con las mismas piezas que el tuyo: una **interfaz**, **datos** en Supabase y una publicación en Cloudflare. Su repositorio es público: `github.com/jagarcig-ntt/feedback-hub`. En esta familia:
 
-- Partimos de `main`, que funciona y está desplegada.
-- Creamos la rama `feature/texto-portada` para un cambio pequeño y visible: el texto de la portada (`public/index.html`).
-- Hacemos un commit con un mensaje con sentido.
-- Abrimos un PR. GitHub rellena sola la **plantilla** del repositorio (`.github/pull_request_template.md`) con cinco apartados: **qué cambia**, **por qué**, **cómo se ha probado** (dos casillas: check en verde y probado en la URL de preview), **¿qué pasa si falla?** y **¿cómo se apaga?**.
-- Lo revisamos y hacemos el merge. `main` está protegida: GitHub no deja entrar nada que no venga por PR y con el check en verde. Ni siquiera al dueño del repositorio.
+- Partimos de `main`, que funciona y está publicada. Está protegida: GitHub no deja entrar nada que no venga por PR y con el check en verde. Ni siquiera al dueño del repositorio.
+- Pedimos a Lovable un cambio pequeño y visible.
+- Lovable no puede escribir en `main`, así que no falla ni pierde el trabajo: lo guarda en la rama `lovable-sync` y avisa con *"Some changes were saved on a sync branch"*.
+- Abrimos un PR de `lovable-sync` a `main`. GitHub rellena sola la **plantilla** del repositorio (`.github/pull_request_template.md`) con cinco apartados: **qué cambia**, **por qué**, **cómo se ha probado** (dos casillas: check en verde y probado en la URL de preview), **¿qué pasa si falla?** y **¿cómo se apaga?**. <!-- ajustar tras el ensayo: confirmar si el alumno añade la plantilla a su repo -->
+- Lo revisamos y hacemos el merge. El cambio vuelve solo a Lovable.
 
-**Tú lo repites en tu copia (fork) del producto demo**, desde la web de GitHub, sin instalar nada: rama → cambio → commit → PR. Al final de este bloque, cada uno tiene **su propio PR abierto**.
+**Tú lo repites en tu propio producto en la segunda práctica**, desde el navegador y sin instalar nada: proteger `main` → cambio en Lovable → PR → merge. Al final, cada uno tiene **su primer PR fusionado**.
 
 ---
 
@@ -125,11 +128,11 @@ En su informe, Google lo dice claramente: **si el cambio hubiera estado protegid
 
 ## 8. El factor agente IA
 
-En la sesión os llevaréis el **Deployment Agent Squad**: un equipo de agentes que os acompaña en cada fase del proceso. En esta fase, el agente de rama y PR:
+**Lovable ya es tu primer agente:** escribe el código y hace los commits por ti. En esta fase, un agente:
 
 **Hace bien:**
-- crear la rama con un nombre que describe el cambio;
-- escribir mensajes de commit claros a partir de lo que ha cambiado;
+- hacer el cambio en una rama, sin tocar `main`;
+- explicar qué ha cambiado, si se lo pides;
 - redactar la descripción del PR siguiendo la plantilla;
 - resumir el cambio para quien lo revisa y señalar qué partes son delicadas.
 
@@ -139,6 +142,8 @@ En la sesión os llevaréis el **Deployment Agent Squad**: un equipo de agentes 
 - **trabajar directamente sobre `main`.** Si un agente te propone "lo cambio directamente para ir más rápido", la respuesta es no.
 
 Los agentes generan cambios más rápido que nunca. Eso hace el punto de control **más** importante, no menos.
+
+Si trabajas desde VS Code, existe un extra opcional, el **Deployment Agent Squad**, que te acompaña en estas fases. No lo necesitas para la sesión. <!-- ajustar tras SPEC-017 -->
 
 ---
 

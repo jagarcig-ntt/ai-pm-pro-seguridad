@@ -26,7 +26,7 @@ Se hace como lo haría un alumno: **sin VS Code, sin terminal y sin clonar nada*
 
 **A3. Supabase, antes de crear ninguna tabla**
 1. En Lovable: *More → Connectors → Supabase*. **No uses *Database*, que es el backend de Lovable.** 📸
-2. Autoriza y elige `feedbackhub-staging`. 📸
+2. Autoriza y crea un proyecto nuevo con *Create Project*, como haría un alumno. 📸
 3. Pide en el chat: *"Guarda las notas en una tabla nueva de Supabase llamada `notas_ensayo`. Cualquiera puede añadir y leer notas."*
 4. Lovable te enseñará el SQL: apruébalo. 📸
 5. Si sale *Build unsuccessful*, pulsa *Fix build*. Anótalo.
@@ -46,15 +46,15 @@ Se hace como lo haría un alumno: **sin VS Code, sin terminal y sin clonar nada*
 ## Bloque B · Primer despliegue (T02) = P1 de la sesión
 *Objetivo de la escaleta: 45 min.*
 
+*Hecho desde Lovable el 5-nov: funcionó y es más sencillo que crear los ficheros en GitHub, que queda como alternativa (*Add file → Create new file*).*
+
 **B1. Workflow de comprobación**
-1. En GitHub, en `main`: *Add file → Create new file*. 📸
-2. Como nombre escribe `.github/workflows/comprobar-pr.yml`.
-3. Pega el contenido de [`Lab/workflows/comprobar-pr.yml`](../../../sesiones/2026-11-git-deploy/Lab/workflows/comprobar-pr.yml).
-4. *Commit changes*, directamente en `main`.
+1. En el chat de Lovable, pide: *"Crea el fichero `.github/workflows/comprobar-pr.yml` en la raíz del repositorio con este contenido exacto. No cambies nada, ni comentarios ni espacios, y no toques ningún otro fichero:"*
+2. Pega a continuación el contenido de [`Lab/workflows/comprobar-pr.yml`](../../../sesiones/2026-11-git-deploy/Lab/workflows/comprobar-pr.yml).
 
 **B2. Workflow de despliegue**
 1. Repite con `.github/workflows/desplegar.yml` y [`Lab/workflows/desplegar.yml`](../../../sesiones/2026-11-git-deploy/Lab/workflows/desplegar.yml).
-2. Al hacer el commit empieza la publicación.
+2. Cuando llega a `main` empieza la publicación.
 
 **B3. Ver la publicación**
 1. Abre la pestaña *Actions*. 📸
@@ -71,9 +71,9 @@ Se hace como lo haría un alumno: **sin VS Code, sin terminal y sin clonar nada*
 
 **C1. Proteger `main`**
 1. *Settings → Rules → Rulesets → New branch ruleset*. 📸
-2. Nombre: `main siempre funciona`. *Enforcement status*: **Active**.
-3. *Target branches*: añade la rama por defecto.
-4. Marca **Restrict deletions**, **Block force pushes** y **Require a pull request before merging**.
+2. Nombre: `main siempre funciona`. *Enforcement status*: **Active**. Viene en *Disabled* por defecto.
+3. *Target branches*: *Add target → Include default branch*. Sin esto, el ruleset no protege nada: GitHub avisa con *"This ruleset does not target any resources"*.
+4. Marca **Restrict deletions**, **Block force pushes** y **Require a pull request before merging**. Dentro de esta última, en *Allowed merge methods*, deja solo **Merge**: Lovable no admite *Squash* ni *Rebase*.
 5. Marca **Require status checks to pass** y añade `Comprobar el PR`. 📸
 6. Guarda y comprueba que aparece como activo.
 
@@ -100,9 +100,9 @@ Se hace como lo haría un alumno: **sin VS Code, sin terminal y sin clonar nada*
 
 | Bloque | Objetivo | Real | ¿Dónde te has atascado? |
 |---|---|---|---|
-| A · De casa | Sin límite | | |
+| A · De casa | Sin límite | **13 min** (Jaime, 5-nov) | Sin atascos |
 | B · Primer despliegue | 45 min | | |
-| C · Gestión de cambios | 45 min | | |
+| C · Gestión de cambios | 45 min | **13 min** (Jaime, 5-nov) | El ruleset se guardó sin rama objetivo |
 
 Jaime conoce el flujo y un alumno no: si un bloque te lleva más de **20 min**, los 45 de la sesión van justos.
 
