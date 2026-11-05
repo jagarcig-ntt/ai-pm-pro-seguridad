@@ -17,7 +17,7 @@ Reglas:
 
 | ID | Tarea | Ficheros | Depende | Estado |
 |---|---|---|---|---|
-| T01 | **Preparar el ensayo:** los 2 workflows listos para copiar y una lista de pasos, tal como los haría un alumno desde el navegador. | `sesiones/2026-11-git-deploy/Lab/workflows/comprobar-pr.yml`, `sesiones/2026-11-git-deploy/Lab/workflows/desplegar.yml`, `ensayo.md` | — | ☐ |
+| T01 | **Preparar el ensayo:** los 2 workflows listos para copiar y una lista de pasos, tal como los haría un alumno desde el navegador. | `sesiones/2026-11-git-deploy/Lab/workflows/comprobar-pr.yml`, `sesiones/2026-11-git-deploy/Lab/workflows/desplegar.yml`, `ensayo.md` | — | ☑ |
 | T02 🧑 | **Ensayo, parte 1 (CA9):** proyecto nuevo de Lovable, repo público, conectar `feedbackhub-staging` por *Connectors*, token y secretos en GitHub, pegar los workflows en `main`. Cronometrar y hacer capturas. | — | T01 | ☐ |
 | T03 | **Verificar la parte 1:** la Action crea el Worker en la primera publicación y la URL de producción sirve la app. Si falla, diagnosticar y corregir la lista de pasos. | `notas.md`, `ensayo.md` | T02 | ☐ |
 | T04 🧑 | **Ensayo, parte 2 (CA9):** proteger `main`, cambio en Lovable, PR, check, preview y merge. Cronometrar y hacer capturas. | — | T03 | ☐ |
@@ -42,3 +42,4 @@ Estados: ☐ pendiente · ◐ en curso · ☑ hecha · ✕ descartada
 
 ## Commits propuestos
 <!-- El agente añade aquí el mensaje sugerido al cerrar cada tarea -->
+- T01 → `[SPEC-019] T01 Workflows para copiar y lista de pasos del ensayo solo con navegador`
