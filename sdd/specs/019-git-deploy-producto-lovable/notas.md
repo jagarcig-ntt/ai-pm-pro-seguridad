@@ -6,7 +6,7 @@ Registro de pasos y observaciones con fecha. **Nunca se anotan valores de claves
 
 ### O6 · ¿Deja conectar un Supabase propio? → **SÍ, y deja elegir un proyecto existente**
 - Ruta: **More → Connectors → Supabase** (*External Supabase*). El chat de Lovable no conecta por sí solo: remite a *More → Connectors* o a escribir `@`.
-- Tras autorizar con OAuth, la pantalla *Supabase* de Lovable muestra **"Connected"** con el proyecto **`feedbackhub-prod`** (reutilizado de SPEC-011) y accesos directos a *Manage users*, *SQL editor*, *Edge functions*, *Manage secrets*, más *Disconnect* y *Manage organizations*.
+- Tras autorizar con OAuth, la pantalla *Supabase* de Lovable muestra **"Connected"** con el proyecto **`feedbackhub-prod`** (reutilizado del demo anterior) y accesos directos a *Manage users*, *SQL editor*, *Edge functions*, *Manage secrets*, más *Disconnect* y *Manage organizations*.
 - Con un Supabase externo conectado, las secciones del backend propio de Lovable (*Database*, *Users*, *Storage*) aparecen en gris: se gestionan en Supabase.
 - **Para la sesión y los requisitos previos (SPEC-013):** el alumno conecta **su** Supabase en *More → Connectors → Supabase*, no en *Database*, que es Lovable Cloud.
 
@@ -40,7 +40,7 @@ Registro de pasos y observaciones con fecha. **Nunca se anotan valores de claves
   - la app muestra "¡Gracias, Prueba agente SPEC-019 (borrar)! Hemos recibido tu feedback";
   - 0 errores de consola.
 - Queda una fila de prueba en `feedbackhub-prod` ("Prueba agente SPEC-019 (borrar)"), además de la "Prueba Lovable" del propio Lovable.
-- **CA1 (parte de envío) ✅.** Falta: el merge y la misma prueba en producción. La lectura bloqueada sin sesión ya se verificó en SPEC-011 con el mismo RLS.
+- **CA1 (parte de envío) ✅.** Falta: el merge y la misma prueba en producción. La lectura bloqueada sin sesión ya se verificó en el demo anterior con el mismo RLS.
 
 ## Producción con Supabase · 3-nov · **CA1 ✅**
 - Merge del PR #4 (`lovable-sync` → `main`, 7 commits de Lovable) → `91c68b8` → despliegue automático. Cloudflare: versión `cc193d17…` al 100 % (11:56 UTC).
@@ -48,3 +48,8 @@ Registro de pasos y observaciones con fecha. **Nunca se anotan valores de claves
 - **Recorrido completo con el producto de Lovable:** cambio en Lovable → `lovable-sync` → PR con checks → preview → merge → producción → **los datos llegan a Supabase**.
 - Filas de prueba en `feedbackhub-prod` para borrar: "Prueba Lovable" y 2 × "Prueba agente SPEC-019 (borrar)". En la segunda, el mensaje salió con las tildes mal codificadas por un fallo del script de prueba, no de la app.
 
+## Rescatado del demo anterior (borrado el 5-nov)
+- **Caso real para F2 (formador) y el 11-dic:** el 22-oct se configuró por error la clave secreta de Supabase (`sb_secret_…`) en lugar de la pública (`sb_publishable_…`), y el demo la servía a cualquiera. Se detectó comprobando solo el prefijo, se revocó y se cambió por la pública. La base de datos estaba vacía, así que el impacto fue bajo. Mensaje: "copié la clave equivocada del panel".
+- **Los secretos solo se aplican en el siguiente despliegue.**
+- **En un PR salen dos "Comprobar el PR"** (uno por el push y otro por el PR). Es normal.
+- **El detalle completo** sigue en git: `git show 07702b3:sdd/specs/011-git-deploy-producto-demo/notas.md` y `…/012-git-deploy-flujo-git-cicd/notas.md`.

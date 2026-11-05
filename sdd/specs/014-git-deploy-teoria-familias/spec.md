@@ -6,7 +6,7 @@
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-10-26 (semana 1 del calendario acordado el 20-oct) |
 | Depende de | SPEC-010 v3 (aprobada) · constitution v1.4 |
-| Alimenta | SPEC-011 (producto demo), SPEC-017 (squad), SPEC-015 (guion), SPEC-016 (portal) |
+| Alimenta | SPEC-019 (producto demo), SPEC-017 (squad), SPEC-015 (guion), SPEC-016 (portal) |
 | Responsable | Jaime García |
 
 ## 1. Problema / necesidad
@@ -26,7 +26,7 @@ Dejar escritas y revisadas las 4 familias teóricas de la sesión Git/Deploy, en
 - **Alumnos (≈12 PMs senior):** una guía de referencia que puedan releer al aplicar el proceso a su producto. Lenguaje de PM, no de ingeniero (constitution 2.5).
 - **Jaime (formador):** una versión que, además del contenido, diga qué enfatizar, qué preguntar, qué errores de comprensión esperar y cómo enlazar con la demo.
 - **Specs posteriores:**
-  - SPEC-011 y SPEC-017 necesitan saber qué conceptos debe poder enseñar el demo y qué fases debe cubrir el squad.
+  - SPEC-019 y SPEC-017 necesitan saber qué conceptos debe poder enseñar el demo y qué fases debe cubrir el squad.
   - SPEC-015 y SPEC-016 vuelcan la teoría al guion y al portal.
 
 ## 4. Alcance

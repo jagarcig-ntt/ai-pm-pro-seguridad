@@ -236,7 +236,7 @@ En esta fase intervienen dos agentes del **Deployment Agent Squad**:
 
 Lo que el producto demo y el squad deben permitir para que esta familia se pueda enseñar como está escrita.
 
-| Concepto | Qué debe tener el producto demo (SPEC-011/012) | Fase del squad (SPEC-017) |
+| Concepto | Qué debe tener el producto demo (SPEC-019) | Fase del squad (SPEC-017) |
 |---|---|---|
 | Workflow legible | `.github/workflows/` con dos ficheros cortos y comentados en castellano: "Comprobar el PR" y "Desplegar" | Escribe o ajusta los workflows con comentarios legibles |
 | Checks obligatorios | Ruleset en `main`: check "Comprobar el PR" obligatorio para hacer merge | No modifica las reglas del repositorio |

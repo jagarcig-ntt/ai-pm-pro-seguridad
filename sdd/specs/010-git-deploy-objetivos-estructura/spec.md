@@ -17,7 +17,7 @@
 >
 >   Ver `sdd/specs/018-git-deploy-flujo-lovable/notas.md`.
 > - **Estructura:** primero la teoría de las 4 familias (SPEC-014) y después dos prácticas: gestión de cambios y CI/CD.
-> - **El producto de demo es el proyecto de Lovable `feedback-hub`** (SPEC-019). FeedbackHub (SPEC-011/012) se retira el 3-nov.
+> - **El producto de demo es el proyecto de Lovable `feedback-hub`** (SPEC-019). El demo anterior (FeedbackHub en Pages) se retiró el 3-nov.
 > - Constitution v1.5: criterios 2.6 y 2.9.
 
 ## 1. Problema / necesidad
@@ -67,7 +67,7 @@ Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía.
 - **R3. Entornos:** explicar development, staging y production y dónde viven las variables y los secretos de su producto, sin que ninguno quede en el código.
 - **R4. CI/CD:** leer los dos workflows y explicar qué pasa desde que abre un PR hasta que el cambio llega a producción.
 - **R5. Go-live y recuperación:** aplicar la checklist de "¿listo para producción?" a su producto y saber volver atrás (rollback o revert).
-- **R6. Delegar con criterio:** saber qué se puede delegar en agentes y qué no. El squad es opcional y no se usa en la práctica guiada.
+- **R6. Delegar con criterio:** saber qué se puede delegar en agentes y qué no. El squad es opcional, para quien trabaje desde VS Code: se menciona de pasada en la web y en la sesión, y no se usa en la práctica guiada.
 - **R7. Hacerlo en su producto:** su repo con `main` protegida, los workflows, los secretos y sus URL de preview y producción.
 
 ### Estructura
@@ -79,7 +79,7 @@ Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía.
   - la plantilla de PR;
   - la guía.
 
-  Todo se hace desde el navegador, sin VS Code ni terminal: los workflows se copian y pegan. El squad (SPEC-017) es un extra opcional para perfiles técnicos.
+  Todo se hace desde el navegador, sin VS Code ni terminal: los workflows se copian y pegan. El squad (SPEC-017) es un extra opcional para quien trabaje desde VS Code, y se hace lo último.
 - R12. Herramienta que funciona a la primera y kit para el día siguiente (criterios 2.10 y 2.11): workflows, guía paso a paso, checklist de go-live y chuleta de Git.
 - R13. **Reto posterior:** cerrar lo que no dé tiempo. Puente al 11-dic: "el día 11 añadimos el check de seguridad a vuestro CI".
 
@@ -110,8 +110,8 @@ Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía.
 - [x] **Sesión solo con navegador** (Jaime, 5-nov): sin VS Code ni terminal. Los dos workflows se entregan para copiar y pegar con la guía; el squad (SPEC-017) pasa a ser un extra opcional para perfiles técnicos. R6, R11, la escaleta y los planes B ya están ajustados.
 - [x] **Orden al crear el Worker** (Jaime, 5-nov): workflows directamente en `main`, la primera publicación crea el Worker y `main` se protege después. En `feedback-hub` el Worker ya existía antes del primer PR, así que este orden se valida en el ensayo solo con navegador (SPEC-019, CA9).
 - [ ] **Riesgo de que el Worker no funcione a los 18** (Jaime, 5-nov). Propuesta: al ser repos públicos, compilar los 18 antes de la sesión, sin publicar nada. Hay que pedir a Gema la lista de repos.
-- [x] **Cuenta de Cloudflare, token y secretos → de casa** (Jaime, 5-nov). Llegan con la cuenta creada y los dos secretos guardados en GitHub, con la guía.
-- [ ] ¿Hay un ayudante en el Zoom? Con **18 personas** montando su repo a la vez es lo más valioso. Pendiente de pedir a Gema.
+- [x] **Cuenta de Cloudflare, token y secretos → de casa** (Jaime, 5-nov). Llegan con la cuenta creada y los dos secretos guardados en GitHub, con la guía. **Plan B si Gema no puede pedirlo:** el token sigue viniendo hecho de casa (correo del 4-nov) y los secretos se guardan al empezar P1, unos 10 min, sin compartir pantalla.
+- [x] **Ayudante en el Zoom: sí** (Jaime, 5-nov). Con 18 personas montando su repo a la vez es lo más valioso. Falta saber quién es para pasarle la guía antes de la sesión.
 - [ ] Fecha y canal del reto posterior. Demo Day: 12-dic, con una sesión de dudas de 2h con Fer Guirao antes. Propuesta: Slack del curso, hasta el 5-dic.
 - [x] **Tokens en una sesión grabada:** al venir de casa, no aparecen en la sesión. Jaime enseña ese paso con capturas.
 

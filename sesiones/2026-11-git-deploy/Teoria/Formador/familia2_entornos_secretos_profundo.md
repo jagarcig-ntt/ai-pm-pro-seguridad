@@ -234,7 +234,7 @@ En esta fase, el agente de entornos y secretos del **Deployment Agent Squad**:
 
 Lo que el producto demo y el squad deben permitir para que esta familia se pueda enseñar como está escrita.
 
-| Concepto | Qué debe tener el producto demo (SPEC-011/013) | Fase del squad (SPEC-017) |
+| Concepto | Qué debe tener el producto demo (SPEC-019) | Fase del squad (SPEC-017) |
 |---|---|---|
 | Tres entornos | Development local, staging (preview) y production, con **bases de datos separadas** (p. ej. dos proyectos de base de datos) | Comprueba que staging y producción no comparten base de datos |
 | Staging visible | Un banner o indicador "STAGING" controlado por una variable de entorno | — |

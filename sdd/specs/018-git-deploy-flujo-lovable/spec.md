@@ -5,16 +5,16 @@
 | Estado | **hecha** (3-nov; [review](review.md)) |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-06 (antes de la reunión con Gema y el entrenador, la semana del 2-nov) |
-| Depende de | SPEC-011 (demo y Cloudflare Pages, hecha) · SPEC-012 (workflows y ruleset, en curso) |
+| Depende de | Demo anterior en Cloudflare Pages (retirado; sustituido por SPEC-019) |
 | Alimenta | SPEC-013 (requisitos previos), SPEC-014 (puente "tu proyecto de Lovable"), SPEC-015 (guion), SPEC-017 (squad) |
 | Responsable | Jaime García · interlocutores: Gema (coordinación) y el entrenador de las sesiones de construcción |
 
 ## 1. Problema / necesidad
 - **Propuesta recibida (correo de Gema, 30-oct).** El entrenador de las sesiones propone *"utilizar Lovable como herramienta principal de construcción, junto con GitHub para el versionado y Supabase para backend, base de datos y autenticación"*, y quiere *"validar con Jaime el flujo completo de despliegue antes de cerrarlo"*. La reunión será la semana del 2-nov (Jaime no puede el sábado 31).
 - **Encaja con lo construido:**
-  - GitHub y Supabase ya son el stack del demo (`sdd/specs/011-git-deploy-producto-demo/`);
+  - GitHub y Supabase ya eran el stack del demo anterior;
   - la teoría ya parte de que los alumnos construyen con Lovable (`sesiones/2026-11-git-deploy/Teoria/familia1_git_profesional_alumnos.md`, sección 2).
-- **La propuesta no dice dónde se publica.** Jaime propondrá **Cloudflare Pages**, ya funcionando en el demo con preview por PR, staging, producción y rollback (`sdd/specs/012-git-deploy-flujo-git-cicd/notas.md`).
+- **La propuesta no dice dónde se publica.** Jaime propondrá **Cloudflare Pages**, ya funcionando en el demo anterior con preview por PR, staging, producción y rollback.
 - **Tensión a validar:**
   - Según la FAQ oficial de Lovable, la sincronización con GitHub es **bidireccional solo con la rama principal**, y Lovable no ve commits de otras ramas hasta que se fusionan (https://lovable.dev/faq/github, consultado el 30-oct).
   - Choca con lo que enseña la sesión: ramas, PR, check obligatorio y `main` protegida (SPEC-012, ruleset `main siempre funciona`).

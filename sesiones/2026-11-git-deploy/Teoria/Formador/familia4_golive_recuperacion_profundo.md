@@ -221,7 +221,7 @@ En esta fase, el agente de go-live del **Deployment Agent Squad**:
 
 Lo que el producto demo y el squad deben permitir para que esta familia se pueda enseñar como está escrita.
 
-| Concepto | Qué debe tener el producto demo (SPEC-011/013) | Fase del squad (SPEC-017) |
+| Concepto | Qué debe tener el producto demo (SPEC-019) | Fase del squad (SPEC-017) |
 |---|---|---|
 | Checklist de go-live | La checklist de 8 puntos como fichero del repo (`docs/checklist-go-live.md`) y como parte del kit (SPEC-015) | Recorre la checklist y responde automáticamente los puntos comprobables |
 | Cambio que rompe producción | Un cambio preparado en una rama (`demo/f4-rompe-portada`) que provoca un error visible y fácil de entender | — |

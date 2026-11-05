@@ -1,26 +1,23 @@
-# Lab · producto demo FeedbackHub
+# Lab · producto de la sesión
 
-El producto demo de la sesión vive en **su propio repositorio**, para que los alumnos puedan hacer fork de un repo limpio:
+El producto de la sesión es un proyecto real de **Lovable**, publicado en Cloudflare Workers por CI/CD desde GitHub:
 
-**https://github.com/jagarcig-ntt/feedbackhub-demo** (público)
+**https://github.com/jagarcig-ntt/feedback-hub** (público)
 
 | Entorno | URL | Base de datos (Supabase) |
 |---|---|---|
-| Production | https://feedbackhub-demo.pages.dev | `feedbackhub-prod` |
-| Staging (preview) | https://staging-prueba.feedbackhub-demo.pages.dev | `feedbackhub-staging` |
-| Development | `npm run dev` en local | `feedbackhub-staging` |
+| Producción | https://jagarcig-ntt-feedback-hub.jagarcig.workers.dev/ | `feedbackhub-prod` |
+| Staging | https://staging-jagarcig-ntt-feedback-hub.jagarcig.workers.dev/ | `feedbackhub-prod` (compartida) |
+| Preview de cada PR | La publica un comentario en el PR | `feedbackhub-prod` (compartida) |
 
 ## Arquitectura (en 5 líneas)
-- **Frontend:** HTML y JS sin compilación (`public/`). Formulario público y panel con login de Supabase.
-- **API:** Cloudflare Pages Functions (`functions/`). Siempre con la clave pública de Supabase, nunca con la secreta.
-- **Datos:** Supabase con permisos en la base de datos (RLS). Cualquiera envía feedback y solo los administradores lo leen.
-- **Configuración:** variables por entorno en Cloudflare. El navegador las pide a `/api/config`.
-- **Despliegue:** GitHub Actions → Cloudflare Pages (SPEC-012). Rollback desde el panel en unos 5 segundos.
+- **App:** plantilla de Lovable (TanStack Start), construida desde el chat de Lovable.
+- **Datos:** Supabase propio, conectado en *More → Connectors → Supabase*, con permisos en la base de datos (RLS).
+- **Configuración:** Lovable sube un `.env` con valores públicos. Las claves secretas nunca van ahí.
+- **Despliegue:** dos workflows de GitHub Actions publican en Cloudflare Workers.
+- **Protección:** `main` solo acepta cambios por PR. Lovable desvía sus cambios a `lovable-sync`.
 
 ## Dónde está cada cosa
-- Spec, plan, tareas y notas: [`sdd/specs/011-git-deploy-producto-demo/`](../../../sdd/specs/011-git-deploy-producto-demo/)
+- Spec, plan, tareas y notas: [`sdd/specs/019-git-deploy-producto-lovable/`](../../../sdd/specs/019-git-deploy-producto-lovable/)
+- Cómo se validó el flujo: [`sdd/specs/018-git-deploy-flujo-lovable/`](../../../sdd/specs/018-git-deploy-flujo-lovable/)
 - Qué debe permitir enseñar el demo: sección 11 de cada versión formador en [`Teoria/Formador/`](../Teoria/Formador/)
-- Checklist de go-live: [`docs/checklist-go-live.md`](https://github.com/jagarcig-ntt/feedbackhub-demo/blob/main/docs/checklist-go-live.md) en el repo del demo
-
-## Trazabilidad
-Los commits del repo del demo llevan el mismo prefijo que los de este repo (`[SPEC-011] Tnn …`). El historial de `main` del demo es material de la Familia 1, idea 2: un commit por cambio, con mensaje con sentido.

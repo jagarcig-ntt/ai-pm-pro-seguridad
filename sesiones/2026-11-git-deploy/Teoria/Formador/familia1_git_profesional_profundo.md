@@ -222,7 +222,7 @@ Los agentes generan cambios más rápido que nunca. Eso hace el punto de control
 
 Lo que el producto demo y el squad deben permitir para que esta familia se pueda enseñar como está escrita.
 
-| Concepto | Qué debe tener el producto demo (SPEC-011/012) | Fase del squad (SPEC-017) |
+| Concepto | Qué debe tener el producto demo (SPEC-019) | Fase del squad (SPEC-017) |
 |---|---|---|
 | `main` siempre funciona | `main` protegida (*ruleset*): no se puede hacer push directo, solo merge vía PR aprobado | El agente nunca hace commit en `main`; si se lo piden, lo rechaza y propone una rama |
 | Rama con propósito | Convención de nombres documentada en el README (`feature/`, `fix/`) | Crea ramas con nombre descriptivo a partir de la tarea |

@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **aprobada** (3-nov) |
+| Estado | **en curso** (5-nov) · aprobada el 3-nov |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-12 (antes del guion y el portal; ensayo la semana del 16-nov) |
-| Depende de | SPEC-018 (hecha: flujo y CI/CD validados) · SPEC-010 v4 · constitution v1.5 |
-| Sustituye a | SPEC-011 y SPEC-012 como demo de la sesión (retiradas el 3-nov) |
-| Alimenta | SPEC-014 v2 (sección 6 de la teoría), SPEC-015 (guion), SPEC-016 (portal), SPEC-017 (squad) |
+| Depende de | SPEC-018 (hecha: flujo y CI/CD validados) · SPEC-010 v4.1 · constitution v1.6 |
+| Sustituye a | El demo anterior, FeedbackHub en Cloudflare Pages (retirado el 3-nov y borrado del repo el 5-nov) |
+| Alimenta | SPEC-014 v2 (sección 6 de la teoría), SPEC-015 (guion), SPEC-016 (portal), SPEC-013 (guía), SPEC-017 (squad) |
 | Responsable | Jaime García |
 
 ## 1. Problema / necesidad
@@ -37,7 +37,7 @@
 
 ## 4. Alcance
 **Incluye (repo `feedback-hub`):**
-- **Supabase (reutilizado, decisión de Jaime del 3-nov):** se reutilizan los proyectos del demo retirado (SPEC-011), que ya tienen la tabla `feedback` (nombre, email, mensaje, valoración), RLS probado (insert público, lectura solo administradores) y usuarios administradores.
+- **Supabase (reutilizado, decisión de Jaime del 3-nov):** se reutilizan los proyectos del demo anterior, que ya tienen la tabla `feedback` (nombre, email, mensaje, valoración), RLS probado (insert público, lectura solo administradores) y usuarios administradores.
   - **`feedbackhub-prod`** → base de datos **compartida** del proyecto de Lovable (staging y producción).
   - **`feedbackhub-staging`** → libre: se usa como el Supabase del ensayo solo con navegador (CA9).
   - Lovable se conecta a la tabla existente, sin crear una nueva. Sin organización nueva y dentro de los 2 proyectos gratuitos.
@@ -46,7 +46,7 @@
   - O6 · si deja conectar un Supabase propio o empuja a su backend.
 - Variables de Supabase en el CI/CD, si el build las necesita (`VITE_*` en los secrets o variables de GitHub).
 - **Ruleset:** añadir el check obligatorio "Comprobar el PR".
-- **Plantilla** `.github/pull_request_template.md`, la misma de SPEC-012.
+- **Plantilla** `.github/pull_request_template.md`, la misma del demo anterior.
 - **Ramas de demo:**
   - `demo/f3-checks`: cambio que rompe la prueba, check en rojo y merge bloqueado;
   - `demo/f4-rompe-produccion`: cambio con los checks en verde que falla en producción, para el simulacro de rollback.

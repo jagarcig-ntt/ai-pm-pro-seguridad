@@ -1,9 +1,9 @@
 # PLAN · SPEC-019 · Producto Lovable de la sesión
 
-*Spec: [spec.md](spec.md) (aprobada el 3-nov) · Estado del plan: borrador · actualizado el 5-nov*
+*Spec: [spec.md](spec.md) (aprobada el 3-nov) · Estado del plan: **aprobado** (Jaime, 5-nov)*
 
 > **Ya hecho (3-nov):** 2.1 y 2.2. El `.env` del repo solo lleva valores públicos y el CI no necesita variables (`notas.md`).
-> **Pendiente:** 2.3–2.8.
+> **Pendiente:** 2.3–2.8. Ver [tasks.md](tasks.md).
 
 ## 1. Enfoque
 - **Lo que más condiciona va primero: Supabase.** Cómo guarda Lovable la conexión (O5, O6) decide:
@@ -11,8 +11,8 @@
   - cómo se rompe producción en la demo de F4;
   - qué cuenta la teoría de F2.
 - **Todo cambio entra como lo haría un alumno:** desde Lovable (en una rama o en `lovable-sync`) o por PR en GitHub. Así cada paso deja material real para la sesión (commits, PR, previews).
-- **Se reutiliza lo de SPEC-012:** la plantilla de PR es idéntica, y la lógica de las ramas de demo es la misma (F3 rompe la prueba; F4 pasa los checks y falla en producción).
-- **Reutilizar las bases de datos de SPEC-011** (decisión del 3-nov): el esquema y los permisos ya están probados y no hay que crear ni configurar nada.
+- **Se reutiliza lo del demo anterior:** la plantilla de PR es idéntica, y la lógica de las ramas de demo es la misma (F3 rompe la prueba; F4 pasa los checks y falla en producción).
+- **Reutilizar las bases de datos del demo anterior** (decisión del 3-nov): el esquema y los permisos ya están probados y no hay que crear ni configurar nada.
 - **Descartado:**
   - usar el backend integrado de Lovable: los alumnos usan Supabase propio por *Connectors* (decisión de Jaime, 5-nov);
   - separar la base de datos de staging: fuera del MVP (acuerdo con Jose, 5-nov).
@@ -28,7 +28,7 @@
    - si hay migraciones SQL en el repo;
    - en qué rama queda el cambio;
    - el CI.
-5. **El agente verifica con la clave pública:** insertar sí, leer no (R3), igual que en SPEC-011.
+5. **El agente verifica con la clave pública:** insertar sí, leer no (R3), igual que en el demo anterior.
 
 ### 2.2 CI/CD con Supabase
 - **Si Lovable escribe la URL y la clave pública en el código:** el build no necesita variables y el CI no cambia. Se documenta como hallazgo para F2 (*"la clave pública puede ir en el código; la secreta, nunca"*).
@@ -36,7 +36,25 @@
 
 ### 2.3 Ruleset y plantilla (pasos de Jaime 🧑)
 - *Settings → Rules → main siempre funciona* → **Require status checks to pass** → `Comprobar el PR`.
-- La plantilla `.github/pull_request_template.md` (texto de SPEC-012) entra por PR, que a su vez sirve como primer ejemplo de PR con check obligatorio.
+- La plantilla `.github/pull_request_template.md` entra por PR, que a su vez sirve como primer ejemplo de PR con check obligatorio. Su texto:
+
+```markdown
+## Qué cambia
+<!-- En una o dos frases, para alguien que no ha hecho el cambio. -->
+
+## Por qué
+<!-- Qué problema resuelve o qué necesidad cubre. -->
+
+## Cómo se ha probado
+- [ ] El check **"Comprobar el PR"** está en verde
+- [ ] Lo he probado en la **URL de preview** (aparece en un comentario de este PR)
+
+## ¿Qué pasa si falla?
+<!-- Qué vería un usuario y a qué afectaría si este cambio fallara en producción. -->
+
+## ¿Cómo se apaga?
+<!-- ¿Hay un feature flag? ¿Basta con un rollback en Cloudflare o hace falta un revert? -->
+```
 
 ### 2.4 Ramas de demo
 | Rama | Cambio | Qué enseña |
@@ -45,7 +63,7 @@
 | `demo/f4-rompe-produccion` | **Propuesta:** renombrar por error la variable de entorno de Supabase que lee la app (por ejemplo, una letra cambiada). La compilación y las pruebas pasan, pero en producción la app no conecta y el formulario falla al enviar. Si O5 dice que la configuración está en el código, la alternativa es un cambio que lanza un error en tiempo de ejecución en la ruta de la portada | "Verde no significa que funcione" → detectar → **rollback de Workers** → arreglar por PR. Enlaza F2 (configuración) con F4 |
 
 ### 2.5 Rollback de Workers (Jaime 🧑, cronometrado)
-Panel: *Workers & Pages → jagarcig-ntt-feedback-hub → Deployments* → versión anterior → *Rollback*. O bien `npx wrangler rollback`. Comprobar el contenido, no solo un 200 (lección de T14 de SPEC-011).
+Panel: *Workers & Pages → jagarcig-ntt-feedback-hub → Deployments* → versión anterior → *Rollback*. O bien `npx wrangler rollback`. Comprobar el contenido, no solo un 200.
 
 ### 2.6 Documentación
 - `README.md` del repo, para alumnos: qué es, cómo trabajar en Lovable por ramas, cómo copiar los workflows, secretos y enlace a la checklist. **Ojo:** Lovable creó su propio `README.md` y el cambio debe entrar por PR sin pisar lo que Lovable necesite.
@@ -71,7 +89,7 @@ Jaime archiva `jagarcig-ntt/feedbackhub-demo` (*Settings → General → Danger 
 ## 4. Riesgos y plan B
 | Riesgo | Prob. | Mitigación |
 |---|---|---|
-| Lovable no deja elegir un proyecto de Supabase **ya existente**, o crea su propia tabla o migración encima | media | Revisar la migración o el SQL que genere antes de aceptarlo. Si insiste en crear tabla, pedirle que la llame igual y comparar con el esquema de SPEC-011 |
+| Lovable no deja elegir un proyecto de Supabase **ya existente**, o crea su propia tabla o migración encima | media | Revisar la migración o el SQL que genere antes de aceptarlo. Si insiste en crear tabla, pedirle que la llame igual y comparar con el esquema del demo anterior |
 | La primera publicación desde `main` no crea el Worker en una cuenta limpia | media | Se ve en el ensayo (CA9); si pasa, se añade el paso necesario en la guía |
 | Conectar Supabase rompe el build en CI (variables) | media | Se ve en el PR antes de producción; se aplica 2.2 |
 | La prueba existente no comprueba el título | alta | Añadir una prueba de portada propia (una línea) por PR |
