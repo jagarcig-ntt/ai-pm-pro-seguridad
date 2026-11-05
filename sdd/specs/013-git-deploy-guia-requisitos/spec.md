@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | borrador (5-nov) |
+| Estado | **en curso** · aprobada por Jaime el 5-nov |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-12 (entrega a Gema, según su correo del 4-nov) |
 | Depende de | SPEC-010 v4.1 · SPEC-019 (ensayo, `ensayo.md` y `notas.md`) · constitution v1.6 |
@@ -59,14 +59,25 @@ Que cada alumno, siguiendo solo la guía, llegue al 21-nov con su proyecto de Lo
 ## 7. Restricciones (constitution)
 2.5 lenguaje de PM · 3.2 coste 0 salvo Lovable Pro · 3.3 plan B · 3.4 nada de secretos reales · 3.5 reproducible desde cero · 4 URL estables y PDF generado · 5.4 nada de inventar datos.
 
-## 8. Preguntas abiertas
-- [ ] **¿Una página de verdad?** Gema pide una página, pero con capturas no cabe. Propuesta: una página resumen con la lista "¿lo tienes?" y, detrás, el paso a paso.
-- [ ] **¿Se piden los secretos en GitHub de casa?** Jaime intentará pedirlo a Gema. Propuesta: incluirlos como último paso. Plan B: se hacen al empezar P1 (unos 10 min).
-- [ ] **¿Cuándo hacen cada parte?** Propuesta: cuentas antes del 13-nov, y Supabase conectado al empezar la sesión de Jose.
-- [ ] **Caducidad del token.** Propuesta: 1 año, para no dejarlo sin fecha y que no caduque antes del Demo Day.
-- [ ] **¿Quién atiende las dudas y por qué canal?** Hace falta para R7.
-- [ ] **¿Quién hace CA3?** Propuesta: alguien sin experiencia en el flujo, si Gema o el ayudante pueden.
-- [ ] **¿Dónde se publica?** Propuesta: PDF en `descargas/`, con enlace desde el portal cuando exista.
+## 8. Decisiones (Jaime, 5-nov)
+- [x] **Extensión:** una página resumen con la lista "¿lo tienes?" y, detrás, el paso a paso.
+- [x] **Secretos en GitHub:** último paso de la guía, si Gema lo acepta. Plan B: al empezar P1 (unos 10 min).
+- [x] **Calendario:** cuentas antes del 13-nov, Supabase conectado al empezar la sesión de Jose y el resto antes del 21-nov.
+- [x] **Token:** caducidad de 1 año.
+- [x] **Prueba sin conocer el flujo (CA3):** alguien de Gema o el ayudante.
+- [x] **Publicación:** PDF en `sesiones/2026-11-git-deploy/descargas/`, con enlace desde el portal cuando exista.
+- [ ] **Dudas:** el borrador dice "Gema, por el Slack del curso". Pendiente de confirmar.
 
-## 9. Hallazgos fuera de alcance
-- La plantilla de PR no está en los pasos del alumno, aunque SPEC-010 (R11) la incluye en su kit. Falta decidir si va como tercer prompt (ver SPEC-019).
+## 9. Plan y tareas
+Es un solo documento, así que plan y tareas van aquí.
+
+| ID | Tarea | Ficheros | Estado |
+|---|---|---|---|
+| T01 | Capturas del ensayo, recortadas y con los datos sensibles tapados. | `sesiones/2026-11-git-deploy/Guia/capturas/` | ☑ |
+| T02 | Texto de la guía y generador del PDF. | `sesiones/2026-11-git-deploy/Guia/guia_requisitos_previos.md`, `scripts/generar_guia_pdf.py`, `sesiones/2026-11-git-deploy/descargas/guia_requisitos_previos.pdf` | ☑ |
+| T03 🧑 | Jaime revisa la guía y confirma el canal de dudas. | — | ☐ |
+| T04 🧑 | Prueba con alguien que no conozca el flujo (CA3). | — | ☐ |
+| T05 | Ajustes tras la prueba y envío a Gema (lo hace Jaime). | guía y PDF | ☐ |
+
+## 10. Hallazgos
+- **Supabase gratis pausa los proyectos tras 1 semana de inactividad** (https://supabase.com/pricing, consultado el 5-nov). Va en la guía, y hay que recordarlo antes del Demo Day.

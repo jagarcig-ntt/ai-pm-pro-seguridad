@@ -110,3 +110,5 @@ El aviso de `feedbackhub-prod` en *Connect project* indica que ese proyecto ya e
 **Segundo cambio tras el merge (Jaime, 5-nov):** `lovable-sync` no se borra y Lovable la reutiliza. Vuelve a salir *"Some changes were saved on a sync branch"* y, en *Settings → Git*, *"Lovable is 2 commits ahead of GitHub"*.
 - **El PR no se crea solo:** ni Lovable ni GitHub lo abren. El alumno debe abrirlo cada vez, de `lovable-sync` a `main`.
 - **Aviso de Lovable, importante para la guía:** *"Merge that branch into "main" in your Git provider using a merge commit. Do not squash or rebase: drafts need the original commits."* El botón del PR debe ser **Create a merge commit**, nunca *Squash* ni *Rebase*.
+
+**Cierre del ensayo (CA9, 5-nov):** PR #2 fusionado con merge commit (`5020b36`), publicación en verde, web 200 y Lovable en "In sync" (Jaime). `lovable-sync` se reutiliza en cada cambio. Tiempos: A 13 min y C 13 min; B sin dato representativo por el diagnóstico del 500. Falta repetirlo con alguien que no conozca el flujo (CA3 de SPEC-013).

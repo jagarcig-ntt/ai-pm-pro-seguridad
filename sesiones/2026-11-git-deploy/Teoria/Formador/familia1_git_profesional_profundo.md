@@ -126,10 +126,17 @@ La demo de la sesión es **`feedback-hub`**, un proyecto real de Lovable con las
 - Partimos de `main`, que funciona y está publicada. Está protegida: GitHub no deja entrar nada que no venga por PR y con el check en verde. Ni siquiera al dueño del repositorio.
 - Pedimos a Lovable un cambio pequeño y visible.
 - Lovable no puede escribir en `main`, así que no falla ni pierde el trabajo: lo guarda en la rama `lovable-sync` y avisa con *"Some changes were saved on a sync branch"*.
-- Abrimos un PR de `lovable-sync` a `main`. GitHub rellena sola la **plantilla** del repositorio (`.github/pull_request_template.md`) con cinco apartados: **qué cambia**, **por qué**, **cómo se ha probado** (dos casillas: check en verde y probado en la URL de preview), **¿qué pasa si falla?** y **¿cómo se apaga?**. <!-- ajustar tras el ensayo: confirmar si el alumno añade la plantilla a su repo -->
+- Abrimos un PR de `lovable-sync` a `main`. GitHub rellena sola la **plantilla** del repositorio (`.github/pull_request_template.md`) con cinco apartados: **qué cambia**, **por qué**, **cómo se ha probado** (dos casillas: check en verde y probado en la URL de preview), **¿qué pasa si falla?** y **¿cómo se apaga?**.
 - Lo revisamos y hacemos el merge. El cambio vuelve solo a Lovable.
 
-**Tú lo repites en tu propio producto en la segunda práctica**, desde el navegador y sin instalar nada: proteger `main` → cambio en Lovable → PR → merge. Al final, cada uno tiene **su primer PR fusionado**.
+**Tu práctica, en tu propio producto y desde el navegador:**
+1. Protege `main` en GitHub.
+2. Pide un cambio en Lovable.
+3. Abre un PR de `lovable-sync` a `main`.
+4. Prueba la URL de preview.
+5. Haz el merge con **Create a merge commit**, nunca con *Squash* ni *Rebase*.
+
+Al final, tendrás **tu primer PR fusionado**.
 
 > 🎓 **En la demo enseñas** (unos 5 min; el flujo completo lo verán en F3 y lo harán en P2):
 > 1. `main` en GitHub y la URL de producción funcionando.

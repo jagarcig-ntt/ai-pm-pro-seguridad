@@ -21,7 +21,7 @@ Reglas:
 | T02 🧑 | **Ensayo, parte 1 (CA9):** proyecto nuevo de Lovable, repo público, conectar su Supabase por *Connectors*, token y secretos en GitHub, pegar los workflows en `main`. Cronometrar y hacer capturas. | — | T01 | ☑ |
 | T03 | **Verificar la parte 1:** la Action crea el Worker en la primera publicación y la URL de producción sirve la app. Si falla, diagnosticar y corregir la lista de pasos. | `notas.md`, `ensayo.md`, `Lab/workflows/desplegar.yml` | T02 | ☑ |
 | T04 🧑 | **Ensayo, parte 2 (CA9):** proteger `main`, cambio en Lovable, PR, check, preview y merge. Cronometrar y hacer capturas. | — | T03 | ☑ |
-| T05 | **Cerrar el ensayo:** comprobar por contenido preview y producción, comparar los tiempos con P1 y P2 de la escaleta y anotar qué pasa a la guía (SPEC-013). | `notas.md`, `ensayo.md` | T04 | ◐ |
+| T05 | **Cerrar el ensayo:** comprobar por contenido preview y producción, comparar los tiempos con P1 y P2 de la escaleta y anotar qué pasa a la guía (SPEC-013). | `notas.md`, `ensayo.md` | T04 | ☑ |
 | T06 🧑 [P] | **Tabla desde el chat (CA7):** en `feedback-hub`, con una rama conectada, pedir una tabla de prueba y aprobar el SQL. | — | — | ☐ |
 | T07 | **Verificar CA7:** si la tabla llega a Supabase antes del merge y si aparece en `supabase/migrations/`. Anotar el mensaje para F2 y borrar la tabla de prueba. | `notas.md` | T06 | ☐ |
 | T08 🧑 | **Login desde la app publicada (CA8):** pedir a Lovable un acceso con login que lea `feedback`, por PR, y añadir la URL de producción a las redirecciones de Supabase. | — | T07 | ☐ |
@@ -44,3 +44,4 @@ Estados: ☐ pendiente · ◐ en curso · ☑ hecha · ✕ descartada
 <!-- El agente añade aquí el mensaje sugerido al cerrar cada tarea -->
 - T01 → `[SPEC-019] T01 Workflows para copiar y lista de pasos del ensayo solo con navegador`
 - T03 → `[SPEC-019] T03 Ensayo bloques A y B: workflows desde Lovable, variables de Supabase en el Worker y comprobación de la web`
+- T05 → `[SPEC-019] T05 Ensayo solo con navegador cerrado: bloque C y lecciones para la guía`

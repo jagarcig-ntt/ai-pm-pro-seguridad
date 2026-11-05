@@ -79,7 +79,7 @@ Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía.
   - la plantilla de PR;
   - la guía.
 
-  Todo se hace desde el navegador, sin VS Code ni terminal: los workflows se copian y pegan. El squad (SPEC-017) es un extra opcional para quien trabaje desde VS Code, y se hace lo último.
+  Todo se hace desde el navegador, sin VS Code ni terminal: los ficheros se pegan en el chat de Lovable, que los sube a `main` (ensayo del 5-nov). El squad (SPEC-017) es un extra opcional para quien trabaje desde VS Code, y se hace lo último.
 - R12. Herramienta que funciona a la primera y kit para el día siguiente (criterios 2.10 y 2.11): workflows, guía paso a paso, checklist de go-live y chuleta de Git.
 - R13. **Reto posterior:** cerrar lo que no dé tiempo. Puente al 11-dic: "el día 11 añadimos el check de seguridad a vuestro CI".
 
@@ -137,7 +137,7 @@ Validada por Jaime el 5-nov; se afina con el portal y el guion. **Idea central:*
 | 10:35 | 15 | **T2 · F2 Entornos y secretos** | Tres entornos · misma app, distinta configuración · secretos en la plataforma | Demo con capturas: secretos ya guardados. Avisa de que staging y producción comparten datos | Pregunta en el chat | — |
 | 10:50 | 15 | **T3 · F3 CI/CD** | Workflow = receta · cada PR se comprueba y previsualiza · merge = producción | Demo con `feedback-hub`: PR → check → preview → merge → producción | Preguntas en el chat | — |
 | 11:05 | 10 | **Pausa 1** | | | | |
-| 11:15 | 45 | **P1 · Primer despliegue** | — | Guía paso a paso en pantalla | Pegar los 2 workflows en `main` desde GitHub → la Action publica y crea el Worker → comprobar la web | **Su URL de producción** |
+| 11:15 | 45 | **P1 · Primer despliegue** | — | Guía paso a paso en pantalla | Pedir a Lovable los 2 workflows y la plantilla de PR → la Action publica y crea el Worker → comprobar la web | **Su URL de producción** |
 | 12:00 | 10 | **Pausa 2** | | | | |
 | 12:10 | 45 | **P2 · Gestión de cambios** | — | Guía en pantalla; desatasca alumno a alumno | Proteger `main` → cambio en Lovable (rama o `lovable-sync`) → **PR → check → preview → merge** → producción actualizada | **Su URL de preview** y su primer PR fusionado |
 | 12:55 | 15 | **T4 · F4 Go-live y volver atrás** | Checklist · rollback / revert · vigilar tras salir | Demo: rollback en Cloudflare. Los rezagados siguen con P2 | Preguntas en el chat | — |
