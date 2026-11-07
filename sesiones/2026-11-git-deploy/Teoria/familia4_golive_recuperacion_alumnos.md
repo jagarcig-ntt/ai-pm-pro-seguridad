@@ -96,17 +96,17 @@ Las dos primeras las ve una herramienta. **La tercera la ve, sobre todo, el PM**
 
 ## 6. Cómo se ve en el producto demo
 
-En la demo hacemos un **simulacro de incidente**:
+**Verde no significa que funcione.** En el ensayo de esta sesión, las pruebas, la compilación y la publicación salieron en verde, y la web daba error 500: al servidor le faltaban dos variables. Por eso tu workflow comprueba al final que la web responde, y por eso tú la abres después de cada salida.
 
-1. Recorremos la checklist de go-live (`docs/checklist-go-live.md` del repo) con el cambio de la rama `demo/f4-rompe-portada` y salimos.
-2. Ese cambio rompe algo en producción a propósito.
-3. Lo detectamos en las señales: la portada falla y los registros en tiempo real de Cloudflare (`npx wrangler pages deployment tail`) muestran los errores.
-4. **Rollback** en un clic en Cloudflare (*Deployments* → despliegue anterior → *Rollback to this deployment*): producción vuelve a funcionar en unos 5 segundos.
+En la demo hacemos un **simulacro de incidente** en `feedback-hub`: <!-- ajustar tras T13 de SPEC-019 -->
+
+1. Recorremos la checklist de go-live con un cambio preparado y salimos.
+2. Ese cambio pasa los checks, pero rompe algo en producción.
+3. Lo detectamos en las señales: la web falla y los registros del Worker en Cloudflare muestran los errores.
+4. **Rollback** en el panel de Cloudflare: *Workers & Pages → tu Worker → Deployments → versión anterior → Rollback*.
 5. Después, el arreglo de verdad entra por el flujo normal: **revert** o corrección, con su PR.
 
-En Cloudflare Pages, apagar el *feature flag* (`FEATURE_VALORACION`) no cambia el código, pero sí exige volver a desplegar la misma versión (*Retry deployment*). También son segundos.
-
-**Tu práctica:** aplica la checklist al cambio del producto demo y, en una columna aparte, **marca qué puntos no podrías responder hoy con tu propio producto**. Esa columna es tu lista de trabajo.
+**Para después de la sesión:** aplica la checklist a tu producto y **marca qué puntos no podrías responder hoy**. Esa es tu lista de trabajo antes del Demo Day.
 
 ---
 
@@ -129,12 +129,12 @@ Las consecuencias, según declaraciones de la propia compañía recogidas por la
 
 ## 8. El factor agente IA
 
-En esta fase, el agente de go-live del **Deployment Agent Squad**:
+En esta fase, un agente:
 
 **Hace bien:**
-- recorrer la checklist y responder automáticamente los puntos comprobables: checks en verde, variables configuradas, URL que responde;
-- hacer una **prueba de humo** tras salir: comprobar que las páginas y endpoints principales funcionan;
-- tener preparado el procedimiento de rollback y decirte cuánto tarda;
+- recorrer la checklist y responder los puntos comprobables: checks en verde, variables configuradas, URL que responde;
+- hacer una **prueba de humo** tras salir: comprobar que las páginas principales funcionan;
+- explicarte el procedimiento de rollback;
 - resumir el estado de las señales técnicas tras el despliegue.
 
 **No delegues:**
@@ -163,7 +163,7 @@ En esta fase, el agente de go-live del **Deployment Agent Squad**:
 - TechRadar, resumen del año: https://www.techradar.com/televisions/2024-the-year-sonos-slipped
 
 **Para profundizar:**
-- Vercel, Instant Rollback: https://vercel.com/docs/instant-rollback
-- Cloudflare Pages, rollbacks: https://developers.cloudflare.com/pages/configuration/rollbacks/
+- Cloudflare Workers, rollbacks: https://developers.cloudflare.com/workers/configuration/versions-and-deployments/rollbacks/
+- Cloudflare Workers, registros: https://developers.cloudflare.com/workers/observability/logs/
 - Git, `git revert`: https://git-scm.com/docs/git-revert
 - Google SRE Book, monitorización de sistemas (las "señales doradas"): https://sre.google/sre-book/monitoring-distributed-systems/

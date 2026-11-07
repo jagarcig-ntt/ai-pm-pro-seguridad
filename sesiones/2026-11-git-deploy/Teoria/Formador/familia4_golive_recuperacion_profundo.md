@@ -3,7 +3,7 @@
 **Guía del formador** · versión profunda
 Sesión "Git, Deployment y Producción" · AI PM Pro · The Hero Camp · 21 de noviembre de 2026
 
-> Es la misma guía que reciben los alumnos, más los bloques marcados con 🎓, que son solo para ti. Bloque B4 de la escaleta (SPEC-010): **30 min** = teoría 12 + simulacro de rollback 8 + checklist aplicada 10. Va justo: si falta tiempo, la idea 3 se reduce a la tabla (decisión del plan, apartado 4).
+> Es la misma guía que reciben los alumnos, más los bloques marcados con 🎓, que son solo para ti. Bloque T4 de la escaleta (SPEC-010 v4.1): **15 min**, tras P2, con unos 6 de simulacro. La checklist aplicada pasa al kit. Va justo: si falta tiempo, la idea 3 se reduce a la tabla. Este documento es de referencia: qué se cuenta exactamente lo fija el guion (SPEC-015).
 
 ---
 
@@ -67,7 +67,7 @@ La checklist no está para cumplir el trámite. Está para que **las alarmas que
 
 **Lo que esto cambia para el PM:** "¿salimos?" deja de ser una sensación y pasa a ser una conversación sobre 8 respuestas concretas.
 
-> 🎓 **Intención:** la checklist es la idea que más se llevan (es parte del kit, SPEC-010 R13). Recórrela señalando de qué familia sale cada punto: es el **resumen de toda la sesión** en una tabla.
+> 🎓 **Intención:** la checklist es la idea que más se llevan (es parte del kit, SPEC-010 R12). Recórrela señalando de qué familia sale cada punto: es el **resumen de toda la sesión** en una tabla.
 >
 > **Error esperado:** *"La checklist ralentiza".* → Se tarda 5 minutos. Sonos tardó meses y 20–30 millones en arreglar lo que una checklist habría puesto encima de la mesa.
 
@@ -111,36 +111,34 @@ Las dos primeras las ve una herramienta. **La tercera la ve, sobre todo, el PM**
 >
 > **Para quien quiera más:** las tres señales simplifican las "cuatro señales doradas" del Google SRE Book (latencia, tráfico, errores y saturación) a lo que un PM puede vigilar. Está en Fuentes.
 >
-> **Error esperado en la prueba de humo (visto al preparar el demo, 28-oct):** tras un rollback a una versión antigua, `/admin` y `/app.js` respondían **200**… porque Cloudflare Pages sirve la portada para cualquier ruta que no existe. Una prueba de humo que solo mira "¿responde?" lo habría dado por bueno. **Hay que mirar el contenido.**
+> **Error esperado en la prueba de humo (visto en el demo anterior, 28-oct):** tras un rollback a una versión antigua, varias rutas respondían **200** porque la plataforma servía la portada para cualquier ruta que no existía. Una prueba que solo mira "¿responde?" lo habría dado por bueno. **Hay que mirar el contenido.** La comprobación del workflow es solo la primera barrera.
 
 ---
 
 ## 6. Cómo se ve en el producto demo
 
-En la demo hacemos un **simulacro de incidente**:
+**Verde no significa que funcione.** En el ensayo de esta sesión, las pruebas, la compilación y la publicación salieron en verde, y la web daba error 500: al servidor le faltaban dos variables. Por eso tu workflow comprueba al final que la web responde, y por eso tú la abres después de cada salida.
 
-1. Recorremos la checklist de go-live (`docs/checklist-go-live.md` del repo) con el cambio de la rama `demo/f4-rompe-portada` y salimos.
-2. Ese cambio rompe algo en producción a propósito.
-3. Lo detectamos en las señales: la portada falla y los registros en tiempo real de Cloudflare (`npx wrangler pages deployment tail`) muestran los errores.
-4. **Rollback** en un clic en Cloudflare (*Deployments* → despliegue anterior → *Rollback to this deployment*): producción vuelve a funcionar en unos 5 segundos.
+En la demo hacemos un **simulacro de incidente** en `feedback-hub`: <!-- ajustar tras T13 de SPEC-019 -->
+
+1. Recorremos la checklist de go-live con un cambio preparado y salimos.
+2. Ese cambio pasa los checks, pero rompe algo en producción.
+3. Lo detectamos en las señales: la web falla y los registros del Worker en Cloudflare muestran los errores.
+4. **Rollback** en el panel de Cloudflare: *Workers & Pages → tu Worker → Deployments → versión anterior → Rollback*.
 5. Después, el arreglo de verdad entra por el flujo normal: **revert** o corrección, con su PR.
 
-En Cloudflare Pages, apagar el *feature flag* (`FEATURE_VALORACION`) no cambia el código, pero sí exige volver a desplegar la misma versión (*Retry deployment*). También son segundos.
+**Para después de la sesión:** aplica la checklist a tu producto y **marca qué puntos no podrías responder hoy**. Esa es tu lista de trabajo antes del Demo Day.
 
-**Tu práctica:** aplica la checklist al cambio del producto demo y, en una columna aparte, **marca qué puntos no podrías responder hoy con tu propio producto**. Esa columna es tu lista de trabajo.
-
-> 🎓 **Simulacro en la demo** (8 min):
-> 1. Checklist rápida en voz alta sobre un cambio preparado.
+> 🎓 **Simulacro en la demo** (unos 6 min, con los rezagados de P2 terminando):
+> 1. Checklist rápida en voz alta sobre el cambio de `demo/f4-rompe-produccion`.
 > 2. Merge → producción.
-> 3. El cambio rompe algo visible (por ejemplo, la portada da error). Pregunta a la sala: "¿qué hacemos?". Deja que propongan.
-> 4. Rollback en la plataforma: producción vuelve en segundos.
+> 3. El cambio rompe algo visible. Pregunta a la sala: "¿qué hacemos?". Deja que propongan.
+> 4. Rollback en el panel: producción vuelve a funcionar.
 > 5. Enseña que `main` sigue teniendo el cambio malo: hace falta revert o arreglo por PR. Es la diferencia entre rollback y revert, vista en vivo.
->
-> **Práctica (10 min):** checklist sobre el cambio del demo y columna "¿podría responderlo hoy con mi producto?". Verificación: "¿cuántos noes tenéis en vuestra columna?". El número no importa: es su lista de trabajo.
 >
 > **Plan B**
 > - **El rollback de la plataforma falla o tarda:** revert por PR (más lento, pero demuestra lo mismo) o vídeo grabado del simulacro.
-> - **Si el deploy de la pausa 2 falló de verdad:** úsalo como simulacro. Es más creíble que uno preparado.
+> - **Si ha fallado de verdad el despliegue de un alumno en P1 o P2:** úsalo como simulacro, con su permiso. Es más creíble que uno preparado.
 
 ---
 
@@ -170,12 +168,12 @@ Las consecuencias, según declaraciones de la propia compañía recogidas por la
 
 ## 8. El factor agente IA
 
-En esta fase, el agente de go-live del **Deployment Agent Squad**:
+En esta fase, un agente:
 
 **Hace bien:**
-- recorrer la checklist y responder automáticamente los puntos comprobables: checks en verde, variables configuradas, URL que responde;
-- hacer una **prueba de humo** tras salir: comprobar que las páginas y endpoints principales funcionan;
-- tener preparado el procedimiento de rollback y decirte cuánto tarda;
+- recorrer la checklist y responder los puntos comprobables: checks en verde, variables configuradas, URL que responde;
+- hacer una **prueba de humo** tras salir: comprobar que las páginas principales funcionan;
+- explicarte el procedimiento de rollback;
 - resumir el estado de las señales técnicas tras el despliegue.
 
 **No delegues:**
@@ -183,7 +181,7 @@ En esta fase, el agente de go-live del **Deployment Agent Squad**:
 - **la decisión de hacer rollback** cuando afecta a usuarios. El agente puede ejecutarlo, pero la decisión y su comunicación son de una persona;
 - **la señal de uso.** Ningún agente sabe mejor que tú si el producto hace lo que tenía que hacer.
 
-> 🎓 **Puente al cierre y al 11 de diciembre:** "el squad ya os ayuda a recorrer la checklist. El 11 de diciembre le añadimos un punto más: el check de seguridad en vuestro CI". **Esta es la frase puente (CA7)**: dila tal cual.
+> 🎓 **Puente al cierre y al 11 de diciembre:** "hoy vuestro CI comprueba las pruebas y que la web responde. El 11 de diciembre añadimos el check de seguridad a vuestro CI". **Esta es la frase puente (CA7)**: dila tal cual.
 >
 > **Delimitación (CA7):** si preguntan por CORS, endpoints expuestos o cabeceras de seguridad, apárcalo para el 11 de diciembre. No forma parte de la checklist de hoy.
 
@@ -195,7 +193,7 @@ En esta fase, el agente de go-live del **Deployment Agent Squad**:
 2. **El plan de vuelta atrás se conoce antes de salir.** Si no se puede volver atrás, el listón sube.
 3. **El go-live termina cuando sabes que va bien**: errores, rendimiento y uso, con alguien mirando.
 
-> 🎓 **Enlace con B5 (cierre):** la checklist rellena es el último entregable visible de la sesión. Pide que guarden su columna de "noes": es el punto de partida del reto posterior (SPEC-010 R14).
+> 🎓 **Enlace con el cierre:** la checklist va en el kit. Pide que la pasen a su producto antes del Demo Day: sus "noes" son su lista de trabajo.
 
 ---
 
@@ -210,8 +208,8 @@ En esta fase, el agente de go-live del **Deployment Agent Squad**:
 - TechRadar, resumen del año: https://www.techradar.com/televisions/2024-the-year-sonos-slipped
 
 **Para profundizar:**
-- Vercel, Instant Rollback: https://vercel.com/docs/instant-rollback
-- Cloudflare Pages, rollbacks: https://developers.cloudflare.com/pages/configuration/rollbacks/
+- Cloudflare Workers, rollbacks: https://developers.cloudflare.com/workers/configuration/versions-and-deployments/rollbacks/
+- Cloudflare Workers, registros: https://developers.cloudflare.com/workers/observability/logs/
 - Git, `git revert`: https://git-scm.com/docs/git-revert
 - Google SRE Book, monitorización de sistemas (las "señales doradas"): https://sre.google/sre-book/monitoring-distributed-systems/
 
@@ -224,10 +222,10 @@ Lo que el producto demo y el squad deben permitir para que esta familia se pueda
 | Concepto | Qué debe tener el producto demo (SPEC-019) | Fase del squad (SPEC-017) |
 |---|---|---|
 | Checklist de go-live | La checklist de 8 puntos como fichero del repo (`docs/checklist-go-live.md`) y como parte del kit (SPEC-015) | Recorre la checklist y responde automáticamente los puntos comprobables |
-| Cambio que rompe producción | Un cambio preparado en una rama (`demo/f4-rompe-portada`) que provoca un error visible y fácil de entender | — |
+| Cambio que rompe producción | Un cambio preparado en una rama (`demo/f4-rompe-produccion`) que provoca un error visible y fácil de entender | — |
 | Rollback | Plataforma con rollback en un clic, probado antes de la sesión | Tiene preparado el procedimiento de rollback y dice cuánto tarda; no lo ejecuta sin decisión humana |
 | Revert | Flujo normal de PR para el arreglo posterior | Prepara el PR de revert |
-| Feature flag como tercera vía | El mismo flag de F1 y F2, apagable desde las variables de la plataforma | Señala si el cambio tiene flag o no |
+| Feature flag como tercera vía | Solo concepto: `feedback-hub` no tiene *feature flag* | Señala si el cambio tiene flag o no |
 | Tres señales | Al menos los registros de errores de la plataforma visibles; una métrica de uso simple si es viable (p. ej. un contador) | Prueba de humo tras salir y resumen de las señales técnicas |
 | Puente al 11-dic | Espacio en el workflow para añadir el check de seguridad (SPEC-022) | Fase de seguridad prevista para el 11 de diciembre |
 | Plan B | Vídeo del simulacro y revert por PR como alternativa al rollback | — |

@@ -3,7 +3,7 @@
 **Guía del formador** · versión profunda
 Sesión "Git, Deployment y Producción" · AI PM Pro · The Hero Camp · 21 de noviembre de 2026
 
-> Es la misma guía que reciben los alumnos, más los bloques marcados con 🎓, que son solo para ti. Bloques B3a y B3b de la escaleta (SPEC-010): **35 min** (teoría 15 + práctica 20: activar Actions en su fork y ver el check en su PR) **+ 25 min** de squad tras la pausa 2 (demo completa del squad, ver SPEC-017).
+> Es la misma guía que reciben los alumnos, más los bloques marcados con 🎓, que son solo para ti. Bloque T3 de la escaleta (SPEC-010 v4.1): **15 min**, con unos 4 de demo, justo antes de la pausa y de P1. Este documento es de referencia: qué se cuenta exactamente lo fija el guion (SPEC-015).
 
 ---
 
@@ -70,12 +70,12 @@ jobs:
     runs-on: ubuntu-latest       # en una máquina limpia de GitHub
     steps:
       - uses: actions/checkout@v4   # 1. coge el código del PR
-      - run: npm ci                 # 2. instala las dependencias
-      - run: npm run build          # 3. comprueba que se construye
-      - run: npm test               # 4. pasa las pruebas
+      - run: bun install --frozen-lockfile   # 2. instala las dependencias
+      - run: bun run test           # 3. pasa las pruebas
+      - run: bun run build          # 4. comprueba que se construye
 ```
 
-Leído en castellano: *"Cada vez que alguien abra un PR, en una máquina limpia, coge su código, instálalo, constrúyelo y pásale las pruebas."*
+Leído en castellano: *"Cada vez que alguien abra un PR, en una máquina limpia, coge su código, instálalo, pásale las pruebas y constrúyelo."*
 
 **Lo que esto cambia para el PM:** el proceso de calidad deja de ser una costumbre y pasa a ser **un documento que se puede leer, revisar y mejorar** como cualquier otro cambio, con su PR.
 
@@ -124,40 +124,57 @@ Y una regla sin excepciones: **nunca se despliega a mano desde un ordenador**. S
 
 ## 6. Cómo se ve en el producto demo
 
-El repositorio del producto demo tiene dos workflows:
+Tu repositorio llevará dos workflows, iguales para todos:
 
-- **"Comprobar el PR"** (`.github/workflows/comprobar-pr.yml`): en cada PR y en cada push a una rama, pasa las pruebas. No usa secretos.
-- **"Desplegar"** (`.github/workflows/desplegar.yml`): vuelve a pasar las pruebas y, solo si están en verde, publica:
+- **"Comprobar el PR"** (`.github/workflows/comprobar-pr.yml`): en cada PR y en cada push a una rama, pasa las pruebas y comprueba que compila. No usa secretos.
+- **"Desplegar"** (`.github/workflows/desplegar.yml`): vuelve a pasar las pruebas y, solo si están en verde, publica en Cloudflare:
   - en cada **PR** → su URL de preview, que deja en un **comentario automático** del PR;
-  - al hacer **merge a `main`** → **producción** (`feedbackhub-demo.pages.dev`);
-  - en cada push a la rama **`staging`** → el staging fijo (`staging-prueba.feedbackhub-demo.pages.dev`).
+  - al hacer **merge a `main`** → **producción**;
+  - en cada push a la rama **`staging`** → un staging fijo, opcional.
 
-La URL de preview lleva el nombre de la rama, con las `/` cambiadas por `-`: la rama `feature/texto-portada` se publica en `feature-texto-portada.feedbackhub-demo.pages.dev`, con la configuración de staging. Un PR con el check en rojo **ni siquiera se publica** en preview.
+  Al final comprueba que la web responde. Si da error, sale en rojo.
 
-En la demo veremos:
-1. Abrir un PR → el check se pone en marcha → ✅ verde.
+La URL de preview lleva el nombre de la rama: en `feedback-hub`, `lovable-sync-jagarcig-ntt-feedback-hub.jagarcig.workers.dev`. Un PR con las pruebas en rojo **ni siquiera se publica** en preview.
+
+**Caso real:** preparando `feedback-hub`, Lovable escribió código que no compilaba, porque olvidó añadir una dependencia. Con `main` protegida y este check, un fallo así no llega a tus usuarios.
+
+**En la demo verás:**
+1. Abrir un PR → los checks se ponen en marcha → ✅ verde.
 2. Abrir la URL de preview y probar el cambio.
-3. Romper a propósito la prueba "la portada muestra el título del producto" (`tests/portada.test.js`) → ❌ rojo → el botón de merge queda bloqueado.
-4. Arreglarlo, hacer merge y ver cómo el cambio llega a producción solo.
+3. Un PR con una prueba rota → ❌ rojo → merge bloqueado. <!-- ajustar tras T13 de SPEC-019 -->
+4. Hacer merge y ver cómo el cambio llega a producción solo.
 
-**Tu práctica:** en tu fork del producto demo, activa GitHub Actions (en los forks viene desactivado por defecto: pestaña *Actions* → *Enable workflows*) y mira cómo el check se ejecuta sobre **tu PR** de la Familia 1.
+**Tu práctica, en tu propio producto:**
 
-> 🎓 **En la demo enseñas** (unos 10 min, B3a):
-> 1. El fichero del workflow en `.github/workflows/`, leído en voz alta.
+*Primera parte: tu primer despliegue*
+1. Pide a Lovable que cree los dos workflows y la plantilla de PR. Pega el texto de la guía de la sesión.
+2. Abre la pestaña *Actions* de GitHub y espera a que **Desplegar** salga en verde.
+3. Abre el run y copia tu URL de producción.
+4. Abre tu web y comprueba que funciona.
+
+*Segunda parte: tu primer cambio*
+1. Protege `main` y pide un cambio en Lovable (Familia 1).
+2. Abre el PR y espera a los checks.
+3. Abre la URL de preview del comentario y prueba el cambio.
+4. Haz el merge y comprueba producción.
+
+> 🎓 **En la demo enseñas** (unos 4 min; el resto lo harán ellos):
+> 1. Los dos ficheros en `.github/workflows/`, leídos en voz alta.
 > 2. Un PR → pestaña *Checks* en marcha → ✅.
-> 3. El comentario o enlace de la plataforma con la URL de preview → abrirla.
-> 4. Romper una prueba → ❌ → merge bloqueado.
-> 5. Arreglar → ✅ → merge → pestaña *Actions*: el workflow de despliegue en marcha. **Deja que el deploy a producción corra durante la pausa 2** (escaleta SPEC-010).
+> 3. El comentario con la URL de preview → abrirla.
+> 4. Un PR en rojo con el merge bloqueado.
 >
-> **Práctica (20 min):** en su fork, *Actions* → *Enable workflows*, y volver a su PR de la Familia 1 (un commit nuevo o *re-run*) para ver el check. Verificación: "¿cuántos veis el check en verde en vuestro PR?".
->
-> **B3b, squad (25 min, tras la pausa):** el squad ejecuta fase a fase sobre el producto demo. Su guion vive en SPEC-017. Aquí solo: preguntas guiadas "¿qué revisaríais en este paso?".
+> **Prácticas:** son P1 (11:15, 45 min) y P2 (12:10, 45 min). Verificación: que peguen su URL de producción en P1 y el enlace de su PR en P2. En el ensayo del 5-nov, Jaime tardó 13 minutos en P2.
 >
 > **Plan B**
-> - **GitHub Actions lento o caído:** el PR de `demo/f3-checks` (rojo, merge bloqueado) y el PR #2 (verde, con preview) ya están ejecutados, más capturas.
+> - **GitHub Actions lento o caído:** capturas del PR #4 de `feedback-hub` y del PR en rojo.
+> - **El despliegue de un alumno falla:** se lee el error del workflow con la guía. Si no se resuelve, pasa al rescate de las 13:15 y conserva el *Publish* de Lovable.
 > - **Si preguntan por qué salen dos "Comprobar el PR":** es el mismo control lanzado por dos motivos (el push a la rama y el PR). Normal.
-> - **En los forks de los alumnos Actions no arranca:** que lo vean en tu pantalla. No es imprescindible para el objetivo del bloque (leer y entender el flujo).
-> - **El deploy de la pausa falla:** perfecto para la Familia 4; úsalo como incidente real, con el rollback preparado.
+>
+> **Errores esperados en P1** (ensayo del 5-nov):
+> - **Falta un secreto o está mal escrito:** el paso 0 del workflow lo dice en rojo.
+> - **Lovable modifica el fichero al pegarlo:** en 4 pegados no cambió el contenido, pero avisa de que se pida "contenido exacto".
+> - **Si un alumno usa una clave secreta de Supabase en el servidor,** el arreglo de las variables no la cubre. Hay que guardarla como secreto del Worker.
 
 ---
 
@@ -185,15 +202,12 @@ Entre los cambios que CrowdStrike anunció en su análisis oficial:
 
 ## 8. El factor agente IA
 
-En esta fase intervienen dos agentes del **Deployment Agent Squad**:
+En esta fase, un agente:
 
-**El agente de CI hace bien:**
-- escribir o ajustar el workflow a partir de lo que tiene tu producto;
+**Hace bien:**
+- escribir el fichero del workflow en tu repositorio, como hace Lovable;
 - cuando un check se pone en rojo, explicarte **en lenguaje humano** por qué ha fallado y proponer el arreglo;
-- añadir comprobaciones que faltan.
-
-**El agente de despliegue hace bien:**
-- comprobar que la URL de preview y la de producción responden tras cada despliegue;
+- añadir comprobaciones que faltan;
 - resumir qué versión hay en cada entorno.
 
 **No delegues:**
@@ -203,7 +217,7 @@ En esta fase intervienen dos agentes del **Deployment Agent Squad**:
 
 > **Error esperado (visto al preparar el demo, 29-oct):** guardar los secretos del despliegue (`CLOUDFLARE_API_TOKEN`) en las variables de **Cloudflare** en lugar de en los *Secrets* de **GitHub**. Los de la plataforma los usa la app; los de GitHub, el workflow que despliega. Son dos cajas fuertes distintas.
 >
-> 🎓 **Momento a vigilar en B3b:** si en la demo el squad propone desactivar un check (puede pasar), es oro. Páralo y pregunta a la sala: "¿lo aprobaríais?". Es la regla "un check en rojo se arregla, no se apaga" en vivo.
+> 🎓 **Momento a vigilar:** si Lovable propone desactivar una prueba para desbloquear a un alumno, es oro. Páralo y pregunta a la sala: "¿lo aprobaríais?".
 
 ---
 
@@ -213,7 +227,7 @@ En esta fase intervienen dos agentes del **Deployment Agent Squad**:
 2. **Ningún PR entra en rojo**, y antes de aprobar lo pruebas en su URL de preview.
 3. **Merge a `main` es una decisión de salir a producción**, y la salida avanza por fases, nunca de golpe ni a mano.
 
-> 🎓 **Antes de la pausa 2:** deja en pantalla la pestaña *Actions* con el deploy en marcha y di "a la vuelta vemos si ha llegado a producción". Así la pausa no corta el hilo.
+> 🎓 **Antes de la pausa:** anuncia que a la vuelta cada uno hará su primer despliegue. Es el momento de más energía de la sesión.
 
 ---
 
@@ -227,8 +241,7 @@ En esta fase intervienen dos agentes del **Deployment Agent Squad**:
 **Para profundizar:**
 - GitHub Docs, cómo funciona GitHub Actions: https://docs.github.com/en/actions/about-github-actions/understanding-github-actions
 - GitHub Docs, reglas del repositorio (rulesets): https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets
-- Cloudflare Pages, versiones de previsualización: https://developers.cloudflare.com/pages/configuration/preview-deployments/
-- Vercel, entornos y previews: https://vercel.com/docs/deployments/environments
+- Cloudflare Workers, versiones de previsualización: https://developers.cloudflare.com/workers/configuration/previews/
 
 ---
 
@@ -238,11 +251,11 @@ Lo que el producto demo y el squad deben permitir para que esta familia se pueda
 
 | Concepto | Qué debe tener el producto demo (SPEC-019) | Fase del squad (SPEC-017) |
 |---|---|---|
-| Workflow legible | `.github/workflows/` con dos ficheros cortos y comentados en castellano: "Comprobar el PR" y "Desplegar" | Escribe o ajusta los workflows con comentarios legibles |
+| Workflow legible | `.github/workflows/` con dos ficheros comentados en castellano: "Comprobar el PR" y "Desplegar" | Escribe o ajusta los workflows con comentarios legibles |
 | Checks obligatorios | Ruleset en `main`: check "Comprobar el PR" obligatorio para hacer merge | No modifica las reglas del repositorio |
 | Pruebas que se pueden romper | Al menos una prueba sencilla y entendible (p. ej. que la portada carga y muestra el título) que se pueda romper a propósito | Explica en lenguaje humano por qué falla un check |
 | Preview por PR | La plataforma de despliegue publica una URL de preview por PR, enlazada en el propio PR | Comprueba que la preview responde |
 | Merge = producción | Workflow o integración que despliega a producción al hacer merge a `main`; sin despliegues manuales | Verifica tras el despliegue que producción responde y qué versión hay |
-| Fork-friendly | Workflows que funcionan en un fork **sin secretos** (el check del PR no necesita credenciales) | — |
-| Coste 0 | Repo público (minutos de Actions sin límite práctico) y plataforma en plan gratuito (lo decide SPEC-013) | — |
+| Práctica en su producto | Workflows genéricos, sin nombres propios, que Lovable sube al repo de cada alumno | — |
+| Coste 0 | Repo público (Actions gratuito con runners estándar) y Cloudflare Workers en plan gratuito | — |
 | Plan B | PR `demo/f3-checks` con checks verde y rojo ya ejecutados, más capturas | — |

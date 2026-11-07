@@ -62,7 +62,7 @@ Que cada alumno, siguiendo solo la guía, llegue al 21-nov con su proyecto de Lo
 ## 8. Decisiones (Jaime, 5-nov)
 - [x] **Extensión:** una página resumen con la lista "¿lo tienes?" y, detrás, el paso a paso.
 - [x] **Secretos en GitHub:** último paso de la guía, si Gema lo acepta. Plan B: al empezar P1 (unos 10 min).
-- [x] **Calendario:** cuentas antes del 13-nov, Supabase conectado al empezar la sesión de Jose y el resto antes del 21-nov.
+- [x] **Calendario:** todo antes del 21-nov (Jaime, 7-nov). Se mantiene la regla de conectar Supabase antes de crear tablas.
 - [x] **Token:** caducidad de 1 año.
 - [x] **Prueba sin conocer el flujo (CA3):** alguien de Gema o el ayudante.
 - [x] **Publicación:** PDF en `sesiones/2026-11-git-deploy/descargas/`, con enlace desde el portal cuando exista.

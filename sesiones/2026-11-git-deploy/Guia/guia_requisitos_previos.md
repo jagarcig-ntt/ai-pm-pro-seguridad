@@ -10,10 +10,10 @@ El día 21 publicarás tu producto de Lovable en Internet, con un sistema profes
 
 | ✔ | Qué | Cuándo |
 |---|---|---|
-| ☐ | Plan Pro de Lovable activo | Antes del 13-nov |
-| ☐ | Proyecto de Lovable conectado a GitHub, con el repositorio **público** | Antes del 13-nov |
-| ☐ | Cuenta de Supabase creada | Antes del 13-nov |
-| ☐ | Supabase **conectado a tu proyecto**, antes de crear ninguna tabla | Al empezar la sesión de base de datos con Jose |
+| ☐ | Plan Pro de Lovable activo | Antes del 21-nov |
+| ☐ | Proyecto de Lovable conectado a GitHub, con el repositorio **público** | Antes del 21-nov |
+| ☐ | Cuenta de Supabase creada | Antes del 21-nov |
+| ☐ | Supabase **conectado a tu proyecto**, antes de crear ninguna tabla | Antes del 21-nov |
 | ☐ | Cuenta de Cloudflare, token y Account ID | Antes del 21-nov |
 | ☐ | Token y Account ID guardados en GitHub | Antes del 21-nov |
 
@@ -49,7 +49,7 @@ El día 21 publicarás tu producto de Lovable en Internet, con un sistema profes
 Aquí se guardarán los datos de tu producto.
 
 1. Crea una cuenta gratuita en [supabase.com](https://supabase.com).
-2. **El día de la sesión de base de datos,** en Lovable abre *More → Connectors → Supabase*. **No uses *Database*:** eso activa el backend de Lovable.
+2. **Antes de crear ninguna tabla,** en Lovable abre *More → Connectors → Supabase*. **No uses *Database*:** eso activa el backend de Lovable.
 3. Autoriza el acceso y pulsa **Create Project**.
 
 ![Crear el proyecto desde Lovable](capturas/03_supabase_connect.png)

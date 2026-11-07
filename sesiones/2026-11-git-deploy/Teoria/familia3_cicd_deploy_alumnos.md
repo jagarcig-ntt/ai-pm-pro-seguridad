@@ -63,12 +63,12 @@ jobs:
     runs-on: ubuntu-latest       # en una máquina limpia de GitHub
     steps:
       - uses: actions/checkout@v4   # 1. coge el código del PR
-      - run: npm ci                 # 2. instala las dependencias
-      - run: npm run build          # 3. comprueba que se construye
-      - run: npm test               # 4. pasa las pruebas
+      - run: bun install --frozen-lockfile   # 2. instala las dependencias
+      - run: bun run test           # 3. pasa las pruebas
+      - run: bun run build          # 4. comprueba que se construye
 ```
 
-Leído en castellano: *"Cada vez que alguien abra un PR, en una máquina limpia, coge su código, instálalo, constrúyelo y pásale las pruebas."*
+Leído en castellano: *"Cada vez que alguien abra un PR, en una máquina limpia, coge su código, instálalo, pásale las pruebas y constrúyelo."*
 
 **Lo que esto cambia para el PM:** el proceso de calidad deja de ser una costumbre y pasa a ser **un documento que se puede leer, revisar y mejorar** como cualquier otro cambio, con su PR.
 
@@ -105,23 +105,39 @@ Y una regla sin excepciones: **nunca se despliega a mano desde un ordenador**. S
 
 ## 6. Cómo se ve en el producto demo
 
-El repositorio del producto demo tiene dos workflows:
+Tu repositorio llevará dos workflows, iguales para todos:
 
-- **"Comprobar el PR"** (`.github/workflows/comprobar-pr.yml`): en cada PR y en cada push a una rama, pasa las pruebas. No usa secretos.
-- **"Desplegar"** (`.github/workflows/desplegar.yml`): vuelve a pasar las pruebas y, solo si están en verde, publica:
+- **"Comprobar el PR"** (`.github/workflows/comprobar-pr.yml`): en cada PR y en cada push a una rama, pasa las pruebas y comprueba que compila. No usa secretos.
+- **"Desplegar"** (`.github/workflows/desplegar.yml`): vuelve a pasar las pruebas y, solo si están en verde, publica en Cloudflare:
   - en cada **PR** → su URL de preview, que deja en un **comentario automático** del PR;
-  - al hacer **merge a `main`** → **producción** (`feedbackhub-demo.pages.dev`);
-  - en cada push a la rama **`staging`** → el staging fijo (`staging-prueba.feedbackhub-demo.pages.dev`).
+  - al hacer **merge a `main`** → **producción**;
+  - en cada push a la rama **`staging`** → un staging fijo, opcional.
 
-La URL de preview lleva el nombre de la rama, con las `/` cambiadas por `-`: la rama `feature/texto-portada` se publica en `feature-texto-portada.feedbackhub-demo.pages.dev`, con la configuración de staging. Un PR con el check en rojo **ni siquiera se publica** en preview.
+  Al final comprueba que la web responde. Si da error, sale en rojo.
 
-En la demo veremos:
-1. Abrir un PR → el check se pone en marcha → ✅ verde.
+La URL de preview lleva el nombre de la rama: en `feedback-hub`, `lovable-sync-jagarcig-ntt-feedback-hub.jagarcig.workers.dev`. Un PR con las pruebas en rojo **ni siquiera se publica** en preview.
+
+**Caso real:** preparando `feedback-hub`, Lovable escribió código que no compilaba, porque olvidó añadir una dependencia. Con `main` protegida y este check, un fallo así no llega a tus usuarios.
+
+**En la demo verás:**
+1. Abrir un PR → los checks se ponen en marcha → ✅ verde.
 2. Abrir la URL de preview y probar el cambio.
-3. Romper a propósito la prueba "la portada muestra el título del producto" (`tests/portada.test.js`) → ❌ rojo → el botón de merge queda bloqueado.
-4. Arreglarlo, hacer merge y ver cómo el cambio llega a producción solo.
+3. Un PR con una prueba rota → ❌ rojo → merge bloqueado. <!-- ajustar tras T13 de SPEC-019 -->
+4. Hacer merge y ver cómo el cambio llega a producción solo.
 
-**Tu práctica:** en tu fork del producto demo, activa GitHub Actions (en los forks viene desactivado por defecto: pestaña *Actions* → *Enable workflows*) y mira cómo el check se ejecuta sobre **tu PR** de la Familia 1.
+**Tu práctica, en tu propio producto:**
+
+*Primera parte: tu primer despliegue*
+1. Pide a Lovable que cree los dos workflows y la plantilla de PR. Pega el texto de la guía de la sesión.
+2. Abre la pestaña *Actions* de GitHub y espera a que **Desplegar** salga en verde.
+3. Abre el run y copia tu URL de producción.
+4. Abre tu web y comprueba que funciona.
+
+*Segunda parte: tu primer cambio*
+1. Protege `main` y pide un cambio en Lovable (Familia 1).
+2. Abre el PR y espera a los checks.
+3. Abre la URL de preview del comentario y prueba el cambio.
+4. Haz el merge y comprueba producción.
 
 ---
 
@@ -143,15 +159,12 @@ Entre los cambios que CrowdStrike anunció en su análisis oficial:
 
 ## 8. El factor agente IA
 
-En esta fase intervienen dos agentes del **Deployment Agent Squad**:
+En esta fase, un agente:
 
-**El agente de CI hace bien:**
-- escribir o ajustar el workflow a partir de lo que tiene tu producto;
+**Hace bien:**
+- escribir el fichero del workflow en tu repositorio, como hace Lovable;
 - cuando un check se pone en rojo, explicarte **en lenguaje humano** por qué ha fallado y proponer el arreglo;
-- añadir comprobaciones que faltan.
-
-**El agente de despliegue hace bien:**
-- comprobar que la URL de preview y la de producción responden tras cada despliegue;
+- añadir comprobaciones que faltan;
 - resumir qué versión hay en cada entorno.
 
 **No delegues:**
@@ -179,5 +192,4 @@ En esta fase intervienen dos agentes del **Deployment Agent Squad**:
 **Para profundizar:**
 - GitHub Docs, cómo funciona GitHub Actions: https://docs.github.com/en/actions/about-github-actions/understanding-github-actions
 - GitHub Docs, reglas del repositorio (rulesets): https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets
-- Cloudflare Pages, versiones de previsualización: https://developers.cloudflare.com/pages/configuration/preview-deployments/
-- Vercel, entornos y previews: https://vercel.com/docs/deployments/environments
+- Cloudflare Workers, versiones de previsualización: https://developers.cloudflare.com/workers/configuration/previews/

@@ -58,6 +58,8 @@ Tres reglas que se derivan de la tabla:
 - **Staging se parece a producción todo lo posible.** Si en staging funciona y en producción no, la diferencia entre ambos es el problema.
 - **A producción solo llega lo que ha pasado por staging.** Es la promesa que hace que staging sirva para algo.
 
+**En vuestro producto:** staging y producción **comparten la base de datos**. Para un primer MVP es una decisión razonable, pero tomada a sabiendas: lo que escribas en una preview llega a tus datos reales, y un cambio de tabla afecta a todos los entornos. Separarlos es el siguiente paso cuando tengas usuarios reales.
+
 > En los planes gratuitos, "staging" suele ser una **versión de previsualización**: cada rama o cada PR se publica automáticamente en una URL propia para probarla. El concepto es el mismo, un sitio para validar antes de producción, aunque no se llame "staging".
 
 ---
@@ -87,13 +89,15 @@ Las variables normales pueden estar escritas en un fichero del repositorio. **Lo
 
 | Dónde | Para qué | Cómo se protege |
 |---|---|---|
-| Fichero `.env` en tu ordenador | Desarrollo local | Está en `.gitignore`: Git lo ignora y nunca se sube |
+| Fichero `.env` del repositorio | Valores **públicos**, como la URL de Supabase y su clave pública | No se protege: cualquiera puede leerlo |
 | *Secrets* de GitHub | Que el CI (Familia 3) pueda usarlos | Cifrados; nadie los puede leer, ni siquiera tú, una vez guardados |
-| Variables de la plataforma de despliegue | Staging y producción | Cifradas y separadas por entorno |
+| Variables de la plataforma de despliegue | Lo que necesita tu app al ejecutarse en Cloudflare | Cifradas si las guardas como secreto |
 
-En el repositorio solo se sube un `.env.example`: **la lista de variables que hacen falta, sin valores**. Sirve de documentación para cualquier persona o agente que llegue al proyecto.
+Lovable sube un `.env` a tu repositorio. Es aceptable **solo porque lleva valores públicos**. La regla es sencilla: **en el `.env` del repo, solo lo que podrías publicar en tu web**. La clave pública de Supabase empieza por `sb_publishable_`. La secreta empieza por `sb_secret_` y nunca va ahí.
 
-Y cada entorno tiene **sus propios secretos**: la clave de pagos de staging no es la de producción. Si algo se filtra desde staging, producción no se ve afectada.
+Tu repositorio es público y las clases se graban: no enseñes nunca un secreto en pantalla ni lo pegues en el chat de Lovable.
+
+Cuando separes entornos, cada uno tendrá **sus propios secretos**: si algo se filtra desde staging, producción no se ve afectada.
 
 > Qué pasa cuando un secreto se filtra, y cómo detectarlo, es el tema de la sesión de **Seguridad del 11 de diciembre**. Hoy nos quedamos en dónde vive cada cosa.
 
@@ -101,19 +105,24 @@ Y cada entorno tiene **sus propios secretos**: la clave de pagos de staging no e
 
 ## 6. Cómo se ve en el producto demo
 
-El producto demo tiene tres entornos:
+Tu producto tiene tres entornos:
 
-- **Development:** en tu ordenador (`npm run dev`), con un fichero `.env` propio y la base de datos de staging.
-- **Staging:** las versiones de previsualización de **Cloudflare Pages** (por ejemplo `staging-prueba.feedbackhub-demo.pages.dev`, y una por cada PR), con su propio proyecto de base de datos (`feedbackhub-staging`, con datos de ejemplo).
-- **Production:** `feedbackhub-demo.pages.dev`, con su propio proyecto de base de datos (`feedbackhub-prod`).
+| | Dónde está | Para qué |
+|---|---|---|
+| **Development** | Vista previa de Lovable | Ver el cambio mientras lo construyes |
+| **Staging** | URL de preview de cada PR, en Cloudflare | Probarlo como en producción, antes del merge |
+| **Production** | URL de tu Worker en Cloudflare | Lo que ven tus usuarios |
 
-En la demo veremos:
-- el `.env.example` del repositorio;
-- las variables en Cloudflare Pages (*Settings → Variables and secrets*), con el mismo nombre en *Production* y en *Preview*: `APP_ENV`, `FEATURE_VALORACION`, `SUPABASE_URL` y `SUPABASE_ANON_KEY` (esta, como *Secret*);
-- los *secrets* de GitHub que usa el despliegue automático (`CLOUDFLARE_API_TOKEN`);
-- el *feature flag* `FEATURE_VALORACION`: el campo "valoración de 1 a 5" aparece en staging y no en producción.
+Los tres usan **el mismo proyecto de Supabase**.
 
-**Tu práctica: el mapa de entornos.** Primero lo rellenas para el producto demo y después, en 5 minutos, para **tu propio producto**:
+**Por qué la vista previa de Lovable no es staging:** corre en la infraestructura de Lovable, no en Cloudflare. En el ensayo de esta sesión, una app funcionaba en Lovable y daba error en Cloudflare. Solo una preview en el mismo sitio que producción lo enseña antes de salir.
+
+**En la demo verás, en `feedback-hub`:**
+1. La URL de producción y la de una preview, una al lado de la otra.
+2. El `.env` del repositorio, solo con valores públicos.
+3. Los *secrets* de GitHub: `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID`.
+
+**Para después de la sesión: tu mapa de entornos.** Rellénalo para tu producto:
 
 | | Development | Staging | Production |
 |---|---|---|---|
@@ -121,8 +130,6 @@ En la demo veremos:
 | ¿Qué base de datos usa? | | | |
 | ¿Qué secretos necesita y dónde viven? | | | |
 | ¿Quién tiene acceso? | | | |
-
-Si al rellenar el de tu producto descubres que dos columnas son iguales, ya sabes por dónde empezar.
 
 ---
 
@@ -143,26 +150,26 @@ La respuesta del CEO de Replit, Amjad Masad, fue calificarlo de "inaceptable" y 
 
 ## 8. El factor agente IA
 
-En esta fase, el agente de entornos y secretos del **Deployment Agent Squad**:
+En esta fase, un agente como Lovable:
 
 **Hace bien:**
-- localizar todas las variables que usa el código y generar el `.env.example`;
-- preparar la lista de lo que hay que configurar en cada entorno y en cada plataforma;
-- avisar si encuentra un secreto escrito en el código o un `.env` fuera de `.gitignore`;
-- comprobar que staging y producción no comparten base de datos.
+- conectar tu app con Supabase y guardar los valores públicos;
+- listar las variables que usa tu producto, si se lo pides;
+- preparar los cambios de la base de datos y enseñarte el SQL antes de ejecutarlo;
+- avisarte si encuentra un secreto escrito en el código, si se lo pides.
 
 **No delegues:**
-- **el acceso a producción.** El agente trabaja en desarrollo y staging. Producción la toca el proceso de despliegue (Familia 3), no el agente;
+- **aprobar cambios en la base de datos sin leerlos.** Lovable trabaja sobre tu única base de datos: la de verdad. Antes de pulsar *Allow*, lee qué va a cambiar;
 - **los valores de los secretos.** No pegues claves reales en el chat de un agente: se configuran directamente en la plataforma;
-- **qué datos se usan para probar.** Copiar datos reales de clientes a staging "para que sea realista" es una decisión de producto y legal, no técnica.
+- **qué datos se usan para probar.** Copiar datos reales de clientes a un entorno de pruebas "para que sea realista" es una decisión de producto y legal, no técnica.
 
 ---
 
 ## 9. Lo que el PM se lleva
 
-1. **Probar y cobrar no se hacen en el mismo sitio.** Cada entorno tiene sus propios datos.
+1. **Probar y cobrar no se hacen en el mismo sitio.** Si hoy tus entornos comparten datos, que sea una decisión consciente.
 2. **El código es el mismo; la configuración cambia.** Y una variable de entorno puede ser un interruptor de producto.
-3. **Los secretos viven en la plataforma, nunca en el código**, y producción no está al alcance del agente.
+3. **Los secretos viven en la plataforma, nunca en el código**, y lees lo que el agente va a cambiar en tu base de datos antes de aprobarlo.
 
 ---
 
@@ -178,5 +185,5 @@ En esta fase, el agente de entornos y secretos del **Deployment Agent Squad**:
 - The Twelve-Factor App, configuración (en español): https://12factor.net/es/config
 - GitHub Docs, uso de secretos en GitHub Actions: https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions
 - Supabase, gestión de entornos: https://supabase.com/docs/guides/deployment/managing-environments
-- Vercel, entornos: https://vercel.com/docs/deployments/environments
-- Cloudflare Pages, versiones de previsualización: https://developers.cloudflare.com/pages/configuration/preview-deployments/
+- Cloudflare Workers, versiones de previsualización: https://developers.cloudflare.com/workers/configuration/previews/
+- Lovable, integración con Supabase: https://docs.lovable.dev/integrations/supabase
