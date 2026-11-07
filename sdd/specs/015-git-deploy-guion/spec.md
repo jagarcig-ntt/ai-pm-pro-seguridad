@@ -32,7 +32,6 @@ Que Jaime y el ayudante puedan impartir las 4 horas siguiendo un solo documento,
 - Instrucciones de P1 y P2 para el alumno, en tono de guía de usuario, incluidos los prompts para Lovable.
 - Pre-sesión: comprobaciones del día y preparación de la demo.
 - Kit del alumno: checklist de go-live, chuleta de Git, mapa de entornos, workflows y plantilla de PR.
-- El texto del reto posterior.
 
 **No incluye:**
 - La maquetación en el portal (SPEC-016).
@@ -66,12 +65,11 @@ Que Jaime y el ayudante puedan impartir las 4 horas siguiendo un solo documento,
 ## 7. Restricciones (constitution)
 1.6 una sola fuente de verdad · 2.1–2.5 patrón de bloque y lenguaje de PM · 2.7 ritmo · 2.8 timings honestos · 2.9 verificación · 2.11 kit · 2.12 dinamismo · 3.3 plan B · 3.4 nada de secretos · 4 Markdown como fuente.
 
-## 8. Preguntas abiertas
-- [ ] **¿Quizzes?** En junio había uno por familia, y SPEC-014 los dejó para el guion. Propuesta: una pregunta rápida en el chat por familia, sin quiz, porque el tiempo es de la práctica.
-- [ ] **¿Quién es el ayudante y qué hace?** Propuesta: lo prepara con la guía, sigue el chat y atiende en una sala aparte a quien se atasca.
-- [ ] **¿Salas de Zoom para desatascar?** Depende de cómo se organice Gema.
-- [ ] **¿Reto posterior?** Sigue abierto en SPEC-010: propuesta de cierre el 5-dic por el Slack del curso.
-- [ ] **¿Cámara y grabación?** Hay que recordar que no se comparta pantalla al pegar secretos, si eso sigue en la sesión. Depende de lo que acepte Gema (SPEC-013).
+## 8. Decisiones y preguntas abiertas
+- [x] **Quizzes** (Jaime, 7-nov): sin quiz. Una pregunta rápida en el chat por familia.
+- [ ] **Ayudante** (Jaime, 7-nov): no lleva guion, sino una **guía de cómo operar** durante la sesión. Su contenido depende del soporte que dé Gema, y Jaime lo hablará con ella.
+- [ ] **Salas de Zoom para desatascar:** en espera.
+- [ ] **Reto posterior** (Jaime, 7-nov): "no hace falta". Pendiente de aclarar si se elimina el reto, lo que afecta a SPEC-010 (R13) y a la constitution (2.9).
 - [ ] **¿Y si los secretos no vienen de casa?** El plan B cuesta unos 10 min de P1 (SPEC-010).
 
 ## 9. Hallazgos fuera de alcance

@@ -112,3 +112,11 @@ El aviso de `feedbackhub-prod` en *Connect project* indica que ese proyecto ya e
 - **Aviso de Lovable, importante para la guía:** *"Merge that branch into "main" in your Git provider using a merge commit. Do not squash or rebase: drafts need the original commits."* El botón del PR debe ser **Create a merge commit**, nunca *Squash* ni *Rebase*.
 
 **Cierre del ensayo (CA9, 5-nov):** PR #2 fusionado con merge commit (`5020b36`), publicación en verde, web 200 y Lovable en "In sync" (Jaime). `lovable-sync` se reutiliza en cada cambio. Tiempos: A 13 min y C 13 min; B sin dato representativo por el diagnóstico del 500. Falta repetirlo con alguien que no conozca el flujo (CA3 de SPEC-013).
+
+## CA7 · Cambio de tabla desde una rama · 7-nov
+Con `main` protegida, se pidió a Lovable añadir una columna `categoria` a `notas_ensayo`, y Jaime aprobó el SQL. Comprobado por el agente **sin abrir ningún PR**:
+- **En el repo,** el cambio solo está en `lovable-sync`: commit `192bb53` con la migración `ALTER TABLE public.notas_ensayo ADD COLUMN categoria text;` y los tipos actualizados. `main` no lo tiene y no hay PR abierto.
+- **En Supabase,** la columna **ya existe**: `select id,categoria` con la clave pública devuelve 200 y `categoria: null`.
+- **Conclusión, CA7 ✅:** los cambios de base de datos de Lovable se aplican al aprobar el SQL, **antes del PR y del merge**. La rama protege el código, no los datos. Con una base de datos compartida, el cambio afecta a producción en el momento.
+
+**Para F2 y la guía de la sesión:** un cambio de tabla no espera al PR. Esta columna opcional no rompe nada, pero borrar o renombrar una columna rompería producción al instante. Por eso, antes de pulsar *Allow*, hay que leer el SQL, y nunca aprobar un `DROP` o un `RENAME` sin pensarlo. Encaja con el caso Replit y con "No delegues" de F2.

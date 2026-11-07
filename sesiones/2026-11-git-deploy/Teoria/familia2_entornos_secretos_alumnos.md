@@ -159,7 +159,7 @@ En esta fase, un agente como Lovable:
 - avisarte si encuentra un secreto escrito en el código, si se lo pides.
 
 **No delegues:**
-- **aprobar cambios en la base de datos sin leerlos.** Lovable trabaja sobre tu única base de datos: la de verdad. Antes de pulsar *Allow*, lee qué va a cambiar;
+- **aprobar cambios en la base de datos sin leerlos.** Lovable trabaja sobre tu única base de datos: la de verdad. Y el cambio se aplica al pulsar *Allow*, antes de cualquier PR: la rama protege el código, no los datos. Lee qué va a cambiar, y nunca apruebes un borrado o un cambio de nombre sin pensarlo;
 - **los valores de los secretos.** No pegues claves reales en el chat de un agente: se configuran directamente en la plataforma;
 - **qué datos se usan para probar.** Copiar datos reales de clientes a un entorno de pruebas "para que sea realista" es una decisión de producto y legal, no técnica.
 
