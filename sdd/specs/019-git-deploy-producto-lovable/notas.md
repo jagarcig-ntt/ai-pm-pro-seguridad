@@ -120,3 +120,22 @@ Con `main` protegida, se pidió a Lovable añadir una columna `categoria` a `not
 - **Conclusión, CA7 ✅:** los cambios de base de datos de Lovable se aplican al aprobar el SQL, **antes del PR y del merge**. La rama protege el código, no los datos. Con una base de datos compartida, el cambio afecta a producción en el momento.
 
 **Para F2 y la guía de la sesión:** un cambio de tabla no espera al PR. Esta columna opcional no rompe nada, pero borrar o renombrar una columna rompería producción al instante. Por eso, antes de pulsar *Allow*, hay que leer el SQL, y nunca aprobar un `DROP` o un `RENAME` sin pensarlo. Encaja con el caso Replit y con "No delegues" de F2.
+
+## CA8 · Login · 8-nov · ⚠️ producción rota antes del merge
+Se pidió a Lovable registro por email y notas privadas. El cambio de código está en `lovable-sync`: 15 ficheros y la migración, sin PR. El SQL añade `user_id`, **borra las políticas públicas** (`DROP POLICY "Anyone can read/add notes"`), quita los permisos a `anon` y crea políticas por usuario.
+
+**Comprobado por el agente antes de cualquier merge:**
+- Sin sesión, leer `notas_ensayo` devuelve 401 (`42501`, sin permisos): las políticas nuevas ya están aplicadas.
+- **La web de producción da 500.** Su código, el de `main`, sigue leyendo las notas sin sesión, y la base de datos ya no lo permite.
+
+**Es el riesgo de CA7 hecho realidad:** al aprobar el SQL, producción se rompió aunque el PR no existía. Ningún check lo detectó, porque no hubo despliegue. Caso propio para F2 ("la rama protege el código, no los datos") y para F4 (un cambio que no se puede deshacer con un rollback del Worker: volver a la versión anterior no devuelve las políticas).
+
+**Lección para alumnos y para Jose:** cuando Lovable proponga borrar políticas o permisos (`DROP POLICY`, `REVOKE`), hay que hacer el PR y el merge inmediatamente después de aprobar, o producción queda rota entre medias.
+
+**Login en la vista previa de Lovable: funciona** (Jaime, 8-nov): registro, correo de confirmación de Supabase e inicio de sesión. Las notas anteriores ya no se ven, porque no tienen `user_id`.
+
+**URL de autenticación en Supabase (captura de Jaime, 8-nov):** Lovable configuró solo, en *Authentication → URL Configuration*, cinco URL suyas (`*.lovableproject.com` y `*.lovable.app`). La **Site URL quedó en `http://localhost:3000`** y **no incluye la URL de Cloudflare**. El código registra con `emailRedirectTo: window.location.origin`, pero Supabase solo respeta las URL de la lista. Desde producción, el enlace del correo llevaría a `localhost`.
+- **Arreglo:** Site URL = URL del Worker, más dos Redirect URLs: `https://<worker>.<subdominio>.workers.dev/**` y `https://*-<worker>.<subdominio>.workers.dev/**` para las previews.
+- **Para la sesión:** paso de P1 para quien tenga login, porque la URL de producción no existe hasta P1. No puede ir en la guía de casa.
+
+**CA8 ✅ (8-nov).** Jaime añadió la URL del Worker en Supabase e hizo el merge del PR #4 (`362e7bb`), con la publicación en verde. Comprobado por el agente: producción `/` → 200 y `/auth` → 200, con "Iniciar sesión" y "Crear cuenta". Sin sesión, leer y escribir en `notas_ensayo` → 401. Jaime confirma que todo funciona en producción.

@@ -76,6 +76,8 @@ La regla importante: **el plan de vuelta atrás se conoce antes de salir, no se 
 
 Y una advertencia: **no todo se puede deshacer.** Un cambio en la estructura de la base de datos, datos ya enviados a terceros o un cambio que los usuarios ya han empezado a usar pueden no tener vuelta atrás limpia. Cuando no se puede volver atrás, **el listón para salir tiene que ser más alto**.
 
+**Nos pasó preparando esta sesión:** al añadir login, Lovable cambió los permisos de la base de datos en cuanto se aprobó el cambio. La web de producción se cayó antes de abrir el PR. Volver a la versión anterior de la web no lo habría arreglado, porque los permisos ya eran otros. Se arregló terminando el ciclo: PR, merge y publicación.
+
 ---
 
 ## 5. Idea 3 · Después de salir: vigilar tres señales
