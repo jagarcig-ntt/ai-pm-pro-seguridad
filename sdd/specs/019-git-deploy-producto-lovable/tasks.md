@@ -26,8 +26,8 @@ Reglas:
 | T07 | **Verificar CA7:** si la tabla llega a Supabase antes del merge y si aparece en `supabase/migrations/`. Anotar el mensaje para F2 y borrar la tabla de prueba. | `notas.md` | T06 | ☑ |
 | T08 🧑 | **Login desde la app publicada (CA8):** pedir a Lovable un acceso con login que lea `feedback`, por PR, y añadir la URL de producción a las redirecciones de Supabase. | — | T07 | ☑ |
 | T09 | **Verificar CA8:** el login y la lectura funcionan en la URL de producción y, sin sesión, no se lee nada. Anotar qué va a la guía. | `notas.md` | T08 | ☑ |
-| T10 | **Plantilla de PR y README:** preparar `.github/pull_request_template.md`, `docs/checklist-go-live.md` y los cambios de `README.md`, para que entren por PR (CA5). | `feedback-hub`: `.github/pull_request_template.md`, `docs/checklist-go-live.md`, `README.md` | T05 | ☐ |
-| T11 🧑 | **Abrir y fusionar ese PR, y añadir "Comprobar el PR" al ruleset de `main`.** | — | T10 | ☐ |
+| T10 | **Plantilla de PR, checklist, README y workflow actualizado:** preparar los ficheros para que entren por prompts de Lovable y PR, como haría un alumno (CA5). *Hecho el 8-nov: la plantilla y `desplegar.yml` ya estaban en `Lab/workflows/`; se añaden la checklist y la sección del README.* | `sesiones/2026-11-git-deploy/Lab/feedback-hub/checklist-go-live.md`, `sesiones/2026-11-git-deploy/Lab/feedback-hub/README-seccion.md` | T05 | ☑ |
+| T11 🧑 | **Abrir y fusionar ese PR, y añadir "Comprobar el PR" al ruleset de `main`.** | — | T10 | ☑ |
 | T12 | **Ramas de demo:** preparar `demo/f3-checks` y `demo/f4-rompe-produccion` (plan 2.4), con script e instrucciones para Jaime. | `feedback-hub`: ramas de demo · `notas.md` | T11 | ☐ |
 | T13 🧑 | **Subir las ramas de demo, abrir sus PR y probar el rollback** en el panel de Cloudflare, cronometrado. | — | T12 | ☐ |
 | T14 | **Verificar CA3 y CA4:** F3 en rojo y merge bloqueado; F4 en verde y con error visible en producción; el rollback la recupera, comprobado por contenido. | `notas.md` | T13 | ☐ |
@@ -47,3 +47,5 @@ Estados: ☐ pendiente · ◐ en curso · ☑ hecha · ✕ descartada
 - T05 → `[SPEC-019] T05 Ensayo solo con navegador cerrado: bloque C y lecciones para la guía`
 - T07 → `[SPEC-019] T07 Los cambios de tabla de Lovable se aplican antes del merge (CA7)`
 - T09 → `[SPEC-019] T09 Login en producción (CA8): URL de Supabase y producción rota antes del merge`
+- T10 → `[SPEC-019] T10 Checklist de go-live y sección del README para feedback-hub`
+- T11 → `[SPEC-019] T11 feedback-hub con plantilla, checklist, README y workflow nuevo; check obligatorio`

@@ -139,3 +139,17 @@ Se pidió a Lovable registro por email y notas privadas. El cambio de código es
 - **Para la sesión:** paso de P1 para quien tenga login, porque la URL de producción no existe hasta P1. No puede ir en la guía de casa.
 
 **CA8 ✅ (8-nov).** Jaime añadió la URL del Worker en Supabase e hizo el merge del PR #4 (`362e7bb`), con la publicación en verde. Comprobado por el agente: producción `/` → 200 y `/auth` → 200, con "Iniciar sesión" y "Crear cuenta". Sin sesión, leer y escribir en `notas_ensayo` → 401. Jaime confirma que todo funciona en producción.
+
+## Plantilla, checklist y README por prompts de Lovable · 8-nov
+Por error se hicieron en el repo del ensayo (`notas-al-d-a`, PR #5) en lugar de en `feedback-hub`. Sirve como prueba del camino del alumno:
+- `desplegar.yml` llegó idéntico.
+- La plantilla de PR, la checklist y la sección del README llegaron **con líneas en blanco de más y sin ningún cambio de contenido**: el resultado en pantalla es el mismo.
+- El PR #5 todavía no muestra la plantilla, porque GitHub la lee de `main`. Saldrá en el siguiente PR.
+- **`feedback-hub`:** el ruleset ya tiene el check obligatorio `Comprobar el PR` y solo admite **merge** (comprobado por la API). Faltan los 4 ficheros.
+
+## T11 en `feedback-hub` · 9-nov · CA5 ✅ (parte de ficheros)
+PR #5 fusionado (`bf146ed`) y publicación en verde. Comprobado por el agente:
+- `desplegar.yml`, la plantilla de PR, `docs/checklist-go-live.md` y la sección del README están en `main`, con el mismo contenido (salvo líneas en blanco).
+- El ruleset exige `Comprobar el PR` y solo admite merge (CA3, parte del ruleset).
+- **Producción con el workflow nuevo:** web 200 y envío real del formulario en Chrome headless → `POST /rest/v1/feedback` **201**, mensaje de agradecimiento y 0 errores. Queda otra fila "Prueba agente SPEC-019 (borrar)" en `feedbackhub-prod`.
+- **Falta de CA5:** `Lab/README.md` ya apunta a `feedback-hub`, pero no enlaza la checklist.

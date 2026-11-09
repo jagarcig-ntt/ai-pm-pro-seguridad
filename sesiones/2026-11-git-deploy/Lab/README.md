@@ -21,3 +21,5 @@ El producto de la sesión es un proyecto real de **Lovable**, publicado en Cloud
 - Spec, plan, tareas y notas: [`sdd/specs/019-git-deploy-producto-lovable/`](../../../sdd/specs/019-git-deploy-producto-lovable/)
 - Cómo se validó el flujo: [`sdd/specs/018-git-deploy-flujo-lovable/`](../../../sdd/specs/018-git-deploy-flujo-lovable/)
 - Qué debe permitir enseñar el demo: sección 11 de cada versión formador en [`Teoria/Formador/`](../Teoria/Formador/)
+- Checklist de go-live: [`docs/checklist-go-live.md`](https://github.com/jagarcig-ntt/feedback-hub/blob/main/docs/checklist-go-live.md) en el repo de `feedback-hub`
+- Ficheros para copiar en el producto de cada alumno: [`workflows/`](workflows/)

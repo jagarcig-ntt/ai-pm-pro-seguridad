@@ -56,7 +56,7 @@ Se hace como lo haría un alumno: **sin VS Code, sin terminal y sin clonar nada*
 1. Repite con `.github/workflows/desplegar.yml` y [`Lab/workflows/desplegar.yml`](../../../sesiones/2026-11-git-deploy/Lab/workflows/desplegar.yml).
 2. Cuando llega a `main` empieza la publicación.
 
-**B2b. Plantilla de PR (añadida el 5-nov, sin ensayar)**
+**B2b. Plantilla de PR (añadida el 5-nov y probada el 8-nov)**
 1. Repite con `.github/pull_request_template.md` y [`Lab/workflows/pull_request_template.md`](../../../sesiones/2026-11-git-deploy/Lab/workflows/pull_request_template.md).
 
 **B3. Ver la publicación**

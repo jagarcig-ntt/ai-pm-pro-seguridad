@@ -69,7 +69,7 @@ Que Jaime y el ayudante puedan impartir las 4 horas siguiendo un solo documento,
 - [x] **Quizzes** (Jaime, 7-nov): sin quiz. Una pregunta rápida en el chat por familia.
 - [ ] **Ayudante** (Jaime, 7-nov): no lleva guion, sino una **guía de cómo operar** durante la sesión. Su contenido depende del soporte que dé Gema, y Jaime lo hablará con ella.
 - [ ] **Salas de Zoom para desatascar:** en espera.
-- [ ] **Reto posterior** (Jaime, 7-nov): "no hace falta". Pendiente de aclarar si se elimina el reto, lo que afecta a SPEC-010 (R13) y a la constitution (2.9).
+- [x] **Reto posterior** (Jaime, 8-nov): se menciona en el cierre del guion, sin fecha ni seguimiento. No cambian SPEC-010 ni la constitution.
 - [ ] **¿Y si los secretos no vienen de casa?** El plan B cuesta unos 10 min de P1 (SPEC-010).
 
 ## 9. Hallazgos fuera de alcance
