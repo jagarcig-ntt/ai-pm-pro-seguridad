@@ -153,3 +153,40 @@ PR #5 fusionado (`bf146ed`) y publicación en verde. Comprobado por el agente:
 - El ruleset exige `Comprobar el PR` y solo admite merge (CA3, parte del ruleset).
 - **Producción con el workflow nuevo:** web 200 y envío real del formulario en Chrome headless → `POST /rest/v1/feedback` **201**, mensaje de agradecimiento y 0 errores. Queda otra fila "Prueba agente SPEC-019 (borrar)" en `feedbackhub-prod`.
 - **Falta de CA5:** `Lab/README.md` ya apunta a `feedback-hub`, pero no enlaza la checklist.
+
+## T12 · Ramas de demo · 9-nov
+| Rama | Cambio | Qué enseña | Comprobado en local (copia de `main`) |
+|---|---|---|---|
+| `demo/f3-checks` | `src/routes/index.tsx` importa `@/components/no-existe` | F3: el check en rojo bloquea el merge y no se publica la preview. Es el mismo tipo de error que Lovable cometió el 3-nov | Prueba y compilación fallan: *"Failed to resolve import "@/components/no-existe""* |
+| `demo/f4-rompe-produccion` | El formulario escribe en `feedbacks` en lugar de `feedback` | F4: todo sale en verde y la web carga, pero el envío falla. Ni la comprobación final del workflow lo ve | Prueba y compilación en verde. El fallo al enviar se verifica en T14 |
+
+**Comandos para Jaime** (Git Bash en VS Code). Crean las dos ramas desde `main` sin tocarlo:
+
+```bash
+cd ~/theherocamp/feedback-hub
+git fetch origin
+
+git switch -C demo/f3-checks origin/main
+sed -i 's#^import { supabase } from "@/integrations/supabase/client";#&\nimport "@/components/no-existe";#' src/routes/index.tsx
+git commit -am "Demo F3: importa un componente que no existe"
+git push -u origin demo/f3-checks
+
+git switch -C demo/f4-rompe-produccion origin/main
+sed -i 's#from("feedback")#from("feedbacks")#' src/routes/index.tsx
+git commit -am "Demo F4: el formulario escribe en una tabla que no existe"
+git push -u origin demo/f4-rompe-produccion
+
+git switch main
+```
+
+**Para la sesión:** tras el ensayo de F4 (merge, rollback y revert), la rama queda gastada. El día 21 se recrea con el mismo bloque y `git push -f origin demo/f4-rompe-produccion`. El force push está permitido en ramas que no son `main`.
+
+## T13 · Ensayo de F3 y F4 · 9-nov
+- **PR #6, F3, abierto:** los tres checks en rojo (`Comprobar el PR` ×2 y `Publicar en Cloudflare Workers`) y sin comentario de preview. **La plantilla de PR sale rellena** (primera prueba real en `feedback-hub`). La API devuelve `mergeable_state: unstable` en lugar de `blocked`: pendiente de confirmar en pantalla que GitHub bloquea el merge.
+- **PR #7, F4, fusionado:** checks en verde, comentario con la preview y plantilla con las dos casillas marcadas. En producción el formulario mostró *"No hemos podido enviar tu opinión"* (captura de Jaime).
+- **Rollback en el panel de Cloudflare: 3 minutos** (Jaime, incluida la navegación). Comprobado por el agente: producción vuelve a guardar feedback (`POST /rest/v1/feedback` → 201, 0 errores).
+- **⚠️ Revert pendiente:** `main` (`461d4b7`) sigue con `from("feedbacks")`. El rollback solo cambió la versión publicada: **el próximo merge en `main` volvería a publicar el fallo**. Es la diferencia entre rollback y revert, vista en real.
+
+**Revert hecho (9-nov):** botón *Revert* del PR #7 → PR #8 fusionado con merge commit (`ac8d7df`), publicación en verde. Comprobado por el agente: `main` vuelve a `from("feedback")` y producción guarda feedback (201, 0 errores). **CA4 ✅.**
+
+**Ciclo completo para F4:** merge con fallo → producción rota → rollback en 3 min → revert por PR → `main` y producción correctos. Todo desde el navegador, sin terminal: el revert lo crea GitHub con un botón.

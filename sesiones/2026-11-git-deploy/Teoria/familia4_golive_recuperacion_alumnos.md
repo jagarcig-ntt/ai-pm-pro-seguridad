@@ -100,13 +100,13 @@ Las dos primeras las ve una herramienta. **La tercera la ve, sobre todo, el PM**
 
 **Verde no significa que funcione.** En el ensayo de esta sesión, las pruebas, la compilación y la publicación salieron en verde, y la web daba error 500: al servidor le faltaban dos variables. Por eso tu workflow comprueba al final que la web responde, y por eso tú la abres después de cada salida.
 
-En la demo hacemos un **simulacro de incidente** en `feedback-hub`: <!-- ajustar tras T13 de SPEC-019 -->
+En la demo hacemos un **simulacro de incidente** en `feedback-hub`:
 
 1. Recorremos la checklist de go-live con un cambio preparado y salimos.
 2. Ese cambio pasa los checks, pero rompe algo en producción.
 3. Lo detectamos en las señales: la web falla y los registros del Worker en Cloudflare muestran los errores.
-4. **Rollback** en el panel de Cloudflare: *Workers & Pages → tu Worker → Deployments → versión anterior → Rollback*.
-5. Después, el arreglo de verdad entra por el flujo normal: **revert** o corrección, con su PR.
+4. **Rollback** en el panel de Cloudflare: *Workers & Pages → tu Worker → Deployments → versión anterior → Rollback*. En el ensayo, producción volvió en unos 3 minutos.
+5. Después, el arreglo de verdad entra por el flujo normal: botón **Revert** del PR en GitHub, que crea un PR nuevo, y merge.
 
 **Para después de la sesión:** aplica la checklist a tu producto y **marca qué puntos no podrías responder hoy**. Esa es tu lista de trabajo antes del Demo Day.
 

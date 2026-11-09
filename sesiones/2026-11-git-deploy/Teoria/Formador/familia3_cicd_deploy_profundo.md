@@ -141,7 +141,7 @@ La URL de preview lleva el nombre de la rama: en `feedback-hub`, `lovable-sync-j
 **En la demo verás:**
 1. Abrir un PR → los checks se ponen en marcha → ✅ verde.
 2. Abrir la URL de preview y probar el cambio.
-3. Un PR con una prueba rota → ❌ rojo → merge bloqueado. <!-- ajustar tras T13 de SPEC-019 -->
+3. Un PR con un cambio que no compila → ❌ rojo → sin preview y con el merge bloqueado.
 4. Hacer merge y ver cómo el cambio llega a producción solo.
 
 **Tu práctica, en tu propio producto:**

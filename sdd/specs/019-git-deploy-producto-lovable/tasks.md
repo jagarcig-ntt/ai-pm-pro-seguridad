@@ -28,9 +28,9 @@ Reglas:
 | T09 | **Verificar CA8:** el login y la lectura funcionan en la URL de producción y, sin sesión, no se lee nada. Anotar qué va a la guía. | `notas.md` | T08 | ☑ |
 | T10 | **Plantilla de PR, checklist, README y workflow actualizado:** preparar los ficheros para que entren por prompts de Lovable y PR, como haría un alumno (CA5). *Hecho el 8-nov: la plantilla y `desplegar.yml` ya estaban en `Lab/workflows/`; se añaden la checklist y la sección del README.* | `sesiones/2026-11-git-deploy/Lab/feedback-hub/checklist-go-live.md`, `sesiones/2026-11-git-deploy/Lab/feedback-hub/README-seccion.md` | T05 | ☑ |
 | T11 🧑 | **Abrir y fusionar ese PR, y añadir "Comprobar el PR" al ruleset de `main`.** | — | T10 | ☑ |
-| T12 | **Ramas de demo:** preparar `demo/f3-checks` y `demo/f4-rompe-produccion` (plan 2.4), con script e instrucciones para Jaime. | `feedback-hub`: ramas de demo · `notas.md` | T11 | ☐ |
-| T13 🧑 | **Subir las ramas de demo, abrir sus PR y probar el rollback** en el panel de Cloudflare, cronometrado. | — | T12 | ☐ |
-| T14 | **Verificar CA3 y CA4:** F3 en rojo y merge bloqueado; F4 en verde y con error visible en producción; el rollback la recupera, comprobado por contenido. | `notas.md` | T13 | ☐ |
+| T12 | **Ramas de demo:** preparar `demo/f3-checks` y `demo/f4-rompe-produccion` (plan 2.4), con script e instrucciones para Jaime. | `feedback-hub`: ramas de demo · `notas.md` | T11 | ☑ |
+| T13 🧑 | **Subir las ramas de demo, abrir sus PR y probar el rollback** en el panel de Cloudflare, cronometrado. | — | T12 | ☑ |
+| T14 | **Verificar CA3 y CA4:** F3 en rojo y merge bloqueado; F4 en verde y con error visible en producción; el rollback la recupera, comprobado por contenido. | `notas.md` | T13 | ☑ |
 | T15 🧑 [P] | **Limpieza:** archivar `feedbackhub-demo`, borrar su proyecto de Pages y las filas de prueba de `feedbackhub-prod`. | — | T14 | ☐ |
 | T16 | **Revisión** `/sdd-review 019`: CA1–CA9, búsqueda de claves (CA6) y Lovable "In sync". | `review.md` | T05, T09, T14 | ☐ |
 
@@ -49,3 +49,5 @@ Estados: ☐ pendiente · ◐ en curso · ☑ hecha · ✕ descartada
 - T09 → `[SPEC-019] T09 Login en producción (CA8): URL de Supabase y producción rota antes del merge`
 - T10 → `[SPEC-019] T10 Checklist de go-live y sección del README para feedback-hub`
 - T11 → `[SPEC-019] T11 feedback-hub con plantilla, checklist, README y workflow nuevo; check obligatorio`
+- T12 → `[SPEC-019] T12 Ramas de demo F3 y F4 probadas en local, con comandos`
+- T14 → `[SPEC-019] T13-T14 Demo F3 en rojo, F4 con rollback en 3 min y revert por PR; teoría F3 y F4 sin marcas`
