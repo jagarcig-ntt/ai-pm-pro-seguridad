@@ -31,8 +31,8 @@ Reglas:
 | T12 | **Ramas de demo:** preparar `demo/f3-checks` y `demo/f4-rompe-produccion` (plan 2.4), con script e instrucciones para Jaime. | `feedback-hub`: ramas de demo · `notas.md` | T11 | ☑ |
 | T13 🧑 | **Subir las ramas de demo, abrir sus PR y probar el rollback** en el panel de Cloudflare, cronometrado. | — | T12 | ☑ |
 | T14 | **Verificar CA3 y CA4:** F3 en rojo y merge bloqueado; F4 en verde y con error visible en producción; el rollback la recupera, comprobado por contenido. | `notas.md` | T13 | ☑ |
-| T15 🧑 [P] | **Limpieza:** archivar `feedbackhub-demo`, borrar su proyecto de Pages y las filas de prueba de `feedbackhub-prod`. | — | T14 | ☐ |
-| T16 | **Revisión** `/sdd-review 019`: CA1–CA9, búsqueda de claves (CA6) y Lovable "In sync". | `review.md` | T05, T09, T14 | ☐ |
+| T15 🧑 [P] | **Limpieza:** archivar `feedbackhub-demo`, borrar su proyecto de Pages y las filas de prueba de `feedbackhub-prod`. | — | T14 | ☑ |
+| T16 | **Revisión** `/sdd-review 019`: CA1–CA9, búsqueda de claves (CA6) y Lovable "In sync". | `review.md` | T05, T09, T14 | ☑ |
 
 Estados: ☐ pendiente · ◐ en curso · ☑ hecha · ✕ descartada
 
@@ -51,3 +51,4 @@ Estados: ☐ pendiente · ◐ en curso · ☑ hecha · ✕ descartada
 - T11 → `[SPEC-019] T11 feedback-hub con plantilla, checklist, README y workflow nuevo; check obligatorio`
 - T12 → `[SPEC-019] T12 Ramas de demo F3 y F4 probadas en local, con comandos`
 - T14 → `[SPEC-019] T13-T14 Demo F3 en rojo, F4 con rollback en 3 min y revert por PR; teoría F3 y F4 sin marcas`
+- T16 → `[SPEC-019] T16 Revisión: CA1, CA2 y CA4–CA9 cumplidos; CA3 y CA6 pendientes de confirmación visual`
