@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **aprobada** (Jaime, 9-nov) |
+| Estado | **en curso** (9-nov) · aprobada por Jaime |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-16 (antes del ensayo completo) |
 | Depende de | SPEC-010 v4.1 (escaleta) · SPEC-014 v2 (teoría) · SPEC-019 (ensayo y demos) · constitution v1.6 |

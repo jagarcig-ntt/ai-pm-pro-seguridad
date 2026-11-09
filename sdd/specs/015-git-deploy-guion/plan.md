@@ -1,6 +1,6 @@
 # PLAN · SPEC-015 · Guion, cheat sheet y kit de la sesión Git/Deploy
 
-*Spec: [spec.md](spec.md) · Estado del plan: borrador (9-nov)*
+*Spec: [spec.md](spec.md) · Estado del plan: **aprobado** (Jaime, 9-nov) · [tareas](tasks.md)*
 
 ## 1. Enfoque
 - **El guion es la única fuente de los minutos:** la cheat sheet, el portal y la guía de la práctica se derivan de él.
@@ -21,13 +21,13 @@
 |---|---|---|---|---|
 | 10:00 | **B0 Apertura** (15) | Saludo y para qué (3) · qué os lleváis: el producto de Lovable en producción (3) · recuento de requisitos en el chat (5) · mapa del día y reglas de la sesión grabada (4) | Chat: ✅ repo público · ✅ Supabase conectado · ✅ secretos guardados | Recuento de requisitos |
 | 10:15 | **T1 · F1 Git** (20) | Antes de entrar: repositorio, rama, PR (2) · para qué (2) · rama y rama conectada en Lovable (4) · commit con sentido: historial real de "Changes" (4) · PR y caso Google Cloud (6) · lo que se lleva (2) | Chat: "del 1 al 5, ¿cuánto habéis tocado Git?" · "¿qué preguntaríais en este PR?" | Respuestas en el chat |
-| 10:35 | **T2 · F2 Entornos** (15) | Antes de entrar (1,5) · para qué (2) · tres entornos y por qué Lovable no es staging, con el 500 (4) · misma app, distinta configuración, y el `.env` público (4) · Replit y nuestra producción rota antes del PR: "lee el SQL" (3) · lo que se lleva (0,5) | Chat: "¿cuántas bases de datos tiene vuestro producto?" | Respuestas en el chat |
-| 10:50 | **T3 · F3 CI/CD** (15) | Antes de entrar (1,5) · para qué (2) · el workflow leído en voz alta (3) · demo: PR en verde con preview y PR #6 en rojo y bloqueado (4) · CrowdStrike (3) · lo que se lleva y anuncio de P1 (1,5) | Chat: "¿cómo llega hoy un cambio a vuestros usuarios?" | Respuestas en el chat |
+| 10:35 | **T2 · F2 Entornos** (15) | Antes de entrar (1) · para qué (2) · tres entornos y por qué Lovable no es staging, con el 500 (4) · misma app, distinta configuración, y el `.env` público (4) · Replit y nuestra producción rota antes del PR: "lee el SQL" (3) · lo que se lleva (1) | Chat: "¿cuántas bases de datos tiene vuestro producto?" | Respuestas en el chat |
+| 10:50 | **T3 · F3 CI/CD** (15) | Antes de entrar (1) · para qué (2) · el workflow leído en voz alta (3) · demo: PR en verde con preview y PR #6 en rojo y bloqueado (4) · CrowdStrike (3) · lo que se lleva y anuncio de P1 (2) | Chat: "¿cómo llega hoy un cambio a vuestros usuarios?" | Respuestas en el chat |
 | 11:05 | **Pausa** (10) | | | |
 | 11:15 | **P1 · Primer despliegue** (45) | Instrucciones en pantalla (5) · los 3 prompts en Lovable (15) · Actions en verde (10) · abrir la web y, quien tenga login, añadir su URL en Supabase (8) · margen (7) | Ayudante con los atascos | ✅ "ficheros en GitHub" · **URL de producción en el chat** |
 | 12:00 | **Pausa** (10) | | | |
 | 12:10 | **P2 · Gestión de cambios** (45) | Demo del ruleset y sus tres trampas: *Disabled*, sin rama objetivo y métodos de merge (5) · crear el ruleset (10) · cambio en Lovable y aviso naranja (7) · PR con plantilla, checks y preview (10) · merge commit y producción (8) · margen (5) | Ayudante con los atascos | ✅ ruleset *Active* · **enlace del PR en el chat** · producción actualizada |
-| 12:55 | **T4 · F4 Go-live** (15) | Antes de entrar (1) · para qué (1,5) · la checklist, que va al kit (3) · simulacro F4: merge, web rota, rollback y revert (6) · Sonos (2,5) · lo que se lleva (1) | Chat: "¿qué hacemos?" durante el simulacro | Respuestas en el chat |
+| 12:55 | **T4 · F4 Go-live** (15) | Antes de entrar (1) · para qué (1) · la checklist, que va al kit (3) · simulacro F4: merge, web rota, rollback y revert (6) · Sonos (3) · lo que se lleva (1) | Chat: "¿qué hacemos?" durante el simulacro | Respuestas en el chat |
 | 13:10 | **Pausa activa** (5) | | | |
 | 13:15 | **Rescate** (25) | Alumno a alumno. Quien terminó: rama `staging` fija o checklist sobre su producto | | Las 2 URL de cada alumno |
 | 13:40 | **B5 Cierre** (15) | Ronda de URL en el chat (5) · el kit (3) · el reto y el squad, de pasada (2) · puente al 11-dic (1) · preguntas y despedida (4) | Chat: pegar las dos URL | Recuento de URL |
