@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **en curso** (5-nov) · aprobada el 3-nov |
+| Estado | **hecha** (9-nov; [review](review.md)) |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-12 (antes del guion y el portal; ensayo la semana del 16-nov) |
 | Depende de | SPEC-018 (hecha: flujo y CI/CD validados) · SPEC-010 v4.1 · constitution v1.6 |
