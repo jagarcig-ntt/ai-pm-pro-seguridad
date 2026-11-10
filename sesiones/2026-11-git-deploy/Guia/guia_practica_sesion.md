@@ -8,6 +8,7 @@ Dos prácticas sobre **tu propio producto**, solo con el navegador:
 - **Práctica 2 (12:10):** tu primer cambio por Pull Request, con `main` protegida.
 
 En los pasos verás dos datos tuyos:
+
 - `<usuario>`: tu usuario de GitHub;
 - `<repo>`: el nombre de tu repositorio.
 
@@ -53,8 +54,8 @@ Sin este paso, el enlace del correo de confirmación lleva a una página que no 
 1. En Supabase, abre tu proyecto y ve a **Authentication → URL Configuration**.
 2. En **Site URL**, sustituye `http://localhost:3000` por tu URL de producción y pulsa *Save changes*.
 3. En **Redirect URLs**, pulsa *Add URL* y añade estas dos direcciones:
-   - `https://<usuario>-<repo>.<tu-subdominio>.workers.dev/**`
-   - `https://*-<usuario>-<repo>.<tu-subdominio>.workers.dev/**`
+    - `https://<usuario>-<repo>.<tu-subdominio>.workers.dev/**`
+    - `https://*-<usuario>-<repo>.<tu-subdominio>.workers.dev/**`
 
    La segunda sirve para las previews de tus Pull Requests.
 4. **No borres las URL de Lovable** que ya hay: son las que hacen funcionar su vista previa.
@@ -82,10 +83,10 @@ Sin este paso, el enlace del correo de confirmación lleva a una página que no 
 3. **Enforcement status:** cámbialo a **Active**. Viene en *Disabled*, y así no protege nada.
 4. **Target branches:** *Add target → Include default branch*. Sin esto, GitHub avisa de que no protege nada.
 5. Marca estas reglas:
-   - **Restrict deletions**;
-   - **Require a pull request before merging**. Dentro, en *Allowed merge methods*, deja solo **Merge**;
-   - **Require status checks to pass**. Pulsa *Add checks* y escribe `Comprobar el PR`, aunque todavía no aparezca en la lista;
-   - **Block force pushes**.
+    - **Restrict deletions**;
+    - **Require a pull request before merging**. Dentro, en *Allowed merge methods*, deja solo **Merge**;
+    - **Require status checks to pass**. Pulsa *Add checks* y escribe `Comprobar el PR`, aunque todavía no aparezca en la lista;
+    - **Block force pushes**.
 6. Pulsa **Create**.
 
 ✅ **En el chat de Zoom:** escribe "Active".

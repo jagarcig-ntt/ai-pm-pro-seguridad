@@ -14,7 +14,7 @@ Es la bisagra del programa: los alumnos llegan con su producto construido en Lov
 | SPEC-013 | Guía de requisitos previos (coste 0, salvo el plan Pro de Lovable) |
 | [SPEC-014](../../sdd/specs/014-git-deploy-teoria-familias/spec.md) | Teoría en 4 familias (alumnos + formador) y glosario |
 | SPEC-015 | Guion minuto a minuto y cheat sheet |
-| SPEC-016 | Portal de la sesión (`index.html` de esta carpeta) |
+| [SPEC-016](../../sdd/specs/016-git-deploy-portal/spec.md) | [Portal de la sesión](index.html) |
 | SPEC-017 | Deployment Agent Squad (opcional) |
 | [SPEC-018](../../sdd/specs/018-git-deploy-flujo-lovable/spec.md) | Validación del flujo Lovable → GitHub → Cloudflare Workers |
 | [SPEC-019](../../sdd/specs/019-git-deploy-producto-lovable/spec.md) | Producto Lovable de la sesión y ensayo |

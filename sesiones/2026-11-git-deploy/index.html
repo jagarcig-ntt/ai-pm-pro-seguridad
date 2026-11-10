@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git, Deployment y Producción · AI PM Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@300;400;500;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/portal.css">
+<style>
+  /* Estilos solo de este portal (SPEC-016). La base común está en assets/. */
+  .tabla { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
+  .tabla th, .tabla td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--divider); vertical-align:top; color:var(--ink-dim); }
+  .tabla th { font-family:var(--mono); font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--ink-faint); font-weight:500; }
+  .tabla td strong { color:var(--ink); }
+  .tabla tr.practica td { color:var(--ink); background:rgba(220,238,60,0.05); }
+  .tabla td.hora { font-family:var(--mono); color:var(--accent); white-space:nowrap; }
+  .pasos { counter-reset:paso; list-style:none; padding:0; margin:20px 0; }
+  .pasos > li { counter-increment:paso; position:relative; padding:14px 0 14px 52px; border-bottom:1px solid var(--divider); color:var(--ink-dim); line-height:1.6; }
+  .pasos > li::before { content:counter(paso); position:absolute; left:0; top:12px; width:34px; height:34px; border:1px solid var(--accent); color:var(--accent); font-family:var(--mono); font-size:13px; display:flex; align-items:center; justify-content:center; }
+  .pasos > li strong { color:var(--ink); }
+  .pasos ul { margin:8px 0 0; padding-left:18px; }
+  .copiable { position:relative; margin:12px 0; background:var(--bg-deeper); border:1px solid var(--divider); padding:14px 110px 14px 16px; font-family:var(--mono); font-size:12.5px; line-height:1.55; color:var(--ink); white-space:pre-wrap; word-break:break-word; }
+  .copiar { position:absolute; top:10px; right:10px; font-family:var(--mono); font-size:11px; letter-spacing:0.08em; padding:7px 12px; background:var(--accent); color:#0A0E1A; border:none; cursor:pointer; font-weight:700; }
+  .copiar.hecho { background:var(--jade); }
+  .control { margin:18px 0; padding:12px 16px; border-left:3px solid var(--jade); background:rgba(62,207,142,0.07); color:var(--ink); font-size:14px; }
+  .aviso { margin:18px 0; padding:12px 16px; border-left:3px solid var(--coral); background:rgba(255,122,107,0.07); color:var(--ink); font-size:14px; }
+  .bloque-hora { font-family:var(--mono); font-size:11px; letter-spacing:0.18em; color:var(--accent); margin-top:8px; }
+  .descargas { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-top:28px; }
+  .descarga { display:block; padding:18px 20px; background:var(--bg-raised); border:1px solid var(--divider); text-decoration:none; transition:border-color .2s; }
+  .descarga:hover { border-color:var(--accent); }
+  .descarga .d-tipo { font-family:var(--mono); font-size:10px; letter-spacing:0.12em; color:var(--accent); margin-bottom:6px; }
+  .descarga .d-titulo { color:var(--ink); font-weight:600; font-size:14px; }
+  .descarga .d-desc { color:var(--ink-dim); font-size:13px; margin-top:4px; }
+  .enlaces-demo { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:24px; }
+  .fam-pm { margin-top:6px; }
+  section p a, .tabla a, .pasos a, .fam-idea-txt a { color:var(--accent); text-underline-offset:3px; }
+  @media (max-width: 640px) {
+    .copiable { padding:48px 14px 14px; }
+    .tabla { font-size:13px; }
+    .tabla th, .tabla td { padding:8px 6px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand"><img src="../../assets/logo-herocamp.jpg" alt="Hero Camp" style="height:28px; width:auto; display:block;"></div>
+  <nav class="nav" id="nav">
+    <a href="#hero" class="active">Inicio</a>
+    <a href="#dia">El día</a>
+    <a href="#familias">Familias</a>
+    <a href="#demo">Demo</a>
+    <a href="#p1">Práctica 1</a>
+    <a href="#p2">Práctica 2</a>
+    <a href="#kit">Kit</a>
+    <a href="#descargas">Descargas</a>
+    <a href="#cierre">Cierre</a>
+  </nav>
+  <div class="header-meta">AI PM PRO · 21 NOV</div>
+</header>
+
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+<div class="notes-banner">Modo notas activo</div>
+
+<!-- B0 · 10:00 -->
+<section id="hero" class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-label reveal">Git, Deployment y Producción · AI PM Pro</div>
+    <h1 class="reveal rd1">De <em>Lovable</em><br>a <em>producción</em></h1>
+    <p class="lead reveal rd2">Hoy tu producto sale a Internet con un proceso profesional detrás: qué entra, quién lo revisa y cómo se vuelve atrás si algo sale mal. Todo desde el navegador.</p>
+    <div class="hero-footer reveal rd3">
+      <div class="hf-item"><span class="hf-label">Fecha</span><span class="hf-value">Sábado 21 nov · 10:00–14:00</span></div>
+      <div class="hf-item"><span class="hf-label">Formato</span><span class="hf-value">Remoto · Zoom</span></div>
+      <div class="hf-item"><span class="hf-label">Ponente</span><span class="hf-value">Jaime · Senior Tech Leader</span></div>
+    </div>
+    <div class="notas-block">
+      <div class="notas-label">Nota · 10:00 · Saludo</div>
+      <p><strong>No abras compartiendo esta web.</strong> Primero el saludo en cámara. Compártela al llegar a "Qué os lleváis".</p>
+      <p><strong>Mensaje:</strong> "Hoy damos el paso entre 'lo tengo en Lovable' y 'está en producción, con un proceso profesional detrás'. No es una sesión de ingenieros."</p>
+    </div>
+  </div>
+</section>
+
+<!-- B0 · 10:03 -->
+<section id="paraque">
+  <div class="container">
+    <div class="eyebrow reveal">Para qué</div>
+    <h2 class="reveal rd1">Qué os lleváis <em>hoy</em></h2>
+    <div class="entregables-grid">
+      <div class="ent-card reveal rd2" onclick="this.classList.toggle('open')">
+        <span class="ent-toggle">+</span>
+        <div class="ent-num">A LAS 12:00</div>
+        <h3 class="ent-title">Tu producto en producción</h3>
+        <p class="ent-desc">Tu web en Internet, en tu propia cuenta de Cloudflare, publicada sola cada vez que apruebas un cambio.</p>
+        <div class="ent-detail"><div class="ent-detail-inner">
+          <div class="ent-items">
+            <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Cada cambio se comprueba</strong> antes de entrar, y se prueba en su propia URL.</span></div>
+            <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong><code>main</code> protegida:</strong> nada entra sin Pull Request.</span></div>
+          </div>
+        </div></div>
+      </div>
+      <div class="ent-card reveal rd3" onclick="this.classList.toggle('open')">
+        <span class="ent-toggle">+</span>
+        <div class="ent-num">PARA EL LUNES</div>
+        <h3 class="ent-title">Ficheros, guía y kit</h3>
+        <p class="ent-desc">Los tres ficheros que lo hacen funcionar, la guía paso a paso y un kit con la checklist para decidir si algo está listo para salir.</p>
+        <div class="ent-detail"><div class="ent-detail-inner">
+          <div class="ent-items">
+            <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Sin terminal ni VS Code:</strong> todo se hace desde el navegador.</span></div>
+            <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Todo está en <a href="#descargas">Descargas</a>.</strong></span></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- B0 · Quién -->
+<section id="quien">
+  <div class="container">
+    <div class="eyebrow reveal">Formador</div>
+    <h2 class="reveal rd1" style="margin-bottom:48px;">Jaime <em>García</em></h2>
+    <div class="traj-layout">
+      <p class="traj-intro reveal rd2">AI Engineering Lead en NTT DATA. Llevo más de una década en banca y tecnología, y he construido con las mismas herramientas que vosotros usáis ahora.</p>
+      <div class="traj-points">
+        <div class="traj-point reveal rd2"><span class="traj-marker">RECORRIDO</span><span class="traj-text"><strong>8 años en NTT DATA</strong>, de Software Engineer a Technical Lead y AI Engineering Senior Lead.</span></div>
+        <div class="traj-point reveal rd3"><span class="traj-marker">SESIÓN</span><span class="traj-text">He preparado esta sesión haciendo lo mismo que vais a hacer hoy, con un producto de Lovable. Os cuento también los errores que cometí.</span></div>
+      </div>
+    </div>
+    <div class="notas-block">
+      <div class="notas-label">Nota · Máximo 1 minuto</div>
+      <p>"Llevo más de una década en banca y tecnología. 8 años en NTT DATA, creciendo de engineer a technical lead a AI lead." Y pasa al "para qué".</p>
+    </div>
+  </div>
+</section>
+
+<!-- B0 · 10:06–10:15 -->
+<section id="dia">
+  <div class="container">
+    <div class="eyebrow reveal">El día</div>
+    <h2 class="reveal rd1">Cuatro horas, <em>dos prácticas</em></h2>
+    <table class="tabla reveal rd2">
+      <thead><tr><th>Hora</th><th>Min</th><th>Bloque</th></tr></thead>
+      <tbody>
+        <tr><td class="hora">10:00</td><td>15</td><td><strong>Apertura</strong></td></tr>
+        <tr><td class="hora">10:15</td><td>20</td><td><strong>F1 · Git profesional</strong></td></tr>
+        <tr><td class="hora">10:35</td><td>15</td><td><strong>F2 · Entornos y secretos</strong></td></tr>
+        <tr><td class="hora">10:50</td><td>15</td><td><strong>F3 · CI/CD</strong></td></tr>
+        <tr><td class="hora">11:05</td><td>10</td><td>Pausa</td></tr>
+        <tr class="practica"><td class="hora">11:15</td><td>45</td><td><strong>Práctica 1 · Tu primer despliegue</strong></td></tr>
+        <tr><td class="hora">12:00</td><td>10</td><td>Pausa</td></tr>
+        <tr class="practica"><td class="hora">12:10</td><td>45</td><td><strong>Práctica 2 · Tu primer cambio por Pull Request</strong></td></tr>
+        <tr><td class="hora">12:55</td><td>15</td><td><strong>F4 · Go-live y recuperación</strong></td></tr>
+        <tr><td class="hora">13:10</td><td>5</td><td>Pausa activa</td></tr>
+        <tr class="practica"><td class="hora">13:15</td><td>25</td><td><strong>Rescate:</strong> nadie se va sin su URL</td></tr>
+        <tr><td class="hora">13:40</td><td>15</td><td><strong>Cierre</strong></td></tr>
+        <tr><td class="hora">13:55</td><td>5</td><td>Margen</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="reveal" style="margin-top:40px;">¿Venís preparados?</h3>
+    <p class="reveal">Escribe en el chat de Zoom cuáles de estas tres tienes:</p>
+    <div class="control reveal">✅ repo público · ✅ Supabase conectado · ✅ secretos guardados en GitHub</div>
+
+    <h3 class="reveal" style="margin-top:40px;">Tres reglas</h3>
+    <ol class="pasos reveal">
+      <li><strong>La sesión se graba y vuestros repos son públicos.</strong> Ningún token ni ninguna clave en pantalla ni en el chat. Si tienes que pegar uno, deja de compartir pantalla.</li>
+      <li><strong>Las dudas, en el chat.</strong> El ayudante te atiende mientras la sesión sigue.</li>
+      <li><strong>Si te atascas en la práctica, dilo pronto.</strong> Hay tiempo para todos al final.</li>
+    </ol>
+    <div class="notas-block">
+      <div class="notas-label">Nota · 10:06 · Recuento de requisitos</div>
+      <p><strong>Sin repo público:</strong> que lo haga ahora (paso 1 de la guía de requisitos). <strong>Sin secretos:</strong> los guarda al empezar P1, hay 10 min previstos. <strong>Sin Supabase:</strong> puede seguir, su web se publicará aunque no guarde datos. <strong>Con el backend de Lovable:</strong> fuera del flujo probado; sigue la sesión y conserva el <em>Publish</em> de Lovable.</p>
+    </div>
+  </div>
+</section>
+
+<!-- T1–T4 -->
+<section id="familias">
+  <div class="container">
+    <div class="eyebrow reveal">Teoría · 10:15–11:05 y 12:55–13:10</div>
+    <h2 class="reveal rd1">Las cuatro <em>familias</em></h2>
+    <p class="reveal rd2" style="margin-top:24px;">Tres ideas por familia. Haz clic en cada tarjeta para verlas.</p>
+    <div class="familias-grid">
+
+      <div class="fam-card reveal rd2" data-n="01" data-c="coral" style="cursor:pointer" onclick="toggleFamily(this)">
+        <div class="fam-card-toggle">+</div>
+        <div class="fam-hdr">
+          <div class="fam-num-hdr">01</div>
+          <div>
+            <div class="fam-tag">10:15 · 20 min</div>
+            <h3 class="fam-name">Git profesional</h3>
+            <p class="fam-desc">Ramas, commits con sentido y el Pull Request como punto de control.</p>
+            <div class="fam-case">Caso Google Cloud · junio de 2025</div>
+          </div>
+        </div>
+        <div class="fam-expanded"><div class="fam-expanded-inner">
+          <div class="fam-block">
+            <div class="fam-block-label">Antes de entrar</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Repositorio:</strong> la carpeta de tu producto con memoria.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Rama:</strong> un borrador del documento, en lugar de editar el original.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Pull Request:</strong> pedir que acepten tus sugerencias antes de que entren.</span></div>
+            </div>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Tres ideas</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">1</span><span class="fam-idea-txt"><strong>La rama: <code>main</code> siempre funciona.</strong> Todo cambio se hace aparte. Con <code>main</code> protegida, Lovable guarda tus cambios en la rama <code>lovable-sync</code>.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>El commit con sentido.</strong> Lovable firma "Changes" o "Work in progress": no eliges esos mensajes, pero sí el título y la descripción de tu Pull Request.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>El Pull Request es tu punto de control.</strong> Las dos preguntas de un PM: ¿qué pasa si falla? ¿Cómo se apaga?</span></div>
+            </div>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Caso real · Google Cloud, junio de 2025</div>
+            <p>Un código nuevo sin manejo de errores ni interruptor para apagarlo. Un dato vacío lo activó y el servicio cayó en todo el mundo durante varias horas. Según el informe de Google, con un interruptor se habría detectado antes.</p>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Lo que el PM se lleva</div>
+            <p class="fam-pm"><code>main</code> siempre funciona · La historia de cambios es el diario del producto · Antes de aprobar, pregunta qué pasa si falla y cómo se apaga.</p>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="fam-card reveal rd3" data-n="02" data-c="blue" style="cursor:pointer" onclick="toggleFamily(this)">
+        <div class="fam-card-toggle">+</div>
+        <div class="fam-hdr">
+          <div class="fam-num-hdr">02</div>
+          <div>
+            <div class="fam-tag">10:35 · 15 min</div>
+            <h3 class="fam-name">Entornos y secretos</h3>
+            <p class="fam-desc">Dónde se prueba, dónde se cobra y dónde viven las claves.</p>
+            <div class="fam-case">Caso Replit y SaaStr · julio de 2025</div>
+          </div>
+        </div>
+        <div class="fam-expanded"><div class="fam-expanded-inner">
+          <div class="fam-block">
+            <div class="fam-block-label">Antes de entrar</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Entorno:</strong> cada sitio donde vive una copia de tu producto.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Variable de entorno:</strong> un ajuste que cambia según el sitio, sin tocar el código.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Secreto:</strong> una llave que, si alguien la tiene, actúa en nombre de tu producto.</span></div>
+            </div>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Tres ideas</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">1</span><span class="fam-idea-txt"><strong>Tres entornos:</strong> development es la vista previa de Lovable; staging, la preview de cada Pull Request; producción, la URL de tu Worker. La vista previa de Lovable no es staging: corre en otro sitio. En tu producto, los tres comparten la base de datos.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>La misma app, distinta configuración.</strong> El <code>.env</code> que sube Lovable es público: solo lo que podrías publicar en tu web.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>Los secretos viven en la plataforma.</strong> Nadie puede leerlos una vez guardados, ni siquiera tú.</span></div>
+            </div>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Caso real · Replit y SaaStr, julio de 2025</div>
+            <p>En plena congelación de código, el agente de Replit borró la base de datos de producción de SaaStr. Una instrucción no es una barrera; un entorno separado, sí.</p>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Nos pasó preparando esta sesión</div>
+            <p>Al aprobar en Lovable un cambio de login, se cambiaron los permisos de la base de datos en el momento, antes de cualquier Pull Request, y la web publicada se cayó. <strong>La rama protege el código, no los datos.</strong> Lee el SQL antes de pulsar <em>Allow</em>.</p>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Lo que el PM se lleva</div>
+            <p class="fam-pm">Probar y cobrar no se hacen en el mismo sitio, y si lo compartes, que sea a sabiendas · El código es el mismo y la configuración cambia · Los secretos, en la plataforma.</p>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="fam-card reveal rd4" data-n="03" data-c="jade" style="cursor:pointer" onclick="toggleFamily(this)">
+        <div class="fam-card-toggle">+</div>
+        <div class="fam-hdr">
+          <div class="fam-num-hdr">03</div>
+          <div>
+            <div class="fam-tag">10:50 · 15 min</div>
+            <h3 class="fam-name">CI/CD y despliegue</h3>
+            <p class="fam-desc">La receta automática que comprueba y publica cada cambio.</p>
+            <div class="fam-case">Caso CrowdStrike · julio de 2024</div>
+          </div>
+        </div>
+        <div class="fam-expanded"><div class="fam-expanded-inner">
+          <div class="fam-block">
+            <div class="fam-block-label">Antes de entrar</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>CI:</strong> el control de calidad automático que no se cansa.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>CD:</strong> la publicación automática; nadie tiene que acordarse de "subirlo".</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Workflow:</strong> la receta escrita de ese proceso.</span></div>
+            </div>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Tres ideas</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">1</span><span class="fam-idea-txt"><strong>El workflow, una receta que se ejecuta sola:</strong> coge el código, lo instala, pasa las pruebas, lo compila, lo publica y comprueba que la web responde.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>Cada Pull Request se comprueba y se previsualiza.</strong> En rojo no se puede hacer merge, y ni siquiera se publica la preview.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>Hacer merge es decidir salir a producción</strong>, y la salida avanza por fases.</span></div>
+            </div>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Caso real · CrowdStrike, 19 de julio de 2024</div>
+            <p>Una actualización esperaba 20 campos y recibió 21. Llegó a la vez a todos los equipos: Microsoft estimó 8,5 millones de dispositivos Windows bloqueados. Automatizar sin fases convierte un error en un error para todos a la vez.</p>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Nos pasó preparando esta sesión</div>
+            <p>Lovable escribió código que no compilaba porque olvidó añadir una dependencia. Con <code>main</code> protegida y este control, un fallo así no llega a tus usuarios.</p>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Lo que el PM se lleva</div>
+            <p class="fam-pm">El proceso de calidad es una receta escrita · Ningún Pull Request entra en rojo · Hacer merge es decidir salir a producción.</p>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="fam-card reveal rd5" data-n="04" data-c="violet" style="cursor:pointer" onclick="toggleFamily(this)">
+        <div class="fam-card-toggle">+</div>
+        <div class="fam-hdr">
+          <div class="fam-num-hdr">04</div>
+          <div>
+            <div class="fam-tag">12:55 · 15 min</div>
+            <h3 class="fam-name">Go-live y recuperación</h3>
+            <p class="fam-desc">Decidir salir y saber volver.</p>
+            <div class="fam-case">Caso Sonos · mayo de 2024</div>
+          </div>
+        </div>
+        <div class="fam-expanded"><div class="fam-expanded-inner">
+          <div class="fam-block">
+            <div class="fam-block-label">Antes de entrar</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Go-live:</strong> abrir la puerta a los usuarios; una decisión de negocio.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Rollback:</strong> el botón de deshacer de producción.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Monitorización:</strong> el cuadro de mandos del coche.</span></div>
+            </div>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Tres ideas</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">1</span><span class="fam-idea-txt"><strong>Salir es una decisión,</strong> con una checklist de 8 preguntas. Está en el <a href="#kit">kit</a>.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>El plan de vuelta atrás se conoce antes de salir.</strong> Rollback para recuperar el servicio ya; revert para dejar el código bien. Los cambios de base de datos no se deshacen con un rollback.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>Después de salir, vigila tres señales:</strong> errores, rendimiento y uso. La tercera la ve sobre todo el PM.</span></div>
+            </div>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Caso real · Sonos, mayo de 2024</div>
+            <p>Lanzaron una app rediseñada sin funciones que la gente usaba a diario y no pudieron volver a la anterior. Según la compañía, arreglarla costó entre 20 y 30 millones de dólares. Su CEO: "nuestra ejecución, mi ejecución, se quedó corta".</p>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Nos pasó preparando esta sesión</div>
+            <p>Pruebas, compilación y publicación en verde, y la web daba error 500. <strong>Verde no significa que funcione.</strong> Por eso tu workflow comprueba al final que la web responde, y por eso tú la abres después de cada salida.</p>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Lo que el PM se lleva</div>
+            <p class="fam-pm">Salir es una decisión, con una checklist · El plan de vuelta atrás se conoce antes de salir · El go-live termina cuando sabes que va bien.</p>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+    <div class="notas-block">
+      <div class="notas-label">Nota · Teoría</div>
+      <p><strong>F1:</strong> pregunta del 1 al 5 sobre Git; si casi todo son unos y doses, recorta la idea 2. Demo: pestaña <em>Commits</em> de <code>feedback-hub</code> y solo la descripción del PR #6. <strong>No digas una duración exacta</strong> del caso Google.</p>
+      <p><strong>F2:</strong> pregunta "¿cuántas bases de datos?". Tono del caso Replit: "una instrucción no es una barrera", no "la IA es peligrosa". Si preguntan por la clave pública: la protegen las políticas de Supabase, el detalle el 11-dic.</p>
+      <p><strong>F3:</strong> PR #4 en verde y PR #6 en rojo, ahora hasta abajo. Antes de CrowdStrike, pregunta quién se vio afectado. No fue un ciberataque.</p>
+      <p><strong>F4:</strong> simulacro con <code>demo/f4-rompe-produccion</code> (sección Demo). Silencio de dos segundos tras la frase de Sonos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Demo -->
+<section id="demo">
+  <div class="container">
+    <div class="eyebrow reveal">La demo</div>
+    <h2 class="reveal rd1">Un producto de Lovable, <em>de verdad</em></h2>
+    <p class="reveal rd2" style="margin-top:24px;">Todo lo que ves en la sesión pasa en <code>feedback-hub</code>, un proyecto real de Lovable con las mismas piezas que el tuyo.</p>
+    <div class="enlaces-demo reveal rd3">
+      <a class="descarga" href="https://jagarcig-ntt-feedback-hub.jagarcig.workers.dev/" target="_blank" rel="noopener"><div class="d-tipo">PRODUCCIÓN</div><div class="d-titulo">La web publicada</div><div class="d-desc">Su Worker en Cloudflare</div></a>
+      <a class="descarga" href="https://github.com/jagarcig-ntt/feedback-hub" target="_blank" rel="noopener"><div class="d-tipo">REPOSITORIO</div><div class="d-titulo">El código en GitHub</div><div class="d-desc">Público, con <code>main</code> protegida</div></a>
+      <a class="descarga" href="https://github.com/jagarcig-ntt/feedback-hub/pull/6" target="_blank" rel="noopener"><div class="d-tipo">PULL REQUEST #6</div><div class="d-titulo">Un cambio en rojo</div><div class="d-desc">No compila: merge bloqueado</div></a>
+      <a class="descarga" href="https://github.com/jagarcig-ntt/feedback-hub/blob/main/docs/checklist-go-live.md" target="_blank" rel="noopener"><div class="d-tipo">CHECKLIST</div><div class="d-titulo">Checklist de go-live</div><div class="d-desc">En el propio repositorio</div></a>
+    </div>
+    <div class="notas-block">
+      <div class="notas-label">Nota · Simulacro de F4 · 13:00 · 6 min</div>
+      <p>1) PR de <code>demo/f4-rompe-produccion</code>: todo en verde y la plantilla con las casillas marcadas. 2) Merge; mientras se publica: "¿lo habríais aprobado?". 3) Enviar el formulario en producción: falla. "¿Qué hacemos?". 4) Rollback en Cloudflare → <em>Deployments</em> (3 min en el ensayo). 5) Botón <em>Revert</em> del PR; el merge del revert, en el rescate.</p>
+      <p><strong>Antes del día 21:</strong> recrear la rama F4 (<code>notas.md</code> de SPEC-019, T12). <strong>Plan B:</strong> capturas del ensayo del 9-nov y del merge bloqueado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- P1 · 11:15 -->
+<section id="p1">
+  <div class="container">
+    <div class="eyebrow reveal">Práctica 1 · 11:15 · 45 min</div>
+    <h2 class="reveal rd1">Tu primer <em>despliegue</em></h2>
+    <p class="reveal rd2" style="margin-top:24px;">En los pasos verás <code>&lt;usuario&gt;</code> (tu usuario de GitHub) y <code>&lt;repo&gt;</code> (el nombre de tu repositorio).</p>
+    <div class="aviso reveal"><strong>Antes de empezar:</strong> abre tu proyecto en Lovable y comprueba su nombre arriba a la izquierda. Si no guardaste los secretos en GitHub, hazlo primero (paso 4 de la guía de requisitos), sin compartir pantalla.</div>
+
+    <h3 class="reveal" style="margin-top:36px;">Paso 1 · Pide a Lovable los tres ficheros, uno a uno</h3>
+    <p>Pulsa <strong>Copiar</strong>: se copia el prompt con el fichero completo. Pégalo en el chat de Lovable y envíalo. Repite con los otros dos.</p>
+
+    <div class="copiable" data-fichero="Lab/workflows/comprobar-pr.yml"><button class="copiar" type="button">Copiar</button>Crea el fichero `.github/workflows/comprobar-pr.yml` en la raíz del repositorio con este contenido exacto. No cambies nada, ni comentarios ni espacios, y no toques ningún otro fichero:</div>
+    <div class="copiable" data-fichero="Lab/workflows/desplegar.yml"><button class="copiar" type="button">Copiar</button>Crea el fichero `.github/workflows/desplegar.yml` en la raíz del repositorio con este contenido exacto. No cambies nada, ni comentarios ni espacios, y no toques ningún otro fichero:</div>
+    <div class="copiable" data-fichero="Lab/workflows/pull_request_template.md"><button class="copiar" type="button">Copiar</button>Crea el fichero `.github/pull_request_template.md` con este contenido exacto. No cambies nada y no toques ningún otro fichero:</div>
+    <p style="font-size:13px;color:var(--ink-faint);">Los ficheros, por si los quieres ver: <a href="https://github.com/jagarcig-ntt/ai-pm-pro-seguridad/blob/main/sesiones/2026-11-git-deploy/Lab/workflows/comprobar-pr.yml" target="_blank" rel="noopener">comprobar-pr.yml</a> · <a href="https://github.com/jagarcig-ntt/ai-pm-pro-seguridad/blob/main/sesiones/2026-11-git-deploy/Lab/workflows/desplegar.yml" target="_blank" rel="noopener">desplegar.yml</a> · <a href="https://github.com/jagarcig-ntt/ai-pm-pro-seguridad/blob/main/sesiones/2026-11-git-deploy/Lab/workflows/pull_request_template.md" target="_blank" rel="noopener">pull_request_template.md</a></p>
+    <div class="control reveal">✅ En el chat de Zoom: escribe "ficheros".</div>
+
+    <h3 class="reveal" style="margin-top:36px;">Pasos 2 a 4</h3>
+    <ol class="pasos reveal">
+      <li><strong>Mira cómo se publica.</strong> En GitHub, pestaña <strong>Actions</strong>: espera a que <strong>Desplegar</strong> salga en verde (alrededor de un minuto). Entra y copia la dirección de <strong>Publicado en</strong>.</li>
+      <li><strong>Prueba tu web.</strong> Ábrela y haz lo principal de tu producto. Abrirla no basta: verde no significa que funcione.</li>
+      <li><strong>Solo si tienes login:</strong> en Supabase, <em>Authentication → URL Configuration</em>. Pon tu URL de producción en <strong>Site URL</strong> y añade estas dos en <strong>Redirect URLs</strong>, con tus datos. No borres las de Lovable.</li>
+    </ol>
+    <div class="copiable"><button class="copiar" type="button">Copiar</button>https://&lt;usuario&gt;-&lt;repo&gt;.&lt;tu-subdominio&gt;.workers.dev/**</div>
+    <div class="copiable"><button class="copiar" type="button">Copiar</button>https://*-&lt;usuario&gt;-&lt;repo&gt;.&lt;tu-subdominio&gt;.workers.dev/**</div>
+    <div class="control reveal">✅ En el chat de Zoom: pega tu URL de producción.</div>
+
+    <h3 class="reveal" style="margin-top:36px;">Si algo falla</h3>
+    <table class="tabla">
+      <thead><tr><th>Lo que ves</th><th>Qué hacer</th></tr></thead>
+      <tbody>
+        <tr><td>No aparece nada en <em>Actions</em></td><td>Busca <code>.github/workflows/</code> en tu repositorio. Si no está, repite el paso 1.</td></tr>
+        <tr><td>Rojo en "0. Comprobar que existen los secretos"</td><td>Los nombres deben ser exactamente <code>CLOUDFLARE_API_TOKEN</code> y <code>CLOUDFLARE_ACCOUNT_ID</code>.</td></tr>
+        <tr><td>Rojo en "5. Compilar"</td><td>En Lovable, pulsa <em>Fix build</em> si aparece. Si no, avisa.</td></tr>
+        <tr><td>Rojo en "7. Publicar"</td><td>Revisa los permisos del token: <code>Account · Workers Scripts · Edit</code>.</td></tr>
+        <tr><td>Rojo en "9. Comprobar que la web responde"</td><td>Se ha publicado, pero da error. Avisa: lo vemos juntos.</td></tr>
+        <tr><td>El correo de confirmación lleva a <code>localhost</code></td><td>Haz el paso 4 y regístrate de nuevo.</td></tr>
+      </tbody>
+    </table>
+    <div class="notas-block">
+      <div class="notas-label">Nota · P1</div>
+      <p><strong>11:15</strong> instrucciones (5) · <strong>11:20</strong> prompts (15) · <strong>11:35</strong> Actions en verde (10) · <strong>11:45</strong> web y login (8) · <strong>11:53</strong> margen (7).</p>
+      <p><strong>Ayudante:</strong> cuenta "ficheros" y URL en el chat, y atiende a quien no tiene secretos. <strong>Errores esperados:</strong> proyecto equivocado en Lovable, los tres ficheros en un solo mensaje. <strong>Rojo en 9:</strong> ¿una clave secreta en el servidor? Al rescate.</p>
+      <p>Quien no tenga URL a las 12:00 sigue en P2 con el ruleset y lo recupera en el rescate.</p>
+    </div>
+  </div>
+</section>
+
+<!-- P2 · 12:10 -->
+<section id="p2">
+  <div class="container">
+    <div class="eyebrow reveal">Práctica 2 · 12:10 · 45 min</div>
+    <h2 class="reveal rd1">Tu primer cambio por <em>Pull Request</em></h2>
+
+    <h3 class="reveal" style="margin-top:36px;">Paso 1 · Protege <code>main</code></h3>
+    <div class="aviso reveal"><strong>Tres trampas:</strong> viene en <em>Disabled</em> (cámbialo a <strong>Active</strong>) · sin rama no protege nada (<em>Include default branch</em>) · en métodos de merge, solo <strong>Merge</strong>.</div>
+    <ol class="pasos reveal">
+      <li>En GitHub: <strong>Settings → Rules → Rulesets → New ruleset → New branch ruleset</strong>.</li>
+      <li><strong>Ruleset Name:</strong> <code>main siempre funciona</code>. <strong>Enforcement status:</strong> <strong>Active</strong>.</li>
+      <li><strong>Target branches:</strong> <em>Add target → Include default branch</em>.</li>
+      <li>Marca:
+        <ul>
+          <li><strong>Restrict deletions</strong>;</li>
+          <li><strong>Require a pull request before merging</strong>, y dentro, en <em>Allowed merge methods</em>, solo <strong>Merge</strong>;</li>
+          <li><strong>Require status checks to pass</strong>: <em>Add checks</em> y escribe <code>Comprobar el PR</code>, aunque no aparezca en la lista;</li>
+          <li><strong>Block force pushes</strong>.</li>
+        </ul>
+      </li>
+      <li>Pulsa <strong>Create</strong>.</li>
+    </ol>
+    <div class="control reveal">✅ En el chat de Zoom: escribe "Active".</div>
+
+    <h3 class="reveal" style="margin-top:36px;">Pasos 2 a 5</h3>
+    <ol class="pasos reveal">
+      <li><strong>Pide un cambio en Lovable,</strong> pequeño y visible. El aviso <em>"Some changes were saved on a sync branch"</em> no es un error: es tu protección funcionando.</li>
+      <li><strong>Abre el Pull Request</strong> con esta dirección (pon tus datos), pulsa <strong>Create pull request</strong> y rellena la plantilla, sobre todo <em>¿Qué pasa si falla?</em> y <em>¿Cómo se apaga?</em></li>
+    </ol>
+    <div class="copiable"><button class="copiar" type="button">Copiar</button>https://github.com/&lt;usuario&gt;/&lt;repo&gt;/compare/main...lovable-sync</div>
+    <div class="control reveal">✅ En el chat de Zoom: pega el enlace de tu Pull Request.</div>
+    <ol class="pasos reveal" start="3" style="counter-reset:paso 2;">
+      <li><strong>Revisa antes de aprobar.</strong> Checks en verde, abre la URL de preview del comentario y prueba tu cambio como un usuario.</li>
+      <li><strong>Haz el merge</strong> con <strong>Create a merge commit</strong>, nunca <em>Squash</em> ni <em>Rebase</em>. Si GitHub ofrece <em>Delete branch</em>, no lo uses: Lovable reutiliza <code>lovable-sync</code>. Espera a <strong>Desplegar</strong> en verde y abre tu producción. En Lovable debe decir <em>In sync with GitHub</em>.</li>
+    </ol>
+    <div class="control reveal">✅ En el chat de Zoom: escribe "producción".</div>
+
+    <h3 class="reveal" style="margin-top:36px;">Si algo falla</h3>
+    <table class="tabla">
+      <thead><tr><th>Lo que ves</th><th>Qué hacer</th></tr></thead>
+      <tbody>
+        <tr><td>El cambio entra directo en <code>main</code>, sin aviso naranja</td><td>El ruleset no está activo: revisa <em>Active</em> e <em>Include default branch</em>.</td></tr>
+        <tr><td>Los checks salen en rojo</td><td>Abre el check y mira en qué paso falla. Si es "Compilar", pide a Lovable que lo arregle.</td></tr>
+        <tr><td>No aparece el comentario con la preview</td><td>Abre <em>Actions → Desplegar</em> de ese Pull Request.</td></tr>
+        <tr><td>Lovable dice "X commits ahead of GitHub"</td><td>Es normal hasta el merge.</td></tr>
+      </tbody>
+    </table>
+    <div class="notas-block">
+      <div class="notas-label">Nota · P2</div>
+      <p><strong>12:10</strong> demo del ruleset y sus trampas (5) · <strong>12:15</strong> crear ruleset (10) · <strong>12:25</strong> cambio en Lovable (7) · <strong>12:32</strong> PR, checks y preview (10) · <strong>12:42</strong> merge y producción (8) · <strong>12:50</strong> margen (5).</p>
+      <p>Cuenta tu error: el primer cambio entró directo porque el ruleset no tenía rama. <strong>Plan B:</strong> capturas de los PR #1 y #2 de <code>notas-al-d-a</code>. Los rezagados siguen durante F4.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Kit -->
+<section id="kit">
+  <div class="container">
+    <div class="eyebrow reveal">Kit · para el lunes</div>
+    <h2 class="reveal rd1">El ciclo de <em>cada cambio</em></h2>
+    <ol class="pasos reveal">
+      <li><strong>Pides el cambio en Lovable.</strong> Se guarda en <code>lovable-sync</code>.</li>
+      <li><strong>Abres un Pull Request</strong> y rellenas la plantilla.</li>
+      <li><strong>Checks en verde y preview probada,</strong> haciendo lo principal de tu producto.</li>
+      <li><strong>Merge con <em>Create a merge commit</em>.</strong> No borres <code>lovable-sync</code>.</li>
+      <li><strong>Abres tu web de producción.</strong> Verde no significa que funcione.</li>
+    </ol>
+    <div class="aviso reveal"><strong>Base de datos:</strong> Lovable aplica los cambios al pulsar <em>Allow</em>, antes del Pull Request. Lee el SQL antes de aprobar; y si borra o cambia permisos, termina el ciclo enseguida.</div>
+
+    <h3 class="reveal" style="margin-top:40px;">Checklist de go-live</h3>
+    <table class="tabla reveal">
+      <thead><tr><th>#</th><th>Pregunta antes de salir</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>¿Lo que sale ha pasado por un PR revisado, con checks en verde?</td></tr>
+        <tr><td>2</td><td>¿Se ha probado en la preview del PR, con el flujo principal de usuario de principio a fin?</td></tr>
+        <tr><td>3</td><td>¿Están configuradas en producción todas las variables y secretos que necesita?</td></tr>
+        <tr><td>4</td><td>¿Cambia algo en la base de datos? Si es así, ¿se puede deshacer?</td></tr>
+        <tr><td>5</td><td>¿Sabemos cómo volver atrás y cuánto se tarda?</td></tr>
+        <tr><td>6</td><td>¿Hay forma de apagarlo sin cambiar el código (<em>feature flag</em>)?</td></tr>
+        <tr><td>7</td><td>¿Alguien estará mirando las señales durante la primera hora tras salir?</td></tr>
+        <tr><td>8</td><td>¿Saben soporte y los usuarios afectados lo que cambia?</td></tr>
+      </tbody>
+    </table>
+    <p class="reveal">El kit completo, con tu mapa de entornos y la chuleta de Git sin terminal, está en <a href="#descargas">Descargas</a>.</p>
+  </div>
+</section>
+
+<!-- Descargas -->
+<section id="descargas">
+  <div class="container">
+    <div class="eyebrow reveal">Descargas</div>
+    <h2 class="reveal rd1">Todo lo de <em>hoy</em></h2>
+    <div class="descargas reveal rd2">
+      <a class="descarga" href="descargas/guia_practica_sesion.pdf" download><div class="d-tipo">PDF</div><div class="d-titulo">Guía de la práctica</div><div class="d-desc">Prácticas 1 y 2, paso a paso</div></a>
+      <a class="descarga" href="descargas/kit_alumno.pdf" download><div class="d-tipo">PDF</div><div class="d-titulo">Kit del alumno</div><div class="d-desc">Ciclo, mapa de entornos, checklist y chuleta</div></a>
+      <a class="descarga" href="descargas/guia_requisitos_previos.pdf" download><div class="d-tipo">PDF</div><div class="d-titulo">Guía de requisitos previos</div><div class="d-desc">Cuentas, token y secretos</div></a>
+      <a class="descarga" href="https://github.com/jagarcig-ntt/ai-pm-pro-seguridad/tree/main/sesiones/2026-11-git-deploy/Lab/workflows" target="_blank" rel="noopener"><div class="d-tipo">FICHEROS</div><div class="d-titulo">Workflows y plantilla</div><div class="d-desc">Los tres ficheros de tu repositorio</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- B5 · 13:40 -->
+<section id="cierre" class="cierre">
+  <div class="container">
+    <div class="eyebrow reveal">Antes de iros</div>
+    <h2 class="reveal rd1">Tres cosas para <em>esta semana</em></h2>
+    <div class="compromisos">
+      <div class="comp-card reveal rd2"><div class="comp-num">01</div><p class="comp-text">Lleva tu próximo cambio por el ciclo completo: Lovable, Pull Request, preview y merge.</p></div>
+      <div class="comp-card reveal rd3"><div class="comp-num">02</div><p class="comp-text">Pasa la checklist de go-live a tu producto. Tus "noes" son tu lista de trabajo antes del Demo Day.</p></div>
+      <div class="comp-card reveal rd4"><div class="comp-num">03</div><p class="comp-text">Entra en tu web unos días antes del Demo Day: Supabase gratis pausa los proyectos tras una semana sin uso.</p></div>
+    </div>
+    <p class="reveal" style="margin-top:32px;">Si no te dio tiempo a terminar, la guía de la práctica sirve para hacerlo por tu cuenta. <strong>El 11 de diciembre añadimos el check de seguridad a tu CI.</strong></p>
+    <div class="notas-block">
+      <div class="notas-label">Nota · Cierre · 13:40</div>
+      <p><strong>13:40</strong> ronda de URL en el chat (5): abre dos o tres al azar · <strong>13:45</strong> el kit (3) · <strong>13:48</strong> lo que queda y la pausa de Supabase (2) · <strong>13:50</strong> puente, tal cual: "El día 11 añadimos el check de seguridad a vuestro CI" (1) · <strong>13:51</strong> preguntas y despedida (4).</p>
+      <p>Squad: solo si SPEC-017 está hecho, una frase: "Para quien trabaje desde VS Code hay un extra opcional, el Deployment Agent Squad".</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <img src="../../assets/logo-herocamp.jpg" alt="Hero Camp" style="height:22px; width:auto; display:block; filter:invert(1); margin-bottom:10px;">
+  <p>AI PM PRO · THE HERO CAMP · 21 NOVIEMBRE 2026 · JAIME</p>
+</footer>
+
+<script src="../../assets/portal.js"></script>
+<script>
+  // Botones de copiar (solo en este portal, SPEC-016). Si el bloque tiene data-fichero,
+  // copia el prompt seguido del contenido del fichero. Desde file:// el fichero no se
+  // puede leer: se copia solo el prompt y se avisa.
+  document.querySelectorAll('.copiable').forEach((bloque) => {
+    const boton = bloque.querySelector('.copiar');
+    const texto = () => [...bloque.childNodes].filter((n) => n !== boton).map((n) => n.textContent).join('').trim();
+    boton.addEventListener('click', async (ev) => {
+      ev.stopPropagation();
+      let contenido = texto();
+      let aviso = 'Copiado';
+      if (bloque.dataset.fichero) {
+        try {
+          const r = await fetch(bloque.dataset.fichero);
+          if (!r.ok) throw new Error(r.status);
+          contenido += '\n\n' + (await r.text());
+          aviso = 'Copiado con el fichero';
+        } catch (e) {
+          aviso = 'Copiado sin el fichero: pégalo tú';
+        }
+      }
+      try {
+        await navigator.clipboard.writeText(contenido);
+      } catch (e) {
+        const area = document.createElement('textarea');
+        area.value = contenido;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+      boton.textContent = aviso;
+      boton.classList.add('hecho');
+      setTimeout(() => { boton.textContent = 'Copiar'; boton.classList.remove('hecho'); }, 2500);
+    });
+  });
+</script>
+</body>
+</html>

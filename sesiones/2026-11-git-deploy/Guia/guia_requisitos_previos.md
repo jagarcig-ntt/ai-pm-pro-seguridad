@@ -25,6 +25,8 @@ El día 21 publicarás tu producto de Lovable en Internet, con un sistema profes
 
 **¿Te atascas?** Escribe a Gema por el Slack del curso, con una captura en la que no se vea ningún token.
 
+**El día de la sesión** compartiremos el portal con todo el material: https://jagarcig-ntt.github.io/ai-pm-pro-seguridad/sesiones/2026-11-git-deploy/
+
 <div class="salto"></div>
 
 ## Paso 1 · Conecta Lovable con GitHub
