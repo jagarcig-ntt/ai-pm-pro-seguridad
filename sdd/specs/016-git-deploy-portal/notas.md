@@ -22,3 +22,10 @@ Portal servido por HTTP en local, como en GitHub Pages, y probado en Chrome head
 **Desde `file://`:** el botón no puede leer el fichero, así que copia solo el prompt y avisa "Copiado sin el fichero: pégalo tú". En GitHub Pages lo lee bien.
 
 **Pendiente de probar en GitHub Pages tras el push (T05):** el botón de copiar con fichero, y que los enlaces de GitHub a `Lab/workflows/` existan.
+
+## T05 · Publicado en GitHub Pages · 10-nov
+Push de Jaime. Comprobado por el agente en https://jagarcig-ntt.github.io/ai-pm-pro-seguridad/sesiones/2026-11-git-deploy/:
+- Portal, hub (con su enlace al portal nuevo), los 3 PDF, `assets/` y los enlaces de GitHub a `Lab/workflows/` → 200.
+- **Botón de copiar en Pages:** "Copiado con el fichero", el prompt más el `desplegar.yml` completo (7.219 caracteres).
+- Notas ocultas sin `?notas` (0) y visibles con él (8 de 8). Sin desbordamiento a 390 px. Único error: el `favicon.ico` de siempre.
+
