@@ -591,7 +591,6 @@
 >
 > Un aviso para el Demo Day: **Supabase gratis pausa los proyectos tras una semana sin uso**. Entrad en vuestra web unos días antes."
 
-🎓 Si SPEC-017 está hecho, añade una frase: "Para quien trabaje desde VS Code hay un extra opcional, el Deployment Agent Squad". Si no, no lo menciones.
 
 ### 13:50 — Puente al 11 de diciembre (1 min)
 

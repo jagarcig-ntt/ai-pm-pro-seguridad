@@ -199,8 +199,6 @@ En su informe, Google lo dice claramente: **si el cambio hubiera estado protegid
 
 Los agentes generan cambios más rápido que nunca. Eso hace el punto de control **más** importante, no menos.
 
-> 🎓 **Puente:** el squad es opcional, para quien trabaje desde VS Code. Menciónalo como mucho en una frase, o no lo menciones. <!-- ajustar tras SPEC-017 -->
->
 > **Si preguntan si un agente puede aprobar PRs:** técnicamente sí, se puede configurar. La regla del curso es que **un agente propone y una persona decide**. Es la misma lógica que el "qué no delegar" de junio.
 
 ---

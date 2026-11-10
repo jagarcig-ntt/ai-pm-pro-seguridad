@@ -128,7 +128,7 @@ La URL de preview lleva el nombre de la rama: en `feedback-hub`, `lovable-sync-j
 **Tu práctica, en tu propio producto:**
 
 *Primera parte: tu primer despliegue*
-1. Pide a Lovable que cree los dos workflows y la plantilla de PR. Pega el texto de la guía de la sesión.
+1. Pide a Lovable los dos workflows y la plantilla de PR, uno a uno: en el portal de la sesión, el botón **Copiar** de cada paso copia el prompt con el fichero dentro.
 2. Abre la pestaña *Actions* de GitHub y espera a que **Desplegar** salga en verde.
 3. Abre el run y copia tu URL de producción.
 4. Abre tu web y comprueba que funciona.

@@ -150,8 +150,6 @@ En su informe, Google lo dice claramente: **si el cambio hubiera estado protegid
 
 Los agentes generan cambios más rápido que nunca. Eso hace el punto de control **más** importante, no menos.
 
-Si trabajas desde VS Code, existe un extra opcional, el **Deployment Agent Squad**, que te acompaña en estas fases. No lo necesitas para la sesión. <!-- ajustar tras SPEC-017 -->
-
 ---
 
 ## 9. Lo que el PM se lleva

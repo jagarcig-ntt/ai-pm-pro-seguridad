@@ -4,7 +4,7 @@
 
 Es la bisagra del programa: los alumnos llegan con su producto construido en Lovable y salen con él publicado en producción.
 - **Formato:** sesión guiada, solo con navegador. Cada alumno trabaja sobre **su propio producto** (SPEC-010 v4.1), y `feedback-hub` es la demo y el plan B.
-- **Herramienta que se llevan:** los workflows de CI/CD ya instalados, la guía y la checklist de go-live. El Deployment Agent Squad es opcional, para quien trabaje desde VS Code.
+- **Herramienta que se llevan:** los workflows de CI/CD ya instalados, la guía y la checklist de go-live.
 - **Cierre:** cada alumno comparte sus URL, y el reto posterior cierra lo que no haya dado tiempo.
 
 ## Specs
@@ -15,7 +15,6 @@ Es la bisagra del programa: los alumnos llegan con su producto construido en Lov
 | [SPEC-014](../../sdd/specs/014-git-deploy-teoria-familias/spec.md) | Teoría en 4 familias (alumnos + formador) y glosario |
 | SPEC-015 | Guion minuto a minuto y cheat sheet |
 | [SPEC-016](../../sdd/specs/016-git-deploy-portal/spec.md) | [Portal de la sesión](index.html) |
-| SPEC-017 | Deployment Agent Squad (opcional) |
 | [SPEC-018](../../sdd/specs/018-git-deploy-flujo-lovable/spec.md) | Validación del flujo Lovable → GitHub → Cloudflare Workers |
 | [SPEC-019](../../sdd/specs/019-git-deploy-producto-lovable/spec.md) | Producto Lovable de la sesión y ensayo |
 

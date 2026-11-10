@@ -61,9 +61,3 @@ Los términos de las cuatro familias, con la misma definición que en cada guía
 | **Prueba de humo** (F4) | Una comprobación rápida tras desplegar: ¿cargan las páginas y responden los endpoints principales? |
 | **Monitorización** (F4) | Vigilar de forma continua cómo se comporta el producto en producción. |
 | **Las tres señales** (F4) | Errores, rendimiento y uso. La tercera la ve, sobre todo, el PM. |
-
-## Agentes
-
-| Término | Qué es |
-|---|---|
-| **Deployment Agent Squad** | Un extra opcional para quien trabaje desde VS Code: un equipo de agentes que acompaña cada fase. Las decisiones las toma una persona. No hace falta para la sesión. <!-- ajustar tras SPEC-017 --> |
