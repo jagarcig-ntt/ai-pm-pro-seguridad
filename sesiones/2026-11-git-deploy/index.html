@@ -34,6 +34,24 @@
   .descarga .d-titulo { color:var(--ink); font-weight:600; font-size:14px; }
   .descarga .d-desc { color:var(--ink-dim); font-size:13px; margin-top:4px; }
   .enlaces-demo { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:24px; }
+  .esquema-git { margin:14px 0 0; }
+  .esquema-git svg { width:100%; height:auto; display:block; background:var(--bg-deeper); border:1px solid var(--divider); }
+  .esquema-git figcaption { margin-top:10px; font-size:13px; color:var(--ink-dim); line-height:1.5; }
+  .eg-main { stroke:var(--accent); stroke-width:4; }
+  .eg-rama-linea { fill:none; stroke:var(--coral); stroke-width:3; }
+  .eg-merge { fill:none; stroke:var(--accent); stroke-width:3; stroke-dasharray:7 6; }
+  .eg-commit-main { fill:var(--accent); }
+  .eg-commit-merge { fill:var(--bg-deeper); stroke:var(--accent); stroke-width:4; }
+  .eg-commit { fill:var(--bg-deeper); stroke:var(--coral); stroke-width:3; }
+  .eg-flecha-main { fill:var(--accent); }
+  .eg-pr { fill:rgba(62,207,142,0.08); stroke:var(--jade); stroke-width:2; }
+  .eg-rama { font-family:var(--mono); font-size:15px; font-weight:700; }
+  .eg-acento { fill:var(--accent); }
+  .eg-coral { fill:var(--coral); }
+  .eg-mono { font-family:var(--mono); font-size:13px; fill:var(--ink-dim); }
+  .eg-claro { fill:var(--ink); }
+  .eg-nota { font-family:var(--sans); font-size:13.5px; fill:var(--ink-faint); }
+  .eg-pr-t { font-family:var(--sans); font-size:15px; font-weight:700; fill:var(--ink); }
   .fam-pm { margin-top:6px; }
   section p a, .tabla a, .pasos a, .fam-idea-txt a { color:var(--accent); text-underline-offset:3px; }
   @media (max-width: 640px) {
@@ -214,6 +232,39 @@
               <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>El commit con sentido.</strong> Lovable firma "Changes" o "Work in progress": no eliges esos mensajes, pero sí el título y la descripción de tu Pull Request.</span></div>
               <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>El Pull Request es tu punto de control.</strong> Las dos preguntas de un PM: ¿qué pasa si falla? ¿Cómo se apaga?</span></div>
             </div>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Así fluye cada cambio</div>
+            <figure class="esquema-git">
+              <svg viewBox="0 0 760 270" role="img" aria-labelledby="esq-git-t esq-git-d">
+                <title id="esq-git-t">El ciclo de cada cambio en Git</title>
+                <desc id="esq-git-d">Lovable guarda los cambios en la rama lovable-sync. Un Pull Request los comprueba con los checks y una preview. El merge commit los lleva a main, que es producción.</desc>
+                <!-- main: la versión que funciona y está en producción -->
+                <line x1="40" y1="70" x2="690" y2="70" class="eg-main"/>
+                <text x="40" y="44" class="eg-rama eg-acento">main</text>
+                <text x="96" y="44" class="eg-nota">siempre funciona</text>
+                <circle cx="80" cy="70" r="9" class="eg-commit-main"/>
+                <circle cx="610" cy="70" r="11" class="eg-commit-merge"/>
+                <path d="M690 70 l-12 -7 v14 z" class="eg-flecha-main"/>
+                <text x="700" y="64" class="eg-rama eg-acento" text-anchor="start">PRO</text>
+                <text x="610" y="44" class="eg-nota" text-anchor="middle">3 · merge commit = salir a producción</text>
+                <!-- lovable-sync: donde Lovable guarda tus cambios -->
+                <path d="M80 70 C 110 70, 110 190, 150 190 L 330 190" class="eg-rama-linea"/>
+                <circle cx="175" cy="190" r="8" class="eg-commit"/>
+                <circle cx="265" cy="190" r="8" class="eg-commit"/>
+                <text x="175" y="218" class="eg-mono" text-anchor="middle">Changes</text>
+                <text x="265" y="172" class="eg-mono" text-anchor="middle">Cambia el botón</text>
+                <text x="150" y="250" class="eg-rama eg-coral">lovable-sync</text>
+                <text x="268" y="250" class="eg-nota">1 · Lovable guarda aquí tus cambios</text>
+                <!-- Pull Request: el punto de control -->
+                <rect x="345" y="160" width="190" height="64" rx="8" class="eg-pr"/>
+                <text x="440" y="185" class="eg-pr-t" text-anchor="middle">2 · Pull Request</text>
+                <text x="440" y="208" class="eg-mono eg-claro" text-anchor="middle">✅ checks · 🔎 preview</text>
+                <line x1="273" y1="190" x2="345" y2="190" class="eg-rama-linea"/>
+                <path d="M535 192 C 585 192, 600 120, 608 84" class="eg-merge"/>
+              </svg>
+              <figcaption>Tu cambio nunca toca <code>main</code> directamente: espera en <code>lovable-sync</code>, pasa por el Pull Request y solo el merge lo lleva a producción.</figcaption>
+            </figure>
           </div>
           <div class="fam-block">
             <div class="fam-block-label">Caso real · Google Cloud, junio de 2025</div>

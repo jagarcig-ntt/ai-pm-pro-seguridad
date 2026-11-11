@@ -29,3 +29,8 @@ Push de Jaime. Comprobado por el agente en https://jagarcig-ntt.github.io/ai-pm-
 - **Botón de copiar en Pages:** "Copiado con el fichero", el prompt más el `desplegar.yml` completo (7.219 caracteres).
 - Notas ocultas sin `?notas` (0) y visibles con él (8 de 8). Sin desbordamiento a 390 px. Único error: el `favicon.ico` de siempre.
 
+## T04 · Ajuste pedido por Jaime · 11-nov
+- **Esquema del flujo de Git en la tarjeta de F1** (solo ahí, de momento): `main` siempre funciona y es producción; Lovable guarda en `lovable-sync`; el Pull Request con checks y preview; el merge commit lleva a producción.
+- **SVG dentro del HTML, no Mermaid:** no carga librerías, usa los colores y tipografías del portal y funciona sin conexión. Tiene `title` y `desc` para accesibilidad.
+- **Verificado en Chrome** a 1440 px y 390 px, con la tarjeta abierta. Se corrigió una etiqueta tapada por la caja del Pull Request. Sin errores de JavaScript. `check_links.py`: 0 rotos.
+
