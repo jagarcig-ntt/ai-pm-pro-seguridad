@@ -52,6 +52,17 @@
   .eg-claro { fill:var(--ink); }
   .eg-nota { font-family:var(--sans); font-size:13.5px; fill:var(--ink-faint); }
   .eg-pr-t { font-family:var(--sans); font-size:15px; font-weight:700; fill:var(--ink); }
+  .ee-env { fill:rgba(100,170,255,0.06); stroke:var(--blue); stroke-width:2; }
+  .ee-pro { stroke:var(--accent); }
+  .ee-env-t { font-family:var(--sans); font-size:16px; font-weight:700; fill:var(--ink); }
+  .ee-paso { stroke:var(--ink-faint); stroke-width:2; }
+  .ee-paso-f { fill:var(--ink-faint); }
+  .ee-datos { stroke:var(--jade); stroke-width:2; stroke-dasharray:5 5; }
+  .ee-bd { fill:rgba(62,207,142,0.10); stroke:var(--jade); stroke-width:2; }
+  .ee-aviso { font-family:var(--sans); font-size:13.5px; fill:var(--coral); }
+  .ee-pub { fill:none; stroke:var(--ink-faint); stroke-width:1.5; stroke-dasharray:4 4; }
+  .ee-sec { fill:rgba(220,238,60,0.06); stroke:var(--accent); stroke-width:2; }
+  .ee-caja-t { font-family:var(--sans); font-size:14.5px; font-weight:700; fill:var(--ink); }
   .fam-pm { margin-top:6px; }
   section p a, .tabla a, .pasos a, .fam-idea-txt a { color:var(--accent); text-underline-offset:3px; }
   @media (max-width: 640px) {
@@ -304,6 +315,52 @@
               <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>La misma app, distinta configuración.</strong> El <code>.env</code> que sube Lovable es público: solo lo que podrías publicar en tu web.</span></div>
               <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>Los secretos viven en la plataforma.</strong> Nadie puede leerlos una vez guardados, ni siquiera tú.</span></div>
             </div>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Tus tres entornos, tus datos y tus secretos</div>
+            <figure class="esquema-git">
+              <svg viewBox="0 0 760 340" role="img" aria-labelledby="esq-ent-t esq-ent-d">
+                <title id="esq-ent-t">Entornos, datos y secretos de tu producto</title>
+                <desc id="esq-ent-d">Development es la vista previa de Lovable, staging la preview del Pull Request y producción el Worker de Cloudflare. Los tres usan la misma base de datos de Supabase. El .env del repositorio solo lleva valores públicos; los secretos viven en GitHub y en Cloudflare.</desc>
+                <text x="380" y="26" class="eg-nota" text-anchor="middle">El mismo código en los tres · distinta configuración</text>
+                <!-- Los tres entornos -->
+                <rect x="30" y="44" width="200" height="74" rx="8" class="ee-env"/>
+                <text x="130" y="72" class="ee-env-t" text-anchor="middle">Development</text>
+                <text x="130" y="96" class="eg-mono" text-anchor="middle">vista previa de Lovable</text>
+                <rect x="280" y="44" width="200" height="74" rx="8" class="ee-env"/>
+                <text x="380" y="72" class="ee-env-t" text-anchor="middle">Staging</text>
+                <text x="380" y="96" class="eg-mono" text-anchor="middle">preview del PR</text>
+                <rect x="530" y="44" width="200" height="74" rx="8" class="ee-env ee-pro"/>
+                <text x="630" y="72" class="ee-env-t" text-anchor="middle">Producción</text>
+                <text x="630" y="96" class="eg-mono" text-anchor="middle">tu Worker</text>
+                <!-- Paso de un entorno a otro -->
+                <line x1="232" y1="81" x2="270" y2="81" class="ee-paso"/>
+                <path d="M278 81 l-10 -6 v12 z" class="ee-paso-f"/>
+                <text x="255" y="138" class="eg-nota" text-anchor="middle">Pull Request</text>
+                <line x1="482" y1="81" x2="520" y2="81" class="ee-paso"/>
+                <path d="M528 81 l-10 -6 v12 z" class="ee-paso-f"/>
+                <text x="505" y="138" class="eg-nota" text-anchor="middle">merge</text>
+                <!-- Una sola base de datos -->
+                <line x1="130" y1="118" x2="350" y2="202" class="ee-datos"/>
+                <line x1="380" y1="118" x2="380" y2="202" class="ee-datos"/>
+                <line x1="630" y1="118" x2="410" y2="202" class="ee-datos"/>
+                <rect x="290" y="202" width="180" height="58" rx="8" class="ee-bd"/>
+                <text x="380" y="227" class="ee-env-t" text-anchor="middle">Supabase</text>
+                <text x="380" y="248" class="eg-mono eg-claro" text-anchor="middle">una sola base de datos</text>
+                <text x="380" y="304" class="ee-aviso" text-anchor="middle">⚠ Compartida: lo que escribes en una preview</text>
+                <text x="380" y="322" class="ee-aviso" text-anchor="middle">llega a tus datos reales</text>
+                <!-- Configuración pública frente a secretos -->
+                <rect x="30" y="202" width="210" height="82" rx="8" class="ee-pub"/>
+                <text x="135" y="227" class="ee-caja-t" text-anchor="middle">🔓 .env en el repo</text>
+                <text x="135" y="248" class="eg-mono" text-anchor="middle">solo valores públicos</text>
+                <rect x="520" y="202" width="210" height="82" rx="8" class="ee-sec"/>
+                <text x="625" y="227" class="ee-caja-t" text-anchor="middle">🔒 Secretos</text>
+                <text x="625" y="248" class="eg-mono" text-anchor="middle">GitHub · Cloudflare</text>
+                <text x="625" y="270" class="eg-nota" text-anchor="middle">nunca en el código</text>
+                <text x="135" y="270" class="eg-nota" text-anchor="middle">lo que podrías publicar</text>
+              </svg>
+              <figcaption>La vista previa de Lovable no es staging: corre en otro sitio. Staging es la preview de tu Pull Request, en el mismo sitio que producción. Y los tres comparten tus datos: lee el SQL antes de pulsar <em>Allow</em>.</figcaption>
+            </figure>
           </div>
           <div class="fam-block">
             <div class="fam-block-label">Caso real · Replit y SaaStr, julio de 2025</div>

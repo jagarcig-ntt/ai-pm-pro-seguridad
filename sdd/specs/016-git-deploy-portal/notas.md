@@ -33,4 +33,5 @@ Push de Jaime. Comprobado por el agente en https://jagarcig-ntt.github.io/ai-pm-
 - **Esquema del flujo de Git en la tarjeta de F1** (solo ahí, de momento): `main` siempre funciona y es producción; Lovable guarda en `lovable-sync`; el Pull Request con checks y preview; el merge commit lleva a producción.
 - **SVG dentro del HTML, no Mermaid:** no carga librerías, usa los colores y tipografías del portal y funciona sin conexión. Tiene `title` y `desc` para accesibilidad.
 - **Verificado en Chrome** a 1440 px y 390 px, con la tarjeta abierta. Se corrigió una etiqueta tapada por la caja del Pull Request. Sin errores de JavaScript. `check_links.py`: 0 rotos.
+- **Esquema de entornos y secretos en la tarjeta de F2** (11-nov, también pedido por Jaime): los tres entornos (vista previa de Lovable, preview del PR y Worker), una sola base de datos de Supabase compartida con su aviso, y el `.env` público frente a los secretos en GitHub y Cloudflare. Mismo estilo que el de F1. Verificado a 1440 y 390 px; se corrigieron un texto que se salía de su caja y dos notas que chocaban.
 
