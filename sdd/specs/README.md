@@ -14,8 +14,8 @@ Fuente de verdad del estado de cada spec. La actualizan los comandos `/sdd-*`.
 | SPEC-017 | ~~Deployment Agent Squad~~ | 2026-11 | — | **descartada para el 21-nov** (Jaime, 10-nov): el proceso se interioriza a mano, sin agentes. Se puede retomar para el 11-dic |
 | [SPEC-018](018-git-deploy-flujo-lovable/spec.md) | **Validar el flujo Lovable → GitHub → Cloudflare Workers** y propuesta para Gema y el entrenador | 2026-11 | 2026-11-06 | **hecha** ([review](018-git-deploy-flujo-lovable/review.md)) |
 | [SPEC-019](019-git-deploy-producto-lovable/spec.md) | **Producto Lovable de la sesión** (`feedback-hub`) y **ensayo solo con navegador**: comprobaciones, check obligatorio, plantilla de PR, ramas de demo, rollback, README ([plan](019-git-deploy-producto-lovable/plan.md) · [tasks](019-git-deploy-producto-lovable/tasks.md)) | 2026-11 | 2026-11-12 | **hecha** ([review](019-git-deploy-producto-lovable/review.md)) |
-| [SPEC-020](020-retro-junio/spec.md) | Retro sesión 26-jun ([retro](020-retro-junio/retro.md)) | 2026-12 | 2026-11-09 | borrador |
-| SPEC-021 | Rediseño familias 3 y 4 | 2026-12 | 2026-11-30 | pendiente |
+| [SPEC-020](020-retro-junio/spec.md) | Retro sesión 26-jun ([retro](020-retro-junio/retro.md) · [review](020-retro-junio/review.md)) | 2026-12 | 2026-11-09 | validada por Jaime (11-nov) · propuesta: hecha |
+| [SPEC-021](021-seguridad-v2-familias-3-4/spec.md) | **Rediseño de las familias 3 y 4**: F3 en dos ejes, F4 en 3 ideas, práctica sobre su producto de Lovable y casos verificados | 2026-12 | 2026-11-30 | borrador |
 | SPEC-022 | Evolución del pipeline de agentes (+ check en CI; + script que regenera el zip, aplazado desde SPEC-001) | 2026-12 | 2026-11-30 | pendiente |
 | SPEC-023 | Guion de 4h Seguridad v2 | 2026-12 | 2026-12-07 | pendiente |
 | SPEC-024 | Portal Seguridad v2 | 2026-12 | 2026-12-07 | pendiente |

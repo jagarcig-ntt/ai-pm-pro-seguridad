@@ -2,7 +2,7 @@
 
 *Spec: SPEC-020 · Fuentes: [E] encuesta y feedback de Maribel (`sesiones/2026-12-seguridad-v2/HeroCamp-Teoria/Feedback-Sesion.md`) · [G] guion (`sesiones/2026-12-seguridad-v2/HeroCamp-Teoria/GUION-SESION-COMPLETO.md`) · [F] percepción del formador*
 
-> **Borrador.** Pendiente de validación de Jaime (SPEC-020 CA4).
+> **Validada por Jaime el 11-nov** (SPEC-020 CA4): datos correctos, duración real de F3 y F4, y decisiones para la v2 aprobadas.
 
 ## 1. Datos
 | Indicador | Valor |
@@ -64,7 +64,9 @@ Es el contenido más técnico (CORS y cabeceras) metido en el menor tiempo y al 
   - F1 aparece como min 8–40 en la tabla de contenidos y como 8–33 en las cabeceras;
   - el quiz de F1 tiene la cabecera en el min 33 pero las preguntas marcadas en el 27–31.
 - **Una sección fuera de orden.** "MINUTO 109: Cómo se arregla" aparece después de "MINUTO 121" [G, línea 1266].
-- **Pendiente de Jaime:** cuánto duraron realmente los bloques el día de la sesión.
+- **Duración real (Jaime, 11-nov):** F3 y F4 sumaron **alrededor de 1 hora entre las dos**, frente a los unos 80 min del guion. **Se alargaron sobre todo F1 y F2**, y F3 y F4 llegaron con menos tiempo del previsto.
+
+**Conclusión:** el problema de F3 y F4 fue doble: demasiadas ideas y poco tiempo, porque F1 y F2 se comieron el margen. En la v2 hay que proteger el tiempo de F3 y F4. Para eso, F1 y F2 necesitan tiempos cerrados y un margen propio, y conviene poner un punto de control a mitad de sesión.
 
 ## 7. Decisiones para la v2
 | Decisión | Spec |
@@ -72,6 +74,7 @@ Es el contenido más técnico (CORS y cabeceras) metido en el menor tiempo y al 
 | F3 se divide en dos ejes, "dónde se escapan los datos" (técnico, con ejercicio) y "qué te exige la ley" (RGPD y 72h, máximo 3 ideas), con unos 60 min y una práctica | SPEC-021 |
 | F4 baja a 3 ideas (endpoints expuestos, CORS explicado con analogía, mimetismo del agente). Las cabeceras pasan a la checklist del kit. Unos 50 min | SPEC-021 |
 | Una pausa antes de F3 y otra antes de F4; ningún tramo de más de 75 min sin descanso | SPEC-023 |
+| F1 y F2 con tiempos cerrados, y un punto de control a mitad de sesión para proteger el tiempo de F3 y F4 | SPEC-023 |
 | Los timings salen de una sola fuente (el guion) y suman 240 min | SPEC-023 |
 | Verificar o actualizar todas las cifras y casos con fuente y fecha | SPEC-021 |
 | Limpiar `CLAUDE.md` del pipeline y `repo-trampa.md`; ejecutar el pipeline como check de PR en GitHub Actions | SPEC-022 |
