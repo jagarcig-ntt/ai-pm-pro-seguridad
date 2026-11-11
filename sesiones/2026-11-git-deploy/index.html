@@ -63,6 +63,17 @@
   .ee-pub { fill:none; stroke:var(--ink-faint); stroke-width:1.5; stroke-dasharray:4 4; }
   .ee-sec { fill:rgba(220,238,60,0.06); stroke:var(--accent); stroke-width:2; }
   .ee-caja-t { font-family:var(--sans); font-size:14.5px; font-weight:700; fill:var(--ink); }
+  .e3-paso { fill:rgba(62,207,142,0.07); stroke:var(--jade); stroke-width:2; }
+  .e3-paso-t { font-family:var(--sans); font-size:15px; font-weight:700; fill:var(--ink); }
+  .e3-mal { fill:none; stroke:var(--coral); stroke-width:2.5; stroke-dasharray:6 5; }
+  .e3-bien { fill:none; stroke:var(--accent); stroke-width:2.5; }
+  .e3-caja-mal { fill:rgba(255,122,107,0.08); stroke:var(--coral); stroke-width:2; }
+  .e4-bien { fill:var(--jade); }
+  .e4-mal { fill:var(--coral); }
+  .e4-rojo { fill:var(--coral); }
+  .e4-prod { stroke:var(--coral); stroke-width:4; opacity:0.55; }
+  .e4-pub { stroke:var(--ink-faint); stroke-width:1.5; stroke-dasharray:3 5; }
+  .e4-rollback { fill:none; stroke:var(--accent); stroke-width:3; }
   .fam-pm { margin-top:6px; }
   section p a, .tabla a, .pasos a, .fam-idea-txt a { color:var(--accent); text-underline-offset:3px; }
   @media (max-width: 640px) {
@@ -406,6 +417,41 @@
             </div>
           </div>
           <div class="fam-block">
+            <div class="fam-block-label">La receta que corre sola en cada cambio</div>
+            <figure class="esquema-git">
+              <svg viewBox="0 0 760 300" role="img" aria-labelledby="esq-ci-t esq-ci-d">
+                <title id="esq-ci-t">El workflow de cada cambio</title>
+                <desc id="esq-ci-d">En cada Pull Request y en cada merge, el workflow instala, pasa las pruebas, compila, publica y comprueba que la web responde. Si es un Pull Request publica una preview; si es un merge, producción. Si algo falla, no se publica y el merge queda bloqueado.</desc>
+                <text x="30" y="40" class="eg-rama eg-acento">Workflow</text>
+                <text x="128" y="40" class="eg-nota">cada Pull Request y cada merge, en una máquina limpia de GitHub</text>
+                <rect x="30" y="64" width="118" height="56" rx="8" class="e3-paso"/><text x="89" y="87" class="eg-mono eg-claro" text-anchor="middle">1</text><text x="89" y="107" class="e3-paso-t" text-anchor="middle">Instalar</text>
+                <rect x="178" y="64" width="118" height="56" rx="8" class="e3-paso"/><text x="237" y="87" class="eg-mono eg-claro" text-anchor="middle">2</text><text x="237" y="107" class="e3-paso-t" text-anchor="middle">Pruebas</text>
+                <rect x="326" y="64" width="118" height="56" rx="8" class="e3-paso"/><text x="385" y="87" class="eg-mono eg-claro" text-anchor="middle">3</text><text x="385" y="107" class="e3-paso-t" text-anchor="middle">Compilar</text>
+                <rect x="474" y="64" width="118" height="56" rx="8" class="e3-paso"/><text x="533" y="87" class="eg-mono eg-claro" text-anchor="middle">4</text><text x="533" y="107" class="e3-paso-t" text-anchor="middle">Publicar</text>
+                <rect x="622" y="64" width="118" height="56" rx="8" class="e3-paso"/><text x="681" y="87" class="eg-mono eg-claro" text-anchor="middle">5</text><text x="681" y="107" class="e3-paso-t" text-anchor="middle">¿Responde?</text>
+                <line x1="148" y1="92" x2="170" y2="92" class="ee-paso"/><path d="M178 92 l-9 -5 v10 z" class="ee-paso-f"/>
+                <line x1="296" y1="92" x2="318" y2="92" class="ee-paso"/><path d="M326 92 l-9 -5 v10 z" class="ee-paso-f"/>
+                <line x1="444" y1="92" x2="466" y2="92" class="ee-paso"/><path d="M474 92 l-9 -5 v10 z" class="ee-paso-f"/>
+                <line x1="592" y1="92" x2="614" y2="92" class="ee-paso"/><path d="M622 92 l-9 -5 v10 z" class="ee-paso-f"/>
+                <path d="M237 120 C 237 165, 200 175, 175 196" class="e3-mal"/>
+                <path d="M385 120 C 385 165, 330 180, 300 196" class="e3-mal"/>
+                <rect x="30" y="196" width="320" height="66" rx="8" class="e3-caja-mal"/>
+                <text x="190" y="222" class="ee-caja-t" text-anchor="middle">❌ Si falla: no se publica</text>
+                <text x="190" y="246" class="eg-mono" text-anchor="middle">y el merge queda bloqueado</text>
+                <path d="M681 120 C 681 160, 560 170, 530 196" class="e3-bien"/>
+                <path d="M681 120 L 681 196" class="e3-bien"/>
+                <rect x="400" y="196" width="170" height="66" rx="8" class="ee-env"/>
+                <text x="485" y="222" class="ee-caja-t" text-anchor="middle">Pull Request</text>
+                <text x="485" y="246" class="eg-mono" text-anchor="middle">→ preview (staging)</text>
+                <rect x="590" y="196" width="150" height="66" rx="8" class="ee-env ee-pro"/>
+                <text x="665" y="222" class="ee-caja-t" text-anchor="middle">Merge</text>
+                <text x="665" y="246" class="eg-mono" text-anchor="middle">→ producción</text>
+                <text x="570" y="288" class="eg-nota" text-anchor="middle">✅ Todo en verde: se publica sola, nadie tiene que subirla</text>
+              </svg>
+              <figcaption>Lo que no pasa las pruebas no llega ni a la preview. Y el paso 5 existe porque verde no significa que funcione: en el ensayo, todo salió en verde y la web daba error.</figcaption>
+            </figure>
+          </div>
+          <div class="fam-block">
             <div class="fam-block-label">Caso real · CrowdStrike, 19 de julio de 2024</div>
             <p>Una actualización esperaba 20 campos y recibió 21. Llegó a la vez a todos los equipos: Microsoft estimó 8,5 millones de dispositivos Windows bloqueados. Automatizar sin fases convierte un error en un error para todos a la vez.</p>
           </div>
@@ -447,6 +493,41 @@
               <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>El plan de vuelta atrás se conoce antes de salir.</strong> Rollback para recuperar el servicio ya; revert para dejar el código bien. Los cambios de base de datos no se deshacen con un rollback.</span></div>
               <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>Después de salir, vigila tres señales:</strong> errores, rendimiento y uso. La tercera la ve sobre todo el PM.</span></div>
             </div>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Rollback y revert: dos cosas distintas</div>
+            <figure class="esquema-git">
+              <svg viewBox="0 0 760 310" role="img" aria-labelledby="esq-rb-t esq-rb-d">
+                <title id="esq-rb-t">Rollback frente a revert</title>
+                <desc id="esq-rb-d">Una versión rota llega a producción. El rollback vuelve a publicar la versión anterior en minutos, pero main sigue con el código roto. El revert crea un cambio nuevo que lo deshace y entra por Pull Request, dejando main y producción bien.</desc>
+                <text x="30" y="70" class="eg-rama eg-acento">main</text>
+                <text x="30" y="90" class="eg-nota">el código</text>
+                <line x1="170" y1="76" x2="730" y2="76" class="eg-main"/>
+                <circle cx="220" cy="76" r="10" class="e4-bien"/>
+                <circle cx="350" cy="76" r="10" class="e4-mal"/>
+                <circle cx="630" cy="76" r="10" class="e4-bien"/>
+                <text x="220" y="52" class="eg-mono" text-anchor="middle">v1</text>
+                <text x="350" y="52" class="eg-mono e4-rojo" text-anchor="middle">v2 rota</text>
+                <text x="630" y="52" class="eg-mono" text-anchor="middle">revert de v2</text>
+                <text x="630" y="26" class="ee-caja-t" text-anchor="middle">2 · Revert, por Pull Request</text>
+                <text x="30" y="200" class="eg-rama eg-coral">Producción</text>
+                <text x="30" y="220" class="eg-nota">en Cloudflare</text>
+                <line x1="170" y1="206" x2="730" y2="206" class="e4-prod"/>
+                <circle cx="220" cy="206" r="10" class="e4-bien"/>
+                <circle cx="350" cy="206" r="10" class="e4-mal"/>
+                <circle cx="490" cy="206" r="10" class="e4-bien"/>
+                <circle cx="630" cy="206" r="10" class="e4-bien"/>
+                <text x="490" y="182" class="eg-mono" text-anchor="middle">v1 otra vez</text>
+                <text x="630" y="236" class="eg-mono" text-anchor="middle">código bueno</text>
+                <line x1="220" y1="88" x2="220" y2="194" class="e4-pub"/>
+                <line x1="350" y1="88" x2="350" y2="194" class="e4-pub"/>
+                <line x1="630" y1="88" x2="630" y2="194" class="e4-pub"/>
+                <path d="M360 218 C 390 258, 450 258, 480 218" class="e4-rollback"/>
+                <text x="420" y="272" class="ee-caja-t" text-anchor="middle">1 · Rollback · minutos</text>
+                <text x="450" y="300" class="ee-aviso" text-anchor="middle">⚠ Entre 1 y 2, main sigue roto: el próximo merge volvería a publicar el fallo</text>
+              </svg>
+              <figcaption>Primero el rollback, para recuperar el servicio; después el revert, para dejar el código bien. Ninguno de los dos deshace los cambios de la base de datos.</figcaption>
+            </figure>
           </div>
           <div class="fam-block">
             <div class="fam-block-label">Caso real · Sonos, mayo de 2024</div>
