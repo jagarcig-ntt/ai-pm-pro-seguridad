@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | borrador (11-nov) |
+| Estado | **aprobada** (Jaime, 11-nov) |
 | Sesión | 2026-12 Seguridad v2 (jueves 11-dic · 17:00–21:00) |
 | Fecha límite | 2026-11-30 |
 | Depende de | SPEC-020 (retro validada el 11-nov) · SPEC-022 (pipeline: formato de los agentes de F3 y F4) · constitution v1.6 |
@@ -70,9 +70,9 @@ Que F3 y F4 respeten el máximo de 3 ideas por bloque, tengan tiempo protegido y
 ## 7. Restricciones (constitution)
 2.3 máximo 3 ideas · 2.4 patrón de bloque · 2.5 lenguaje de PM · 2.6 práctica sobre lo suyo · 2.7 ritmo · 3.2 coste 0 · 3.3 plan B · 3.4 nada de secretos reales · 5.4 nada de inventar datos.
 
-## 8. Preguntas abiertas
-- [ ] **¿Y F1 y F2?** Funcionaron mejor, pero se alargaron y se comieron el tiempo de F3 y F4. Propuesta: no rediseñarlas aquí. En SPEC-023 tendrán tiempos cerrados, se actualizarán sus cifras y se añadirán los casos propios de noviembre (la clave secreta copiada por error el 22-oct, el `.env` público de Lovable o la tabla abierta a cualquiera).
-- [ ] **¿Tiempos?** La retro propone unos 60 minutos para F3 y unos 50 para F4. Propuesta: mantenerlos como objetivo y cerrarlos en SPEC-023.
-- [ ] **¿Casos?** Propuesta: conservar los que se puedan verificar y sustituir, si hay alternativas documentadas, los que estén lejos de un producto como el suyo (por ejemplo, Spring Boot Actuator), por casos cercanos al ecosistema de Lovable y Supabase.
-- [ ] **¿Cuánto RGPD?** Propuesta: solo lo que decide un PM (qué datos guardas, para qué y qué haces si hay una brecha), sin entrar en detalle legal.
-- [ ] **¿La práctica de F3 se basa en lo que envían a servicios de IA?** Depende de si sus productos usan IA. Propuesta: preguntarlo en la encuesta de Gema o con la lista de repos, y tener una práctica alternativa.
+## 8. Decisiones (Jaime, 11-nov: "sí a todo")
+- [x] **F1 y F2:** no se rediseñan aquí. En SPEC-023 tendrán tiempos cerrados, cifras actualizadas y los casos propios de noviembre.
+- [x] **Tiempos:** unos 60 min para F3 y unos 50 para F4, como objetivo. Se cierran en SPEC-023.
+- [x] **Casos:** se conservan los verificables y se sustituyen, si hay alternativas documentadas, los más lejanos a su producto, por casos del entorno de Lovable y Supabase.
+- [x] **RGPD:** solo lo que decide un PM, sin detalle legal.
+- [x] **Productos con IA:** se pregunta (Gema o lista de repos) y se prepara una práctica alternativa para quien no use IA.
