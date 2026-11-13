@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **aprobada** (Jaime, 11-nov) |
+| Estado | **en curso** (11-nov) · aprobada por Jaime |
 | Sesión | 2026-12 Seguridad v2 (jueves 11-dic · 17:00–21:00) |
 | Fecha límite | 2026-11-30 |
 | Depende de | SPEC-020 (retro validada el 11-nov) · SPEC-022 (pipeline: formato de los agentes de F3 y F4) · constitution v1.6 |

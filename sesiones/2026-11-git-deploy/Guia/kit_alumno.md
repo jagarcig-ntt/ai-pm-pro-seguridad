@@ -79,6 +79,6 @@ La práctica completa, paso a paso, está en la **guía de la práctica**.
 
 ## 6. Si no te dio tiempo
 
-Termínalo por tu cuenta antes del Demo Day con la guía de la práctica. Y un aviso: **Supabase gratis pausa los proyectos tras una semana sin uso**. Entra en tu web unos días antes del Demo Day y, si no funciona, reactívalo desde el panel de Supabase.
+Termínalo por tu cuenta antes del Demo Day con la guía de la práctica. Y entra en tu web unos días antes del Demo Day para comprobar que lo principal funciona.
 
 El 11 de diciembre añadimos el check de seguridad a tu CI.

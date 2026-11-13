@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | borrador |
+| Estado | **hecha** (11-nov; [review](review.md)) |
 | Sesión | 2026-12 Seguridad v2 |
 | Fecha límite | 2026-11-09 |
 | Depende de | — |
@@ -33,10 +33,10 @@ Un documento de retro (`retro.md`) que diga qué mantener, qué simplificar, qu�
 - R4. Proponer decisiones concretas para la v2, cada una asignada a una spec.
 
 ## 6. Criterios de aceptación
-- [ ] CA1. `retro.md` sigue `sdd/templates/retro.md`.
-- [ ] CA2. Cada afirmación cita su fuente: encuesta, guion (con línea) o formador.
-- [ ] CA3. Cada decisión de la sección 7 tiene una spec asignada.
-- [ ] CA4. Jaime valida el documento.
+- [x] CA1. `retro.md` sigue `sdd/templates/retro.md`.
+- [x] CA2. Cada afirmación cita su fuente: encuesta, guion (con línea) o formador.
+- [x] CA3. Cada decisión de la sección 7 tiene una spec asignada.
+- [x] CA4. Jaime valida el documento.
 
 ## 7. Restricciones (constitution)
 Criterios 2.3 (máximo 3 ideas por bloque), 2.8 (timings honestos) y 5.4 (no inventar datos).

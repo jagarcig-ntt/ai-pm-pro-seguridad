@@ -1,6 +1,6 @@
 # PLAN · SPEC-021 · Rediseño de las familias 3 y 4
 
-*Spec: [spec.md](spec.md) (aprobada el 11-nov) · Estado del plan: borrador (11-nov)*
+*Spec: [spec.md](spec.md) (aprobada el 11-nov) · Estado del plan: **aprobado** (Jaime, 11-nov) · [tareas](tasks.md)*
 
 ## 1. Enfoque
 - **Se reescriben en su sitio** los ficheros de junio de `sesiones/2026-12-seguridad-v2/HeroCamp-Teoria/Bloque Teorico/`. Lo impartido sigue en el tag `sesion-2026-06` (constitution 1.4).

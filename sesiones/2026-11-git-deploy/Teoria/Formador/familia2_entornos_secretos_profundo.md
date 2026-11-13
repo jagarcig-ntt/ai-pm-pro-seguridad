@@ -109,7 +109,7 @@ Las variables normales pueden estar escritas en un fichero del repositorio. **Lo
 
 | Dónde | Para qué | Cómo se protege |
 |---|---|---|
-| Fichero `.env` del repositorio | Valores **públicos**, como la URL de Supabase y su clave pública | No se protege: cualquiera puede leerlo |
+| Fichero `.env` del repositorio | Valores **públicos**, como la dirección de tu base de datos y su clave pública | No se protege: cualquiera puede leerlo |
 | *Secrets* de GitHub | Que el CI (Familia 3) pueda usarlos | Cifrados; nadie los puede leer, ni siquiera tú, una vez guardados |
 | Variables de la plataforma de despliegue | Lo que necesita tu app al ejecutarse en Cloudflare | Cifradas si las guardas como secreto |
 
@@ -125,7 +125,7 @@ Cuando separes entornos, cada uno tendrá **sus propios secretos**: si algo se f
 >
 > **En la demo:** enseña el `.env` de `feedback-hub` y la pantalla de *Secrets* de GitHub (sin revelar valores). Que vean que ni el propio dueño puede leer un secreto una vez guardado.
 >
-> **Si preguntan si la clave pública es segura:** se puede publicar porque quien protege los datos son las políticas de acceso (RLS) de Supabase. Si una tabla permite leer a cualquiera, cualquiera puede leerla. El detalle va al 11-dic.
+> **Si preguntan si la clave pública es segura:** se puede publicar porque quien protege los datos son las políticas de acceso (RLS) de la base de datos. Si una tabla permite leer a cualquiera, cualquiera puede leerla. El detalle va al 11-dic.
 >
 > **Caso propio (preparando el demo anterior, 22-oct-2026):** al configurar Cloudflare se copió la clave **secreta** de Supabase en lugar de la **pública**, y la app la estaba enviando a cualquier navegador. Se detectó comprobando solo el prefijo de la clave, se revocó y se cambió por la pública. Cuéntalo en una frase: es el error más fácil del mundo y la razón de que existan las pruebas. El detalle va al 11-dic.
 
@@ -141,7 +141,7 @@ Tu producto tiene tres entornos:
 | **Staging** | URL de preview de cada PR, en Cloudflare | Probarlo como en producción, antes del merge |
 | **Production** | URL de tu Worker en Cloudflare | Lo que ven tus usuarios |
 
-Los tres usan **el mismo proyecto de Supabase**.
+Los tres usan **la misma base de datos**, la de Lovable Cloud.
 
 **Por qué la vista previa de Lovable no es staging:** corre en la infraestructura de Lovable, no en Cloudflare. En el ensayo de esta sesión, una app funcionaba en Lovable y daba error en Cloudflare. Solo una preview en el mismo sitio que producción lo enseña antes de salir.
 
@@ -167,7 +167,7 @@ Los tres usan **el mismo proyecto de Supabase**.
 >
 > **Plan B:** capturas de los tres entornos y de la lista de *secrets*.
 >
-> **Si preguntan por qué no separamos los datos:** va más allá de un primer MVP (acordado con Jose, 5-nov). Se puede hacer más adelante, con un segundo proyecto de Supabase.
+> **Si preguntan por qué no separamos los datos:** va más allá de un primer MVP (acordado con Jose, 5-nov). Se puede hacer más adelante, pasando a un Supabase propio con dos proyectos.
 
 ---
 
@@ -198,7 +198,7 @@ La respuesta del CEO de Replit, Amjad Masad, fue calificarlo de "inaceptable" y 
 En esta fase, un agente como Lovable:
 
 **Hace bien:**
-- conectar tu app con Supabase y guardar los valores públicos;
+- crear tu base de datos y guardar los valores públicos;
 - listar las variables que usa tu producto, si se lo pides;
 - preparar los cambios de la base de datos y enseñarte el SQL antes de ejecutarlo;
 - avisarte si encuentra un secreto escrito en el código, si se lo pides.
@@ -235,7 +235,7 @@ En esta fase, un agente como Lovable:
 - GitHub Docs, uso de secretos en GitHub Actions: https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions
 - Supabase, gestión de entornos: https://supabase.com/docs/guides/deployment/managing-environments
 - Cloudflare Workers, versiones de previsualización: https://developers.cloudflare.com/workers/configuration/previews/
-- Lovable, integración con Supabase: https://docs.lovable.dev/integrations/supabase
+- Lovable Cloud: https://docs.lovable.dev/integrations/cloud
 
 ---
 

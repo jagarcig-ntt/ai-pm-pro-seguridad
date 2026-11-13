@@ -102,15 +102,14 @@
 
 **Tú:**
 > "Antes de nada, comprobamos que venís preparados. Escribid en el chat, en un solo mensaje, cuáles de estas tres tenéis:
-> ✅ repo público · ✅ Supabase conectado · ✅ secretos guardados en GitHub."
+> ✅ repo público · ✅ token de Cloudflare · ✅ secretos guardados en GitHub."
 
 **ACCIÓN:** espera las respuestas. El ayudante las cuenta.
 
 🎓 **Según lo que veas:**
 - **Le falta el repo público:** que lo haga ahora, en un minuto. Es el paso 1 de la guía de requisitos.
 - **Le faltan los secretos:** los guardará al empezar P1. Hay 10 minutos previstos para ello.
-- **No tiene Supabase conectado:** puede seguir. Su web se publicará, aunque no guarde datos.
-- **Usa el backend de Lovable en lugar de Supabase:** queda fuera del flujo probado. Que siga la sesión y conserve el *Publish* de Lovable.
+- **Le falta el token de Cloudflare:** que lo cree al empezar P1, con el paso 2 de la guía de requisitos y sin compartir pantalla.
 
 ### 10:11 — Cómo vamos a trabajar (4 min)
 
@@ -257,11 +256,11 @@
 **Tú:**
 > "El código es el mismo en los tres entornos. Lo que cambia es la configuración, que se le da desde fuera.
 >
-> Lovable sube este fichero, el `.env`, a vuestro repositorio público. ¿Es un problema? No, **porque solo lleva valores públicos**: la dirección de Supabase y su clave pública. La regla: en el `.env` del repo, solo lo que podríais publicar en vuestra web.
+> Lovable sube este fichero, el `.env`, a vuestro repositorio público. ¿Es un problema? No, **porque solo lleva valores públicos**: la dirección de vuestra base de datos y su clave pública. La regla: en el `.env` del repo, solo lo que podríais publicar en vuestra web.
 >
 > Los secretos de verdad viven aquí, en la plataforma. Fijaos: ni siquiera yo puedo ver su valor una vez guardados."
 
-🎓 **Si preguntan si la clave pública es segura:** lo que protege los datos son las políticas de acceso de Supabase. El detalle, el 11 de diciembre.
+🎓 **Si preguntan si la clave pública es segura:** lo que protege los datos son las políticas de acceso de la base de datos. El detalle, el 11 de diciembre.
 
 ### 10:46 — Caso real: Replit, y el nuestro (3 min)
 
@@ -373,7 +372,7 @@
 > "Vamos a pedir a Lovable tres ficheros, uno a uno. Cuando lleguen a GitHub, vuestro producto se publicará solo. Cuatro avisos:
 > 1. **Comprobad el nombre de vuestro proyecto en Lovable**, arriba a la izquierda. Preparando esto, yo mismo me equivoqué de proyecto.
 > 2. Pedid el contenido **exacto**, con el prompt de la guía.
-> 3. Quien no tenga los secretos en GitHub: primero el paso 4 de la guía de requisitos, **sin compartir pantalla**. [Nombre del ayudante] os acompaña.
+> 3. Quien no tenga los secretos en GitHub: primero el paso 3 de la guía de requisitos, **sin compartir pantalla**. [Nombre del ayudante] os acompaña.
 > 4. Cuando terminéis cada paso, escribidlo en el chat."
 
 ### 11:20 — Los tres prompts (15 min)
@@ -408,7 +407,7 @@
 **Tú:**
 > "Abrid vuestra URL y **haced lo principal de vuestro producto**: crear algo, guardar algo. Abrirla no basta: verde no significa que funcione.
 >
-> Si vuestro producto tiene login, falta un paso, el 4 de la guía. Supabase deja como dirección `localhost`, y el correo de confirmación os llevaría a una página que no existe. Añadid vuestra URL en *Authentication → URL Configuration*."
+> Si vuestro producto tiene login, falta un paso, el 4 de la guía. Sin él, el enlace del correo de confirmación os lleva a la vista previa de Lovable en lugar de a vuestra web. Añadid vuestra URL en Lovable, en *More → Users → Settings → Advanced → Allowed URLs*."
 
 ### 11:53 — Margen (7 min)
 
@@ -589,7 +588,7 @@
 **Tú:**
 > "Si no os ha dado tiempo a terminar, la guía y el kit sirven para hacerlo por vuestra cuenta antes del Demo Day.
 >
-> Un aviso para el Demo Day: **Supabase gratis pausa los proyectos tras una semana sin uso**. Entrad en vuestra web unos días antes."
+> Y un consejo para el Demo Day: entrad en vuestra web unos días antes y comprobad que lo principal funciona."
 
 
 ### 13:50 — Puente al 11 de diciembre (1 min)

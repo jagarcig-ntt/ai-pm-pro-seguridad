@@ -12,8 +12,6 @@ El día 21 publicarás tu producto de Lovable en Internet, con un sistema profes
 |---|---|---|
 | ☐ | Plan Pro de Lovable activo | Antes del 21-nov |
 | ☐ | Proyecto de Lovable conectado a GitHub, con el repositorio **público** | Antes del 21-nov |
-| ☐ | Cuenta de Supabase creada | Antes del 21-nov |
-| ☐ | Supabase **conectado a tu proyecto**, antes de crear ninguna tabla | Antes del 21-nov |
 | ☐ | Cuenta de Cloudflare, token y Account ID | Antes del 21-nov |
 | ☐ | Token y Account ID guardados en GitHub | Antes del 21-nov |
 
@@ -21,7 +19,7 @@ El día 21 publicarás tu producto de Lovable en Internet, con un sistema profes
 
 1. **Tu repositorio será público.** No incluyas nunca información confidencial de tu empresa ni datos reales de personas.
 2. **El token es una contraseña.** No lo compartas, no lo pegues en el chat de Lovable y no lo enseñes en pantalla: las clases se graban.
-3. **Conecta Supabase antes de crear tablas.** No actives el backend de Lovable.
+3. **Lee lo que Lovable va a cambiar en tu base de datos antes de pulsar *Allow*:** se aplica en ese mismo momento.
 
 **¿Te atascas?** Escribe a Gema por el Slack del curso, con una captura en la que no se vea ningún token.
 
@@ -46,30 +44,14 @@ El día 21 publicarás tu producto de Lovable en Internet, con un sistema profes
 
 > **No renombres ni muevas el repositorio** después de conectarlo: Lovable perdería la conexión.
 
-## Paso 2 · Conecta Supabase
+> **Tu base de datos** es la de Lovable Cloud, la que configuras con Jose. No necesitas ninguna cuenta más para ella.
 
-Aquí se guardarán los datos de tu producto.
-
-1. Crea una cuenta gratuita en [supabase.com](https://supabase.com).
-2. **Antes de crear ninguna tabla,** en Lovable abre *More → Connectors → Supabase*. **No uses *Database*:** eso activa el backend de Lovable.
-3. Autoriza el acceso y pulsa **Create Project**.
-
-![Crear el proyecto desde Lovable](capturas/03_supabase_connect.png)
-
-4. Comprueba que tu proyecto aparece como **Connected**.
-
-![Supabase conectado](capturas/04_supabase_conectado.png)
-
-A partir de aquí, todo se pide en el chat de Lovable. Cuando cree una tabla, te enseñará el cambio y te pedirá permiso.
-
-> **Si ya has activado el backend de Lovable,** no intentes cambiarlo por tu cuenta. Avisa a Jose.
-
-## Paso 3 · Prepara Cloudflare
+## Paso 2 · Prepara Cloudflare
 
 Aquí se publicará tu producto.
 
 1. Crea una cuenta gratuita en [cloudflare.com](https://dash.cloudflare.com/sign-up).
-2. Entra en *Workers & Pages*. Déjala abierta: en la columna de la derecha está tu **Account ID**. Lo necesitarás en el paso 4.
+2. Entra en *Workers & Pages*. Déjala abierta: en la columna de la derecha está tu **Account ID**. Lo necesitarás en el paso 3.
 
 ![Dónde está el Account ID](capturas/06_cloudflare_account_id.png)
 
@@ -87,7 +69,7 @@ Aquí se publicará tu producto.
 
 <div class="salto"></div>
 
-## Paso 4 · Guarda el token en GitHub
+## Paso 3 · Guarda el token en GitHub
 
 Así tu repositorio podrá publicar sin que el token aparezca en ningún sitio.
 
@@ -107,7 +89,7 @@ Así tu repositorio podrá publicar sin que el token aparezca en ningún sitio.
 |---|---|---|
 | Lovable | Plan Pro, 25 €/mes | Lo contrata cada alumno |
 | GitHub | Gratis | Las automatizaciones son gratuitas en repositorios públicos |
-| Supabase | Gratis | Máximo 2 proyectos activos. **Se pausa tras 1 semana sin uso:** si tu producto deja de funcionar, reactívalo desde el panel de Supabase. Compruébalo antes del Demo Day |
+| Lovable Cloud | Incluido en tu plan de Lovable | Tu base de datos y el login usan créditos de tu plan |
 | Cloudflare | Gratis | 100.000 peticiones al día, de sobra para el curso |
 
-<p class="fuentes">Datos consultados el 5-nov-2026: acuerdo del curso (Lovable), docs.github.com (Actions), supabase.com/pricing y panel de Cloudflare Workers.</p>
+<p class="fuentes">Datos consultados el 5-nov-2026: acuerdo del curso (Lovable), docs.github.com (Actions), docs.lovable.dev (Lovable Cloud) y panel de Cloudflare Workers.</p>

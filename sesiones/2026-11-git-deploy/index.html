@@ -204,7 +204,7 @@
 
     <h3 class="reveal" style="margin-top:40px;">¿Venís preparados?</h3>
     <p class="reveal">Escribe en el chat de Zoom cuáles de estas tres tienes:</p>
-    <div class="control reveal">✅ repo público · ✅ Supabase conectado · ✅ secretos guardados en GitHub</div>
+    <div class="control reveal">✅ repo público · ✅ token de Cloudflare · ✅ secretos guardados en GitHub</div>
 
     <h3 class="reveal" style="margin-top:40px;">Tres reglas</h3>
     <ol class="pasos reveal">
@@ -214,7 +214,7 @@
     </ol>
     <div class="notas-block">
       <div class="notas-label">Nota · 10:06 · Recuento de requisitos</div>
-      <p><strong>Sin repo público:</strong> que lo haga ahora (paso 1 de la guía de requisitos). <strong>Sin secretos:</strong> los guarda al empezar P1, hay 10 min previstos. <strong>Sin Supabase:</strong> puede seguir, su web se publicará aunque no guarde datos. <strong>Con el backend de Lovable:</strong> fuera del flujo probado; sigue la sesión y conserva el <em>Publish</em> de Lovable.</p>
+      <p><strong>Sin repo público:</strong> que lo haga ahora (paso 1 de la guía de requisitos). <strong>Sin secretos:</strong> los guarda al empezar P1, hay 10 min previstos.</p>
     </div>
   </div>
 </section>
@@ -332,7 +332,7 @@
             <figure class="esquema-git">
               <svg viewBox="0 0 760 340" role="img" aria-labelledby="esq-ent-t esq-ent-d">
                 <title id="esq-ent-t">Entornos, datos y secretos de tu producto</title>
-                <desc id="esq-ent-d">Development es la vista previa de Lovable, staging la preview del Pull Request y producción el Worker de Cloudflare. Los tres usan la misma base de datos de Supabase. El .env del repositorio solo lleva valores públicos; los secretos viven en GitHub y en Cloudflare.</desc>
+                <desc id="esq-ent-d">Development es la vista previa de Lovable, staging la preview del Pull Request y producción el Worker de Cloudflare. Los tres usan la misma base de datos de Lovable Cloud. El .env del repositorio solo lleva valores públicos; los secretos viven en GitHub y en Cloudflare.</desc>
                 <text x="380" y="26" class="eg-nota" text-anchor="middle">El mismo código en los tres · distinta configuración</text>
                 <!-- Los tres entornos -->
                 <rect x="30" y="44" width="200" height="74" rx="8" class="ee-env"/>
@@ -356,7 +356,7 @@
                 <line x1="380" y1="118" x2="380" y2="202" class="ee-datos"/>
                 <line x1="630" y1="118" x2="410" y2="202" class="ee-datos"/>
                 <rect x="290" y="202" width="180" height="58" rx="8" class="ee-bd"/>
-                <text x="380" y="227" class="ee-env-t" text-anchor="middle">Supabase</text>
+                <text x="380" y="227" class="ee-env-t" text-anchor="middle">Lovable Cloud</text>
                 <text x="380" y="248" class="eg-mono eg-claro" text-anchor="middle">una sola base de datos</text>
                 <text x="380" y="304" class="ee-aviso" text-anchor="middle">⚠ Compartida: lo que escribes en una preview</text>
                 <text x="380" y="322" class="ee-aviso" text-anchor="middle">llega a tus datos reales</text>
@@ -548,7 +548,7 @@
     <div class="notas-block">
       <div class="notas-label">Nota · Teoría</div>
       <p><strong>F1:</strong> pregunta del 1 al 5 sobre Git; si casi todo son unos y doses, recorta la idea 2. Demo: pestaña <em>Commits</em> de <code>feedback-hub</code> y solo la descripción del PR #6. <strong>No digas una duración exacta</strong> del caso Google.</p>
-      <p><strong>F2:</strong> pregunta "¿cuántas bases de datos?". Tono del caso Replit: "una instrucción no es una barrera", no "la IA es peligrosa". Si preguntan por la clave pública: la protegen las políticas de Supabase, el detalle el 11-dic.</p>
+      <p><strong>F2:</strong> pregunta "¿cuántas bases de datos?". Tono del caso Replit: "una instrucción no es una barrera", no "la IA es peligrosa". Si preguntan por la clave pública: la protegen las políticas de acceso de la base de datos, el detalle el 11-dic.</p>
       <p><strong>F3:</strong> PR #4 en verde y PR #6 en rojo, ahora hasta abajo. Antes de CrowdStrike, pregunta quién se vio afectado. No fue un ciberataque.</p>
       <p><strong>F4:</strong> simulacro con <code>demo/f4-rompe-produccion</code> (sección Demo). Silencio de dos segundos tras la frase de Sonos.</p>
     </div>
@@ -581,7 +581,7 @@
     <div class="eyebrow reveal">Práctica 1 · 11:15 · 45 min</div>
     <h2 class="reveal rd1">Tu primer <em>despliegue</em></h2>
     <p class="reveal rd2" style="margin-top:24px;">En los pasos verás <code>&lt;usuario&gt;</code> (tu usuario de GitHub) y <code>&lt;repo&gt;</code> (el nombre de tu repositorio).</p>
-    <div class="aviso reveal"><strong>Antes de empezar:</strong> abre tu proyecto en Lovable y comprueba su nombre arriba a la izquierda. Si no guardaste los secretos en GitHub, hazlo primero (paso 4 de la guía de requisitos), sin compartir pantalla.</div>
+    <div class="aviso reveal"><strong>Antes de empezar:</strong> abre tu proyecto en Lovable y comprueba su nombre arriba a la izquierda. Si no guardaste los secretos en GitHub, hazlo primero (paso 3 de la guía de requisitos), sin compartir pantalla.</div>
 
     <h3 class="reveal" style="margin-top:36px;">Paso 1 · Pide a Lovable los tres ficheros, uno a uno</h3>
     <p>Pulsa <strong>Copiar</strong>: se copia el prompt con el fichero completo. Pégalo en el chat de Lovable y envíalo. Repite con los otros dos.</p>
@@ -596,8 +596,9 @@
     <ol class="pasos reveal">
       <li><strong>Mira cómo se publica.</strong> En GitHub, pestaña <strong>Actions</strong>: espera a que <strong>Desplegar</strong> salga en verde (alrededor de un minuto). Entra y copia la dirección de <strong>Publicado en</strong>.</li>
       <li><strong>Prueba tu web.</strong> Ábrela y haz lo principal de tu producto. Abrirla no basta: verde no significa que funcione.</li>
-      <li><strong>Solo si tienes login:</strong> en Supabase, <em>Authentication → URL Configuration</em>. Pon tu URL de producción en <strong>Site URL</strong> y añade estas dos en <strong>Redirect URLs</strong>, con tus datos. No borres las de Lovable.</li>
+      <li><strong>Solo si tienes login:</strong> en Lovable, <em>More → Users → Settings → Advanced → Allowed URLs</em>. Añade estas tres direcciones, con tus datos. Si ves un campo <strong>Site URL</strong>, pon tu URL de producción. No borres las de Lovable.</li>
     </ol>
+    <div class="copiable"><button class="copiar" type="button">Copiar</button>https://&lt;usuario&gt;-&lt;repo&gt;.&lt;tu-subdominio&gt;.workers.dev</div>
     <div class="copiable"><button class="copiar" type="button">Copiar</button>https://&lt;usuario&gt;-&lt;repo&gt;.&lt;tu-subdominio&gt;.workers.dev/**</div>
     <div class="copiable"><button class="copiar" type="button">Copiar</button>https://*-&lt;usuario&gt;-&lt;repo&gt;.&lt;tu-subdominio&gt;.workers.dev/**</div>
     <div class="control reveal">✅ En el chat de Zoom: pega tu URL de producción.</div>
@@ -611,7 +612,7 @@
         <tr><td>Rojo en "5. Compilar"</td><td>En Lovable, pulsa <em>Fix build</em> si aparece. Si no, avisa.</td></tr>
         <tr><td>Rojo en "7. Publicar"</td><td>Revisa los permisos del token: <code>Account · Workers Scripts · Edit</code>.</td></tr>
         <tr><td>Rojo en "9. Comprobar que la web responde"</td><td>Se ha publicado, pero da error. Avisa: lo vemos juntos.</td></tr>
-        <tr><td>El correo de confirmación lleva a <code>localhost</code></td><td>Haz el paso 4 y regístrate de nuevo.</td></tr>
+        <tr><td>El correo de confirmación lleva a la vista previa de Lovable</td><td>Añade tu web en <em>Allowed URLs</em> (paso del login) y regístrate de nuevo con otro email.</td></tr>
       </tbody>
     </table>
     <div class="notas-block">
@@ -732,12 +733,12 @@
     <div class="compromisos">
       <div class="comp-card reveal rd2"><div class="comp-num">01</div><p class="comp-text">Lleva tu próximo cambio por el ciclo completo: Lovable, Pull Request, preview y merge.</p></div>
       <div class="comp-card reveal rd3"><div class="comp-num">02</div><p class="comp-text">Pasa la checklist de go-live a tu producto. Tus "noes" son tu lista de trabajo antes del Demo Day.</p></div>
-      <div class="comp-card reveal rd4"><div class="comp-num">03</div><p class="comp-text">Entra en tu web unos días antes del Demo Day: Supabase gratis pausa los proyectos tras una semana sin uso.</p></div>
+      <div class="comp-card reveal rd4"><div class="comp-num">03</div><p class="comp-text">Entra en tu web unos días antes del Demo Day y comprueba que lo principal funciona.</p></div>
     </div>
     <p class="reveal" style="margin-top:32px;">Si no te dio tiempo a terminar, la guía de la práctica sirve para hacerlo por tu cuenta. <strong>El 11 de diciembre añadimos el check de seguridad a tu CI.</strong></p>
     <div class="notas-block">
       <div class="notas-label">Nota · Cierre · 13:40</div>
-      <p><strong>13:40</strong> ronda de URL en el chat (5): abre dos o tres al azar · <strong>13:45</strong> el kit (3) · <strong>13:48</strong> lo que queda y la pausa de Supabase (2) · <strong>13:50</strong> puente, tal cual: "El día 11 añadimos el check de seguridad a vuestro CI" (1) · <strong>13:51</strong> preguntas y despedida (4).</p>
+      <p><strong>13:40</strong> ronda de URL en el chat (5): abre dos o tres al azar · <strong>13:45</strong> el kit (3) · <strong>13:48</strong> lo que queda (2) · <strong>13:50</strong> puente, tal cual: "El día 11 añadimos el check de seguridad a vuestro CI" (1) · <strong>13:51</strong> preguntas y despedida (4).</p>
     </div>
   </div>
 </section>

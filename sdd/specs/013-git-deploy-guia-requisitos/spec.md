@@ -79,5 +79,7 @@ Es un solo documento, así que plan y tareas van aquí.
 | T04 🧑 | Prueba con alguien que no conozca el flujo (CA3). | — | ☐ |
 | T05 | Ajustes tras la prueba y envío a Gema (lo hace Jaime). | guía y PDF | ☐ |
 
+- [x] **Backend (13-nov):** Lovable Cloud. La guía ya no pide cuenta de Supabase y tiene tres pasos.
+
 ## 10. Hallazgos
 - **Supabase gratis pausa los proyectos tras 1 semana de inactividad** (https://supabase.com/pricing, consultado el 5-nov). Va en la guía, y hay que recordarlo antes del Demo Day.

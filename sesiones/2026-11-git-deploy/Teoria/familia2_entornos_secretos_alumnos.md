@@ -89,7 +89,7 @@ Las variables normales pueden estar escritas en un fichero del repositorio. **Lo
 
 | Dónde | Para qué | Cómo se protege |
 |---|---|---|
-| Fichero `.env` del repositorio | Valores **públicos**, como la URL de Supabase y su clave pública | No se protege: cualquiera puede leerlo |
+| Fichero `.env` del repositorio | Valores **públicos**, como la dirección de tu base de datos y su clave pública | No se protege: cualquiera puede leerlo |
 | *Secrets* de GitHub | Que el CI (Familia 3) pueda usarlos | Cifrados; nadie los puede leer, ni siquiera tú, una vez guardados |
 | Variables de la plataforma de despliegue | Lo que necesita tu app al ejecutarse en Cloudflare | Cifradas si las guardas como secreto |
 
@@ -113,7 +113,7 @@ Tu producto tiene tres entornos:
 | **Staging** | URL de preview de cada PR, en Cloudflare | Probarlo como en producción, antes del merge |
 | **Production** | URL de tu Worker en Cloudflare | Lo que ven tus usuarios |
 
-Los tres usan **el mismo proyecto de Supabase**.
+Los tres usan **la misma base de datos**, la de Lovable Cloud.
 
 **Por qué la vista previa de Lovable no es staging:** corre en la infraestructura de Lovable, no en Cloudflare. En el ensayo de esta sesión, una app funcionaba en Lovable y daba error en Cloudflare. Solo una preview en el mismo sitio que producción lo enseña antes de salir.
 
@@ -153,7 +153,7 @@ La respuesta del CEO de Replit, Amjad Masad, fue calificarlo de "inaceptable" y 
 En esta fase, un agente como Lovable:
 
 **Hace bien:**
-- conectar tu app con Supabase y guardar los valores públicos;
+- crear tu base de datos y guardar los valores públicos;
 - listar las variables que usa tu producto, si se lo pides;
 - preparar los cambios de la base de datos y enseñarte el SQL antes de ejecutarlo;
 - avisarte si encuentra un secreto escrito en el código, si se lo pides.
@@ -186,4 +186,4 @@ En esta fase, un agente como Lovable:
 - GitHub Docs, uso de secretos en GitHub Actions: https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions
 - Supabase, gestión de entornos: https://supabase.com/docs/guides/deployment/managing-environments
 - Cloudflare Workers, versiones de previsualización: https://developers.cloudflare.com/workers/configuration/previews/
-- Lovable, integración con Supabase: https://docs.lovable.dev/integrations/supabase
+- Lovable Cloud: https://docs.lovable.dev/integrations/cloud

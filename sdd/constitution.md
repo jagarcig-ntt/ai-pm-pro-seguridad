@@ -1,6 +1,6 @@
 # Constitution · Hero Camp AI PM Pro
 
-*Versión 1.6 · 5 de noviembre de 2026 · Responsable: Jaime García*
+*Versión 1.7 · 13 de noviembre de 2026 · Responsable: Jaime García*
 
 Principios y reglas que gobiernan todo el material formativo de este repositorio.
 Ninguna spec, plan o tarea puede contradecirla. Si algo choca con ella, se cambia la constitution primero (con su propia versión y fecha), nunca se ignora.
@@ -15,7 +15,7 @@ Ninguna spec, plan o tarea puede contradecirla. Si algo choca con ella, se cambi
 | Git, Deployment y Producción | 21 nov 2026 | 10:00–14:00 (4h, Zoom) | En diseño · **prioridad** |
 | Seguridad y buenas prácticas con IA (v2) | 11 dic 2026 | 17:00–21:00 (4h) | Evoluciona directamente el material de junio |
 
-Audiencia de la promoción actual: **18 alumnos**, con una edad media de más de 40 años. La mitad son ingenieros y perfiles tecnológicos de empresas tradicionales; la otra mitad, perfiles de diseño y negocio. Cada uno desarrolla un side project individual que presenta ante un jurado en el **Demo Day (12-dic)**. Construyen con **Lovable** (plan Pro), GitHub y su propio proyecto de Supabase, y publican en Cloudflare.
+Audiencia de la promoción actual: **18 alumnos**, con una edad media de más de 40 años. La mitad son ingenieros y perfiles tecnológicos de empresas tradicionales; la otra mitad, perfiles de diseño y negocio. Cada uno desarrolla un side project individual que presenta ante un jurado en el **Demo Day (12-dic)**. Construyen con **Lovable** (plan Pro, con Lovable Cloud como backend) y GitHub, y publican en Cloudflare.
 
 Coordinación: Maribel Fernández (sesión de junio) · Gema (coordinación) · Jose (sesiones de construcción del 7, 13, 14 y 20-nov) · Fer Guirao (sesión de dudas antes del Demo Day).
 
@@ -53,7 +53,7 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 
 ## 3. Criterios técnicos
 
-1. **Stack del alumno primero.** Ejemplos, labs y demos usan el stack del curso: Lovable, GitHub, Supabase propio conectado desde Lovable, Cloudflare Workers y Claude Code. No se introduce tecnología nueva sin justificar en la spec.
+1. **Stack del alumno primero.** Ejemplos, labs y demos usan el stack del curso: Lovable con Lovable Cloud, GitHub, Cloudflare Workers y Claude Code. No se introduce tecnología nueva sin justificar en la spec.
 2. **Coste 0 € adicional.** Más allá del plan Pro de Lovable (25 €/mes, que contrata cada alumno por acuerdo con Hero Camp), todo debe funcionar en planes gratuitos. Los límites relevantes (minutos de CI, proyectos, builds) se documentan en la spec correspondiente con fecha de verificación.
 3. **Plan B probado.** Toda demo o práctica en vivo tiene una alternativa ensayada: repo de prueba, captura, informe pregenerado.
 4. **Nada de secretos reales, tampoco en pantalla.** Las clases se graban y los repos son públicos: ningún token ni clave se muestra en la sesión. Las claves de los productos trampa son falsas o están revocadas. Los secretos reales van en variables de entorno o secrets de GitHub, nunca en el repo.
@@ -116,4 +116,5 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 | 1.3 | 2026-10-15 | 1.4: junio evoluciona en su sitio hacia diciembre y lo impartido se conserva con un tag de git · 3.6: `assets/` compartido · 4: portal = `index.html` de la sesión, `descargas/` y URLs estables (SPEC-001 v2) |
 | 1.4 | 2026-10-20 | 2.6: excepción de producto de ejemplo común + herramienta genérica · 2.9: nuevo criterio de éxito de Git/Deploy (SPEC-010 v3) |
 | 1.5 | 2026-11-02 | Audiencia y 3.1: Lovable como herramienta principal y Cloudflare Workers · 2.6: se practica sobre el producto propio cuando el stack es común · 2.9: éxito de Git/Deploy = su producto en staging y producción por CI/CD (SPEC-010 v4, a partir de SPEC-018) |
+| 1.7 | 2026-11-13 | Audiencia y 3.1: el backend de los alumnos es Lovable Cloud y no un Supabase propio (validado con `prueba-cloud` el 13-nov) |
 | 1.6 | 2026-11-05 | Tras el correo de Gema: audiencia (18, perfil mixto, Demo Day), coordinación, 2.9 la preview del PR cuenta como staging, 2.6 18 productos, 3.1 Supabase propio de cada alumno conectado desde Lovable (decisión de Jaime, 5-nov), 3.2 coste 0 salvo Lovable Pro, 3.4 clases grabadas |

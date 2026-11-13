@@ -49,16 +49,16 @@ En cuanto llegue a GitHub, **empieza tu primera publicación**.
 2. **Haz lo principal de tu producto**: crear algo, guardar o enviar un formulario. Abrirla no basta: verde no significa que funcione.
 
 ### Paso 4 · Solo si tu producto tiene inicio de sesión
-Sin este paso, el enlace del correo de confirmación lleva a una página que no existe.
+Sin este paso, el enlace del correo de confirmación te lleva a la vista previa de Lovable en lugar de a tu web.
 
-1. En Supabase, abre tu proyecto y ve a **Authentication → URL Configuration**.
-2. En **Site URL**, sustituye `http://localhost:3000` por tu URL de producción y pulsa *Save changes*.
-3. En **Redirect URLs**, pulsa *Add URL* y añade estas dos direcciones:
-    - `https://<usuario>-<repo>.<tu-subdominio>.workers.dev/**`
-    - `https://*-<usuario>-<repo>.<tu-subdominio>.workers.dev/**`
-
-   La segunda sirve para las previews de tus Pull Requests.
+1. En Lovable, abre **More → Users → Settings → Advanced** y busca **Allowed URLs**.
+2. Pulsa *Add URL* y añade estas tres direcciones, con tus datos:
+    - `https://<usuario>-<repo>.<tu-subdominio>.workers.dev` (tu web, tal cual, sin barra al final);
+    - `https://<usuario>-<repo>.<tu-subdominio>.workers.dev/**`;
+    - `https://*-<usuario>-<repo>.<tu-subdominio>.workers.dev/**` (las previews de tus Pull Requests).
+3. Si en esa pantalla hay un campo **Site URL**, pon tu URL de producción.
 4. **No borres las URL de Lovable** que ya hay: son las que hacen funcionar su vista previa.
+5. Comprueba que funciona: regístrate desde tu web con un email nuevo y abre el enlace del correo.
 
 ### Si algo falla en la práctica 1
 
@@ -69,9 +69,9 @@ Sin este paso, el enlace del correo de confirmación lleva a una página que no 
 | En rojo en "5. Compilar" | El código de Lovable no compila | En Lovable, pulsa *Fix build* si aparece. Si no, avisa |
 | En rojo en "7. Publicar" | El token o el Account ID no son correctos | Revisa los permisos del token: `Account · Workers Scripts · Edit` |
 | En rojo en "9. Comprobar que la web responde" | Se ha publicado, pero la web da error | Avisa: lo vemos juntos |
-| El correo de confirmación lleva a `localhost` | Falta el paso 4 | Haz el paso 4 y regístrate de nuevo |
+| El correo de confirmación lleva a la vista previa de Lovable | Falta el paso 4 | Haz el paso 4 y regístrate de nuevo con otro email |
 
-**¿No guardaste los secretos en GitHub antes de la sesión?** Hazlo antes del paso 1, siguiendo el paso 4 de la guía de requisitos previos. **No compartas pantalla mientras pegas el token.**
+**¿No guardaste los secretos en GitHub antes de la sesión?** Hazlo antes del paso 1, siguiendo el paso 3 de la guía de requisitos previos. **No compartas pantalla mientras pegas el token.**
 
 ---
 
