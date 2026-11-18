@@ -107,7 +107,7 @@ El PR es **el punto de control** entre el trabajo en la rama y el producto. Tien
    - **¿Qué pasa si falla?** ¿Hay manejo de errores?
    - **¿Se puede apagar?** ¿Hay forma de desactivarlo sin cambiar el código?
    - **¿Toca algo que no debería?** ¿Datos, permisos, configuración?
-3. **Las comprobaciones automáticas.** Pruebas y verificaciones que se ejecutan solas en cada PR. Las veremos en la Familia 3.
+3. **Las comprobaciones automáticas.** Pruebas y verificaciones que se ejecutan solas en cada PR. Las veremos en la Familia 2.
 
 Solo cuando las tres cosas están en verde se hace el *merge*: los cambios entran en `main`.
 
@@ -116,7 +116,7 @@ Solo cuando las tres cosas están en verde se hace el *merge*: los cambios entra
 > 🎓 **Intención:** es la idea más importante del bloque y la que conecta con el caso. El PM sale sabiendo que **puede revisar un PR sin leer código**.
 > - **Error esperado:** *"Revisar un PR es leer código y yo no sé".* → Revisar es leer la descripción y hacer las tres preguntas. Si la descripción no responde, no se aprueba. Eso es criterio de producto, no de ingeniería.
 > - **Pregunta para el chat** (con un PR del demo en pantalla): "¿Qué le preguntaríais a quien ha hecho este cambio antes de aprobarlo?". Recoge 2 o 3 respuestas y conéctalas con las tres preguntas.
-> - **Anticipa:** las comprobaciones automáticas solo se mencionan aquí. El detalle va en la Familia 3; no lo abras ahora.
+> - **Anticipa:** las comprobaciones automáticas solo se mencionan aquí. El detalle va en la Familia 2; no lo abras ahora.
 
 ---
 
@@ -139,7 +139,7 @@ La demo de la sesión es **`feedback-hub`**, un proyecto real de Lovable con las
 
 Al final, tendrás **tu primer PR fusionado**.
 
-> 🎓 **En la demo enseñas** (unos 5 min; el flujo completo lo verán en F3 y lo harán en P2):
+> 🎓 **En la demo enseñas** (unos 5 min; el flujo completo lo verán en F2 y lo harán en P2):
 > 1. `main` en GitHub y la URL de producción funcionando.
 > 2. Un PR ya hecho de `lovable-sync` a `main`: la plantilla rellena, sobre todo "qué pasa si falla" y "cómo se apaga".
 > 3. El *merge* y cómo aparece también en el historial de Lovable.
@@ -179,7 +179,7 @@ En su informe, Google lo dice claramente: **si el cambio hubiera estado protegid
 > - Cuéntalo como historia, no como informe técnico. No entres en Spanner ni en *null pointers*: con "un dato vacío que el código no sabía manejar" basta.
 > - **Lo que no debes decir:** una duración exacta. Las "7 horas" solo aparecen en medios secundarios; di "varias horas".
 > - **Pregunta para cerrar:** "Si hubierais estado en ese PR como PM, ¿qué habríais preguntado?". Las respuestas que buscas son "¿qué pasa si falla?" y "¿se puede apagar?".
-> - **Puente:** el caso también enlaza con la Familia 2 (staging) y con la Familia 3 (despliegue por fases). Menciónalo en una frase y no lo desarrolles.
+> - **Puente:** el caso también enlaza con la Familia 3 (staging) y con la Familia 2 (despliegue por fases). Menciónalo en una frase y no lo desarrolles.
 
 ---
 

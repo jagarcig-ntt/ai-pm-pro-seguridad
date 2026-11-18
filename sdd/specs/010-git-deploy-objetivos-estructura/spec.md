@@ -104,8 +104,8 @@ Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía.
 - [x] **Dónde viven los datos → Lovable Cloud** (13-nov). Sustituye a la decisión del 5-nov (Supabase propio obligatorio): Jose prototipa con Lovable Cloud y el backend se queda ahí. El flujo de la sesión funciona igual, validado con `prueba-cloud` el 13-nov ([plan B](plan-b-lovable-cloud.md)). Cambian la guía, el paso del login en P1 y algunas frases.
 - [x] **¿Llegan al 21 conectados a Supabase?** No: llegan con Lovable Cloud (13-nov). Historia: (10-nov) Jose prototipa con Lovable Cloud y Gema confirma Supabase para la sesión. Pendiente de que Gema diga si la conexión a Supabase se hace antes del 21 o al empezar la sesión. Si llegan con Lovable Cloud, se activa el [plan B](plan-b-lovable-cloud.md).
 - [x] **Base de datos de staging → compartida en la sesión** (decisión de Jaime, 2-nov). Staging y producción usan **el mismo proyecto de Supabase y un único modelo de datos**. Acordado con Jose (Slack, 5-nov): separarlos va más allá de un primer MVP, así que se explica como teoría y **no se pide ni en la sesión ni en el reto**. Queda como mejora opcional para quien quiera.
-  - Se presenta como **deuda consciente**: F2 enseña que cada entorno debería tener sus datos, y en la sesión se dice explícitamente "hoy compartimos, y separarlo es el siguiente paso cuando el producto tenga usuarios reales". Es una buena lección de PM: decidir una deuda y apuntarla, no tenerla sin saberlo.
-  - **Para la teoría (SPEC-014):** añadir esa nota en F2 (formador y alumnos) cuando se ajuste a la v4.
+  - Se presenta como **deuda consciente**: F3 (entornos) enseña que cada entorno debería tener sus datos, y en la sesión se dice explícitamente "hoy compartimos, y separarlo es el siguiente paso cuando el producto tenga usuarios reales". Es una buena lección de PM: decidir una deuda y apuntarla, no tenerla sin saberlo.
+  - **Para la teoría (SPEC-014):** añadir esa nota en F3, entornos (formador y alumnos) cuando se ajuste a la v4.
 - [x] **Sesión solo con navegador** (Jaime, 5-nov): sin VS Code ni terminal. Los dos workflows se entregan para copiar y pegar con la guía; el squad (SPEC-017) pasa a ser un extra opcional para perfiles técnicos. R6, R11, la escaleta y los planes B ya están ajustados.
 - [x] **Orden al crear el Worker** (Jaime, 5-nov): workflows directamente en `main`, la primera publicación crea el Worker y `main` se protege después. En `feedback-hub` el Worker ya existía antes del primer PR, así que este orden se valida en el ensayo solo con navegador (SPEC-019, CA9).
 - [ ] **Riesgo de que el Worker no funcione a los 18** (Jaime, 5-nov). Propuesta: al ser repos públicos, compilar los 18 antes de la sesión, sin publicar nada. Hay que pedir a Gema la lista de repos.
@@ -132,12 +132,12 @@ Acordada con Gema el 17-nov y validada por Jaime. **Patrón:** teoría corta →
 | Hora | Min | Bloque | Ideas (≤3) | Jaime | El alumno | Entregable |
 |---|---|---|---|---|---|---|
 | 10:00 | 15 | **B0 Apertura** | Por qué importa · qué os lleváis · cómo trabajamos | Recuento y reglas de la sesión grabada | En el chat: ✅ repo público · ✅ token · ✅ secretos | Recuento de requisitos |
-| 10:15 | 15 | **Teoría 1 · De Lovable a producción** (F1 y F3) | `main` siempre funciona · el PR como punto de control · la receta automática | Esquemas de Git y del workflow · caso Google Cloud | Preguntas en el chat | — |
+| 10:15 | 15 | **Teoría 1 · De Lovable a producción** (F1 y F2) | `main` siempre funciona · el PR como punto de control · la receta automática | Esquemas de Git y del workflow · caso Google Cloud | Preguntas en el chat | — |
 | 10:30 | 15 | **Demo 1 en directo** | — | Publica su proyecto de demostración desde cero, como harán ellos | Miran | — |
 | 10:45 | 5 | **Pausa activa** y reparto en 3 salas de 6 | | | | |
 | 10:50 | 35 | **Salas · Práctica 1: primer despliegue** | — | En la sala principal; entra si Aida lo necesita | Los 3 prompts → Actions en verde → su URL | **Su URL de producción** |
 | 11:25 | 10 | **Pausa** | | | | |
-| 11:35 | 15 | **Teoría 2 · Entornos y secretos** (F2) | Tres entornos · `.env` público y secretos · la rama protege el código, no los datos | Esquema de entornos · caso Replit y el nuestro | Pregunta en el chat | — |
+| 11:35 | 15 | **Teoría 2 · Entornos y secretos** (F3) | Tres entornos · `.env` público y secretos · la rama protege el código, no los datos | Esquema de entornos · caso Replit y el nuestro | Pregunta en el chat | — |
 | 11:50 | 15 | **Demo 2 en directo** | — | Protege `main`, cambio en Lovable, PR, preview y merge | Miran | — |
 | 12:05 | 40 | **Salas · Práctica 2: primer cambio por PR** | — | En la sala principal; entra si Aida lo necesita | Ruleset → cambio → PR → preview → merge | **Su primer PR fusionado** |
 | 12:45 | 10 | **Pausa** | | | | |

@@ -25,10 +25,10 @@ Cuatro familias, cada una con su guía para alumnos y su versión profunda para 
 
 | Familia | Bloque | Alumnos | Formador | Caso real |
 |---|---|---|---|---|
-| F1 · Git profesional | T1 · 20 min | [familia1_git_profesional_alumnos.md](Teoria/familia1_git_profesional_alumnos.md) | [profundo](Teoria/Formador/familia1_git_profesional_profundo.md) | Google Cloud, jun-2025 |
-| F2 · Entornos y secretos | T2 · 15 min | [familia2_entornos_secretos_alumnos.md](Teoria/familia2_entornos_secretos_alumnos.md) | [profundo](Teoria/Formador/familia2_entornos_secretos_profundo.md) | Replit / SaaStr, jul-2025 |
-| F3 · CI/CD y deploy | T3 · 15 min | [familia3_cicd_deploy_alumnos.md](Teoria/familia3_cicd_deploy_alumnos.md) | [profundo](Teoria/Formador/familia3_cicd_deploy_profundo.md) | CrowdStrike, jul-2024 |
-| F4 · Go-live y recuperación | T4 · 15 min | [familia4_golive_recuperacion_alumnos.md](Teoria/familia4_golive_recuperacion_alumnos.md) | [profundo](Teoria/Formador/familia4_golive_recuperacion_profundo.md) | Sonos, may-2024 |
+| F1 · Git profesional | Teoría 1 · 10:15 | [familia1_git_profesional_alumnos.md](Teoria/familia1_git_profesional_alumnos.md) | [profundo](Teoria/Formador/familia1_git_profesional_profundo.md) | Google Cloud, jun-2025 |
+| F2 · CI/CD y deploy | Teoría 1 · 10:15 | [familia2_cicd_deploy_alumnos.md](Teoria/familia2_cicd_deploy_alumnos.md) | [profundo](Teoria/Formador/familia2_cicd_deploy_profundo.md) | CrowdStrike, jul-2024 |
+| F3 · Entornos y secretos | Teoría 2 · 11:35 | [familia3_entornos_secretos_alumnos.md](Teoria/familia3_entornos_secretos_alumnos.md) | [profundo](Teoria/Formador/familia3_entornos_secretos_profundo.md) | Replit / SaaStr, jul-2025 |
+| F4 · Go-live y recuperación | Teoría 3 · 12:55 | [familia4_golive_recuperacion_alumnos.md](Teoria/familia4_golive_recuperacion_alumnos.md) | [profundo](Teoria/Formador/familia4_golive_recuperacion_profundo.md) | Sonos, may-2024 |
 
 Términos comunes: [glosario.md](Teoria/glosario.md), base de la chuleta de Git (SPEC-015).
 

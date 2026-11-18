@@ -16,40 +16,40 @@ Los términos de las cuatro familias, con la misma definición que en cada guía
 | **Rama** (F1) | Una copia de trabajo paralela del producto para hacer un cambio sin tocar `main`. Un propósito por rama y vida corta. |
 | **Commit** (F1) | Una foto del producto con una explicación de qué cambió. Bueno si dice qué y por qué, hace una sola cosa y deja el producto funcionando. |
 | **Pull Request (PR)** (F1) | La petición de que los cambios de una rama entren en `main`. Es el punto de control: descripción, revisión, checks y preview. |
-| **Merge** (F1, F3) | Integrar los cambios de un PR en `main`. Con despliegue continuo, hacer merge es decidir salir a producción. |
+| **Merge** (F1, F2) | Integrar los cambios de un PR en `main`. Con despliegue continuo, hacer merge es decidir salir a producción. |
 | **Rama conectada** (F1) | La rama donde Lovable guarda tus cambios. Se elige en *Settings → Git*. |
 | **`lovable-sync`** (F1) | La rama que usa Lovable cuando `main` está protegida. Tus cambios esperan ahí hasta que abres un PR. No se borra. |
 | **Merge commit** (F1) | La forma de hacer merge que necesita Lovable. Nunca uses *Squash* ni *Rebase*. |
 | **Revert** (F4) | Un commit nuevo que deshace un cambio anterior y pasa por el flujo normal (PR, checks, despliegue). |
 
-## Entornos y configuración
-
-| Término | Qué es |
-|---|---|
-| **Entorno** (F2) | Cada sitio donde vive una copia del producto funcionando. Mismo producto, distinto escenario. |
-| **Development** (F2) | El entorno para construir y experimentar. En tu producto, la vista previa de Lovable. |
-| **Staging** (F2) | El ensayo general: igual que producción. A producción solo llega lo que ha pasado por staging. En tu producto, la preview de cada PR. En muchas empresas se llama **PRE** (preproducción). |
-| **Production** (F2) | El entorno que usan los clientes, con datos reales. También se le llama **PRO**. |
-| **Preview** (F2, F3) | Una versión del producto publicada automáticamente para un PR o una rama, en su propia URL. En los planes gratuitos hace de staging. |
-| **Variable de entorno** (F2) | Un ajuste que el producto lee al arrancar y que cambia según el entorno: base de datos, funcionalidades encendidas, servicios externos. |
-| **Feature flag** (F1, F2, F4) | Un interruptor (normalmente una variable de entorno) para encender o apagar una funcionalidad sin cambiar el código. |
-| **Secreto** (F2) | Una variable de entorno que no puede ver cualquiera: contraseñas y claves. Vive en la plataforma, nunca en el código. |
-| **`.env`** (F2) | El fichero de variables. Lovable lo sube al repositorio, así que solo puede llevar valores públicos. |
-| **`.gitignore`** (F2) | La lista de ficheros que Git ignora. |
-
 ## Automatización y despliegue
 
 | Término | Qué es |
 |---|---|
-| **CI (integración continua)** (F3) | El control de calidad automático: cada cambio propuesto se construye y se prueba solo. |
-| **CD (despliegue continuo)** (F3) | La publicación automática: un cambio aprobado llega a staging y a producción sin pasos manuales. |
-| **Workflow** (F3) | El fichero con la receta automática (cuándo, qué pasos, qué necesita). En GitHub vive en `.github/workflows/`. |
-| **GitHub Actions** (F3) | El sistema de GitHub que ejecuta los workflows. |
-| **Check** (F3) | El resultado de un workflow sobre un PR: ✅ verde o ❌ rojo. Un PR en rojo no se integra. |
-| **Ruleset** (F1, F3) | Las reglas del repositorio: por ejemplo, que `main` solo acepte cambios vía PR aprobado y con checks en verde. |
-| **Despliegue (deploy)** (F3) | Publicar una versión del producto en un entorno. |
-| **Worker** (F3) | La forma en que tu app se ejecuta en Cloudflare. Se crea sola en la primera publicación. |
-| **Despliegue por fases** (F3) | Llevar un cambio por etapas (preview → staging → producción) en lugar de a todos de golpe. |
+| **CI (integración continua)** (F2) | El control de calidad automático: cada cambio propuesto se construye y se prueba solo. |
+| **CD (despliegue continuo)** (F2) | La publicación automática: un cambio aprobado llega a staging y a producción sin pasos manuales. |
+| **Workflow** (F2) | El fichero con la receta automática (cuándo, qué pasos, qué necesita). En GitHub vive en `.github/workflows/`. |
+| **GitHub Actions** (F2) | El sistema de GitHub que ejecuta los workflows. |
+| **Check** (F2) | El resultado de un workflow sobre un PR: ✅ verde o ❌ rojo. Un PR en rojo no se integra. |
+| **Ruleset** (F1, F2) | Las reglas del repositorio: por ejemplo, que `main` solo acepte cambios vía PR aprobado y con checks en verde. |
+| **Despliegue (deploy)** (F2) | Publicar una versión del producto en un entorno. |
+| **Worker** (F2) | La forma en que tu app se ejecuta en Cloudflare. Se crea sola en la primera publicación. |
+| **Despliegue por fases** (F2) | Llevar un cambio por etapas (preview → staging → producción) en lugar de a todos de golpe. |
+
+## Entornos y configuración
+
+| Término | Qué es |
+|---|---|
+| **Entorno** (F3) | Cada sitio donde vive una copia del producto funcionando. Mismo producto, distinto escenario. |
+| **Development** (F3) | El entorno para construir y experimentar. En tu producto, la vista previa de Lovable. |
+| **Staging** (F3) | El ensayo general: igual que producción. A producción solo llega lo que ha pasado por staging. En tu producto, la preview de cada PR. En muchas empresas se llama **PRE** (preproducción). |
+| **Production** (F3) | El entorno que usan los clientes, con datos reales. También se le llama **PRO**. |
+| **Preview** (F3, F2) | Una versión del producto publicada automáticamente para un PR o una rama, en su propia URL. En los planes gratuitos hace de staging. |
+| **Variable de entorno** (F3) | Un ajuste que el producto lee al arrancar y que cambia según el entorno: base de datos, funcionalidades encendidas, servicios externos. |
+| **Feature flag** (F1, F3, F4) | Un interruptor (normalmente una variable de entorno) para encender o apagar una funcionalidad sin cambiar el código. |
+| **Secreto** (F3) | Una variable de entorno que no puede ver cualquiera: contraseñas y claves. Vive en la plataforma, nunca en el código. |
+| **`.env`** (F3) | El fichero de variables. Lovable lo sube al repositorio, así que solo puede llevar valores públicos. |
+| **`.gitignore`** (F3) | La lista de ficheros que Git ignora. |
 
 ## Salida a producción y recuperación
 

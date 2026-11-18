@@ -7,12 +7,12 @@
 | Hora | Min | Bloque | Lo esencial |
 |---|---|---|---|
 | 10:00 | 15 | B0 Apertura | Recuento: repo público · token · secretos · salas, Aida y 3 reglas |
-| 10:15 | 15 | Teoría 1 · F1 y F3 | `main` siempre funciona · PR y Google Cloud · la receta |
+| 10:15 | 15 | Teoría 1 · F1 y F2 | `main` siempre funciona · PR y Google Cloud · la receta |
 | 10:30 | 15 | Demo 1 en directo | Conectar · secretos sin compartir · 3 prompts · URL y login |
 | 10:45 | 5 | Pausa activa y salas | 3 salas de 6 · difusión con el enlace del portal |
 | 10:50 | 35 | Salas · Práctica 1 | ✅ URL de producción · login: *Allowed URLs* de Lovable |
 | 11:25 | 10 | Pausa | Errores repetidos, con Aida · recuento de URL |
-| 11:35 | 15 | Teoría 2 · F2 | Tres entornos · `.env` público · Replit y "lee antes de *Allow*" |
+| 11:35 | 15 | Teoría 2 · F3 | Tres entornos · `.env` público · Replit y "lee antes de *Allow*" |
 | 11:50 | 15 | Demo 2 en directo | Trampas: *Active*, rama, solo Merge · aviso naranja · PR y merge |
 | 12:05 | 40 | Salas · Práctica 2 | ✅ enlace del PR · ✅ cambio en producción |
 | 12:45 | 10 | Pausa | Quién necesita el rescate |

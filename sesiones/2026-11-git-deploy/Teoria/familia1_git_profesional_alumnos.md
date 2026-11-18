@@ -87,7 +87,7 @@ El PR es **el punto de control** entre el trabajo en la rama y el producto. Tien
    - **¿Qué pasa si falla?** ¿Hay manejo de errores?
    - **¿Se puede apagar?** ¿Hay forma de desactivarlo sin cambiar el código?
    - **¿Toca algo que no debería?** ¿Datos, permisos, configuración?
-3. **Las comprobaciones automáticas.** Pruebas y verificaciones que se ejecutan solas en cada PR. Las veremos en la Familia 3.
+3. **Las comprobaciones automáticas.** Pruebas y verificaciones que se ejecutan solas en cada PR. Las veremos en la Familia 2.
 
 Solo cuando las tres cosas están en verde se hace el *merge*: los cambios entran en `main`.
 

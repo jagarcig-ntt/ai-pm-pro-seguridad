@@ -81,7 +81,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 **Tú:**
 > "Buenos días a todos. Gracias por venir un sábado por la mañana.
 >
-> Rápidamente, quién soy: llevo más de una década en banca y tecnología. 8 años en NTT DATA, creciendo de engineer a technical lead a AI lead.
+> Rápidamente, quién soy: llevo más de una década en banca y tecnología. 8 años en NTT DATA, creciendo de engineer a technical lead a Project Manager.
 >
 > Hasta hoy habéis construido vuestro producto con Lovable. Funciona, lo veis en la vista previa. Hoy damos el paso que hay entre 'lo tengo en Lovable' y 'está en Internet, con un proceso profesional detrás'.
 >
@@ -126,7 +126,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 ## TEORÍA 1 · DE LOVABLE A PRODUCCIÓN · 10:15–10:30 (15 min)
 
-*Teoría: `Teoria/familia1_git_profesional_alumnos.md` y `familia3_cicd_deploy_alumnos.md` · Ideas: 1) `main` siempre funciona; 2) el Pull Request es el punto de control; 3) la receta que publica sola.*
+*Teoría: `Teoria/familia1_git_profesional_alumnos.md` y `familia2_cicd_deploy_alumnos.md` · Ideas: 1) `main` siempre funciona; 2) el Pull Request es el punto de control; 3) la receta que publica sola.*
 
 **ANTES DE ENTRAR**
 
@@ -166,7 +166,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 ### 10:26 — Idea 3 · La receta que publica sola (4 min)
 
-**ACCIÓN:** portal, tarjeta de la familia 3, esquema del workflow.
+**ACCIÓN:** portal, tarjeta de la familia 2, esquema del workflow.
 
 **Tú:**
 > "Y lo que lo une todo es esta receta. En cada Pull Request y en cada merge, una máquina de GitHub instala, pasa las pruebas, compila, publica y comprueba que la web responde. Si algo falla, no se publica. Si es un Pull Request, publica una **preview** para que lo probéis antes. Si es un merge, **producción**.
@@ -225,7 +225,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 ### 10:40 — La publicación, la URL y el login (5 min)
 
 **ACCIÓN** (práctica 1, pasos 2 a 4):
-1. [ ] GitHub → pestaña **Actions** → **Desplegar** en marcha. Mientras tanto, explica los pasos con el esquema de F3.
+1. [ ] GitHub → pestaña **Actions** → **Desplegar** en marcha. Mientras tanto, explica los pasos con el esquema de F2.
 2. [ ] Círculo verde ✅ → clic en **Desplegar** → en el resumen, **Publicado en:** → copia la URL.
 3. [ ] Abre la URL. "Verde no significa que funcione": **regístrate** con el email de reserva.
 4. [ ] Antes de abrir el correo: Lovable → **More → Users → Settings → Advanced → Allowed URLs** → *Add URL*, y añade las tres direcciones con los botones *Copiar* del portal:
@@ -307,7 +307,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 ## TEORÍA 2 · ENTORNOS Y SECRETOS · 11:35–11:50 (15 min)
 
-*Teoría: `Teoria/familia2_entornos_secretos_alumnos.md` · Ideas: 1) tres entornos; 2) el `.env` público y los secretos; 3) la rama protege el código, no los datos.*
+*Teoría: `Teoria/familia3_entornos_secretos_alumnos.md` · Ideas: 1) tres entornos; 2) el `.env` público y los secretos; 3) la rama protege el código, no los datos.*
 
 **ANTES DE ENTRAR**
 
@@ -329,7 +329,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 ### 11:38 — Idea 1 · Tres entornos (4 min)
 
-**ACCIÓN:** portal, tarjeta de la familia 2, esquema de entornos.
+**ACCIÓN:** portal, tarjeta de la familia 3, esquema de entornos.
 
 **Tú:**
 > "Vuestro producto tiene tres entornos: la **vista previa de Lovable**, donde construís; la **preview de cada Pull Request**, la vista previa del borrador antes de publicarlo; y **producción**, vuestra web.

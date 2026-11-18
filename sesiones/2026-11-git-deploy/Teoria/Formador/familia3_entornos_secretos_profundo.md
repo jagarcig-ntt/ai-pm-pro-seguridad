@@ -1,7 +1,9 @@
-# Familia 2 — Entornos y secretos: desarrollo, staging y producción
+# Familia 3 — Entornos y secretos: desarrollo, staging y producción
 
-**Guía de referencia para el alumno**
+**Guía del formador** · versión profunda
 Sesión "Git, Deployment y Producción" · AI PM Pro · The Hero Camp · 21 de noviembre de 2026
+
+> Es la misma guía que reciben los alumnos, más los bloques marcados con 🎓, que son solo para ti. Bloque T2 de la escaleta (SPEC-010 v4.1): **15 min**, con unos 4 de demo. El mapa de entornos pasa al kit. Este documento es de referencia: qué se cuenta exactamente lo fija el guion (SPEC-015).
 
 ---
 
@@ -17,6 +19,7 @@ Sesión "Git, Deployment y Producción" · AI PM Pro · The Hero Camp · 21 de n
 8. [El factor agente IA](#8-el-factor-agente-ia)
 9. [Lo que el PM se lleva](#9-lo-que-el-pm-se-lleva)
 10. [Fuentes](#10-fuentes)
+11. [🎓 Mapa para specs posteriores](#11--mapa-para-specs-posteriores)
 
 ---
 
@@ -31,6 +34,9 @@ Un ajuste que el producto lee al arrancar y que cambia según dónde está: a qu
 **Secreto.**
 Una variable de entorno que no puede ver cualquiera: la contraseña de la base de datos, la clave del servicio de pagos o la de la API de IA. Si alguien la tiene, puede actuar en nombre de tu producto.
 
+> 🎓 **Intención:** tres palabras y ninguna más. Si alguien pregunta por *Docker*, *Kubernetes* o *servidores*, apárcalo: "eso es el cómo; hoy vemos el qué".
+> - **Analogía alternativa:** un restaurante. Development es la cocina de pruebas, staging la cata con el equipo y production el comedor con clientes. La receta (el código) es la misma; cambian los ingredientes de verdad (la configuración).
+
 ---
 
 ## 2. Para qué le importa a un PM
@@ -40,6 +46,8 @@ Si construyes con Lovable o con un agente, es fácil que hoy tengas **un solo pr
 Separar entornos es **separar el sitio donde se prueba del sitio donde se cobra**. Le da al equipo (y a los agentes) un lugar donde equivocarse sin consecuencias, y a ti un lugar donde ver el cambio funcionando antes de que lo vean tus usuarios.
 
 Como PM no vas a configurar los entornos, pero sí decides cosas que dependen de ellos: cuándo algo está "validado en staging", qué datos se pueden usar para probar y quién tiene acceso a producción.
+
+> 🎓 **Pregunta para el chat:** "¿Cuántas bases de datos tiene hoy vuestro producto? ¿Una, dos, no lo sé?". Las respuestas "una" y "no lo sé" son la entrada perfecta a la idea 1. No juzgues: es lo normal con Lovable.
 
 ---
 
@@ -62,6 +70,12 @@ Tres reglas que se derivan de la tabla:
 
 > En los planes gratuitos, "staging" suele ser una **versión de previsualización**: cada rama o cada PR se publica automáticamente en una URL propia para probarla. El concepto es el mismo, un sitio para validar antes de producción, aunque no se llame "staging".
 
+> 🎓 **Errores de comprensión esperados**
+> - *"Staging es para empresas grandes".* → Staging es "el sitio donde miras antes de que lo vean tus clientes". En los planes gratuitos es la preview de cada PR y no cuesta nada.
+> - *"Lovable ya es mi staging".* → Lovable es development: corre en otro sitio. El 5-nov, una app funcionaba en Lovable y daba 500 en Cloudflare (`sdd/specs/019-git-deploy-producto-lovable/notas.md`).
+> - *"Si staging es igual que producción, ¿para qué dos?".* → Igual en código y configuración; distinto en datos y en quién lo usa. Esa es toda la gracia.
+> - *"Puedo usar los datos de producción en staging para que sea realista".* → Esa es una decisión de producto y legal, no técnica. Lánzala como pregunta y deja el detalle para el 11 de diciembre.
+
 ---
 
 ## 4. Idea 2 · La misma app, distinta configuración
@@ -81,6 +95,12 @@ Esto tiene dos consecuencias:
 
 **Lo que esto cambia para el PM:** "¿está activado en producción?" se convierte en una pregunta con respuesta concreta, y encender una funcionalidad puede ser una decisión de producto, no un despliegue.
 
+> 🎓 **Puente con la Familia 1:** señala `FEATURE_NUEVO_CHECKOUT` en la tabla y recuerda el caso Google: "esto es el interruptor que les faltó". Es el momento en que F1 y F3 encajan; dedícale 30 segundos.
+>
+> **Error esperado:** *"Entonces hago una versión del código para cada entorno".* → No: una sola versión, tres configuraciones. Si el código cambia entre staging y producción, staging deja de servir.
+>
+> **Error esperado (visto al preparar el demo, 22-oct):** crear variables con sufijo por entorno (`SUPABASE_URL_PROD`, `SUPABASE_URL_STG`) en una misma lista. Así el código tiene que saber en qué entorno está para elegir cuál leer. Lo correcto es **el mismo nombre en todos los entornos, con distinto valor**.
+
 ---
 
 ## 5. Idea 3 · Los secretos viven en la plataforma, no en el código
@@ -90,7 +110,7 @@ Las variables normales pueden estar escritas en un fichero del repositorio. **Lo
 | Dónde | Para qué | Cómo se protege |
 |---|---|---|
 | Fichero `.env` del repositorio | Valores **públicos**, como la dirección de tu base de datos y su clave pública | No se protege: cualquiera puede leerlo |
-| *Secrets* de GitHub | Que el CI (Familia 3) pueda usarlos | Cifrados; nadie los puede leer, ni siquiera tú, una vez guardados |
+| *Secrets* de GitHub | Que el CI (Familia 2) pueda usarlos | Cifrados; nadie los puede leer, ni siquiera tú, una vez guardados |
 | Variables de la plataforma de despliegue | Lo que necesita tu app al ejecutarse en Cloudflare | Cifradas si las guardas como secreto |
 
 Lovable sube un `.env` a tu repositorio. Es aceptable **solo porque lleva valores públicos**. La regla es sencilla: **en el `.env` del repo, solo lo que podrías publicar en tu web**. La clave pública de Supabase empieza por `sb_publishable_`. La secreta empieza por `sb_secret_` y nunca va ahí.
@@ -100,6 +120,14 @@ Tu repositorio es público y las clases se graban: no enseñes nunca un secreto 
 Cuando separes entornos, cada uno tendrá **sus propios secretos**: si algo se filtra desde staging, producción no se ve afectada.
 
 > Qué pasa cuando un secreto se filtra, y cómo detectarlo, es el tema de la sesión de **Seguridad del 11 de diciembre**. Hoy nos quedamos en dónde vive cada cosa.
+
+> 🎓 **Delimitación con el 11-dic (CA7):** aquí solo se trata **dónde vive** cada secreto. Si preguntan "¿y si ya subí una clave a GitHub?", la respuesta es: "trátala como comprometida y cámbiala. El porqué y el cómo detectarlo lo vemos el 11 de diciembre". No abras esa conversación aquí: es otra sesión entera.
+>
+> **En la demo:** enseña el `.env` de `feedback-hub` y la pantalla de *Secrets* de GitHub (sin revelar valores). Que vean que ni el propio dueño puede leer un secreto una vez guardado.
+>
+> **Si preguntan si la clave pública es segura:** se puede publicar porque quien protege los datos son las políticas de acceso (RLS) de la base de datos. Si una tabla permite leer a cualquiera, cualquiera puede leerla. El detalle va al 11-dic.
+>
+> **Caso propio (preparando el demo anterior, 22-oct-2026):** al configurar Cloudflare se copió la clave **secreta** de Supabase en lugar de la **pública**, y la app la estaba enviando a cualquier navegador. Se detectó comprobando solo el prefijo de la clave, se revocó y se cambió por la pública. Cuéntalo en una frase: es el error más fácil del mundo y la razón de que existan las pruebas. El detalle va al 11-dic.
 
 ---
 
@@ -131,6 +159,16 @@ Los tres usan **la misma base de datos**, la de Lovable Cloud.
 | ¿Qué secretos necesita y dónde viven? | | | |
 | ¿Quién tiene acceso? | | | |
 
+> 🎓 **En la demo enseñas** (unos 4 min, con capturas donde haya secretos):
+> 1. Producción y una preview, una al lado de la otra.
+> 2. El `.env` de `feedback-hub`: "esto se puede leer porque es público".
+> 3. La lista de *secrets* de GitHub, sin revelar valores. **Sesión grabada:** nada de abrir la pantalla de tokens.
+> 4. Avisa en voz alta: "staging y producción comparten datos; lo que probéis en la preview llega a la tabla real".
+>
+> **Plan B:** capturas de los tres entornos y de la lista de *secrets*.
+>
+> **Si preguntan por qué no separamos los datos:** va más allá de un primer MVP (acordado con Jose, 5-nov). Se puede hacer más adelante, pasando a un Supabase propio con dos proyectos.
+
 ---
 
 ## 7. Caso real: Replit y SaaStr, julio de 2025
@@ -144,7 +182,14 @@ La respuesta del CEO de Replit, Amjad Masad, fue calificarlo de "inaceptable" y 
 - **separación automática entre la base de datos de desarrollo y la de producción**, y
 - un modo de solo planificación, en el que el agente no puede tocar nada.
 
-**La lección para la Familia 2:** el agente se equivocó, pero el problema de fondo es que **desde donde trabajaba se podía tocar producción**. Una instrucción ("no toques nada") no es una barrera. Un entorno separado sí lo es. Es justo lo que Replit añadió después.
+**La lección para la Familia 3:** el agente se equivocó, pero el problema de fondo es que **desde donde trabajaba se podía tocar producción**. Una instrucción ("no toques nada") no es una barrera. Un entorno separado sí lo es. Es justo lo que Replit añadió después.
+
+> 🎓 **Cómo contarlo (unos 3 min):**
+> - Es el caso más cercano a ellos: un agente de *vibe coding*, como los que usan.
+> - **Cuida el tono:** no es "la IA es peligrosa", es "una instrucción no es una barrera".
+> - **Matiz que debes respetar:** el relato viene de Lemkin. Di "según el propio Lemkin" en lo del agente que "mintió".
+> - **Pregunta para el chat:** "¿Vuestro agente puede llegar hoy a la base de datos de producción?". Con Lovable, la respuesta es sí. Por eso importa leer el SQL antes de aprobarlo.
+> - **Reserva** (por si conocen el caso o preguntan por uno clásico): GitLab, enero de 2017. Borraron la base de datos de producción creyendo que era la secundaria, ninguno de sus cinco sistemas de copias funcionaba y les salvó una instantánea hecha para staging. Fuente: post-mortem oficial (ver `sdd/specs/014-git-deploy-teoria-familias/casos.md`).
 
 ---
 
@@ -163,6 +208,8 @@ En esta fase, un agente como Lovable:
 - **los valores de los secretos.** No pegues claves reales en el chat de un agente: se configuran directamente en la plataforma;
 - **qué datos se usan para probar.** Copiar datos reales de clientes a un entorno de pruebas "para que sea realista" es una decisión de producto y legal, no técnica.
 
+> 🎓 **Conecta con Replit:** "aquí tampoco hay una barrera entre el agente y vuestros datos. Vuestra barrera es leer el SQL antes de pulsar *Allow*".
+
 ---
 
 ## 9. Lo que el PM se lleva
@@ -170,6 +217,8 @@ En esta fase, un agente como Lovable:
 1. **Probar y cobrar no se hacen en el mismo sitio.** Si hoy tus entornos comparten datos, que sea una decisión consciente.
 2. **El código es el mismo; la configuración cambia.** Y una variable de entorno puede ser un interruptor de producto.
 3. **Los secretos viven en la plataforma, nunca en el código**, y lees lo que el agente va a cambiar en tu base de datos antes de aprobarlo.
+
+> 🎓 **Cierre del bloque:** pide una palabra en el chat: "¿qué vais a mirar el lunes en vuestro producto?". Si sale "base de datos" o "acceso del agente", el bloque ha funcionado.
 
 ---
 
@@ -187,3 +236,18 @@ En esta fase, un agente como Lovable:
 - Supabase, gestión de entornos: https://supabase.com/docs/guides/deployment/managing-environments
 - Cloudflare Workers, versiones de previsualización: https://developers.cloudflare.com/workers/configuration/previews/
 - Lovable Cloud: https://docs.lovable.dev/integrations/cloud
+
+---
+
+## 11. 🎓 Mapa para specs posteriores
+
+Lo que el producto demo y el squad deben permitir para que esta familia se pueda enseñar como está escrita.
+
+| Concepto | Qué debe tener el producto demo (SPEC-019) | Fase del squad (SPEC-017) |
+|---|---|---|
+| Tres entornos | Vista previa de Lovable, preview del PR y producción, con **una base de datos compartida** (deuda consciente) | Avisa de que staging y producción comparten base de datos |
+| Misma app, distinta configuración | Valores públicos en el `.env`, que el workflow pasa al Worker | Lista las variables que usa el código y dónde configurar cada una |
+| Feature flag | Solo concepto: `feedback-hub` no tiene *feature flag* | Señala funcionalidades nuevas sin flag |
+| Secretos fuera del código | `.env` solo con valores públicos y *Secrets* de GitHub configurados | Avisa si encuentra secretos en el código o en el `.env` |
+| Agente y datos reales | Lovable pide aprobar cada cambio de base de datos | El agente no pide ni usa secretos de producción |
+| Plan B | Capturas de los tres entornos y de la lista de *secrets* | — |

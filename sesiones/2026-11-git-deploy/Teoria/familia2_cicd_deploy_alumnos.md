@@ -1,4 +1,4 @@
-# Familia 3 — CI/CD y deploy: la receta automática hasta producción
+# Familia 2 — CI/CD y deploy: la receta automática hasta producción
 
 **Guía de referencia para el alumno**
 Sesión "Git, Deployment y Producción" · AI PM Pro · The Hero Camp · 21 de noviembre de 2026
@@ -51,7 +51,7 @@ Un workflow tiene tres partes que se pueden leer sin saber programar:
 
 1. **Cuándo** se ejecuta: "cuando se abre un PR", "cuando se hace merge a `main`".
 2. **Qué pasos** sigue: instalar, construir, probar, desplegar.
-3. **Qué necesita**: los secretos de la Familia 2, que lee de GitHub sin que nadie los vea.
+3. **Qué necesita**: los secretos (Familia 3), que lee de GitHub sin que nadie los vea.
 
 Así se ve uno, simplificado. **No hay que memorizarlo**, solo saber leerlo en voz alta:
 
@@ -79,7 +79,7 @@ Leído en castellano: *"Cada vez que alguien abra un PR, en una máquina limpia,
 Cuando abres un PR, ocurren dos cosas automáticamente:
 
 - **Las comprobaciones (checks).** El workflow se ejecuta y el PR muestra el resultado: ✅ verde o ❌ rojo. Con las reglas del repositorio bien configuradas, **un PR en rojo no se puede integrar**. No depende de que alguien se acuerde de mirar.
-- **La previsualización (preview).** La plataforma de despliegue publica ese PR en una URL propia, conectada al entorno de staging de la Familia 2. Puedes abrirla, probar el cambio como lo vería un usuario y compartirla con quien tenga que validarlo.
+- **La previsualización (preview).** La plataforma de despliegue publica ese PR en una URL propia, conectada al entorno de staging de la Familia 3. Puedes abrirla, probar el cambio como lo vería un usuario y compartirla con quien tenga que validarlo.
 
 Con esto, el PR de la Familia 1 queda completo: **descripción + revisión + checks en verde + preview probada**.
 
@@ -153,7 +153,7 @@ Entre los cambios que CrowdStrike anunció en su análisis oficial:
 - más validaciones y pruebas antes de publicar;
 - que los clientes puedan decidir cuándo reciben las actualizaciones.
 
-**La lección para la Familia 3:** automatizar el despliegue es bueno, pero **automatizar un despliegue sin fases convierte un error en un error para todos a la vez**. La receta tiene que incluir comprobaciones y avanzar por etapas.
+**La lección para la Familia 2:** automatizar el despliegue es bueno, pero **automatizar un despliegue sin fases convierte un error en un error para todos a la vez**. La receta tiene que incluir comprobaciones y avanzar por etapas.
 
 ---
 

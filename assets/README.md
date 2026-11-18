@@ -34,7 +34,7 @@ Un portal vive en `sesiones/AAAA-MM-tema/index.html`, dos niveles por debajo de 
 | Fondos | `--bg` `#0A0E1A` · `--bg-deeper` · `--bg-raised` · `--bg-card` |
 | Texto | `--ink` `#F5F3EE` · `--ink-dim` · `--ink-faint` · `--divider` |
 | Acento | `--accent` `#DCEE3C` · `--accent-glow` · `--accent-soft` |
-| Colores de familia | `--blue` (F2) · `--coral` (F1) · `--jade` (F3) · `--violet` (F4) |
+| Colores de familia | `--blue` · `--coral` · `--jade` · `--violet`, uno por familia. Git/Deploy: F1 coral, F2 jade, F3 blue, F4 violet (renumeradas el 18-nov) |
 | Notas del orador | `--notes` · `--notes-soft` · `--notes-border` |
 | Tipografía | `--serif` (Fraunces) · `--sans` (Manrope) · `--mono` (JetBrains Mono) |
 | Layout | `--max-w` 1180px · `--gutter` · `--header-h` 68px · `--ease` |

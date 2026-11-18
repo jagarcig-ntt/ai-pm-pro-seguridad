@@ -54,12 +54,12 @@ Antes de salir, alguien recorre una lista y responde **sí o no** a cada punto. 
 
 | # | Pregunta | Familia |
 |---|---|---|
-| 1 | ¿Lo que sale ha pasado por un PR revisado, con checks en verde? | F1, F3 |
-| 2 | ¿Se ha probado en staging o en la preview, con el flujo principal de usuario de principio a fin? | F2, F3 |
-| 3 | ¿Están configuradas en producción todas las variables y secretos que necesita? | F2 |
-| 4 | ¿Cambia algo en la base de datos? Si es así, ¿se puede deshacer? | F2, F4 |
+| 1 | ¿Lo que sale ha pasado por un PR revisado, con checks en verde? | F1, F2 |
+| 2 | ¿Se ha probado en staging o en la preview, con el flujo principal de usuario de principio a fin? | F3, F2 |
+| 3 | ¿Están configuradas en producción todas las variables y secretos que necesita? | F3 |
+| 4 | ¿Cambia algo en la base de datos? Si es así, ¿se puede deshacer? | F3, F4 |
 | 5 | ¿Sabemos cómo volver atrás y cuánto se tarda? | F4 |
-| 6 | ¿Hay forma de apagarlo sin cambiar el código (*feature flag*)? | F1, F2 |
+| 6 | ¿Hay forma de apagarlo sin cambiar el código (*feature flag*)? | F1, F3 |
 | 7 | ¿Alguien estará mirando las señales durante la primera hora tras salir? | F4 |
 | 8 | ¿Saben soporte y los usuarios afectados lo que cambia? | F4 |
 
