@@ -4,8 +4,8 @@
 
 Dos prácticas sobre **tu propio producto**, solo con el navegador:
 
-- **Práctica 1 (11:15):** tu primer despliegue. Al terminar, tu producto está en Internet.
-- **Práctica 2 (12:10):** tu primer cambio por Pull Request, con `main` protegida.
+- **Práctica 1 (10:30, primero en directo y después en salas):** tu primer despliegue. Al terminar, tu producto está en Internet.
+- **Práctica 2 (11:50, primero en directo y después en salas):** tu primer cambio por Pull Request, con `main` protegida.
 
 En los pasos verás dos datos tuyos:
 

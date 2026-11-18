@@ -6,17 +6,18 @@
 
 | Hora | Min | Bloque | Lo esencial |
 |---|---|---|---|
-| 10:00 | 15 | B0 Apertura | Recuento en el chat: repo público · token · secretos |
-| 10:15 | 20 | T1 · F1 Git | Historial de "Changes" · descripción del PR #6 · Google Cloud |
-| 10:35 | 15 | T2 · F2 Entornos | Lovable no es staging (el 500) · `.env` público · Replit y "lee el SQL" |
-| 10:50 | 15 | T3 · F3 CI/CD | Workflow en voz alta · PR #4 verde, #6 bloqueado · CrowdStrike |
-| 11:05 | 10 | Pausa | Preguntar al ayudante quién no tiene secretos |
-| 11:15 | 45 | P1 Primer despliegue | ✅ "ficheros" · ✅ URL de producción · login: URL en *Allowed URLs* de Lovable |
-| 12:00 | 10 | Pausa | Recuento de URL en pantalla |
-| 12:10 | 45 | P2 Gestión de cambios | Trampas: *Active*, rama, solo Merge · ✅ "Active" · ✅ enlace del PR · ✅ "producción" |
-| 12:55 | 15 | T4 · F4 Go-live | Checklist · simulacro F4 · Sonos |
-| 13:10 | 5 | Pausa activa | |
-| 13:15 | 25 | Rescate | Revert de F4 · `staging` para quien acabó |
+| 10:00 | 15 | B0 Apertura | Recuento: repo público · token · secretos · salas, Aida y 3 reglas |
+| 10:15 | 15 | Teoría 1 · F1 y F3 | `main` siempre funciona · PR y Google Cloud · la receta |
+| 10:30 | 15 | Demo 1 en directo | Conectar · secretos sin compartir · 3 prompts · URL y login |
+| 10:45 | 5 | Pausa activa y salas | 3 salas de 6 · difusión con el enlace del portal |
+| 10:50 | 35 | Salas · Práctica 1 | ✅ URL de producción · login: *Allowed URLs* de Lovable |
+| 11:25 | 10 | Pausa | Errores repetidos, con Aida · recuento de URL |
+| 11:35 | 15 | Teoría 2 · F2 | Tres entornos · `.env` público · Replit y "lee antes de *Allow*" |
+| 11:50 | 15 | Demo 2 en directo | Trampas: *Active*, rama, solo Merge · aviso naranja · PR y merge |
+| 12:05 | 40 | Salas · Práctica 2 | ✅ enlace del PR · ✅ cambio en producción |
+| 12:45 | 10 | Pausa | Quién necesita el rescate |
+| 12:55 | 20 | Teoría 3 · F4 | Checklist · simulacro F4 · rollback, revert y Sonos |
+| 13:15 | 25 | Salas · Rescate | Revert de F4 · `staging` para quien acabó |
 | 13:40 | 15 | B5 Cierre | Ronda de URL · kit · puente al 11-dic |
 | 13:55 | 5 | Colchón | |
 
@@ -49,7 +50,10 @@
 - **Merge con *Squash* o *Rebase*:** Lovable se desincroniza. Solo *Create a merge commit*.
 
 ## Si vas tarde
-Recorta Sonos a una frase y el simulacro de F4 a las capturas. **No toques P1 ni P2.**
+Recorta Sonos a una frase y el simulacro de F4 a las capturas. **No toques las salas.**
+
+## Salas
+3 salas de 6. Aida pasa por las tres; tú en la principal, y entras si una sala se atasca entera. Su guía: `Guia/guia_asistente.md`.
 
 ## Sesión grabada
 Ningún token en pantalla. Si un alumno lo enseña, que deje de compartir y lo revoque después.

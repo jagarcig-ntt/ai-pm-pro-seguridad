@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | borrador **v4.1** (5-nov) · la v3 aprobada el 20-oct queda sustituida |
+| Estado | borrador **v5** (17-nov) · la v3 aprobada el 20-oct queda sustituida |
 | Sesión | 2026-11 Git/Deploy (sábado 21-nov · 10:00–14:00 · Zoom) |
 | Fecha límite | 2026-11-06 (antes de la reunión con Gema y el entrenador) |
 | Depende de | SPEC-018 (flujo Lovable validado) · SPEC-019 (producto Lovable de la sesión) · SPEC-014 (teoría) · constitution v1.6 |
@@ -125,26 +125,27 @@ Quien no lo consiga en la sesión lo cierra en el reto posterior, con la guía.
 
 ---
 
-## Anexo A · Escaleta v4.1 (5-nov)
+## Anexo A · Escaleta v5 (17-nov)
 
-Validada por Jaime el 5-nov; se afina con el portal y el guion. **Idea central:** todos en producción a las 12:00, un solo ciclo de PR y lo arriesgado primero. El mapa de entornos y el ejercicio de checklist pasan al kit.
+Acordada con Gema el 17-nov y validada por Jaime. **Patrón:** teoría corta → Jaime lo hace en directo → los alumnos lo hacen en **3 salas de 6**. **Aida**, la asistente, pasa por las salas resolviendo dudas, y Jaime se queda en la sala principal y entra si hay un atasco grande. **El nivel técnico de la clase es bajo:** teoría mínima y siempre "primero lo ves, luego lo haces". Para las demos, Jaime usa un proyecto de Lovable nuevo, con Lovable Cloud y sin conectar a GitHub.
 
 | Hora | Min | Bloque | Ideas (≤3) | Jaime | El alumno | Entregable |
 |---|---|---|---|---|---|---|
-| 10:00 | 15 | **B0 Apertura.** De "lo tengo en Lovable" a "está en producción" | Por qué importa · el mapa del día · qué os lleváis | Enseña el resultado final (un producto de Lovable con preview y producción) | En el chat: ✅ repo público · ✅ Supabase conectado · ✅ secretos guardados en GitHub | Recuento de requisitos |
-| 10:15 | 20 | **T1 · F1 Git profesional** | Rama · commit con sentido · PR como punto de control | Demo en `feedback-hub`: historial de commits de Lovable ("Changes") frente a uno bueno; PR con plantilla | Preguntas en el chat (2) | — |
-| 10:35 | 15 | **T2 · F2 Entornos y secretos** | Tres entornos · misma app, distinta configuración · secretos en la plataforma | Demo con capturas: secretos ya guardados. Avisa de que staging y producción comparten datos | Pregunta en el chat | — |
-| 10:50 | 15 | **T3 · F3 CI/CD** | Workflow = receta · cada PR se comprueba y previsualiza · merge = producción | Demo con `feedback-hub`: PR → check → preview → merge → producción | Preguntas en el chat | — |
-| 11:05 | 10 | **Pausa 1** | | | | |
-| 11:15 | 45 | **P1 · Primer despliegue** | — | Guía paso a paso en pantalla | Pedir a Lovable los 2 workflows y la plantilla de PR → la Action publica y crea el Worker → comprobar la web | **Su URL de producción** |
-| 12:00 | 10 | **Pausa 2** | | | | |
-| 12:10 | 45 | **P2 · Gestión de cambios** | — | Guía en pantalla; desatasca alumno a alumno | Proteger `main` → cambio en Lovable (rama o `lovable-sync`) → **PR → check → preview → merge** → producción actualizada | **Su URL de preview** y su primer PR fusionado |
-| 12:55 | 15 | **T4 · F4 Go-live y volver atrás** | Checklist · rollback / revert · vigilar tras salir | Demo: rollback en Cloudflare. Los rezagados siguen con P2 | Preguntas en el chat | — |
-| 13:10 | 5 | **Pausa activa** | | | | |
-| 13:15 | 25 | **Rescate** | — | Alumno a alumno | Quien va atrasado cierra P1 y P2; quien acabó crea la rama `staging` o repasa la checklist | Sus 2 URL |
-| 13:40 | 15 | **B5 Cierre** | Ronda de URL · reto · puente al 11-dic | Explica el reto y la fecha | Pega sus 2 URL en el chat | Kit descargado |
+| 10:00 | 15 | **B0 Apertura** | Por qué importa · qué os lleváis · cómo trabajamos | Recuento y reglas de la sesión grabada | En el chat: ✅ repo público · ✅ token · ✅ secretos | Recuento de requisitos |
+| 10:15 | 15 | **Teoría 1 · De Lovable a producción** (F1 y F3) | `main` siempre funciona · el PR como punto de control · la receta automática | Esquemas de Git y del workflow · caso Google Cloud | Preguntas en el chat | — |
+| 10:30 | 15 | **Demo 1 en directo** | — | Publica su proyecto de demostración desde cero, como harán ellos | Miran | — |
+| 10:45 | 5 | **Pausa activa** y reparto en 3 salas de 6 | | | | |
+| 10:50 | 35 | **Salas · Práctica 1: primer despliegue** | — | En la sala principal; entra si Aida lo necesita | Los 3 prompts → Actions en verde → su URL | **Su URL de producción** |
+| 11:25 | 10 | **Pausa** | | | | |
+| 11:35 | 15 | **Teoría 2 · Entornos y secretos** (F2) | Tres entornos · `.env` público y secretos · la rama protege el código, no los datos | Esquema de entornos · caso Replit y el nuestro | Pregunta en el chat | — |
+| 11:50 | 15 | **Demo 2 en directo** | — | Protege `main`, cambio en Lovable, PR, preview y merge | Miran | — |
+| 12:05 | 40 | **Salas · Práctica 2: primer cambio por PR** | — | En la sala principal; entra si Aida lo necesita | Ruleset → cambio → PR → preview → merge | **Su primer PR fusionado** |
+| 12:45 | 10 | **Pausa** | | | | |
+| 12:55 | 20 | **Teoría 3 · Salir y volver atrás** (F4) | Checklist · rollback y revert · verde no significa que funcione | Simulacro en `feedback-hub` · caso Sonos | "¿Qué hacemos?" en el chat | — |
+| 13:15 | 25 | **Salas · Rescate** | — | Ayuda donde haga falta | Cerrar lo pendiente; quien acabó, `staging` o checklist | Sus 2 URL |
+| 13:40 | 15 | **B5 Cierre** | Ronda de URL · kit · puente al 11-dic | Explica el kit | Pega sus 2 URL en el chat | Kit descargado |
 | 13:55 | 5 | **Colchón** | | | | |
-| | **240** | | | | Práctica: 115 min (**≈48 %**). Teoría: 65 min. Margen: el rescate de 25 min y 5 de colchón (12,5 %). Tramos sin pausa: 65 / 45 / 60 / 45 min | |
+| | **240** | | | | Práctica en salas: 100 min (**≈42 %**), más 30 min de demos. Teoría: 50 min. Margen: el rescate de 25 min y 5 de colchón. Tramos sin pausa real: 85 min (con la pausa activa de 5 min a los 45) / 70 / 65 min | |
 
 **Plan B transversal:** quien no tenga requisitos previos o se atasque sigue P1 y P2 sobre su **copia de `feedback-hub`** (SPEC-019) y lleva su producto en el reto.
 

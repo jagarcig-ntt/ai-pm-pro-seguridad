@@ -29,13 +29,14 @@ Sesión "Git, Deployment y Producción" · AI PM Pro · The Hero Camp · 21 de n
 La carpeta de tu producto con memoria. Guarda cada versión de cada fichero, quién la cambió, cuándo y por qué. En GitHub, además, es el sitio donde el equipo (personas y agentes) se coordina.
 
 **Rama.**
-Una copia de trabajo paralela del producto. Puedes cambiar lo que quieras en ella sin tocar la versión que funciona, que vive en la rama principal (`main`). Es como trabajar sobre un borrador del documento en lugar de editar el original.
+Una copia de trabajo paralela del producto. Puedes cambiar lo que quieras en ella sin tocar la versión que funciona, que vive en la rama principal (`main`). Es como escribir el borrador de un artículo para el blog de tu empresa sin tocar el que ya está publicado.
 
 **Pull Request (PR).**
 La petición formal de "quiero que mis cambios entren en `main`". No es un trámite: es el momento en el que alguien revisa qué cambia, por qué y qué podría salir mal, antes de que llegue al producto.
 
 > 🎓 **Intención:** que nadie se quede fuera por el vocabulario. Son 2 minutos, en cámara y sin portal.
-> - **Si la analogía del borrador no engancha:** "Google Docs con sugerencias. La rama es el modo sugerencia, el PR es pedir que acepten tus sugerencias y `main` es el documento final".
+> - **La analogía del blog sirve para toda la sesión:** `main` es el artículo publicado, la rama el borrador, el PR enviarlo a revisión, los checks el corrector automático, la preview el botón *Vista previa*, el merge *Publicar* y el rollback volver a la versión anterior.
+> - **Si la analogía del blog no engancha:** "Google Docs con sugerencias. La rama es el modo sugerencia, el PR es pedir que acepten tus sugerencias y `main` es el documento final".
 > - **Pregunta para el chat:** "Del 1 al 5, ¿cuánto habéis tocado Git directamente, sin que Lovable o Cursor lo hagan por vosotros?". Te da el nivel real de la sala para calibrar el resto del bloque.
 
 ---
