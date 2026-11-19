@@ -26,7 +26,7 @@ Sesión "Git, Deployment y Producción" · AI PM Pro · The Hero Camp · 21 de n
 La carpeta de tu producto con memoria. Guarda cada versión de cada fichero, quién la cambió, cuándo y por qué. En GitHub, además, es el sitio donde el equipo (personas y agentes) se coordina.
 
 **Rama.**
-Una copia de trabajo paralela del producto. Puedes cambiar lo que quieras en ella sin tocar la versión que funciona, que vive en la rama principal (`main`). Es como escribir el borrador de un artículo para el blog de tu empresa sin tocar el que ya está publicado.
+Una copia de trabajo paralela del producto. Puedes cambiar lo que quieras en ella sin tocar la versión que funciona, que vive en la rama principal (`main`).
 
 **Pull Request (PR).**
 La petición formal de "quiero que mis cambios entren en `main`". No es un trámite: es el momento en el que alguien revisa qué cambia, por qué y qué podría salir mal, antes de que llegue al producto.

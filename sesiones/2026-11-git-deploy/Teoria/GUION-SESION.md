@@ -133,28 +133,26 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 **ANTES DE ENTRAR · F1 Git**
 
-| Término | Analogía para un PM |
+| Término | Qué es |
 |---|---|
-| Repositorio | El blog de la empresa con todo su historial: cada versión de cada artículo |
-| Commit | Guardar una versión con una nota de qué cambió |
-| Rama | El borrador, aparte del artículo que ya está publicado |
+| Repositorio | La carpeta de tu producto en GitHub: todo el código y el historial de cada cambio |
+| Commit | Un cambio guardado, con fecha, autor y una nota de qué cambió |
+| Rama | Una línea de trabajo paralela. `main` es la principal, la que se publica |
 
 ### 10:15 — Antes de entrar · Git (3 min)
 
 **ACCIÓN:** portal, tarjeta de la familia 1.
 
 **Tú:**
-> "Cuatro palabras que vais a oír toda la mañana. Pensad en el blog de vuestra empresa.
+> "Cuatro palabras que vais a oír toda la mañana.
 >
-> El **repositorio** es el blog entero, con su historial: cada versión de cada artículo, quién la hizo y cuándo. Vuestro producto ya tiene uno en GitHub.
+> El **repositorio** es la carpeta de vuestro producto en GitHub: todo el código y el historial de cada cambio. Ya lo tenéis.
 >
-> Un **commit** es guardar una versión con una nota de qué ha cambiado. Cada vez que pedís algo a Lovable, Lovable hace un commit.
+> Un **commit** es un cambio guardado, con fecha, autor y una nota de qué cambió. Cada vez que pedís algo a Lovable, Lovable hace un commit.
 >
-> Lo publicado, lo que leen los clientes, es `main`. Y una **rama** es un borrador aparte: escribís sin tocar lo publicado.
+> Una **rama** es una línea de trabajo paralela. La principal se llama `main`, y es la que se publica. En las demás se puede cambiar sin tocarla.
 >
 > La cuarta palabra, el **Pull Request**, os la cuento en un minuto."
-
-🎓 Si la analogía no engancha, la de reserva: un Google Docs en modo sugerencia.
 
 ### 10:18 — Idea 1 · Push y pull: cómo viajan los cambios (3 min)
 
@@ -165,7 +163,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 >
 > **Push** significa empujar: Lovable empuja cada commit a GitHub, solo, cada vez que pedís un cambio. **Pull** significa tirar: Lovable trae lo que ha cambiado en GitHub, por ejemplo cuando aprobáis un cambio allí. Lovable hace las dos cosas por vosotros. Por eso, en sus ajustes, veis *In sync with GitHub*: los dos sitios tienen lo mismo.
 >
-> Y de ahí viene el nombre **Pull Request**: es pedir a quien cuida el producto que *tire* de vuestro borrador y lo incorpore a lo publicado."
+> Y de ahí viene el nombre **Pull Request**: es la petición de que *tiren* de vuestra rama y unan sus cambios a `main`, revisándolos antes."
 
 ### 10:21 — Idea 2 · `main` siempre funciona (2 min)
 
@@ -190,25 +188,25 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 **ANTES DE ENTRAR · F2 CI/CD**
 
-| Término | Analogía para un PM |
+| Término | Qué es |
 |---|---|
-| CI/CD | El corrector automático que revisa (CI) y publica (CD) cada cambio |
-| Workflow | La receta escrita de ese proceso |
-| Entorno | Cada sitio donde vive una copia del producto: el ensayo y el estreno |
+| CI/CD | La comprobación automática (CI) y la publicación automática (CD) de cada cambio |
+| Workflow | El fichero con los pasos que GitHub ejecuta solo en cada cambio |
+| Entorno | Cada sitio donde está publicada una copia de tu producto: la preview y producción |
 
 ### 10:26 — F2 · Del Pull Request a producción: la receta (2 min)
 
 **ACCIÓN:** portal, tarjeta de la familia 2, esquema del workflow.
 
 **Tú:**
-> "Si el Pull Request es la puerta, el **workflow** es quien revisa en la puerta. Es una receta escrita que GitHub ejecuta sola en cada Pull Request y en cada merge: instala, pasa las pruebas, compila, publica y comprueba que la web responde. Revisar es la parte de **CI**; publicar, la de **CD**. Si algo falla, no se publica."
+> "Si el Pull Request es la puerta, el **workflow** es quien revisa en la puerta. Es un fichero con los pasos que GitHub ejecuta solo en cada Pull Request y en cada merge: instala, pasa las pruebas, compila, publica y comprueba que la web responde. Revisar es la parte de **CI**; publicar, la de **CD**. Si algo falla, no se publica."
 
 ### 10:28 — Dos entornos, y dónde pasa cada cosa (2 min)
 
 **ACCIÓN:** portal, tarjeta de la familia 2, tabla "Dónde pasa cada cosa".
 
 **Tú:**
-> "La receta publica en dos sitios. Si es un Pull Request, en una **preview**: el ensayo, una copia aparte para probar. Si es un merge, en **producción**: el estreno, vuestra web. A las 11:35 vemos los entornos con calma.
+> "La receta publica en dos sitios. Si es un Pull Request, en una **preview**: una copia aparte para probar el cambio. Si es un merge, en **producción**: vuestra web. A las 11:35 vemos los entornos con calma.
 >
 > Y para que no os perdáis, dónde pasa cada cosa:"
 
@@ -380,7 +378,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 **ACCIÓN:** portal, tarjeta de la familia 3, esquema de entornos.
 
 **Tú:**
-> "Esta mañana os adelanté dos entornos: la preview y producción. En realidad, vuestro producto tiene tres: la **vista previa de Lovable**, donde construís; la **preview de cada Pull Request**, la vista previa del borrador antes de publicarlo; y **producción**, vuestra web.
+> "Esta mañana os adelanté dos entornos: la preview y producción. En realidad, vuestro producto tiene tres: la **vista previa de Lovable**, donde construís; la **preview de cada Pull Request**, donde probáis el cambio antes de aprobarlo; y **producción**, vuestra web.
 >
 > ¿Por qué la vista previa de Lovable no basta? Porque corre en otro sitio. Preparando esta sesión, una app funcionaba perfecta en Lovable y daba error en Cloudflare. Solo una preview en el mismo sitio que producción lo enseña antes de salir.
 >
@@ -536,7 +534,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 **ACCIÓN:** portal, tarjeta de la familia 4, esquema de rollback y revert.
 
 **Tú:**
-> "El rollback es volver a la versión anterior del artículo, y ha recuperado el servicio en minutos. Pero `main` sigue teniendo el cambio malo: el próximo merge volvería a publicarlo. Por eso después va el **revert**, con este botón del Pull Request.
+> "El rollback vuelve a publicar la versión anterior, y ha recuperado el servicio en minutos. Pero `main` sigue teniendo el cambio malo: el próximo merge volvería a publicarlo. Por eso después va el **revert**, con este botón del Pull Request.
 >
 > Y no todo se puede deshacer: un cambio en la base de datos o un dato ya enviado a vuestros usuarios no vuelven con un botón. Por eso el plan de vuelta atrás se piensa **antes** de salir."
 
