@@ -72,9 +72,9 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 ## B0 · APERTURA · 10:00–10:15 (15 min)
 
-*Ideas: 1) de "lo tengo en Lovable" a "está en producción"; 2) lo que os lleváis; 3) cómo vamos a trabajar.*
+*Orden: quién soy → qué os lleváis y el plan del día → cómo vamos a trabajar → ¿venís preparados? Después, directos a la teoría.*
 
-### 10:00 — Saludo y para qué (3 min)
+### 10:00 — Saludo y quién soy (3 min)
 
 **En cámara, sin compartir pantalla.**
 
@@ -83,20 +83,37 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 >
 > Rápidamente, quién soy: llevo más de una década en banca y tecnología. 8 años en NTT DATA, creciendo de engineer a technical lead a Project Manager.
 >
-> Hasta hoy habéis construido vuestro producto con Lovable. Funciona, lo veis en la vista previa. Hoy damos el paso que hay entre 'lo tengo en Lovable' y 'está en Internet, con un proceso profesional detrás'.
->
-> No es una sesión de ingenieros. Es la sesión en la que decidís **qué entra en vuestro producto, quién lo revisa y cómo se vuelve atrás** si algo sale mal. Y no hace falta instalar nada: todo se hace desde el navegador."
+> Hasta hoy habéis construido vuestro producto con Lovable. Funciona, lo veis en la vista previa. Hoy damos el paso que hay entre 'lo tengo en Lovable' y 'está en Internet, con un proceso profesional detrás'. No es una sesión de ingenieros, y no hace falta instalar nada: todo se hace desde el navegador."
 
-### 10:03 — Qué os lleváis (3 min)
+### 10:03 — Qué os lleváis y el plan del día (4 min)
 
-**ACCIÓN:** comparte pantalla. Abre la producción de `feedback-hub` y su pestaña *Actions*.
+**ACCIÓN:** comparte pantalla. Abre la producción de `feedback-hub` y su pestaña *Actions*. Después, el portal en la sección "El día".
 
 **Tú:**
-> "Esto es lo que vais a tener hoy, cada uno con su producto: una web en Internet, en vuestra propia cuenta de Cloudflare, y una máquina que comprueba cada cambio y lo publica sola cuando lo aprobáis.
+> "Esto es lo que vais a tener hoy, cada uno con su producto: una web en Internet, en vuestra propia cuenta de Cloudflare, y una máquina que comprueba cada cambio y lo publica sola cuando lo aprobáis. Y os lleváis la guía paso a paso y un kit con una checklist para decidir si algo está listo para salir.
 >
-> Y os lleváis la guía paso a paso y un kit con una checklist para decidir si algo está listo para salir."
+> El plan, en tres rondas:
+> 1. **Cómo llega un cambio de Lovable a producción.** Al terminar, vuestra web publicada.
+> 2. **Entornos y secretos.** Al terminar, vuestro primer cambio entrado por Pull Request.
+> 3. **Salir y volver atrás.** Y después, un rato de rescate para que nadie se vaya sin su web.
+>
+> Cerramos a las 13:40, con pausas entre ronda y ronda."
 
-### 10:06 — ¿Venís preparados? (4 min)
+### 10:07 — Cómo vamos a trabajar (4 min)
+
+**ACCIÓN:** portal, sección "El día".
+
+**Tú:**
+> "Las tres rondas son iguales: os cuento una idea corta, **lo hago yo delante de vosotros** y después **lo hacéis vosotros en salas de seis**.
+>
+> En las salas os acompaña **Aida**: pasará por las tres resolviendo dudas. Yo estaré en la sala principal, y si algo se complica, entro.
+>
+> Tres reglas:
+> 1. **La sesión se graba y vuestros repos son públicos.** Ningún token ni ninguna clave en pantalla ni en el chat. Si tenéis que pegar uno, dejad de compartir pantalla.
+> 2. **En las salas, todo está en el portal:** cada paso tiene un botón para copiar lo que hay que pegar.
+> 3. **Si os atascáis, decidlo pronto.** Al final hay tiempo para que nadie se vaya sin su web."
+
+### 10:11 — ¿Venís preparados? (4 min)
 
 **Tú:**
 > "Escribid en el chat, en un solo mensaje, cuáles de estas tres tenéis:
@@ -108,70 +125,101 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 - **Le falta el repo público:** lo hará en su sala, al empezar (paso 1 de la guía de requisitos).
 - **Le falta el token o los secretos:** lo hará en su sala, al empezar la práctica 1, sin compartir pantalla. Aida le acompaña.
 
-### 10:10 — Cómo vamos a trabajar (5 min)
-
-**ACCIÓN:** portal, sección "El día".
-
-**Tú:**
-> "Vamos a hacerlo tres veces igual: os cuento una idea corta, **lo hago yo delante de vosotros** y después **lo hacéis vosotros en salas de seis**.
->
-> En las salas os acompaña **Aida**: pasará por las tres resolviendo dudas. Yo estaré en la sala principal, y si algo se complica, entro.
->
-> Tres reglas:
-> 1. **La sesión se graba y vuestros repos son públicos.** Ningún token ni ninguna clave en pantalla ni en el chat. Si tenéis que pegar uno, dejad de compartir pantalla.
-> 2. **En las salas, todo está en el portal:** cada paso tiene un botón para copiar lo que hay que pegar.
-> 3. **Si os atascáis, decidlo pronto.** Al final hay tiempo para que nadie se vaya sin su web."
-
 ---
 
 ## TEORÍA 1 · DE LOVABLE A PRODUCCIÓN · 10:15–10:30 (15 min)
 
-*Teoría: `Teoria/familia1_git_profesional_alumnos.md` y `familia2_cicd_deploy_alumnos.md` · Ideas: 1) `main` siempre funciona; 2) el Pull Request es el punto de control; 3) la receta que publica sola.*
+*Teoría: `Teoria/familia1_git_profesional_alumnos.md` y `familia2_cicd_deploy_alumnos.md` · Dos familias, cada una con sus tres términos y sus tres ideas. **F1 · Git:** push y pull, `main` siempre funciona, el Pull Request. **F2 · CI/CD:** la receta, dos entornos (preview y producción) y dónde pasa cada cosa. Sin casos reales: están en el portal, en un desplegable.*
 
-**ANTES DE ENTRAR**
+**ANTES DE ENTRAR · F1 Git**
 
 | Término | Analogía para un PM |
 |---|---|
-| Rama | El borrador del artículo, aparte del que ya está publicado |
-| Pull Request | Enviar el borrador a revisión antes de publicarlo |
-| Workflow | El sistema que, al aprobarlo, lo revisa, enseña la vista previa y lo publica |
+| Repositorio | El blog de la empresa con todo su historial: cada versión de cada artículo |
+| Commit | Guardar una versión con una nota de qué cambió |
+| Rama | El borrador, aparte del artículo que ya está publicado |
 
-### 10:15 — Antes de entrar (2 min)
+### 10:15 — Antes de entrar · Git (3 min)
+
+**ACCIÓN:** portal, tarjeta de la familia 1.
 
 **Tú:**
-> "Tres palabras. Pensad en publicar un artículo en el blog de vuestra empresa. No editáis el que ya está publicado, el que leen los clientes: eso es `main`. Escribís un **borrador** aparte: eso es una **rama**. Antes de publicarlo, lo enviáis a revisión: eso es un **Pull Request**. Y el **workflow** es el sistema que, al aprobarlo, lo revisa, os enseña la vista previa y lo publica solo."
+> "Cuatro palabras que vais a oír toda la mañana. Pensad en el blog de vuestra empresa.
+>
+> El **repositorio** es el blog entero, con su historial: cada versión de cada artículo, quién la hizo y cuándo. Vuestro producto ya tiene uno en GitHub.
+>
+> Un **commit** es guardar una versión con una nota de qué ha cambiado. Cada vez que pedís algo a Lovable, Lovable hace un commit.
+>
+> Lo publicado, lo que leen los clientes, es `main`. Y una **rama** es un borrador aparte: escribís sin tocar lo publicado.
+>
+> La cuarta palabra, el **Pull Request**, os la cuento en un minuto."
 
 🎓 Si la analogía no engancha, la de reserva: un Google Docs en modo sugerencia.
 
-### 10:17 — Idea 1 · `main` siempre funciona (4 min)
+### 10:18 — Idea 1 · Push y pull: cómo viajan los cambios (3 min)
 
-**ACCIÓN:** portal, tarjeta de la familia 1, esquema "Así fluye cada cambio".
+**ACCIÓN:** portal, esquema de la familia 1, franja de arriba: Lovable ⇄ GitHub → Cloudflare.
+
+**Tú:**
+> "Vuestro código vive en dos sitios: **Lovable**, donde lo construís, y **GitHub**, donde está el repositorio.
+>
+> **Push** significa empujar: Lovable empuja cada commit a GitHub, solo, cada vez que pedís un cambio. **Pull** significa tirar: Lovable trae lo que ha cambiado en GitHub, por ejemplo cuando aprobáis un cambio allí. Lovable hace las dos cosas por vosotros. Por eso, en sus ajustes, veis *In sync with GitHub*: los dos sitios tienen lo mismo.
+>
+> Y de ahí viene el nombre **Pull Request**: es pedir a quien cuida el producto que *tire* de vuestro borrador y lo incorpore a lo publicado."
+
+### 10:21 — Idea 2 · `main` siempre funciona (2 min)
+
+**ACCIÓN:** portal, esquema "Así fluye cada cambio".
 
 **Tú:**
 > "La regla es sencilla: **`main` siempre funciona**, porque es lo que ven vuestros usuarios. Todo cambio se hace aparte.
 >
-> Con Lovable pasa algo bonito: cuando protejamos `main`, Lovable no podrá escribir ahí, así que guardará vuestros cambios solo en una rama que se llama `lovable-sync`. No falla ni pierde nada: espera a que vosotros decidáis."
+> Cuando protejamos `main`, Lovable no podrá escribir ahí, así que guardará vuestros cambios en una rama que se llama `lovable-sync`. No falla ni pierde nada: espera a que vosotros decidáis."
 
-### 10:21 — Idea 2 · El Pull Request, y Google Cloud (5 min)
+### 10:23 — Idea 3 · El Pull Request, el punto de control (3 min)
 
 **Tú:**
 > "El Pull Request es el punto de control entre 'lo he cambiado' y 'lo ven mis usuarios'. Tiene una plantilla con dos preguntas que importan a un PM: **¿qué pasa si falla?** y **¿cómo se apaga?** No hace falta leer código para hacerlas.
 >
-> Junio de 2025: Google añade una funcionalidad nueva a un servicio interno de Google Cloud. No manejaba bien los errores ni tenía un interruptor para apagarla. Un dato vacío la activó y el servicio se cayó en todo el mundo durante varias horas. Su propio informe dice que, con un interruptor, se habría detectado antes."
+> Y fijaos en una cosa: en el Pull Request vais a **ver vuestro cambio funcionando antes de que llegue a vuestros usuarios**, en una copia aparte de la web. A eso se le llama un **entorno**, y ahora os cuento de dónde sale."
 
 **Tú:**
-> "En el chat: ¿qué habríais preguntado en ese Pull Request?"
+> "En el chat: ¿qué os gustaría saber antes de aprobar un cambio en vuestro producto?"
 
-🎓 Buscas "¿qué pasa si falla?" y "¿se puede apagar?". **No digas una duración exacta.**
+🎓 Buscas "¿qué pasa si falla?", "¿se puede apagar?" y "¿lo puedo probar antes?". La última te lleva a la familia 2.
 
-### 10:26 — Idea 3 · La receta que publica sola (4 min)
+**ANTES DE ENTRAR · F2 CI/CD**
+
+| Término | Analogía para un PM |
+|---|---|
+| CI/CD | El corrector automático que revisa (CI) y publica (CD) cada cambio |
+| Workflow | La receta escrita de ese proceso |
+| Entorno | Cada sitio donde vive una copia del producto: el ensayo y el estreno |
+
+### 10:26 — F2 · Del Pull Request a producción: la receta (2 min)
 
 **ACCIÓN:** portal, tarjeta de la familia 2, esquema del workflow.
 
 **Tú:**
-> "Y lo que lo une todo es esta receta. En cada Pull Request y en cada merge, una máquina de GitHub instala, pasa las pruebas, compila, publica y comprueba que la web responde. Si algo falla, no se publica. Si es un Pull Request, publica una **preview** para que lo probéis antes. Si es un merge, **producción**.
+> "Si el Pull Request es la puerta, el **workflow** es quien revisa en la puerta. Es una receta escrita que GitHub ejecuta sola en cada Pull Request y en cada merge: instala, pasa las pruebas, compila, publica y comprueba que la web responde. Revisar es la parte de **CI**; publicar, la de **CD**. Si algo falla, no se publica."
+
+### 10:28 — Dos entornos, y dónde pasa cada cosa (2 min)
+
+**ACCIÓN:** portal, tarjeta de la familia 2, tabla "Dónde pasa cada cosa".
+
+**Tú:**
+> "La receta publica en dos sitios. Si es un Pull Request, en una **preview**: el ensayo, una copia aparte para probar. Si es un merge, en **producción**: el estreno, vuestra web. A las 11:35 vemos los entornos con calma.
 >
-> Esa receta es lo que vais a pedirle a Lovable dentro de cinco minutos. Os lo enseño."
+> Y para que no os perdáis, dónde pasa cada cosa:"
+
+| Dónde | Qué pasa | Quién lo hace |
+|---|---|---|
+| **Lovable** | Pedís el cambio. Lovable hace el commit, el push a GitHub y el pull de vuelta | Vosotros pedís; Lovable lo hace |
+| **GitHub** | El repositorio, las ramas, el Pull Request, los checks del workflow, el merge y los secretos | Vosotros abrís el PR y decidís el merge; el workflow comprueba |
+| **Cloudflare** | Donde vive la web: la preview de cada Pull Request y producción | El workflow publica, solo |
+
+**Tú:**
+> "Esa receta es lo que vais a pedirle a Lovable ahora mismo. Os lo enseño."
 
 ---
 
@@ -332,7 +380,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 **ACCIÓN:** portal, tarjeta de la familia 3, esquema de entornos.
 
 **Tú:**
-> "Vuestro producto tiene tres entornos: la **vista previa de Lovable**, donde construís; la **preview de cada Pull Request**, la vista previa del borrador antes de publicarlo; y **producción**, vuestra web.
+> "Esta mañana os adelanté dos entornos: la preview y producción. En realidad, vuestro producto tiene tres: la **vista previa de Lovable**, donde construís; la **preview de cada Pull Request**, la vista previa del borrador antes de publicarlo; y **producción**, vuestra web.
 >
 > ¿Por qué la vista previa de Lovable no basta? Porque corre en otro sitio. Preparando esta sesión, una app funcionaba perfecta en Lovable y daba error en Cloudflare. Solo una preview en el mismo sitio que producción lo enseña antes de salir.
 >
@@ -345,14 +393,17 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 **Tú:**
 > "Lovable sube este fichero a vuestro repositorio público. ¿Problema? No, **porque solo lleva valores públicos**. La regla: en el `.env`, solo lo que podríais publicar en vuestra web. Los secretos de verdad, como el token de Cloudflare, viven aquí, donde nadie puede leerlos."
 
-### 11:45 — Idea 3 · Replit, y el nuestro (5 min)
+### 11:45 — Idea 3 · La rama protege el código, no los datos (5 min)
 
 **Tú:**
-> "Julio de 2025. Jason Lemkin, fundador de SaaStr, construía una app con el agente de IA de Replit. En plena congelación de código, el agente borró la base de datos de producción. Según el propio Lemkin, le dijo que no se podía recuperar. No era cierto. **Una instrucción no es una barrera.**
+> "Nos pasó preparando esta sesión: pedí a Lovable que añadiera login. Al aprobar su cambio, modificó los permisos de la base de datos en ese mismo momento, antes de ningún Pull Request, y la web publicada se cayó.
 >
-> Y el nuestro: preparando esta sesión pedí a Lovable que añadiera login. Al aprobar su cambio, modificó los permisos de la base de datos en ese mismo momento, antes de ningún Pull Request, y la web publicada se cayó. **La rama protege el código, no los datos.** Antes de pulsar *Allow* en Lovable, leed qué va a cambiar."
+> **La rama protege el código, no los datos.** Los cambios de base de datos se aplican cuando pulsáis *Allow* en Lovable. Antes de pulsarlo, leed qué va a cambiar."
 
-🎓 **Cuida el tono:** no es "la IA es peligrosa", es "una instrucción no es una barrera".
+**Tú:**
+> "En el chat: ¿qué buscaríais en ese aviso antes de pulsar *Allow*?"
+
+🎓 Buscas "si borra algo" y "si cambia quién puede ver qué". **Cuida el tono:** no es "la IA es peligrosa", es "una instrucción no es una barrera".
 
 ---
 
@@ -480,16 +531,19 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 **Plan B:** capturas del ensayo del 9-nov.
 
-### 13:07 — Idea 2 · Rollback y revert, y Sonos (6 min)
+### 13:07 — Idea 2 · Rollback y revert (6 min)
 
 **ACCIÓN:** portal, tarjeta de la familia 4, esquema de rollback y revert.
 
 **Tú:**
 > "El rollback es volver a la versión anterior del artículo, y ha recuperado el servicio en minutos. Pero `main` sigue teniendo el cambio malo: el próximo merge volvería a publicarlo. Por eso después va el **revert**, con este botón del Pull Request.
 >
-> Y no todo se puede deshacer. Mayo de 2024: Sonos lanza su app rediseñada sin funciones que la gente usaba a diario. Intentaron volver a la anterior y no pudieron. Según la compañía, arreglarla costó entre 20 y 30 millones de dólares. Su CEO: 'nuestra ejecución, **mi ejecución**, se quedó corta'."
+> Y no todo se puede deshacer: un cambio en la base de datos o un dato ya enviado a vuestros usuarios no vuelven con un botón. Por eso el plan de vuelta atrás se piensa **antes** de salir."
 
-**ACCIÓN:** silencio de dos segundos.
+**Tú:**
+> "En el chat: ¿cuándo usaríais el rollback y cuándo el revert?"
+
+🎓 Rollback: recuperar el servicio ya. Revert: dejar `main` bien para que no vuelva a salir.
 
 🎓 Haz el merge del revert durante el rescate, para dejar `main` correcto.
 
@@ -554,7 +608,7 @@ Para lo que se haya alargado. Si no hace falta, termina antes.
 
 | Situación | Qué hacer |
 |---|---|
-| **Vas 10 minutos tarde** | Recorta Sonos a una frase y el simulacro a las capturas. No toques las salas |
+| **Vas 10 minutos tarde** | Recorta el simulacro a las capturas y quita las preguntas al chat de la teoría. No toques las salas |
 | **Vas adelantado** | Más tiempo en las salas. No añadas contenido nuevo |
 | **Una sala se atasca entera** | Entra tú en esa sala y Aida pasa a las otras dos |
 | **Más de la mitad sin secretos guardados** | Que los guarden al empezar la práctica 1; el rescate absorbe el retraso |

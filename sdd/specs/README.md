@@ -18,7 +18,7 @@ Fuente de verdad del estado de cada spec. La actualizan los comandos `/sdd-*`.
 | [SPEC-021](021-seguridad-v2-familias-3-4/spec.md) | **Rediseño de las familias 3 y 4**: F3 en dos ejes, F4 en 3 ideas, práctica sobre su producto de Lovable y casos verificados ([plan](021-seguridad-v2-familias-3-4/plan.md) · [tasks](021-seguridad-v2-familias-3-4/tasks.md)) | 2026-12 | 2026-11-30 | **en curso** |
 | SPEC-022 | Evolución del pipeline de agentes (+ check en CI; + script que regenera el zip, aplazado desde SPEC-001) | 2026-12 | 2026-11-30 | pendiente |
 | SPEC-023 | Guion de 4h Seguridad v2 | 2026-12 | 2026-12-07 | pendiente |
-| SPEC-024 | Portal Seguridad v2 | 2026-12 | 2026-12-07 | pendiente |
+| [SPEC-024](024-seguridad-v2-portal/spec.md) | **Portal Seguridad v2** ([plan](024-seguridad-v2-portal/plan.md)) con la estructura del 21-nov (teoría → demo → 3 salas), prompts auditores copiables, seguridad de GitHub y check de seguridad en el CI; anexo con la escaleta en borrador | 2026-12 | 2026-12-07 (esqueleto: 2026-11-23) | **aprobada** (18-nov) |
 
 **Orden (5-nov):** SPEC-019 (ensayo primero) → SPEC-013 (guía, 12-nov) → SPEC-014 v2 → guion y portal (015, 016) → ensayo completo la semana del 16-nov → compilar los repos de los alumnos tras el 20-nov → SPEC-017 si da tiempo.
 
