@@ -1,6 +1,6 @@
 # Constitution · Hero Camp AI PM Pro
 
-*Versión 1.7 · 13 de noviembre de 2026 · Responsable: Jaime García*
+*Versión 1.8 · 19 de noviembre de 2026 · Responsable: Jaime García*
 
 Principios y reglas que gobiernan todo el material formativo de este repositorio.
 Ninguna spec, plan o tarea puede contradecirla. Si algo choca con ella, se cambia la constitution primero (con su propia versión y fecha), nunca se ignora.
@@ -37,7 +37,7 @@ Coordinación: Maribel Fernández (sesión de junio) · Gema (coordinación) · 
 Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 
 1. **El "para qué" antes del "qué".** Cada bloque abre anclando por qué le importa a un PM (feedback de Maribel).
-2. **"Antes de entrar".** Cada bloque empieza con un máximo de 3 términos clave explicados con analogías no técnicas.
+2. **"Antes de entrar".** Cada bloque empieza con un máximo de 3 términos clave, con definiciones cortas y sencillas ligadas a lo que el alumno verá en pantalla. Una imagen o analogía, solo si aclara de verdad.
 3. **Máximo 3 ideas por bloque.** Lección de las familias 3 y 4 de junio: la densidad mata la comprensión. Si un bloque necesita más de 3 ideas, se divide o se recorta.
 4. **Patrón de bloque:** concepto en cámara → caso real → momento interactivo → demo o práctica → cómo se arregla o se hace bien → "lo que el PM se lleva".
 5. **Lenguaje de PM, no de ingeniero.** El output de cualquier práctica es una decisión o un criterio, no código. Se explica el comando, pero no se exige dominarlo.
@@ -117,4 +117,5 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 | 1.4 | 2026-10-20 | 2.6: excepción de producto de ejemplo común + herramienta genérica · 2.9: nuevo criterio de éxito de Git/Deploy (SPEC-010 v3) |
 | 1.5 | 2026-11-02 | Audiencia y 3.1: Lovable como herramienta principal y Cloudflare Workers · 2.6: se practica sobre el producto propio cuando el stack es común · 2.9: éxito de Git/Deploy = su producto en staging y producción por CI/CD (SPEC-010 v4, a partir de SPEC-018) |
 | 1.7 | 2026-11-13 | Audiencia y 3.1: el backend de los alumnos es Lovable Cloud y no un Supabase propio (validado con `prueba-cloud` el 13-nov) |
+| 1.8 | 2026-11-19 | 2.2: los términos de "Antes de entrar" se explican con definiciones directas, no con analogías (decisión de Jaime en el ensayo de Git/Deploy) |
 | 1.6 | 2026-11-05 | Tras el correo de Gema: audiencia (18, perfil mixto, Demo Day), coordinación, 2.9 la preview del PR cuenta como staging, 2.6 18 productos, 3.1 Supabase propio de cada alumno conectado desde Lovable (decisión de Jaime, 5-nov), 3.2 coste 0 salvo Lovable Pro, 3.4 clases grabadas |

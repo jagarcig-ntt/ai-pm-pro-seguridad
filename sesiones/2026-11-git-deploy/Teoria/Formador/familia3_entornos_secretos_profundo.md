@@ -26,7 +26,7 @@ Sesión "Git, Deployment y Producción" · AI PM Pro · The Hero Camp · 21 de n
 ## 1. Antes de entrar: tres conceptos en lenguaje humano
 
 **Entorno.**
-Cada sitio donde vive una copia de tu producto funcionando: tu ordenador, una versión de pruebas, la que usan tus clientes. Mismo producto, distinto escenario. Como un ensayo general frente al estreno. En muchas empresas los llaman *local*, *PRE* (preproducción) y *PRO*: son los mismos tres entornos que aquí llamamos development, staging y production.
+Cada sitio donde vive una copia de tu producto funcionando: tu ordenador, una versión de pruebas, la que usan tus clientes. Mismo producto, distinto sitio y distintos datos o ajustes. En muchas empresas los llaman *local*, *PRE* (preproducción) y *PRO*: son los mismos tres entornos que aquí llamamos development, staging y production.
 
 **Variable de entorno.**
 Un ajuste que el producto lee al arrancar y que cambia según dónde está: a qué base de datos se conecta, qué funcionalidades están encendidas, a qué servicio de pagos llama. El código no cambia; cambian sus ajustes.
@@ -35,7 +35,6 @@ Un ajuste que el producto lee al arrancar y que cambia según dónde está: a qu
 Una variable de entorno que no puede ver cualquiera: la contraseña de la base de datos, la clave del servicio de pagos o la de la API de IA. Si alguien la tiene, puede actuar en nombre de tu producto.
 
 > 🎓 **Intención:** tres palabras y ninguna más. Si alguien pregunta por *Docker*, *Kubernetes* o *servidores*, apárcalo: "eso es el cómo; hoy vemos el qué".
-> - **Analogía alternativa:** un restaurante. Development es la cocina de pruebas, staging la cata con el equipo y production el comedor con clientes. La receta (el código) es la misma; cambian los ingredientes de verdad (la configuración).
 
 ---
 
@@ -55,7 +54,7 @@ Como PM no vas a configurar los entornos, pero sí decides cosas que dependen de
 
 | | **Development** | **Staging** | **Production** |
 |---|---|---|---|
-| **Para qué** | Construir y experimentar | Ensayo general: validar antes de salir | Servir a los usuarios |
+| **Para qué** | Construir y experimentar | Validar antes de salir, igual que producción | Servir a los usuarios |
 | **Quién lo usa** | Quien desarrolla (persona o agente) | El equipo, el PM, quien valida | Los clientes |
 | **Datos** | Falsos o de ejemplo | De prueba, **parecidos** a los reales | Reales |
 | **Si se rompe** | No pasa nada | Molesta, pero nadie lo nota fuera | Lo notan tus usuarios |

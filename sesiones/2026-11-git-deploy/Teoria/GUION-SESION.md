@@ -129,7 +129,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 ## TEORÍA 1 · DE LOVABLE A PRODUCCIÓN · 10:15–10:30 (15 min)
 
-*Teoría: `Teoria/familia1_git_profesional_alumnos.md` y `familia2_cicd_deploy_alumnos.md` · Dos familias, cada una con sus tres términos y sus tres ideas. **F1 · Git:** push y pull, `main` siempre funciona, el Pull Request. **F2 · CI/CD:** la receta, dos entornos (preview y producción) y dónde pasa cada cosa. Sin casos reales: están en el portal, en un desplegable.*
+*Teoría: `Teoria/familia1_git_profesional_alumnos.md` y `familia2_cicd_deploy_alumnos.md` · Dos familias, cada una con sus tres términos y sus tres ideas. **F1 · Git:** push y pull, `main` siempre funciona, el Pull Request. **F2 · CI/CD:** el workflow, dos entornos (preview y producción) y dónde pasa cada cosa. Sin casos reales: están en el portal, en un desplegable.*
 
 **ANTES DE ENTRAR · F1 Git**
 
@@ -194,7 +194,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 | Workflow | El fichero con los pasos que GitHub ejecuta solo en cada cambio |
 | Entorno | Cada sitio donde está publicada una copia de tu producto: la preview y producción |
 
-### 10:26 — F2 · Del Pull Request a producción: la receta (2 min)
+### 10:26 — F2 · Del Pull Request a producción: el workflow (2 min)
 
 **ACCIÓN:** portal, tarjeta de la familia 2, esquema del workflow.
 
@@ -206,7 +206,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 **ACCIÓN:** portal, tarjeta de la familia 2, tabla "Dónde pasa cada cosa".
 
 **Tú:**
-> "La receta publica en dos sitios. Si es un Pull Request, en una **preview**: una copia aparte para probar el cambio. Si es un merge, en **producción**: vuestra web. A las 11:35 vemos los entornos con calma.
+> "El workflow publica en dos sitios. Si es un Pull Request, en una **preview**: una copia aparte para probar el cambio. Si es un merge, en **producción**: vuestra web. A las 11:35 vemos los entornos con calma.
 >
 > Y para que no os perdáis, dónde pasa cada cosa:"
 
@@ -217,7 +217,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 | **Cloudflare** | Donde vive la web: la preview de cada Pull Request y producción | El workflow publica, solo |
 
 **Tú:**
-> "Esa receta es lo que vais a pedirle a Lovable ahora mismo. Os lo enseño."
+> "Ese workflow es lo que vais a pedirle a Lovable ahora mismo. Os lo enseño."
 
 ---
 
@@ -357,16 +357,16 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 **ANTES DE ENTRAR**
 
-| Término | Analogía para un PM |
+| Término | Qué es |
 |---|---|
-| Entorno | El ensayo general frente al estreno |
-| Variable de entorno | Un ajuste que cambia según dónde está el producto |
-| Secreto | Una llave que, si alguien la tiene, actúa en tu nombre |
+| Entorno | Cada sitio donde está publicada una copia de tu producto |
+| Variable de entorno | Un ajuste que cambia según el entorno, sin tocar el código |
+| Secreto | Una clave o token que da acceso a un servicio en nombre de tu producto. Quien lo tenga puede usarlo |
 
 ### 11:35 — Antes de entrar (1 min)
 
 **Tú:**
-> "Tres palabras. **Entorno:** cada sitio donde vive una copia de vuestro producto. **Variable:** un ajuste que cambia según el sitio. **Secreto:** una llave que, si alguien la tiene, actúa en vuestro nombre."
+> "Tres palabras. **Entorno:** cada sitio donde vive una copia de vuestro producto. **Variable:** un ajuste que cambia según el sitio. **Secreto:** una clave o token que da acceso a un servicio en nombre de vuestro producto; quien lo tenga puede usarlo."
 
 ### 11:36 — Para qué (2 min)
 
@@ -510,7 +510,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 ### 12:55 — Antes de entrar (1 min)
 
 **Tú:**
-> "**Go-live:** abrir la puerta a los usuarios. **Rollback:** el botón de deshacer de producción. **Revert:** un cambio nuevo que deshace otro."
+> "**Go-live:** el momento en que un cambio queda disponible para vuestros usuarios. **Rollback:** volver a publicar la versión anterior. **Revert:** un cambio nuevo que deshace otro."
 
 ### 12:56 — Idea 1 · La checklist (3 min)
 

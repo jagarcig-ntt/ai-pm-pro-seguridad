@@ -44,7 +44,7 @@ La petición formal de "quiero que mis cambios entren en `main`". No es un trám
 
 Hasta ahora, Lovable ha ido haciendo los commits por vosotros, directamente sobre `main`, sin PR ni revisión. Funciona mientras el producto es un prototipo y solo lo tocáis vosotros.
 
-En cuanto hay usuarios reales, otra persona en el equipo o un agente que hace cambios por su cuenta, trabajar así es como editar el contrato firmado en lugar de un borrador. Cualquier error llega directo al producto, nadie lo ha mirado antes y es difícil saber qué cambió y cuándo.
+En cuanto hay usuarios reales, otra persona en el equipo o un agente que hace cambios por su cuenta, trabajar directamente sobre la versión publicada es un riesgo. Cualquier error llega directo al producto, nadie lo ha mirado antes y es difícil saber qué cambió y cuándo.
 
 Git profesional no es una cuestión de ingenieros. Es **el sistema de control de cambios de tu producto**: decide qué entra, quién lo revisa y cómo se vuelve atrás. Como PM no necesitas dominar los comandos, pero sí saber qué preguntar y qué exigir.
 
@@ -206,7 +206,7 @@ Los agentes generan cambios más rápido que nunca. Eso hace el punto de control
 ## 9. Lo que el PM se lleva
 
 1. **`main` siempre funciona.** Todo cambio va en una rama, incluidos los que hace un agente.
-2. **La historia de commits es el diario del producto.** Si no se puede leer, no se puede investigar ni deshacer.
+2. **La historia de commits cuenta qué cambió, quién y cuándo.** Si no se puede leer, no se puede investigar ni deshacer.
 3. **El PR es tu punto de control.** Antes de aprobar, pregunta qué pasa si falla y cómo se apaga.
 
 > 🎓 **Verificación del bloque:** las dos preguntas para el chat de este bloque. La verificación real llega en P2, con los enlaces de PR.

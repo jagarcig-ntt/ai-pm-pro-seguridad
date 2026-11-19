@@ -26,10 +26,10 @@ Sesión "Git, Deployment y Producción" · AI PM Pro · The Hero Camp · 21 de n
 El momento en que un cambio (o un producto entero) pasa a estar disponible para usuarios reales. No es un momento técnico: es una decisión de negocio con consecuencias.
 
 **Rollback.**
-Volver a la versión anterior que funcionaba. Es el botón de "deshacer" de producción. Las plataformas de despliegue modernas lo permiten en un clic, porque guardan cada versión publicada.
+Volver a publicar la versión anterior que funcionaba. Las plataformas de despliegue modernas lo permiten en un clic, porque guardan cada versión publicada.
 
 **Monitorización.**
-Mirar de forma continua cómo se comporta el producto en producción: si da errores, si va lento, si los usuarios hacen lo que esperabas. Es el cuadro de mandos del coche: sin él, conduces a ciegas.
+Mirar de forma continua cómo se comporta el producto en producción: si da errores, si va lento, si los usuarios hacen lo que esperabas. Sin ella, no sabes si producción va bien hasta que alguien se queja.
 
 ---
 

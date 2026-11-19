@@ -28,7 +28,7 @@ Los términos de las cuatro familias, con la misma definición que en cada guía
 |---|---|
 | **CI (integración continua)** (F2) | El control de calidad automático: cada cambio propuesto se construye y se prueba solo. |
 | **CD (despliegue continuo)** (F2) | La publicación automática: un cambio aprobado llega a staging y a producción sin pasos manuales. |
-| **Workflow** (F2) | El fichero con la receta automática (cuándo, qué pasos, qué necesita). En GitHub vive en `.github/workflows/`. |
+| **Workflow** (F2) | El fichero con los pasos que GitHub ejecuta solo (cuándo, qué pasos, qué necesita). En GitHub vive en `.github/workflows/`. |
 | **GitHub Actions** (F2) | El sistema de GitHub que ejecuta los workflows. |
 | **Check** (F2) | El resultado de un workflow sobre un PR: ✅ verde o ❌ rojo. Un PR en rojo no se integra. |
 | **Ruleset** (F1, F2) | Las reglas del repositorio: por ejemplo, que `main` solo acepte cambios vía PR aprobado y con checks en verde. |
@@ -42,7 +42,7 @@ Los términos de las cuatro familias, con la misma definición que en cada guía
 |---|---|
 | **Entorno** (F3) | Cada sitio donde vive una copia del producto funcionando. Mismo producto, distinto escenario. |
 | **Development** (F3) | El entorno para construir y experimentar. En tu producto, la vista previa de Lovable. |
-| **Staging** (F3) | El ensayo general: igual que producción. A producción solo llega lo que ha pasado por staging. En tu producto, la preview de cada PR. En muchas empresas se llama **PRE** (preproducción). |
+| **Staging** (F3) | El entorno de pruebas igual que producción. A producción solo llega lo que ha pasado por staging. En tu producto, la preview de cada PR. En muchas empresas se llama **PRE** (preproducción). |
 | **Production** (F3) | El entorno que usan los clientes, con datos reales. También se le llama **PRO**. |
 | **Preview** (F3, F2) | Una versión del producto publicada automáticamente para un PR o una rama, en su propia URL. En los planes gratuitos hace de staging. |
 | **Variable de entorno** (F3) | Un ajuste que el producto lee al arrancar y que cambia según el entorno: base de datos, funcionalidades encendidas, servicios externos. |
@@ -57,7 +57,7 @@ Los términos de las cuatro familias, con la misma definición que en cada guía
 |---|---|
 | **Go-live** (F4) | El momento en que un cambio pasa a estar disponible para usuarios reales. Una decisión de negocio. |
 | **Checklist de go-live** (F4) | Las 8 preguntas de sí o no que se responden antes de salir. |
-| **Rollback** (F4) | Volver a publicar la versión anterior que funcionaba. El botón de "deshacer" de producción. |
+| **Rollback** (F4) | Volver a publicar la versión anterior que funcionaba. |
 | **Prueba de humo** (F4) | Una comprobación rápida tras desplegar: ¿cargan las páginas y responden los endpoints principales? |
 | **Monitorización** (F4) | Vigilar de forma continua cómo se comporta el producto en producción. |
 | **Las tres señales** (F4) | Errores, rendimiento y uso. La tercera la ve, sobre todo, el PM. |

@@ -1,4 +1,4 @@
-# Familia 2 — CI/CD y deploy: la receta automática hasta producción
+# Familia 2 — CI/CD y deploy: los pasos automáticos hasta producción
 
 **Guía de referencia para el alumno**
 Sesión "Git, Deployment y Producción" · AI PM Pro · The Hero Camp · 21 de noviembre de 2026
@@ -9,7 +9,7 @@ Sesión "Git, Deployment y Producción" · AI PM Pro · The Hero Camp · 21 de n
 
 1. [Antes de entrar: tres conceptos en lenguaje humano](#1-antes-de-entrar-tres-conceptos-en-lenguaje-humano)
 2. [Para qué le importa a un PM](#2-para-qué-le-importa-a-un-pm)
-3. [Idea 1 · El workflow: una receta que se ejecuta sola](#3-idea-1--el-workflow-una-receta-que-se-ejecuta-sola)
+3. [Idea 1 · El workflow: unos pasos que se ejecutan solos](#3-idea-1--el-workflow-unos-pasos-que-se-ejecutan-solos)
 4. [Idea 2 · Cada PR se comprueba y se previsualiza antes de entrar](#4-idea-2--cada-pr-se-comprueba-y-se-previsualiza-antes-de-entrar)
 5. [Idea 3 · Merge a main = producción, por fases](#5-idea-3--merge-a-main--producción-por-fases)
 6. [Cómo se ve en el producto demo](#6-cómo-se-ve-en-el-producto-demo)
@@ -29,7 +29,7 @@ Cada vez que alguien propone un cambio, una máquina lo comprueba automáticamen
 Cuando un cambio se aprueba, una máquina lo publica automáticamente, primero en staging y después en producción. Nadie tiene que acordarse de "subirlo".
 
 **Workflow.**
-El fichero donde se escribe esa receta: qué se hace, en qué orden y cuándo. En GitHub se llama *GitHub Actions* y vive en el propio repositorio, en la carpeta `.github/workflows/`.
+El fichero donde se escriben esos pasos: qué se hace, en qué orden y cuándo. En GitHub se llama *GitHub Actions* y vive en el propio repositorio, en la carpeta `.github/workflows/`.
 
 ---
 
@@ -37,7 +37,7 @@ El fichero donde se escribe esa receta: qué se hace, en qué orden y cuándo. E
 
 Pregúntate cómo llega hoy un cambio de tu producto a tus usuarios. Si la respuesta incluye "le doy al botón de publicar", "lo subo desde mi ordenador" o "me acuerdo de…", tu proceso depende de la memoria y el buen día de alguien.
 
-CI/CD convierte ese proceso en una **receta escrita que se ejecuta siempre igual**. Para un PM eso significa tres cosas:
+CI/CD convierte ese proceso en **unos pasos escritos que se ejecutan siempre igual**. Para un PM eso significa tres cosas:
 
 - **Velocidad:** un cambio aprobado llega a producción en minutos, no "cuando alguien pueda".
 - **Previsibilidad:** todos los cambios pasan por los mismos controles, también los que hace un agente a las tres de la mañana.
@@ -45,7 +45,7 @@ CI/CD convierte ese proceso en una **receta escrita que se ejecuta siempre igual
 
 ---
 
-## 3. Idea 1 · El workflow: una receta que se ejecuta sola
+## 3. Idea 1 · El workflow: unos pasos que se ejecutan solos
 
 Un workflow tiene tres partes que se pueden leer sin saber programar:
 
@@ -99,7 +99,7 @@ Que sea automático no significa que sea de golpe. Un buen despliegue avanza **p
 
 En productos grandes hay una fase más: publicar primero para una parte de los usuarios y ampliar si todo va bien. Para vuestros productos, staging hace ese papel.
 
-Y una regla sin excepciones: **nunca se despliega a mano desde un ordenador**. Si un cambio no ha pasado por la receta, no está en producción.
+Y una regla sin excepciones: **nunca se despliega a mano desde un ordenador**. Si un cambio no ha pasado por el workflow, no está en producción.
 
 ---
 
@@ -153,7 +153,7 @@ Entre los cambios que CrowdStrike anunció en su análisis oficial:
 - más validaciones y pruebas antes de publicar;
 - que los clientes puedan decidir cuándo reciben las actualizaciones.
 
-**La lección para la Familia 2:** automatizar el despliegue es bueno, pero **automatizar un despliegue sin fases convierte un error en un error para todos a la vez**. La receta tiene que incluir comprobaciones y avanzar por etapas.
+**La lección para la Familia 2:** automatizar el despliegue es bueno, pero **automatizar un despliegue sin fases convierte un error en un error para todos a la vez**. El workflow tiene que incluir comprobaciones y avanzar por etapas.
 
 ---
 
@@ -176,7 +176,7 @@ En esta fase, un agente:
 
 ## 9. Lo que el PM se lleva
 
-1. **El proceso de calidad es una receta escrita**, no una costumbre: se lee, se revisa y se mejora.
+1. **El proceso de calidad está escrito en el workflow**, no es una costumbre: se lee, se revisa y se mejora.
 2. **Ningún PR entra en rojo**, y antes de aprobar lo pruebas en su URL de preview.
 3. **Merge a `main` es una decisión de salir a producción**, y la salida avanza por fases, nunca de golpe ni a mano.
 

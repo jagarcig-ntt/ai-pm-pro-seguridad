@@ -62,7 +62,7 @@ Antes de un cambio importante, responde **sí o no**. Si hay un "no", decide a s
 | Preview | Tu cambio publicado en su propia URL antes del merge | Comentario automático del PR |
 | Merge | Integrar el cambio en `main`: es decidir salir a producción | Botón del PR |
 | Ruleset | Las reglas que protegen `main` | GitHub, *Settings → Rules* |
-| Workflow | La receta automática que comprueba y publica | `.github/workflows/` y pestaña *Actions* |
+| Workflow | El fichero con los pasos automáticos que comprueban y publican cada cambio | `.github/workflows/` y pestaña *Actions* |
 | Secreto | Una clave que nadie puede leer una vez guardada | GitHub, *Settings → Secrets and variables → Actions* |
 | Rollback | Volver a publicar la versión anterior | Cloudflare, *Deployments* |
 | Revert | Un cambio nuevo que deshace otro | Botón del PR ya fusionado |

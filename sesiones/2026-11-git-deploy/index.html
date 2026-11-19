@@ -330,7 +330,7 @@
           </div>
           <div class="fam-block">
             <div class="fam-block-label">Lo que el PM se lleva</div>
-            <p class="fam-pm"><code>main</code> siempre funciona · La historia de cambios es el diario del producto · Antes de aprobar, pregunta qué pasa si falla y cómo se apaga.</p>
+            <p class="fam-pm"><code>main</code> siempre funciona · La historia de cambios cuenta qué cambió, quién y cuándo · Antes de aprobar, pregunta qué pasa si falla y cómo se apaga.</p>
           </div>
           <div class="fam-block">
             <details class="comandos" onclick="event.stopPropagation()">
@@ -360,7 +360,7 @@
           <div>
             <div class="fam-tag">10:15 · Teoría 1</div>
             <h3 class="fam-name">CI/CD y despliegue</h3>
-            <p class="fam-desc">La receta automática que comprueba y publica cada cambio.</p>
+            <p class="fam-desc">Los pasos automáticos que comprueban y publican cada cambio.</p>
           </div>
         </div>
         <div class="fam-expanded"><div class="fam-expanded-inner">
@@ -375,13 +375,13 @@
           <div class="fam-block">
             <div class="fam-block-label">Tres ideas</div>
             <div class="fam-ideas">
-              <div class="fam-idea"><span class="fam-idea-mark">1</span><span class="fam-idea-txt"><strong>El workflow, una receta que se ejecuta sola:</strong> coge el código, lo instala, pasa las pruebas, lo compila, lo publica y comprueba que la web responde.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">1</span><span class="fam-idea-txt"><strong>El workflow se ejecuta solo en cada cambio:</strong> coge el código, lo instala, pasa las pruebas, lo compila, lo publica y comprueba que la web responde.</span></div>
               <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>Cada Pull Request se comprueba y se publica en su propia preview,</strong> un entorno aparte para probarlo. En rojo no se puede hacer merge, y ni siquiera se publica la preview.</span></div>
               <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>Hacer merge es decidir salir a producción</strong>, y la salida avanza por fases.</span></div>
             </div>
           </div>
           <div class="fam-block">
-            <div class="fam-block-label">La receta que corre sola en cada cambio</div>
+            <div class="fam-block-label">El workflow de cada cambio</div>
             <figure class="esquema-git">
               <svg viewBox="0 0 760 300" role="img" aria-labelledby="esq-ci-t esq-ci-d">
                 <title id="esq-ci-t">El workflow de cada cambio</title>
@@ -438,7 +438,7 @@
           </div>
           <div class="fam-block">
             <div class="fam-block-label">Lo que el PM se lleva</div>
-            <p class="fam-pm">El proceso de calidad es una receta escrita · Ningún Pull Request entra en rojo · Hacer merge es decidir salir a producción.</p>
+            <p class="fam-pm">El proceso de calidad está escrito en el workflow · Ningún Pull Request entra en rojo · Hacer merge es decidir salir a producción.</p>
           </div>
         </div></div>
       </div>
@@ -457,9 +457,9 @@
           <div class="fam-block">
             <div class="fam-block-label">Antes de entrar</div>
             <div class="fam-ideas">
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Entorno:</strong> cada sitio donde vive una copia de tu producto.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Variable de entorno:</strong> un ajuste que cambia según el sitio, sin tocar el código.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Secreto:</strong> una llave que, si alguien la tiene, actúa en nombre de tu producto.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Entorno:</strong> cada sitio donde está publicada una copia de tu producto.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Variable de entorno:</strong> un ajuste que cambia según el entorno, sin tocar el código.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Secreto:</strong> una clave o token que da acceso a un servicio en nombre de tu producto. Quien lo tenga puede usarlo.</span></div>
             </div>
           </div>
           <div class="fam-block">
@@ -547,9 +547,9 @@
           <div class="fam-block">
             <div class="fam-block-label">Antes de entrar</div>
             <div class="fam-ideas">
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Go-live:</strong> abrir la puerta a los usuarios; una decisión de negocio.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Rollback:</strong> el botón de deshacer de producción.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Monitorización:</strong> el cuadro de mandos del coche.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Go-live:</strong> el momento en que un cambio queda disponible para tus usuarios. Es una decisión de negocio.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Rollback:</strong> volver a publicar la versión anterior que funcionaba.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Monitorización:</strong> vigilar de forma continua si producción da errores, va lenta o no hace lo esperado.</span></div>
             </div>
           </div>
           <div class="fam-block">
