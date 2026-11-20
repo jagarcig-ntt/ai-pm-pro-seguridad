@@ -40,7 +40,7 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
     > Crea una app sencilla de lista de tareas en español. Inicio de sesión con email y contraseña. Cada usuario ve, añade, marca como hecha y borra solo sus propias tareas. Diseño limpio, una sola página tras el login.
 2. [ ] **Aprobar con *Allow*** los cambios de base de datos que pida Lovable y comprobar en su vista previa que el registro y las tareas funcionan.
 3. [ ] **No conectarlo a GitHub.** Eso se hace en directo.
-4. [ ] **Token de Cloudflare** (paso 2 de la guía de requisitos): *My Profile → API Tokens → Create Token → Create Custom Token* · permisos `Account · Workers Scripts · Edit` · *All accounts* · 1 año. Guárdalo, junto con el **Account ID** (*Workers & Pages*, columna derecha), donde puedas copiarlos **sin que se vean en pantalla**. Usa la misma cuenta que `prueba-cloud`.
+4. [ ] **Token de Cloudflare** (paso 2 de la guía de requisitos): *My Profile → API Tokens → Create Token* · *Start from scratch → Start with an Account policy* · *All accounts* · `Workers Scripts` → **Edit** · 1 year. Guárdalo, junto con el **Account ID** (*Workers & Pages*, columna derecha), donde puedas copiarlos **sin que se vean en pantalla**. Usa la misma cuenta que `prueba-cloud`.
 5. [ ] **Ensayo con el primer proyecto:** las demos 1 y 2 enteras, siguiendo este guion y **cronometradas** (15 min cada una). Si algo de la guía no coincide con la pantalla, se corrige antes del 21.
 6. [ ] **No borrar `prueba-cloud`:** es el plan B de las dos demos (ya está desplegado y con login).
 
@@ -247,10 +247,11 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 > "Para que GitHub pueda publicar en vuestra cuenta de Cloudflare necesita un token: una clave con permiso solo para publicar. Os enseño el formulario; el botón final lo pulsáis vosotros sin compartir pantalla."
 
 **ACCIÓN** (práctica 1, paso 2):
-1. [ ] Cloudflare → *My Profile → API Tokens → Create Token → Create Custom Token*.
-2. [ ] Rellena el formulario en pantalla: nombre, `Account · Workers Scripts · Edit`, *Include · All accounts*, 1 año.
-3. [ ] **No pulses *Create Token*.** Usas el que preparaste antes de la sesión.
-4. [ ] Di dónde está el **Account ID**: *Workers & Pages*, columna derecha. No lo abras compartiendo.
+1. [ ] Cloudflare → *My Profile → API Tokens → Create Token* → nombre del proyecto.
+2. [ ] *Policies* → *Start from scratch* → **Start with an Account policy** → *Include · All accounts*.
+3. [ ] Buscador: `worker` → fila **Workers Scripts** → **Edit** · *Token expiration*: 1 year → *Continue to summary*.
+4. [ ] Enseña el resumen: **All accounts · Workers Scripts: Edit**. **No pulses *Create Token*:** usas el que preparaste antes de la sesión.
+5. [ ] Di dónde está el **Account ID**: *Workers & Pages*, columna derecha. No lo abras compartiendo.
 
 ### 10:36 — Guardar los secretos (2 min)
 

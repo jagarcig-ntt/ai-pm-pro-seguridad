@@ -34,16 +34,18 @@ En los pasos verás dos datos tuyos:
 **Deja de compartir pantalla** desde aquí hasta terminar el paso 3. El token es una contraseña y la sesión se graba.
 
 1. En Cloudflare, entra en *Workers & Pages*. En la columna de la derecha está tu **Account ID**: déjala abierta.
-2. Haz clic en tu perfil y ve a *My Profile → API Tokens → Create Token → Create Custom Token*.
-3. Rellena el formulario así:
-    - **Token name:** el nombre de tu proyecto;
-    - **Permissions:** `Account` · `Workers Scripts` · `Edit`;
-    - **Account Resources:** `Include` · `All accounts`;
-    - **Token expiration:** `1 year`.
-4. Pulsa *Continue to summary* y después *Create Token*.
-5. **Copia el token.** Cloudflare solo lo enseña una vez. Si lo pierdes, crea otro.
+2. Haz clic en tu perfil y ve a *My Profile → API Tokens → Create Token*.
+3. **Token name:** el nombre de tu proyecto.
+4. En **Policies**, pulsa *Start from scratch* y elige **Start with an Account policy**.
+5. Deja `Include` · `All accounts`. En el buscador escribe `worker` y, en la fila **Workers Scripts**, marca **Edit**.
 
-![Permisos del token](capturas/05_cloudflare_token.png)
+![Workers Scripts · Edit](capturas/05_cloudflare_token.png)
+
+6. **Token expiration:** `1 year`. Pulsa *Continue to summary*.
+7. Comprueba el resumen: **All accounts** y **Workers Scripts: Edit**. Pulsa *Create Token*.
+8. **Copia el token.** Cloudflare solo lo enseña una vez. Si lo pierdes, crea otro.
+
+![Resumen del token](capturas/08_cloudflare_resumen.png)
 
 ### Paso 3 · Guarda el token y el Account ID en GitHub
 1. En tu repositorio de GitHub, ve a *Settings → Secrets and variables → Actions*.

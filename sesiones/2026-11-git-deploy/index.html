@@ -681,9 +681,10 @@
     <div class="aviso reveal"><strong>Deja de compartir pantalla</strong> desde aquí hasta terminar el paso 3. El token es una contraseña y la sesión se graba.</div>
     <ol class="pasos reveal">
       <li>En Cloudflare, entra en <em>Workers &amp; Pages</em>. En la columna de la derecha está tu <strong>Account ID</strong>: déjala abierta.</li>
-      <li>Haz clic en tu perfil y ve a <em>My Profile → API Tokens → Create Token → Create Custom Token</em>.</li>
-      <li>Rellena: <strong>Token name</strong>, el nombre de tu proyecto · <strong>Permissions</strong>, <code>Account</code> · <code>Workers Scripts</code> · <code>Edit</code> · <strong>Account Resources</strong>, <code>Include</code> · <code>All accounts</code> · <strong>Token expiration</strong>, 1 año.</li>
-      <li>Pulsa <em>Continue to summary</em> y <em>Create Token</em>. <strong>Copia el token:</strong> Cloudflare solo lo enseña una vez.</li>
+      <li>Haz clic en tu perfil y ve a <em>My Profile → API Tokens → Create Token</em>. <strong>Token name:</strong> el nombre de tu proyecto.</li>
+      <li>En <strong>Policies</strong>, pulsa <em>Start from scratch</em> y elige <strong>Start with an Account policy</strong>. Deja <code>Include</code> · <code>All accounts</code>.</li>
+      <li>En el buscador escribe <code>worker</code> y, en la fila <strong>Workers Scripts</strong>, marca <strong>Edit</strong>. <strong>Token expiration:</strong> 1 year.</li>
+      <li>Pulsa <em>Continue to summary</em>. Comprueba que pone <strong>All accounts</strong> y <strong>Workers Scripts: Edit</strong>, y pulsa <em>Create Token</em>. <strong>Copia el token:</strong> Cloudflare solo lo enseña una vez.</li>
     </ol>
 
     <h3 class="reveal" style="margin-top:36px;">Paso 3 · Guarda el token y el Account ID en GitHub</h3>

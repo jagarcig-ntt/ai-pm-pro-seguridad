@@ -13,8 +13,10 @@ El día 21 publicarás tu producto de Lovable en Internet, con un sistema profes
 | ☐ | Plan Pro de Lovable activo y tu proyecto creado | Antes del 21-nov |
 | ☐ | Cuenta en [github.com](https://github.com) | Antes del 21-nov |
 | ☐ | Cuenta gratuita en [Cloudflare](https://dash.cloudflare.com/sign-up). Lo más cómodo: *Continue with GitHub* | Antes del 21-nov |
+| ☐ | *Opcional:* proyecto de Lovable conectado a GitHub, con el repositorio **público** (paso 1) | Lo hacemos en la sesión |
+| ☐ | *Opcional:* token de Cloudflare y secretos guardados en GitHub (pasos 2 y 3) | Lo hacemos en la sesión |
 
-**Conectar Lovable con GitHub, crear el token y guardar los secretos lo hacemos juntos en la sesión** (práctica 1). Los pasos 1 a 3 de esta guía son los mismos, con capturas, por si quieres adelantarlos o repasarlos.
+**Lo opcional lo hacemos juntos en la sesión** (práctica 1). Si quieres adelantarlo, aquí tienes los pasos con capturas.
 
 **Tres reglas de oro**
 
@@ -28,7 +30,7 @@ El día 21 publicarás tu producto de Lovable en Internet, con un sistema profes
 
 <div class="salto"></div>
 
-## Paso 1 · Conecta Lovable con GitHub
+## Paso 1 · Conecta Lovable con GitHub *(opcional)*
 
 1. Crea tu proyecto en Lovable, si aún no lo tienes. **Ponle un nombre sin tildes ni eñes:** se usa para el repositorio y para tu dirección web.
 2. Crea una cuenta en [github.com](https://github.com) si no la tienes.
@@ -47,30 +49,37 @@ El día 21 publicarás tu producto de Lovable en Internet, con un sistema profes
 
 > **Tu base de datos** es la de Lovable Cloud, la que configuras con Jose. No necesitas ninguna cuenta más para ella.
 
-## Paso 2 · Prepara Cloudflare
+## Paso 2 · Prepara Cloudflare *(el token es opcional)*
 
 Aquí se publicará tu producto.
 
 1. Crea una cuenta gratuita en [cloudflare.com](https://dash.cloudflare.com/sign-up).
+Lo que sigue es opcional: lo hacemos en la sesión.
+
 2. Entra en *Workers & Pages*. Déjala abierta: en la columna de la derecha está tu **Account ID**. Lo necesitarás en el paso 3.
 
 ![Dónde está el Account ID](capturas/06_cloudflare_account_id.png)
 
-3. Haz clic en tu perfil y ve a *My Profile → API Tokens → Create Token → Create Custom Token*.
-4. Rellena el formulario así:
-    - **Token name:** el nombre de tu proyecto.
-    - **Permissions:** `Account` · `Workers Scripts` · `Edit`.
-    - **Account Resources:** `Include` · `All accounts`.
-    - **Token expiration:** `1 year`.
+3. Haz clic en tu perfil y ve a *My Profile → API Tokens → Create Token*.
+4. **Token name:** el nombre de tu proyecto.
+5. En **Policies**, pulsa *Start from scratch* y elige **Start with an Account policy**.
 
-![Permisos del token](capturas/05_cloudflare_token.png)
+![Start with an Account policy](capturas/05a_cloudflare_politica.png)
 
-5. Pulsa *Continue to summary* y después *Create Token*.
-6. **Copia el token.** Cloudflare solo lo enseña una vez. Si lo pierdes, crea otro.
+6. Deja `Include` · `All accounts`. En el buscador escribe `worker` y, en la fila **Workers Scripts**, marca **Edit**.
+
+![Workers Scripts · Edit](capturas/05_cloudflare_token.png)
+
+7. **Token expiration:** `1 year`. Pulsa *Continue to summary*.
+8. Comprueba el resumen: **All accounts** y **Workers Scripts: Edit**. Pulsa *Create Token*.
+
+![Resumen del token](capturas/08_cloudflare_resumen.png)
+
+9. **Copia el token.** Cloudflare solo lo enseña una vez. Si lo pierdes, crea otro.
 
 <div class="salto"></div>
 
-## Paso 3 · Guarda el token en GitHub
+## Paso 3 · Guarda el token en GitHub *(opcional)*
 
 Así tu repositorio podrá publicar sin que el token aparezca en ningún sitio.
 

@@ -8,7 +8,7 @@ Un resumen de lo que hacen los alumnos en cada práctica y de los atascos que sa
 
 1. **Lovable:** abrir su proyecto y comprobar el nombre arriba a la izquierda.
 2. **Conectar con GitHub:** en Lovable, *Settings → Git* hasta ver **Connected**. Después, en GitHub, *Settings → General → Danger Zone → Change visibility → Public*.
-3. **Token de Cloudflare**, sin compartir pantalla: *My Profile → API Tokens → Create Custom Token*, con `Account · Workers Scripts · Edit` y *All accounts*. El **Account ID** está en *Workers & Pages*, columna derecha.
+3. **Token de Cloudflare**, sin compartir pantalla: *My Profile → API Tokens → Create Token* → *Start from scratch → Start with an Account policy* → *All accounts* → buscar `worker` → **Workers Scripts · Edit**. El **Account ID** está en *Workers & Pages*, columna derecha.
 4. **Secretos en GitHub**, sin compartir pantalla: *Settings → Secrets and variables → Actions*, con `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID`.
 5. **Los tres prompts:** botón *Copiar* del portal → chat de Lovable → enviar. Uno a uno, esperando a que Lovable termine.
 6. **GitHub → *Actions* → Desplegar:** en verde en 1–3 minutos. La URL aparece en el resumen, en **Publicado en**.
