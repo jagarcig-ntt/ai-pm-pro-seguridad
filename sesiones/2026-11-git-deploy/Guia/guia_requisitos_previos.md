@@ -2,18 +2,19 @@
 
 **AI PM Pro · The Hero Camp · Sábado 21 de noviembre · 10:00–14:00 · Zoom**
 
-El día 21 publicarás tu producto de Lovable en Internet, con un sistema profesional de cambios. Para aprovechar la sesión, llega con estas cuentas preparadas. Solo necesitas el navegador: no hay que instalar nada.
+El día 21 publicarás tu producto de Lovable en Internet, con un sistema profesional de cambios. Solo necesitas el navegador: no hay que instalar nada.
 
-**Tiempo estimado:** unos 30 minutos.
+**Tiempo estimado:** unos 5 minutos.
 
 ## ¿Lo tienes?
 
 | ✔ | Qué | Cuándo |
 |---|---|---|
-| ☐ | Plan Pro de Lovable activo | Antes del 21-nov |
-| ☐ | Proyecto de Lovable conectado a GitHub, con el repositorio **público** | Antes del 21-nov |
-| ☐ | Cuenta de Cloudflare, token y Account ID | Antes del 21-nov |
-| ☐ | Token y Account ID guardados en GitHub | Antes del 21-nov |
+| ☐ | Plan Pro de Lovable activo y tu proyecto creado | Antes del 21-nov |
+| ☐ | Cuenta en [github.com](https://github.com) | Antes del 21-nov |
+| ☐ | Cuenta gratuita en [Cloudflare](https://dash.cloudflare.com/sign-up). Lo más cómodo: *Continue with GitHub* | Antes del 21-nov |
+
+**Conectar Lovable con GitHub, crear el token y guardar los secretos lo hacemos juntos en la sesión** (práctica 1). Los pasos 1 a 3 de esta guía son los mismos, con capturas, por si quieres adelantarlos o repasarlos.
 
 **Tres reglas de oro**
 
@@ -81,7 +82,7 @@ Así tu repositorio podrá publicar sin que el token aparezca en ningún sitio.
 
 ![Los dos secretos guardados](capturas/07_github_secretos.png)
 
-**¡Ya está!** Revisa la lista de la primera página.
+**¡Ya está!** Si lo has adelantado, en la sesión empezarás directamente por el paso 4 de la práctica 1.
 
 ## Costes y límites
 

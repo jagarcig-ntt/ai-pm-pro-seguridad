@@ -217,8 +217,8 @@
     </table>
 
     <h3 class="reveal" style="margin-top:40px;">¿Venís preparados?</h3>
-    <p class="reveal">Escribe en el chat de Zoom cuáles de estas tres tienes:</p>
-    <div class="control reveal">✅ repo público · ✅ token de Cloudflare · ✅ secretos guardados en GitHub</div>
+    <p class="reveal">Escribe en el chat de Zoom cuáles de estas tienes. Lo demás lo hacemos juntos en la práctica 1.</p>
+    <div class="control reveal">✅ cuenta de GitHub · ✅ cuenta de Cloudflare · ✅ tu proyecto en Lovable</div>
 
     <h3 class="reveal" style="margin-top:40px;">Tres reglas</h3>
     <ol class="pasos reveal">
@@ -228,7 +228,7 @@
     </ol>
     <div class="notas-block">
       <div class="notas-label">Nota · 10:11 · Recuento de requisitos</div>
-      <p><strong>Sin repo público:</strong> que lo haga ahora (paso 1 de la guía de requisitos). <strong>Sin token o sin secretos:</strong> los guarda en su sala al empezar P1, sin compartir pantalla; Aida le acompaña.</p>
+      <p><strong>Sin cuenta de GitHub o de Cloudflare:</strong> que la cree ahora, durante la teoría (en Cloudflare, con <em>Continue with GitHub</em>). Conectar Lovable, el token y los secretos se hacen en la práctica 1.</p>
     </div>
   </div>
 </section>
@@ -665,9 +665,39 @@
     <div class="eyebrow reveal">Práctica 1 · Demo 10:30 · En salas 10:50 · 35 min</div>
     <h2 class="reveal rd1">Tu primer <em>despliegue</em></h2>
     <p class="reveal rd2" style="margin-top:24px;">En los pasos verás <code>&lt;usuario&gt;</code> (tu usuario de GitHub) y <code>&lt;repo&gt;</code> (el nombre de tu repositorio).</p>
-    <div class="aviso reveal"><strong>Antes de empezar:</strong> abre tu proyecto en Lovable y comprueba su nombre arriba a la izquierda. Si no guardaste los secretos en GitHub, hazlo primero (paso 3 de la guía de requisitos), sin compartir pantalla.</div>
+    <div class="aviso reveal"><strong>Antes de empezar:</strong> abre tu proyecto en Lovable y comprueba su nombre arriba a la izquierda. Si tienes varios, es fácil equivocarse.</div>
 
-    <h3 class="reveal" style="margin-top:36px;">Paso 1 · Pide a Lovable los tres ficheros, uno a uno</h3>
+    <h3 class="reveal" style="margin-top:36px;">Paso 1 · Conecta Lovable con GitHub y haz público el repositorio</h3>
+    <ol class="pasos reveal">
+      <li>En Lovable, abre <em>Settings → Git</em> y conecta tu proyecto con GitHub. Si GitHub te pide autorizar a Lovable, acepta en tu cuenta personal.</li>
+      <li>Espera a ver <strong>Connected</strong> e <strong>In sync with GitHub</strong>.</li>
+      <li>Abre tu repositorio en GitHub y ve a <em>Settings → General</em>. Baja hasta <em>Danger Zone</em>.</li>
+      <li>Pulsa <em>Change visibility</em> y elige <strong>Public</strong>. Comprueba que pone <em>This repository is currently public</em>.</li>
+    </ol>
+    <div class="aviso reveal"><strong>No renombres ni muevas el repositorio</strong> después de conectarlo: Lovable perdería la conexión.</div>
+    <div class="control reveal">✅ En el chat de Zoom: escribe "conectado".</div>
+
+    <h3 class="reveal" style="margin-top:36px;">Paso 2 · Crea el token de Cloudflare</h3>
+    <div class="aviso reveal"><strong>Deja de compartir pantalla</strong> desde aquí hasta terminar el paso 3. El token es una contraseña y la sesión se graba.</div>
+    <ol class="pasos reveal">
+      <li>En Cloudflare, entra en <em>Workers &amp; Pages</em>. En la columna de la derecha está tu <strong>Account ID</strong>: déjala abierta.</li>
+      <li>Haz clic en tu perfil y ve a <em>My Profile → API Tokens → Create Token → Create Custom Token</em>.</li>
+      <li>Rellena: <strong>Token name</strong>, el nombre de tu proyecto · <strong>Permissions</strong>, <code>Account</code> · <code>Workers Scripts</code> · <code>Edit</code> · <strong>Account Resources</strong>, <code>Include</code> · <code>All accounts</code> · <strong>Token expiration</strong>, 1 año.</li>
+      <li>Pulsa <em>Continue to summary</em> y <em>Create Token</em>. <strong>Copia el token:</strong> Cloudflare solo lo enseña una vez.</li>
+    </ol>
+
+    <h3 class="reveal" style="margin-top:36px;">Paso 3 · Guarda el token y el Account ID en GitHub</h3>
+    <ol class="pasos reveal">
+      <li>En tu repositorio de GitHub, ve a <em>Settings → Secrets and variables → Actions</em> y pulsa <em>New repository secret</em>.</li>
+      <li><strong>Name:</strong> el primero de abajo · <strong>Secret:</strong> tu token. Pulsa <em>Add secret</em>.</li>
+      <li>Repite con el segundo nombre y tu Account ID como <strong>Secret</strong>.</li>
+      <li>Comprueba que ves los dos, con estos nombres exactos. Ya puedes volver a compartir pantalla.</li>
+    </ol>
+    <div class="copiable"><button class="copiar" type="button">Copiar</button>CLOUDFLARE_API_TOKEN</div>
+    <div class="copiable"><button class="copiar" type="button">Copiar</button>CLOUDFLARE_ACCOUNT_ID</div>
+    <div class="control reveal">✅ En el chat de Zoom: escribe "secretos".</div>
+
+    <h3 class="reveal" style="margin-top:36px;">Paso 4 · Pide a Lovable los tres ficheros, uno a uno</h3>
     <p>Pulsa <strong>Copiar</strong>: se copia el prompt con el fichero completo. Pégalo en el chat de Lovable y envíalo. Repite con los otros dos.</p>
 
     <div class="copiable" data-fichero="Lab/workflows/comprobar-pr.yml"><button class="copiar" type="button">Copiar</button>Crea el fichero `.github/workflows/comprobar-pr.yml` en la raíz del repositorio con este contenido exacto. No cambies nada, ni comentarios ni espacios, y no toques ningún otro fichero:</div>
@@ -676,7 +706,7 @@
     <p style="font-size:13px;color:var(--ink-faint);">Los ficheros, por si los quieres ver: <a href="https://github.com/jagarcig-ntt/ai-pm-pro-seguridad/blob/main/sesiones/2026-11-git-deploy/Lab/workflows/comprobar-pr.yml" target="_blank" rel="noopener">comprobar-pr.yml</a> · <a href="https://github.com/jagarcig-ntt/ai-pm-pro-seguridad/blob/main/sesiones/2026-11-git-deploy/Lab/workflows/desplegar.yml" target="_blank" rel="noopener">desplegar.yml</a> · <a href="https://github.com/jagarcig-ntt/ai-pm-pro-seguridad/blob/main/sesiones/2026-11-git-deploy/Lab/workflows/pull_request_template.md" target="_blank" rel="noopener">pull_request_template.md</a></p>
     <div class="control reveal">✅ En el chat de Zoom: escribe "ficheros".</div>
 
-    <h3 class="reveal" style="margin-top:36px;">Pasos 2 a 4</h3>
+    <h3 class="reveal" style="margin-top:36px;">Pasos 5 a 7</h3>
     <ol class="pasos reveal">
       <li><strong>Mira cómo se publica.</strong> En GitHub, pestaña <strong>Actions</strong>: espera a que <strong>Desplegar</strong> salga en verde (alrededor de un minuto). Entra y copia la dirección de <strong>Publicado en</strong>.</li>
       <li><strong>Prueba tu web.</strong> Ábrela y haz lo principal de tu producto. Abrirla no basta: verde no significa que funcione.</li>
@@ -691,18 +721,19 @@
     <table class="tabla">
       <thead><tr><th>Lo que ves</th><th>Qué hacer</th></tr></thead>
       <tbody>
-        <tr><td>No aparece nada en <em>Actions</em></td><td>Busca <code>.github/workflows/</code> en tu repositorio. Si no está, repite el paso 1.</td></tr>
+        <tr><td>En <em>Settings → Git</em> no aparece tu cuenta de GitHub</td><td>Autoriza a Lovable en GitHub cuando te lo pida, en tu cuenta personal, y vuelve a conectar.</td></tr>
+        <tr><td>No aparece nada en <em>Actions</em></td><td>Busca <code>.github/workflows/</code> en tu repositorio. Si no está, repite el paso 4.</td></tr>
         <tr><td>Rojo en "0. Comprobar que existen los secretos"</td><td>Los nombres deben ser exactamente <code>CLOUDFLARE_API_TOKEN</code> y <code>CLOUDFLARE_ACCOUNT_ID</code>.</td></tr>
         <tr><td>Rojo en "5. Compilar"</td><td>En Lovable, pulsa <em>Fix build</em> si aparece. Si no, avisa.</td></tr>
-        <tr><td>Rojo en "7. Publicar"</td><td>Revisa los permisos del token: <code>Account · Workers Scripts · Edit</code>.</td></tr>
+        <tr><td>Rojo en "7. Publicar"</td><td>Revisa los permisos del token: <code>Account · Workers Scripts · Edit</code>. Si no, crea otro (paso 2) y sustituye el secreto.</td></tr>
         <tr><td>Rojo en "9. Comprobar que la web responde"</td><td>Se ha publicado, pero da error. Avisa: lo vemos juntos.</td></tr>
         <tr><td>El correo de confirmación lleva a la vista previa de Lovable</td><td>Añade tu web en <em>Allowed URLs</em> (paso del login) y regístrate de nuevo con otro email.</td></tr>
       </tbody>
     </table>
     <div class="notas-block">
       <div class="notas-label">Nota · P1</div>
-      <p><strong>Demo 10:30:</strong> conectar y repo público (4) · secretos sin compartir pantalla (2) · los tres prompts (4) · Actions, URL y login (5). <strong>Salas 10:50:</strong> arranque (2) · prompts (13) · Actions en verde (10) · web y login (7) · <strong>11:22</strong> vuelta y URL en el chat (3).</p>
-      <p><strong>Aida:</strong> pasa por las tres salas y atiende primero a quien no tiene secretos. Si una sala se atasca entera, entras tú. <strong>Errores esperados:</strong> proyecto equivocado en Lovable, los tres ficheros en un solo mensaje. <strong>Rojo en 9:</strong> ¿una clave secreta en el servidor? Al rescate.</p>
+      <p><strong>Demo 10:30:</strong> conectar y repo público (3) · formulario del token (3) · secretos sin compartir pantalla (2) · los tres prompts (3) · Actions, URL y login (4). <strong>Salas 10:50:</strong> arranque (2) · conectar (5) · token y secretos sin compartir (8) · prompts (7) · Actions en verde (5) · web y login (5) · <strong>11:22</strong> vuelta y URL en el chat (3).</p>
+      <p><strong>Aida:</strong> pasa por las tres salas, sobre todo en el token y los secretos. Si una sala se atasca entera, entras tú. <strong>Errores esperados:</strong> proyecto equivocado en Lovable, token sin el permiso <em>Edit</em>, nombre del secreto mal escrito, los tres ficheros en un solo mensaje. <strong>Rojo en 9:</strong> ¿una clave secreta en el servidor? Al rescate.</p>
       <p>Quien no tenga URL a las 11:25 sigue en P2 con el ruleset y lo recupera en el rescate.</p>
     </div>
   </div>
@@ -803,7 +834,7 @@
     <div class="descargas reveal rd2">
       <a class="descarga" href="descargas/guia_practica_sesion.pdf" download><div class="d-tipo">PDF</div><div class="d-titulo">Guía de la práctica</div><div class="d-desc">Prácticas 1 y 2, paso a paso</div></a>
       <a class="descarga" href="descargas/kit_alumno.pdf" download><div class="d-tipo">PDF</div><div class="d-titulo">Kit del alumno</div><div class="d-desc">Ciclo, mapa de entornos, checklist y chuleta</div></a>
-      <a class="descarga" href="descargas/guia_requisitos_previos.pdf" download><div class="d-tipo">PDF</div><div class="d-titulo">Guía de requisitos previos</div><div class="d-desc">Cuentas, token y secretos</div></a>
+      <a class="descarga" href="descargas/guia_requisitos_previos.pdf" download><div class="d-tipo">PDF</div><div class="d-titulo">Guía de requisitos previos</div><div class="d-desc">Cuentas, y los pasos de conexión y secretos con capturas</div></a>
       <a class="descarga" href="https://github.com/jagarcig-ntt/ai-pm-pro-seguridad/tree/main/sesiones/2026-11-git-deploy/Lab/workflows" target="_blank" rel="noopener"><div class="d-tipo">FICHEROS</div><div class="d-titulo">Workflows y plantilla</div><div class="d-desc">Los tres ficheros de tu repositorio</div></a>
     </div>
   </div>

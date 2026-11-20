@@ -116,14 +116,15 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 ### 10:11 — ¿Venís preparados? (4 min)
 
 **Tú:**
-> "Escribid en el chat, en un solo mensaje, cuáles de estas tres tenéis:
-> ✅ repo público · ✅ token de Cloudflare · ✅ secretos guardados en GitHub."
+> "Escribid en el chat, en un solo mensaje, cuáles de estas tenéis:
+> ✅ cuenta de GitHub · ✅ cuenta de Cloudflare · ✅ vuestro proyecto en Lovable.
+> Lo demás, conectar con GitHub y guardar el token, lo hacemos juntos en la práctica 1."
 
 **ACCIÓN:** espera las respuestas. Aida las cuenta.
 
 🎓 **Según lo que veas:**
-- **Le falta el repo público:** lo hará en su sala, al empezar (paso 1 de la guía de requisitos).
-- **Le falta el token o los secretos:** lo hará en su sala, al empezar la práctica 1, sin compartir pantalla. Aida le acompaña.
+- **Le falta una cuenta:** que la cree ahora, durante la teoría. En Cloudflare, con *Continue with GitHub*.
+- **No tiene proyecto en Lovable:** que cree uno sencillo ahora; si no da tiempo, practica sobre su copia de `feedback-hub`.
 
 ---
 
@@ -223,14 +224,14 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 ## DEMO 1 EN DIRECTO · 10:30–10:45 (15 min)
 
-*Proyecto: `demo-tareas`, sin conectar. Haces lo mismo que los alumnos: pasos 1 y 3 de la guía de requisitos y práctica 1 de la guía de la práctica.*
+*Proyecto: `demo-tareas`, sin conectar. Haces lo mismo que los alumnos: la práctica 1 del portal, pasos 1 a 7.*
 
-### 10:30 — Conectar con GitHub y repo público (4 min)
+### 10:30 — Conectar con GitHub y repo público (3 min)
 
 **Tú:**
-> "Este es un proyecto de Lovable recién creado, como el vuestro. Primero, lo que ya traéis hecho de casa: conectarlo a GitHub y hacerlo público."
+> "Este es un proyecto de Lovable recién creado, como el vuestro. Primero, conectarlo a GitHub y hacerlo público."
 
-**ACCIÓN, paso a paso** (paso 1 de la guía de requisitos):
+**ACCIÓN, paso a paso** (práctica 1, paso 1):
 1. [ ] Lovable: comprueba el nombre `demo-tareas` arriba a la izquierda.
 2. [ ] *Settings → Git* → conectar con GitHub → elegir tu cuenta → crear el repositorio.
 3. [ ] Espera a ver **Connected** e **In sync with GitHub**.
@@ -240,12 +241,23 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 🎓 **No renombres ni muevas el repositorio** después de conectarlo.
 
-### 10:34 — Guardar los secretos (2 min)
+### 10:33 — El token de Cloudflare (3 min)
 
 **Tú:**
-> "Ahora dejo de compartir pantalla, porque voy a pegar mi token. Es lo que haréis vosotros si no los traéis guardados."
+> "Para que GitHub pueda publicar en vuestra cuenta de Cloudflare necesita un token: una clave con permiso solo para publicar. Os enseño el formulario; el botón final lo pulsáis vosotros sin compartir pantalla."
 
-**ACCIÓN** (paso 3 de la guía de requisitos):
+**ACCIÓN** (práctica 1, paso 2):
+1. [ ] Cloudflare → *My Profile → API Tokens → Create Token → Create Custom Token*.
+2. [ ] Rellena el formulario en pantalla: nombre, `Account · Workers Scripts · Edit`, *Include · All accounts*, 1 año.
+3. [ ] **No pulses *Create Token*.** Usas el que preparaste antes de la sesión.
+4. [ ] Di dónde está el **Account ID**: *Workers & Pages*, columna derecha. No lo abras compartiendo.
+
+### 10:36 — Guardar los secretos (2 min)
+
+**Tú:**
+> "Ahora dejo de compartir pantalla, porque voy a pegar mi token. Vosotros haréis igual."
+
+**ACCIÓN** (práctica 1, paso 3):
 1. [ ] **Deja de compartir pantalla.**
 2. [ ] Repositorio → *Settings → Secrets and variables → Actions* → *New repository secret*.
 3. [ ] **Name:** `CLOUDFLARE_API_TOKEN` · **Secret:** el token → *Add secret*.
@@ -255,12 +267,12 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 **Tú:**
 > "Aquí están: dos secretos, y ni siquiera yo puedo ver su valor."
 
-### 10:36 — Los tres prompts (4 min)
+### 10:38 — Los tres prompts (3 min)
 
 **Tú:**
 > "En el portal, cada paso tiene un botón **Copiar**, que copia el mensaje con el fichero dentro. Lo pego en Lovable, lo envío y espero a que termine. **Uno a uno.**"
 
-**ACCIÓN** (práctica 1, paso 1):
+**ACCIÓN** (práctica 1, paso 4):
 1. [ ] Portal → Práctica 1 → *Copiar* del **1.1 `comprobar-pr.yml`** → pega en el chat de Lovable → envía → espera a que termine.
 2. [ ] *Copiar* del **1.2 `desplegar.yml`** → pega → envía → espera. "En cuanto llega a GitHub, empieza la publicación."
 3. [ ] *Copiar* del **1.3 plantilla de PR** → pega → envía → espera.
@@ -268,9 +280,9 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 🎓 Mientras Lovable trabaja, señala en el portal qué hace cada fichero.
 
-### 10:40 — La publicación, la URL y el login (5 min)
+### 10:41 — La publicación, la URL y el login (4 min)
 
-**ACCIÓN** (práctica 1, pasos 2 a 4):
+**ACCIÓN** (práctica 1, pasos 5 a 7):
 1. [ ] GitHub → pestaña **Actions** → **Desplegar** en marcha. Mientras tanto, explica los pasos con el esquema de F2.
 2. [ ] Círculo verde ✅ → clic en **Desplegar** → en el resumen, **Publicado en:** → copia la URL.
 3. [ ] Abre la URL. "Verde no significa que funcione": **regístrate** con el email de reserva.
@@ -307,15 +319,28 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 
 🎓 Aida entra en la primera sala. Tú, en la sala principal, atento a las peticiones de ayuda.
 
-### 10:52 — Los tres prompts (13 min)
+### 10:52 — Conectar con GitHub y repo público (5 min)
 
 🎓 **Errores esperados:**
 - Se equivocan de proyecto en Lovable.
+- GitHub pide autorizar a Lovable: que acepte en su cuenta personal.
+- Se olvidan de hacer público el repositorio.
+
+### 10:57 — Token y secretos, sin compartir pantalla (8 min)
+
+🎓 **Errores esperados:**
+- Token sin el permiso *Workers Scripts · Edit*.
+- Pierden el token antes de guardarlo: que creen otro.
+- Nombre del secreto mal escrito: que usen los botones *Copiar* del portal.
+- Alguien comparte pantalla con el token visible: ver "Qué hacer si…".
+
+### 11:05 — Los tres prompts (7 min)
+
+🎓 **Errores esperados:**
 - Pegan los tres ficheros en un solo mensaje.
 - El fichero no aparece en `.github/workflows/` en GitHub: que repitan el prompt.
-- Quien no traía los secretos los guarda ahora, sin compartir pantalla.
 
-### 11:05 — La publicación en verde (10 min)
+### 11:12 — La publicación en verde (5 min)
 
 🎓 **Qué significa cada rojo:**
 
@@ -326,9 +351,9 @@ Haces lo mismo que un alumno en casa, dos veces: un proyecto para el **ensayo** 
 | 7 | Token sin el permiso *Workers Scripts · Edit*, o Account ID equivocado |
 | 9 | Publicado, pero la web da error. Al rescate |
 
-### 11:15 — Probar la web y el login (7 min)
+### 11:17 — Probar la web y el login (5 min)
 
-🎓 Si el correo de confirmación lleva a la vista previa de Lovable, falta añadir su web en *Allowed URLs* (las tres direcciones del paso 4).
+🎓 Si el correo de confirmación lleva a la vista previa de Lovable, falta añadir su web en *Allowed URLs* (las tres direcciones del paso 7).
 
 ### 11:22 — Vuelta a la sala principal (3 min)
 
@@ -609,7 +634,7 @@ Para lo que se haya alargado. Si no hace falta, termina antes.
 | **Vas 10 minutos tarde** | Recorta el simulacro a las capturas y quita las preguntas al chat de la teoría. No toques las salas |
 | **Vas adelantado** | Más tiempo en las salas. No añadas contenido nuevo |
 | **Una sala se atasca entera** | Entra tú en esa sala y Aida pasa a las otras dos |
-| **Más de la mitad sin secretos guardados** | Que los guarden al empezar la práctica 1; el rescate absorbe el retraso |
+| **La práctica 1 se alarga (conectar, token y secretos)** | Quien no tenga URL a las 11:25 sigue en la práctica 2 con el ruleset; el rescate absorbe el retraso |
 | **Cae GitHub, Lovable o Cloudflare** | Sigue con las capturas del ensayo. Lo hacen después con la guía |
 | **Un alumno comparte pantalla con un token visible** | Pídele que deje de compartir. Al acabar, que revoque el token y cree uno nuevo |
 | **Pregunta de seguridad (CORS, claves, ataques)** | "Lo vemos el 11 de diciembre" |

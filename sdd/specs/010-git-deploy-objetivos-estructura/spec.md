@@ -131,11 +131,11 @@ Acordada con Gema el 17-nov y validada por Jaime. **Patrón:** teoría corta →
 
 | Hora | Min | Bloque | Ideas (≤3) | Jaime | El alumno | Entregable |
 |---|---|---|---|---|---|---|
-| 10:00 | 15 | **B0 Apertura** | Por qué importa · qué os lleváis · cómo trabajamos | Recuento y reglas de la sesión grabada | En el chat: ✅ repo público · ✅ token · ✅ secretos | Recuento de requisitos |
+| 10:00 | 15 | **B0 Apertura** | Por qué importa · qué os lleváis · cómo trabajamos | Recuento y reglas de la sesión grabada | En el chat: ✅ cuenta de GitHub · ✅ cuenta de Cloudflare · ✅ proyecto en Lovable | Recuento de requisitos |
 | 10:15 | 15 | **Teoría 1 · De Lovable a producción** (F1 y F2) | `main` siempre funciona · el PR como punto de control · la receta automática | Esquemas de Git y del workflow · caso Google Cloud | Preguntas en el chat | — |
 | 10:30 | 15 | **Demo 1 en directo** | — | Publica su proyecto de demostración desde cero, como harán ellos | Miran | — |
 | 10:45 | 5 | **Pausa activa** y reparto en 3 salas de 6 | | | | |
-| 10:50 | 35 | **Salas · Práctica 1: primer despliegue** | — | En la sala principal; entra si Aida lo necesita | Los 3 prompts → Actions en verde → su URL | **Su URL de producción** |
+| 10:50 | 35 | **Salas · Práctica 1: primer despliegue** | — | En la sala principal; entra si Aida lo necesita | Conectar con GitHub → token y secretos → los 3 prompts → Actions en verde → su URL | **Su URL de producción** |
 | 11:25 | 10 | **Pausa** | | | | |
 | 11:35 | 15 | **Teoría 2 · Entornos y secretos** (F3) | Tres entornos · `.env` público y secretos · la rama protege el código, no los datos | Esquema de entornos · caso Replit y el nuestro | Pregunta en el chat | — |
 | 11:50 | 15 | **Demo 2 en directo** | — | Protege `main`, cambio en Lovable, PR, preview y merge | Miran | — |

@@ -18,7 +18,45 @@ En los pasos verás dos datos tuyos:
 
 ## Práctica 1 · Tu primer despliegue
 
-### Paso 1 · Pide a Lovable los tres ficheros
+### Paso 1 · Conecta Lovable con GitHub y haz público el repositorio
+1. En Lovable, abre *Settings → Git* y conecta tu proyecto con GitHub. Si GitHub te pide autorizar a Lovable, acepta en tu cuenta personal.
+2. Espera a ver **Connected** e **In sync with GitHub**.
+3. Abre tu repositorio en GitHub y ve a *Settings → General*. Baja hasta *Danger Zone*.
+4. Pulsa *Change visibility* y elige **Public**. Comprueba que pone *This repository is currently public*.
+
+![Proyecto conectado a GitHub](capturas/01_lovable_git.png)
+
+> **No renombres ni muevas el repositorio** después de conectarlo: Lovable perdería la conexión.
+
+✅ **En el chat de Zoom:** escribe "conectado".
+
+### Paso 2 · Crea el token de Cloudflare
+**Deja de compartir pantalla** desde aquí hasta terminar el paso 3. El token es una contraseña y la sesión se graba.
+
+1. En Cloudflare, entra en *Workers & Pages*. En la columna de la derecha está tu **Account ID**: déjala abierta.
+2. Haz clic en tu perfil y ve a *My Profile → API Tokens → Create Token → Create Custom Token*.
+3. Rellena el formulario así:
+    - **Token name:** el nombre de tu proyecto;
+    - **Permissions:** `Account` · `Workers Scripts` · `Edit`;
+    - **Account Resources:** `Include` · `All accounts`;
+    - **Token expiration:** `1 year`.
+4. Pulsa *Continue to summary* y después *Create Token*.
+5. **Copia el token.** Cloudflare solo lo enseña una vez. Si lo pierdes, crea otro.
+
+![Permisos del token](capturas/05_cloudflare_token.png)
+
+### Paso 3 · Guarda el token y el Account ID en GitHub
+1. En tu repositorio de GitHub, ve a *Settings → Secrets and variables → Actions*.
+2. Pulsa *New repository secret*.
+3. **Name:** `CLOUDFLARE_API_TOKEN`. **Secret:** tu token. Pulsa *Add secret*.
+4. Repite con **Name:** `CLOUDFLARE_ACCOUNT_ID` y tu Account ID como **Secret**.
+5. Comprueba que ves los dos, con estos nombres exactos. Ya puedes volver a compartir pantalla.
+
+![Los dos secretos guardados](capturas/07_github_secretos.png)
+
+✅ **En el chat de Zoom:** escribe "secretos".
+
+### Paso 4 · Pide a Lovable los tres ficheros
 Pide los tres ficheros **uno a uno**, en tres mensajes. Para copiar cada fichero, ábrelo y pulsa el botón de copiar (*Copy raw file*).
 
 **1.1 Comprobación de cada cambio.** Escribe en el chat de Lovable y pega el contenido de [comprobar-pr.yml](../Lab/workflows/comprobar-pr.yml) a continuación:
@@ -37,18 +75,18 @@ En cuanto llegue a GitHub, **empieza tu primera publicación**.
 
 ✅ **En el chat de Zoom:** escribe "ficheros".
 
-### Paso 2 · Mira cómo se publica
+### Paso 5 · Mira cómo se publica
 1. En GitHub, abre tu repositorio y la pestaña **Actions**.
 2. Espera a que **Desplegar** salga con el círculo verde ✅. Tarda alrededor de un minuto.
 3. Haz clic en **Desplegar**. En el resumen verás **Publicado en:** y tu dirección. Tiene esta forma: `https://<usuario>-<repo>.<tu-subdominio>.workers.dev`.
 
 ✅ **En el chat de Zoom:** pega tu URL de producción.
 
-### Paso 3 · Prueba tu web
+### Paso 6 · Prueba tu web
 1. Abre tu URL.
 2. **Haz lo principal de tu producto**: crear algo, guardar o enviar un formulario. Abrirla no basta: verde no significa que funcione.
 
-### Paso 4 · Solo si tu producto tiene inicio de sesión
+### Paso 7 · Solo si tu producto tiene inicio de sesión
 Sin este paso, el enlace del correo de confirmación te lleva a la vista previa de Lovable en lugar de a tu web.
 
 1. En Lovable, abre **More → Users → Settings → Advanced** y busca **Allowed URLs**.
@@ -64,14 +102,12 @@ Sin este paso, el enlace del correo de confirmación te lleva a la vista previa 
 
 | Lo que ves | Qué significa | Qué hacer |
 |---|---|---|
-| No aparece nada en *Actions* | Los ficheros no han llegado a GitHub | Busca `.github/workflows/` en tu repositorio. Si no está, repite el paso 1 |
+| No aparece nada en *Actions* | Los ficheros no han llegado a GitHub | Busca `.github/workflows/` en tu repositorio. Si no está, repite el paso 4 |
 | **Desplegar** en rojo en el paso "0. Comprobar que existen los secretos" | Falta un secreto o tiene otro nombre | *Settings → Secrets and variables → Actions*: deben ser exactamente `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` |
 | En rojo en "5. Compilar" | El código de Lovable no compila | En Lovable, pulsa *Fix build* si aparece. Si no, avisa |
-| En rojo en "7. Publicar" | El token o el Account ID no son correctos | Revisa los permisos del token: `Account · Workers Scripts · Edit` |
+| En rojo en "7. Publicar" | El token o el Account ID no son correctos | Revisa los permisos del token: `Account · Workers Scripts · Edit`. Si no, crea otro (paso 2) y sustituye el secreto |
 | En rojo en "9. Comprobar que la web responde" | Se ha publicado, pero la web da error | Avisa: lo vemos juntos |
-| El correo de confirmación lleva a la vista previa de Lovable | Falta el paso 4 | Haz el paso 4 y regístrate de nuevo con otro email |
-
-**¿No guardaste los secretos en GitHub antes de la sesión?** Hazlo antes del paso 1, siguiendo el paso 3 de la guía de requisitos previos. **No compartas pantalla mientras pegas el token.**
+| El correo de confirmación lleva a la vista previa de Lovable | Falta el paso 7 | Haz el paso 7 y regístrate de nuevo con otro email |
 
 ---
 
