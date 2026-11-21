@@ -16,7 +16,7 @@ import markdown
 RAIZ = Path(__file__).resolve().parent.parent
 SESION = RAIZ / "sesiones" / "2026-11-git-deploy"
 GUIAS = ["guia_requisitos_previos", "guia_practica_sesion", "kit_alumno"]
-REPO = "https://github.com/jagarcig-ntt/ai-pm-pro-seguridad"
+WEB = "https://jagarcig-ntt.github.io/ai-pm-pro-seguridad"
 CHROME = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
 
 ESTILO = """
@@ -41,11 +41,10 @@ blockquote { margin: 7pt 0; padding: 4pt 9pt; border-left: 4px solid #DCEE3C; ba
 
 
 def enlaces_absolutos(html: str, carpeta: str) -> str:
-    """En un PDF los enlaces relativos no funcionan: se convierten en enlaces de GitHub."""
+    """En un PDF los enlaces relativos no funcionan: se convierten en enlaces a la web publicada (GitHub Pages)."""
     def cambiar(m: re.Match) -> str:
         ruta = posixpath.normpath(posixpath.join(carpeta, m.group(1)))
-        tipo = "tree" if m.group(1).endswith("/") else "blob"
-        return f'href="{REPO}/{tipo}/main/{ruta}"'
+        return f'href="{WEB}/{ruta}"'
     return re.sub(r'href="(?!https?:|#|mailto:)([^"]+)"', cambiar, html)
 
 

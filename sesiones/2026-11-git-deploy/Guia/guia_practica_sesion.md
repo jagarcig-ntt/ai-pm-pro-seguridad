@@ -59,7 +59,7 @@ En los pasos verás dos datos tuyos:
 ✅ **En el chat de Zoom:** escribe "secretos".
 
 ### Paso 4 · Pide a Lovable los tres ficheros
-Pide los tres ficheros **uno a uno**, en tres mensajes. Para copiar cada fichero, ábrelo y pulsa el botón de copiar (*Copy raw file*).
+Pide los tres ficheros **uno a uno**, en tres mensajes. Lo más cómodo es el botón *Copiar* de la práctica 1 en el portal, que copia el mensaje con el fichero dentro. Desde esta guía, abre o descarga cada fichero y copia todo su contenido.
 
 **1.1 Comprobación de cada cambio.** Escribe en el chat de Lovable y pega el contenido de [comprobar-pr.yml](../Lab/workflows/comprobar-pr.yml) a continuación:
 

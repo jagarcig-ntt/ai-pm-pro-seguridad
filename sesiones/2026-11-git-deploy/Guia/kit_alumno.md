@@ -69,7 +69,7 @@ Antes de un cambio importante, responde **sí o no**. Si hay un "no", decide a s
 
 ## 5. Los ficheros
 
-Los tres ficheros que pediste a Lovable están en la carpeta [`Lab/workflows/`](../Lab/workflows/) de este portal:
+Los tres ficheros que pediste a Lovable están en la sección [Descargas del portal](https://jagarcig-ntt.github.io/ai-pm-pro-seguridad/sesiones/2026-11-git-deploy/#descargas):
 
 - `comprobar-pr.yml`: comprueba cada cambio.
 - `desplegar.yml`: publica en Cloudflare y comprueba que la web responde.
