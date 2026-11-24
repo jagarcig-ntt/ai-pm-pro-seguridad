@@ -1,133 +1,32 @@
-# 🎯 CHEAT SHEET - Sesión 26 de junio
+# CHEAT SHEET · Seguridad v2 · jueves 10-dic · 19:00–21:00
 
-**Imprime esto. Ten lo visible durante la sesión.**
+*Sale de `GUION-SESION.md` (SPEC-023). Si no coinciden, manda el guion. Mensaje de la sesión: **Lovable protege una parte; la decisión es tuya.***
 
----
+| Hora | Min | Bloque | Preguntas (chat o voz) |
+|---|---|---|---|
+| 19:00 | 10 | Apertura | 19:08 ¿Habéis abierto la guía? → pega el enlace |
+| 19:10 | 27 | F1 · Claves y secretos | 19:20 · 19:28 · 19:35 |
+| 19:37 | 27 | F2 · Datos y permisos | 19:47 · 19:55 · 20:02 |
+| 20:04 | 8 | Pausa | Apunta las dudas del chat |
+| 20:12 | 27 | F3 · Datos personales | 20:22 · 20:30 · 20:37 |
+| 20:39 | 5 | Demo del pipeline de agentes | — |
+| 20:44 | 4 | Cierre | 20:46 ¿Qué vas a revisar primero? |
+| 20:48 | 12 | Colchón | Preguntas. Fin a las 21:00 |
 
-## ⏱️ TIMELINE (minutos)
+**Cada familia (27 min):** +0 Para qué y Antes de entrar (3) · +3 Ideas 1 y 2 (7) · +10 Pregunta (2) · +12 Idea 3 y caso (6) · +18 Chequeo (7) · +25 Lo que te llevas y pregunta (2)
 
-```
-0-5      Apertura + gancho
-5-50     Familia 1: Credenciales
-50-105   Familia 2: Base de Datos
-105-145  Familia 3: Datos Sensibles
-145-175  Familia 4: Configuración
-175-180  Cierre
-```
+**Chequeo (7 min):** pregunta de predicción → prompt en directo → mientras responde, lo ya hecho → resumen de dos frases → mensaje. **Sin respuesta a los 4 min → captura** (`023/capturas/fN-prompt.png`).
 
----
+| | Antes de entrar | Ideas | Caso | Preguntas | Chequeo: qué enseñar | Mensaje |
+|---|---|---|---|---|---|---|
+| **F1** | clave · clave pública · clave secreta | 1) No todas las claves son iguales. 2) Lovable guarda las secretas en *Secrets*, pero solo protege lo que pasa por Lovable. 3) Una clave publicada se usa en minutos | Startup mexicana: 82.314 $ en 48 h (feb-2026). Unit 42: menos de 5 min | ¿Dónde has pegado una clave? · ¿Lovable pondrá la clave en la web? · Una clave de tu producto: ¿pública o secreta? | Prompt 1 + la negativa del 24-nov en el historial del chat | Lovable te protege si la clave pasa por Lovable. Fuera, nadie |
+| **F2** | base de datos · tabla · RLS | 1) Con la clave pública cualquiera puede consultar tu base de datos. 2) RLS decide qué filas ve cada usuario. 3) Lovable crea con RLS; si pides algo inseguro, lo hace y avisa | CVE-2025-48757 (Matt Palmer, 29-may-2025; Lovable lo disputa). *Moltbook (saltable)* | ¿Qué protege tus datos? · ¿Qué dirá el escáner? · ¿Dónde mirarías un aviso crítico? | Prompt 2 + **More → Security → Findings** (crítico de `notas_publicas`). **No pulsar** *Fix all* ni *Run checks* | Lovable avisa; la decisión es tuya |
+| **F3** | dato personal · RGPD · brecha | 1) Pide solo lo que necesitas. 2) Dónde acaban los datos: consola, registros, IA. 3) 72 h para avisar (AEPD) | Samsung y ChatGPT (2023). *Multas de 2025, unos 1.200 M€ (saltable)* | ¿Qué datos pide tu registro? · ¿Lovable avisará de los datos de más? · Un dato que podrías quitar | Prompt 3 + vista previa del formulario (DNI, teléfono, fecha de nacimiento) | Ninguna herramienta decide por ti qué datos necesitas |
 
-## 🚀 COMANDO PARA EJECUTAR DEMO
+**Si vas tarde:** salta Cyble (F1), Moltbook (F2) y las multas (F3). El colchón absorbe el resto.
 
-```bash
-node /ruta/al/pipeline/dist/index.js --repo .
-```
+**Pipeline (20:39):** VS Code en `HeroCamp-Product/` → `/security-audit --repo feedbackhub` → opción **A** → `security-report.md`. **Sin terminar a los 2 min → `023/plan-b/security-report.md`.** Mensaje: no lo necesitáis; es la misma revisión, automatizada.
 
-**En VSCode integrada terminal:**
-- Font size: 28-32 (GRANDE)
-- Tarda: 0.15 segundos
-- Output: 17 hallazgos
+**Cierre (20:44):** checklist de la guía · Demo Day el 12-dic: mañana (11) nada de cambios grandes, salvo algo grave ("Si ya ocurrió") · datos de prueba en la demo, nada de *Secrets* en pantalla.
 
----
-
-## 📊 LOS 4 HALLAZGOS PRINCIPALES
-
-### Familia 1: Credenciales
-**Caso:** Startup mexicana, $82.314 en 48 horas  
-**Fallo:** API key Gemini hardcodeada  
-**Lección:** 4 minutos desde commit hasta explotación
-
-### Familia 2: Base de Datos
-**Caso:** CVE-2025-48757, 170 apps, 13.000 usuarios  
-**Fallo:** Tablas sin RLS  
-**Lección:** RLS no se activa por defecto  
-**Extra:** Prompt Injection (OWASP LLM #1) — agentes que leen input de usuarios sin permisos mínimos
-
-### Familia 3: Datos Sensibles
-**Caso:** Samsung 2023, 3 incidentes en 20 días  
-**Fallo:** Emails reales en test-data.json  
-**Lección:** 72 horas para notificar una brecha
-
-### Familia 4: Configuración
-**Caso:** CBIZ 2024, 36.000 registros en 3 meses  
-**Fallo:** Endpoint sin autenticación  
-**Lección:** 99% de fallos cloud = responsabilidad del cliente
-
----
-
-## 💯 CIFRAS CLAVE (memorizar)
-
-- **29 millones** de secretos expuestos en GitHub en 2025
-- **70%** de secretos de 2022 todavía funcionan en 2025
-- **4 minutos** de media hasta explotación
-- **170+ apps** afectadas por CVE-2025-48757
-- **13.000 usuarios** con datos expuestos
-- **3.000 activos** cloud mal configurados (empresa promedio)
-- **99%** de fallos cloud culpa del cliente
-- **72 horas** para notificar una brecha (RGPD)
-- **20 millones** de euros multa máxima RGPD
-
----
-
-## 🎬 MOMENTOS CLAVE (dónde pausar)
-
-1. **Min 5:** Tras mencionar $82.314 → pausa de 3 segundos
-2. **Min 12:** Tras mencionar $55.000 → pausa de 3 segundos
-3. **Min 22:** Tras mostrar "10 CRÍTICOS" → deja que lo procesen (5 seg)
-4. **Min 70:** Tras mencionar "4 minutos" → pausa (3 seg)
-5. **Min 140:** Tras mencionar "72 horas" → pausa (3 seg)
-
----
-
-## 🔧 SI ALGO FALLA
-
-| Problema | Solución |
-|----------|----------|
-| Pipeline no ejecuta | "Perfecto, así vemos los errores típicos" + mostrar informe pregenerado |
-| Terminal muy pequeña | Ctrl+Scroll up para aumentar font |
-| Alguien hace pregunta OFF-TOPIC | "Buena. La anotamos para después" |
-| Se olvida un comando | Tiene los comandos en GUION-SESION.md |
-
----
-
-## 📋 ANTES DE EMPEZAR (1 HORA ANTES)
-
-- [ ] VSCode abierto + feedbackhub visible
-- [ ] `npm run build` ejecutado (sin errores)
-- [ ] Terminal grande (font 28+)
-- [ ] Diapositivas cargadas
-- [ ] Este cheat sheet impreso y visible
-- [ ] Agua
-
----
-
-## 🎯 AL FINAL
-
-Entregar carpeta `/security-pipeline/` con:
-- `README.md` (cómo usar)
-- `dist/` (compilado)
-- Script de testing
-
----
-
-## 💬 FRASES CLAVE
-
-Úsalas cuando necesites conectar:
-
-> "Esto no es paranoia. Pasó 79.000 veces el año pasado."
-
-> "En 4 minutos hay un bot esperando."
-
-> "No es un ataque sofisticado. Es que no pusieron una cerradura."
-
-> "Si dice 'NO DESPLEGAR', hay riesgo AHORA MISMO."
-
-> "72 horas. No para investigar. Para NOTIFICAR."
-
-> "El agente no distingue entre instrucción y input de usuario. Todo es texto."
-
-> "Si ya ocurrió: rota, evalúa, llama, documenta, no borres."
-
----
-
-*Para referencia completa, abre: GUION-SESION.md*
+**Una hora antes (18:00):** pestañas: guía en PDF · chat de `prueba-cloud` · Findings · vista previa del formulario · prompts · carpeta del plan B. VS Code con letra 28 o más. ***Secrets* cerrado.** Chat de Zoom visible. Grabación activada. Agua.

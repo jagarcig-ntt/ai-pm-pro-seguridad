@@ -13,7 +13,7 @@ Ninguna spec, plan o tarea puede contradecirla. Si algo choca con ella, se cambi
 |---|---|---|---|
 | Seguridad para PMs (v1) | 26 jun 2026 | 17:00–20:00 (3h, Zoom) | Impartida · 9,29/10 · conservada en el tag de git `sesion-2026-06` |
 | Git, Deployment y Producción | 21 nov 2026 | 10:00–14:00 (4h, Zoom) | Impartida · retro en SPEC-025 (encuesta: 6,75 de media con 8 respuestas; todos menos una persona con su producto en producción) |
-| Seguridad y buenas prácticas con IA (v2) | **jueves 10 dic 2026** | 17:00–19:00 o 19:00–21:00, por confirmar (**2h, Zoom**) | **Replanteada el 24-nov (SPEC-026):** solo teoría (F1, F2 y F3, con un chequeo en Lovable del formador tras cada una) + guía y checklist para su producto de Lovable, enviadas antes de la sesión |
+| Seguridad y buenas prácticas con IA (v2) | **jueves 10 dic 2026** | **19:00–21:00** (**2h, Zoom**) | **Replanteada el 24-nov (SPEC-026):** solo teoría (F1, F2 y F3, con un chequeo en Lovable del formador tras cada una) + guía y checklist para su producto de Lovable, enviadas antes de la sesión |
 
 La sesión de 4h del viernes 11-dic la imparte otro entrenador, con temas de negocio, y queda fuera de este repositorio (acuerdo con coordinación del 24-nov).
 

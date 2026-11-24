@@ -10,7 +10,7 @@
 | Frase nueva en el material de alumnos | ✅ `index.html:855` y `Guia/kit_alumno.md:84`. El PDF del kit está regenerado y la incluye (comprobado leyendo el texto del PDF) |
 | La promesa antigua en `sesiones/2026-11-git-deploy/` | ✅ en el material del formador: `Teoria/GUION-SESION.md` (613, 616, 641), `Teoria/CHEAT-SHEET.md` (21, 35), `Teoria/Formador/*_profundo.md` y las notas del formador de `index.html` (636, 858). Es la sesión que ya se dio, así que se dejan tal cual. ⚠️ Fuera del material del formador quedan dos menciones (ver hallazgos) |
 | Portal del 21-nov en el navegador, a 1440 px y 390 px | ✅ La sección de cierre muestra la frase nueva sin cortes en los dos anchos. A 390 px el menú superior se desplaza en horizontal, que ya era así en el diseño. **Método:** este equipo no tiene Chrome, así que se usó Edge sin ventana, con una copia temporal que fuerza que se vea el contenido animado (`.reveal`). Para 390 px se usó un marco de 390 px, porque Edge sin ventana tiene un ancho mínimo de 492 px |
-| El PDF de la guía responde en su URL | ⏳ Pendiente del push. URL: `https://jagarcig-ntt.github.io/ai-pm-pro-seguridad/sesiones/2026-12-seguridad-v2/descargas/guia_seguridad_alumnos.pdf`. En local está generado (9 páginas, T10) |
+| El PDF de la guía responde en su URL | ✅ Después del push (commit 3bc9c7b): 200, `application/pdf`, el mismo SHA-1 que el PDF local. El kit también responde (200). URL: `https://jagarcig-ntt.github.io/ai-pm-pro-seguridad/sesiones/2026-12-seguridad-v2/descargas/guia_seguridad_alumnos.pdf`. En local está generado (9 páginas, T10) |
 
 ### Hallazgos
 1. **`sesiones/2026-11-git-deploy/Teoria/familia3_entornos_secretos_alumnos.md:102`** es teoría para alumnos (enlazada desde el README de la sesión) y dice: "es el tema de la sesión de **Seguridad del 11 de diciembre**". No es la promesa del check, pero la fecha ya no es correcta (ahora es el jueves 10 de diciembre). Ninguna tarea de SPEC-026 declara este fichero. ✅ **Corregido el 24-nov** a "Seguridad del 10 de diciembre", con el OK de Jaime.
@@ -61,8 +61,8 @@
 |---|---|
 | T01, T02, T03, T04, T05, T07, T08, T09, T10 | ☑ |
 | T06 | ☑ (24-nov): comprobación avanzada documentada; prompt F1 ajustado y validado con el formato nuevo |
-| T11 🧑 | ☐: revisión de Jaime |
-| T12 | ◐: falta la URL del PDF después del push |
+| T11 🧑 | ☑ (24-nov): OK de Jaime y push |
+| T12 | ☑ (24-nov): URL del PDF comprobada |
 | T13 | Esta revisión |
 
 ### Correcciones aplicadas tras la revisión (24-nov, OK de Jaime)
@@ -81,8 +81,8 @@
 **La spec no se puede pasar a `hecha` todavía.** Hay que hacer, en este orden:
 1. ~~Corregir en la guía el momento de pasar la checklist y los términos de F3; regenerar el PDF~~ ✅ hecho.
 2. ~~Corregir "Demo Day mañana" en `plan.md:26`~~ ✅ hecho.
-3. T11: revisión de Jaime (R7 ya está decidido: vale así). Después, el push.
-4. T12: comprobar la URL del PDF.
+3. ~~T11 y push~~ ✅ hecho (commit 3bc9c7b).
+4. ~~T12: comprobar la URL del PDF~~ ✅ hecho.
 5. ~~Cerrar T06~~ ✅ hecho (24-nov).
 6. Llevar a SPEC-023: la interacción al empezar cada chequeo (CA3), CA7 del guion y la fecha del Demo Day. Llevar a SPEC-024: CA7 del portal. CA2 de SPEC-023 se cumple cuando se cree su carpeta.
 

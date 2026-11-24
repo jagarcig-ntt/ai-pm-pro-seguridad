@@ -1,6 +1,6 @@
 # PLAN · SPEC-024 · Portal de la sesión Seguridad v2
 
-*Spec: [spec.md](spec.md) (aprobada el 18-nov) · Estado del plan: borrador*
+*Spec: [spec.md](spec.md) · Estado del plan: **obsoleto** (24-nov). Es el plan de la v1 (aprobada el 18-nov: salas, prácticas, auditores). Se rehace con `/sdd-plan 024` cuando se apruebe la spec v2*
 
 ## 1. Enfoque
 - **Se reconstruye `sesiones/2026-12-seguridad-v2/index.html` en su sitio** (constitution 1.4: lo impartido sigue en el tag `sesion-2026-06`), tomando como **plantilla el portal del 21-nov** (`sesiones/2026-11-git-deploy/index.html`): sus secciones, sus estilos propios (`.tabla`, `.pasos`, `.copiable`, `.control`, `.aviso`, `.comandos`) y sus botones *Copiar*.

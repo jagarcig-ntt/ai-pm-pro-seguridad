@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Estado | **en curso** (24-nov) · aprobada por Jaime · [plan](plan.md) aprobado · [tasks](tasks.md) |
-| Sesión | 2026-12 Seguridad v2 (**jueves 10-dic**, 2h por Zoom, con Aida; **17:00–19:00 o 19:00–21:00**, por confirmar) |
+| Sesión | 2026-12 Seguridad v2 (**jueves 10-dic**, 2h por Zoom, con Aida; **19:00–21:00**, confirmado el 24-nov) |
 | Fecha límite | 2026-11-30 (alcance, constitution y reordenación de specs) · **2026-12-04 (guía y checklist, que se envían antes de la sesión; propuesta)** · 2026-12-07 (escaleta y guion) |
 | Depende de | SPEC-025 (retro del 21-nov) · SPEC-021 T01 (`verificacion.md`, casos verificados) |
 | Sustituye o redefine | SPEC-021 · SPEC-022 · SPEC-023 · SPEC-024 (ver §5.3) |
@@ -89,7 +89,7 @@ Dejar definida y ordenada la nueva sesión de seguridad (2h de teoría el 10-dic
 2.2 definiciones directas · 2.3 máximo 3 ideas · 2.5 lenguaje de PM · 2.7 ritmo · 2.8 timings honestos · 2.11 kit accionable · 3.1 stack del alumno · 4 URL estables · 5.4 no inventar datos · 5.6 portal sensible.
 
 ## 8. Preguntas abiertas
-- [ ] **Hora exacta:** 17:00–19:00 o 19:00–21:00 (pendiente de Gema). La escaleta se escribe en minutos relativos hasta que se confirme.
+- [x] **Hora exacta:** **19:00–21:00** (Jaime, 24-nov). Minuto 0 = 19:00; pausa a las 20:04 y cierre a las 20:44, con colchón hasta las 21:00.
 - [ ] **Comentario de `comprobar-pr.yml` en los repos de los alumnos** (Jaime no lo sabe, 24-nov). **Recomendación:** corregirlo solo en la plantilla (`Lab/workflows/comprobar-pr.yml`) y dejar los repos de los alumnos como están. Es un comentario que no afecta al funcionamiento, y tocar 18 repos ajenos no compensa. Pendiente de confirmar.
 
 ## 8 bis. Decisiones (Jaime, 24-nov)

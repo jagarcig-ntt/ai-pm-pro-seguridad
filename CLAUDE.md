@@ -23,7 +23,7 @@ Las plantillas están en `sdd/templates/`.
 |---|---|---|
 | Seguridad para PMs v1 | 26 jun 2026 | Impartida (9,29/10). Conservada en el tag de git `sesion-2026-06`; su material evoluciona en `sesiones/2026-12-seguridad-v2/` |
 | Git, Deployment y Producción | 21 nov 2026 · 10:00–14:00 | `sesiones/2026-11-git-deploy/` (esqueleto; ver su README) |
-| Seguridad y buenas prácticas con IA v2 | 11 dic 2026 · 17:00–21:00 | `sesiones/2026-12-seguridad-v2/`: portal (`index.html`), `descargas/`, `HeroCamp-Teoria/`, `HeroCamp-Product/` (pipeline) |
+| Seguridad y buenas prácticas con IA v2 | jueves 10 dic 2026 · 19:00–21:00 (2h, solo teoría; SPEC-026) | `sesiones/2026-12-seguridad-v2/`: portal (`index.html`), `descargas/`, `HeroCamp-Teoria/`, `HeroCamp-Product/` (pipeline) |
 
 El contexto operativo de la sesión de junio (audiencia, identidad visual, decisiones de diseño) está en `sesiones/2026-12-seguridad-v2/HeroCamp-Teoria/Contexto-Proyecto.md`.
 

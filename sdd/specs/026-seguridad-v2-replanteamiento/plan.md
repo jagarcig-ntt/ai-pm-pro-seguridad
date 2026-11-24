@@ -12,7 +12,7 @@ Se reutiliza la teoría de junio de F1, F2 y F3, recortada a 3 ideas por familia
 
 ## 2. Diseño
 
-### 2.1 Escaleta (120 min, minutos relativos hasta confirmar 17:00 o 19:00)
+### 2.1 Escaleta (120 min, minuto 0 = 19:00; hora confirmada el 24-nov)
 Sustituye al anexo A de la spec. La fuente definitiva de los minutos será el guion de SPEC-023 (constitution 1.6).
 
 | Min | Dur. | Bloque | Contenido | Interacción |
