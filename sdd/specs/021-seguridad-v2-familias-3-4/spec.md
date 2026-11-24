@@ -2,8 +2,8 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **en curso** (11-nov) · aprobada por Jaime |
-| Sesión | 2026-12 Seguridad v2 (jueves 11-dic · 17:00–21:00) |
+| Estado | **en curso** (11-nov) · aprobada por Jaime · **redefinida por [SPEC-026](../026-seguridad-v2-replanteamiento/spec.md) el 24-nov:** queda solo la teoría de F3 (3 ideas, lenguaje directo) y los casos verificados (T01, hecha). F4 sale de la sesión y pasa a la checklist de la guía; salen las prácticas (T06); el kit pasa a SPEC-026. Las tareas T02–T07 se replanifican |
+| Sesión | 2026-12 Seguridad v2 (**jueves 10-dic, 2h, solo teoría**; antes 11-dic · 17:00–21:00) |
 | Fecha límite | 2026-11-30 |
 | Depende de | SPEC-020 (retro validada el 11-nov) · SPEC-022 (pipeline: formato de los agentes de F3 y F4) · constitution v1.6 |
 | Alimenta | SPEC-023 (guion de 4h) · SPEC-024 (portal) |

@@ -1,6 +1,6 @@
 # Constitution · Hero Camp AI PM Pro
 
-*Versión 1.8 · 19 de noviembre de 2026 · Responsable: Jaime García*
+*Versión 1.9 · 24 de noviembre de 2026 · Responsable: Jaime García*
 
 Principios y reglas que gobiernan todo el material formativo de este repositorio.
 Ninguna spec, plan o tarea puede contradecirla. Si algo choca con ella, se cambia la constitution primero (con su propia versión y fecha), nunca se ignora.
@@ -12,8 +12,10 @@ Ninguna spec, plan o tarea puede contradecirla. Si algo choca con ella, se cambi
 | Sesión | Fecha | Horario | Estado |
 |---|---|---|---|
 | Seguridad para PMs (v1) | 26 jun 2026 | 17:00–20:00 (3h, Zoom) | Impartida · 9,29/10 · conservada en el tag de git `sesion-2026-06` |
-| Git, Deployment y Producción | 21 nov 2026 | 10:00–14:00 (4h, Zoom) | En diseño · **prioridad** |
-| Seguridad y buenas prácticas con IA (v2) | 11 dic 2026 | 17:00–21:00 (4h) | Evoluciona directamente el material de junio |
+| Git, Deployment y Producción | 21 nov 2026 | 10:00–14:00 (4h, Zoom) | Impartida · retro en SPEC-025 (encuesta: 6,75 de media con 8 respuestas; todos menos una persona con su producto en producción) |
+| Seguridad y buenas prácticas con IA (v2) | **jueves 10 dic 2026** | 17:00–19:00 o 19:00–21:00, por confirmar (**2h, Zoom**) | **Replanteada el 24-nov (SPEC-026):** solo teoría (F1, F2 y F3, con un chequeo en Lovable del formador tras cada una) + guía y checklist para su producto de Lovable, enviadas antes de la sesión |
+
+La sesión de 4h del viernes 11-dic la imparte otro entrenador, con temas de negocio, y queda fuera de este repositorio (acuerdo con coordinación del 24-nov).
 
 Audiencia de la promoción actual: **18 alumnos**, con una edad media de más de 40 años. La mitad son ingenieros y perfiles tecnológicos de empresas tradicionales; la otra mitad, perfiles de diseño y negocio. Cada uno desarrolla un side project individual que presenta ante un jurado en el **Demo Day (12-dic)**. Construyen con **Lovable** (plan Pro, con Lovable Cloud como backend) y GitHub, y publican en Cloudflare.
 
@@ -48,6 +50,11 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 10. **Herramienta que funciona a la primera.** Lo más valorado en junio fue el pipeline de agentes ("funcionó a la primera"). Cada sesión entrega una herramienta ejecutable (pipeline, workflow, plantilla de repo) probada desde cero antes de la sesión.
 11. **Kit listo para aplicar.** El segundo punto más valorado fue el kit de seguridad. Cada sesión cierra con un entregable accionable al día siguiente (checklist, guía, plantillas), no solo con teoría.
 12. **Dinamismo sin perder la guía.** Lo guiado y paso a paso funcionó, pero hubo un comentario de "poco dinámico". En las sesiones de 4h, al menos el 40 % del tiempo es práctica o interacción.
+
+**Excepción · Seguridad v2 (10-dic), SPEC-026.** Por acuerdo con coordinación, es una sesión de 2h solo de teoría, así que no se aplican los criterios 2.6 (práctica sobre lo suyo), 2.10 (herramienta ejecutable) ni 2.12 (40 % de práctica). En su lugar:
+- el formador lanza en directo un chequeo en Lovable (escáner y prompt) tras cada familia;
+- la guía, con su checklist y los prompts, se envía antes de la sesión, para que cada alumno repita el chequeo sobre su producto;
+- todo el material se escribe con conceptos básicos y lenguaje directo, sin metáforas ni analogías (amplía 2.2 a toda la sesión).
 
 ---
 
@@ -118,4 +125,5 @@ Heredados de lo que funcionó el 26-jun y del feedback de coordinación.
 | 1.5 | 2026-11-02 | Audiencia y 3.1: Lovable como herramienta principal y Cloudflare Workers · 2.6: se practica sobre el producto propio cuando el stack es común · 2.9: éxito de Git/Deploy = su producto en staging y producción por CI/CD (SPEC-010 v4, a partir de SPEC-018) |
 | 1.7 | 2026-11-13 | Audiencia y 3.1: el backend de los alumnos es Lovable Cloud y no un Supabase propio (validado con `prueba-cloud` el 13-nov) |
 | 1.8 | 2026-11-19 | 2.2: los términos de "Antes de entrar" se explican con definiciones directas, no con analogías (decisión de Jaime en el ensayo de Git/Deploy) |
+| 1.9 | 2026-11-24 | §0: el 21-nov pasa a impartida; Seguridad v2 pasa al jueves 10-dic, 2h y solo teoría, y el 11-dic lo lleva otro entrenador · excepción a 2.6, 2.10 y 2.12 para Seguridad v2, con lenguaje directo en toda la sesión (SPEC-026, acuerdo con Gema y Manu) |
 | 1.6 | 2026-11-05 | Tras el correo de Gema: audiencia (18, perfil mixto, Demo Day), coordinación, 2.9 la preview del PR cuenta como staging, 2.6 18 productos, 3.1 Supabase propio de cada alumno conectado desde Lovable (decisión de Jaime, 5-nov), 3.2 coste 0 salvo Lovable Pro, 3.4 clases grabadas |

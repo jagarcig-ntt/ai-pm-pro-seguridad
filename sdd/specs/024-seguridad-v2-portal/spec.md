@@ -2,9 +2,9 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | aprobada (Jaime, 18-nov) |
-| Sesión | 2026-12 Seguridad v2 |
-| Fecha límite | 2026-12-07 (esqueleto del portal y escaleta en borrador: 2026-11-23) |
+| Estado | aprobada (Jaime, 18-nov) · **redefinida por [SPEC-026](../026-seguridad-v2-replanteamiento/spec.md) el 24-nov; hay que volver a aprobarla.** Nuevo alcance: portal con teoría (F1, F2 y F3, 3 ideas cada una, lenguaje directo), casos, el chequeo en Lovable y descargas. Salen las prácticas, las salas, los prompts auditores, el check en el CI y el anexo A (lo sustituye la escaleta de SPEC-026, plan §2.1) |
+| Sesión | 2026-12 Seguridad v2 (**jueves 10-dic, 2h**) |
+| Fecha límite | 2026-12-07 |
 | Depende de | SPEC-021 (contenido y prácticas de F3 y F4) · SPEC-022 (prompts auditores y check de seguridad en el CI, por redefinir) · SPEC-023 (guion, fuente de los minutos) · SPEC-016 (portal del 21-nov, modelo) |
 | Responsable | Jaime García |
 

@@ -99,7 +99,7 @@ Tu repositorio es público y las clases se graban: no enseñes nunca un secreto 
 
 Cuando separes entornos, cada uno tendrá **sus propios secretos**: si algo se filtra desde staging, producción no se ve afectada.
 
-> Qué pasa cuando un secreto se filtra, y cómo detectarlo, es el tema de la sesión de **Seguridad del 11 de diciembre**. Hoy nos quedamos en dónde vive cada cosa.
+> Qué pasa cuando un secreto se filtra, y cómo detectarlo, es el tema de la sesión de **Seguridad del 10 de diciembre**. Hoy nos quedamos en dónde vive cada cosa.
 
 ---
 

@@ -1,8 +1,10 @@
-"""Genera los PDF de las guías de la sesión Git/Deploy a partir de su Markdown.
+"""Genera los PDF de las guías de los alumnos a partir de su Markdown.
 
 Uso:  python scripts/generar_guia_pdf.py [nombre ...]
-Sin argumentos genera todas las de GUIAS (fuente en Guia/, PDF en descargas/).
-Necesita el paquete `markdown` (pip install markdown) y Google Chrome.
+Sin argumentos genera las de la sesión Git/Deploy (POR_DEFECTO). Las demás guías,
+como la de seguridad, se generan pidiéndolas por su nombre:
+      python scripts/generar_guia_pdf.py guia_seguridad_alumnos
+Necesita el paquete `markdown` (pip install markdown) y Google Chrome o Microsoft Edge.
 """
 import posixpath
 import re
@@ -14,10 +16,24 @@ from pathlib import Path
 import markdown
 
 RAIZ = Path(__file__).resolve().parent.parent
-SESION = RAIZ / "sesiones" / "2026-11-git-deploy"
-GUIAS = ["guia_requisitos_previos", "guia_practica_sesion", "kit_alumno"]
+GIT_DEPLOY = "sesiones/2026-11-git-deploy"
+SEGURIDAD = "sesiones/2026-12-seguridad-v2"
+# nombre de la guía → (carpeta del Markdown, carpeta del PDF), relativas a la raíz del repo
+GUIAS = {
+    "guia_requisitos_previos": (f"{GIT_DEPLOY}/Guia", f"{GIT_DEPLOY}/descargas"),
+    "guia_practica_sesion": (f"{GIT_DEPLOY}/Guia", f"{GIT_DEPLOY}/descargas"),
+    "kit_alumno": (f"{GIT_DEPLOY}/Guia", f"{GIT_DEPLOY}/descargas"),
+    "guia_seguridad_alumnos": (f"{SEGURIDAD}/HeroCamp-Teoria/Entregables", f"{SEGURIDAD}/descargas"),
+}
+POR_DEFECTO = ["guia_requisitos_previos", "guia_practica_sesion", "kit_alumno"]
 WEB = "https://jagarcig-ntt.github.io/ai-pm-pro-seguridad"
-CHROME = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+# Chrome o, si no está, Edge (también es Chromium y acepta las mismas opciones)
+NAVEGADORES = [
+    r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+    r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
+    r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
+    r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
+]
 
 ESTILO = """
 @page { size: A4; margin: 15mm 16mm; }
@@ -30,6 +46,8 @@ ol, ul { margin: 4pt 0; padding-left: 18pt; }
 li { margin: 2pt 0; }
 a { color: #1b1d17; }
 code { font-family: Consolas, monospace; background: #f0f0ea; padding: 0 2pt; }
+pre { white-space: pre-wrap; background: #f0f0ea; padding: 5pt 7pt; font-size: 9pt; break-inside: avoid; }
+pre code { padding: 0; }
 table { border-collapse: collapse; width: 100%; margin: 6pt 0; break-inside: avoid; }
 th, td { border: 1px solid #c9c9bf; padding: 4pt 6pt; text-align: left; vertical-align: top; }
 th { background: #f0f0ea; }
@@ -48,13 +66,23 @@ def enlaces_absolutos(html: str, carpeta: str) -> str:
     return re.sub(r'href="(?!https?:|#|mailto:)([^"]+)"', cambiar, html)
 
 
+def navegador() -> str:
+    for ruta in NAVEGADORES:
+        if Path(ruta).exists():
+            return ruta
+    sys.exit("No se encuentra Chrome ni Edge. Instala uno de los dos o añade su ruta a NAVEGADORES.")
+
+
 def generar(nombre: str) -> None:
-    fuente = SESION / "Guia" / f"{nombre}.md"
-    destino = SESION / "descargas" / f"{nombre}.pdf"
+    if nombre not in GUIAS:
+        sys.exit(f"Guía desconocida: {nombre}. Disponibles: {', '.join(GUIAS)}")
+    carpeta_md, carpeta_pdf = GUIAS[nombre]
+    fuente = RAIZ / carpeta_md / f"{nombre}.md"
+    destino = RAIZ / carpeta_pdf / f"{nombre}.pdf"
     cuerpo = markdown.markdown(
-        fuente.read_text(encoding="utf-8"), extensions=["tables", "sane_lists", "md_in_html"]
+        fuente.read_text(encoding="utf-8"), extensions=["tables", "sane_lists", "md_in_html", "fenced_code"]
     )
-    cuerpo = enlaces_absolutos(cuerpo, "sesiones/2026-11-git-deploy/Guia")
+    cuerpo = enlaces_absolutos(cuerpo, carpeta_md)
     html = (
         '<!doctype html><html lang="es"><head><meta charset="utf-8">'
         f'<base href="{fuente.parent.as_uri()}/"><title>{nombre}</title>'
@@ -66,7 +94,7 @@ def generar(nombre: str) -> None:
         pagina.write_text(html, encoding="utf-8")
         subprocess.run(
             [
-                CHROME, "--headless=new", "--disable-gpu", "--no-pdf-header-footer",
+                navegador(), "--headless=new", "--disable-gpu", "--no-pdf-header-footer",
                 f"--user-data-dir={Path(carpeta) / 'perfil'}",
                 f"--print-to-pdf={destino}", pagina.as_uri(),
             ],
@@ -76,7 +104,7 @@ def generar(nombre: str) -> None:
 
 
 def main() -> None:
-    for nombre in sys.argv[1:] or GUIAS:
+    for nombre in sys.argv[1:] or POR_DEFECTO:
         generar(nombre)
 
 

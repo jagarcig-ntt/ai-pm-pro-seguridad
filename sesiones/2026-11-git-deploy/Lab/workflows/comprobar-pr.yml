@@ -43,5 +43,5 @@ jobs:
       - name: 5. Comprobar que compila
         run: bun run build
 
-      # 11 de diciembre: aquí añadiremos el check de seguridad
-      # (sesión "Seguridad y buenas prácticas con IA").
+      # Seguridad: este workflow no revisa la seguridad. Para eso, usa la guía
+      # y la checklist de la sesión de seguridad del 10 de diciembre.

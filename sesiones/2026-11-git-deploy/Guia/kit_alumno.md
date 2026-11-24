@@ -81,4 +81,4 @@ La práctica completa, paso a paso, está en la **guía de la práctica**.
 
 Termínalo por tu cuenta antes del Demo Day con la guía de la práctica. Y entra en tu web unos días antes del Demo Day para comprobar que lo principal funciona.
 
-El 11 de diciembre añadimos el check de seguridad a tu CI.
+En la sesión de seguridad os damos una guía y una checklist para revisar vuestro producto.
