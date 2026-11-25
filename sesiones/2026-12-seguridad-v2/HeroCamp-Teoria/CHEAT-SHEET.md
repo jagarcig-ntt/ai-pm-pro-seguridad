@@ -15,6 +15,8 @@
 
 **Cada familia (27 min):** +0 Para qué y Antes de entrar (3) · +3 Ideas 1 y 2 (7) · +10 Pregunta (2) · +12 Idea 3 y caso (6) · +18 Chequeo (7) · +25 Lo que te llevas y pregunta (2)
 
+**En el portal, no bajes de «Caso real» antes del chequeo:** la tarjeta ya cuenta lo que pasó.
+
 **Chequeo (7 min):** pregunta de predicción → prompt en directo → mientras responde, lo ya hecho → resumen de dos frases → mensaje. **Sin respuesta a los 4 min → captura** (`023/capturas/fN-prompt.png`).
 
 | | Antes de entrar | Ideas | Caso | Preguntas | Chequeo: qué enseñar | Mensaje |
@@ -25,8 +27,8 @@
 
 **Si vas tarde:** salta Cyble (F1), Moltbook (F2) y las multas (F3). El colchón absorbe el resto.
 
-**Pipeline (20:39):** VS Code en `HeroCamp-Product/` → `/security-audit --repo feedbackhub` → opción **A** → `security-report.md`. **Sin terminar a los 2 min → `023/plan-b/security-report.md`.** Mensaje: no lo necesitáis; es la misma revisión, automatizada.
+**Pipeline (20:39):** VS Code en `herocamp-security-pipeline`, terminal Git Bash → `bash auditar.sh https://github.com/jagarcig-ntt/feedback-hub --rama demo/seguridad` → `security-report.md`. 36–72 s. **Sin terminar a los 2 min o familia «No revisada» → `023/plan-b/security-report.md`.** Mensaje: no lo necesitáis; es la misma revisión, automatizada.
 
 **Cierre (20:44):** checklist de la guía · Demo Day el 12-dic: mañana (11) nada de cambios grandes, salvo algo grave ("Si ya ocurrió") · datos de prueba en la demo, nada de *Secrets* en pantalla.
 
-**Una hora antes (18:00):** pestañas: guía en PDF · chat de `prueba-cloud` · Findings · vista previa del formulario · prompts · carpeta del plan B. VS Code con letra 28 o más. ***Secrets* cerrado.** Chat de Zoom visible. Grabación activada. Agua.
+**Una hora antes (18:00):** pestañas: portal (sin `?notas`) · chat de `prueba-cloud` · Findings · vista previa del formulario · portal en `#prompts` · carpeta del plan B. VS Code con letra 28 o más y la orden escrita. ***Secrets* cerrado.** Chat de Zoom visible. Grabación activada. Agua.

@@ -441,14 +441,15 @@ Formato de la respuesta:
       <div>
         <p><strong>VS Code</strong> es un programa para trabajar con el código desde el ordenador, fuera de Lovable. <strong>Claude Code</strong> es un asistente de IA que funciona dentro de VS Code y puede leer y revisar el código de un proyecto entero.</p>
         <p>Un <strong>agente</strong> es un programa de IA que recibe una tarea, decide qué pasos dar y los ejecuta por su cuenta: leer ficheros, buscar fallos y escribir un informe. Un <strong>pipeline</strong> es una secuencia de pasos que se lanzan juntos.</p>
-        <p>En la sesión lanzo cuatro agentes sobre <code>feedbackhub</code>, un proyecto de prueba con fallos metidos a propósito y claves falsas. Cada agente revisa una familia de riesgos: las tres de hoy y la configuración (por ejemplo, si hay archivos o páginas de prueba que cualquiera puede abrir). La configuración la tienes en la checklist de la guía.</p>
+        <p>En la sesión lanzo cuatro agentes sobre <code>feedback-hub</code>, el proyecto de Lovable del 21 de noviembre, en una versión aparte con un fallo metido a propósito por cada familia, y claves y datos inventados. Cada agente revisa una familia de riesgos: las tres de hoy y la configuración (por ejemplo, si hay archivos o páginas de prueba que cualquiera puede abrir). La configuración la tienes en la checklist de la guía.</p>
         <p>El resultado es un informe: arriba, cuántos problemas hay y cómo de graves son; debajo, una sección por familia. Cada problema dice qué es, dónde está, por qué importa y qué hacer.</p>
+        <p><strong>Si quieres probarlo:</strong> está en <a href="https://github.com/jagarcig-ntt/herocamp-security-pipeline" target="_blank" rel="noopener">GitHub, con las instrucciones</a>. Necesitas una cuenta de Claude que incluya Claude Code e instalar varios programas. Los ficheros que leen los agentes se envían a Anthropic, la empresa de Claude. No publiques el informe: dice dónde están los fallos de tu proyecto.</p>
       </div>
     </details>
     <div class="notas-block">
       <div class="notas-label">Nota · 20:39 · Demo del pipeline (5 min)</div>
-      <p><strong>20:39</strong> cambia a VS Code (<code>HeroCamp-Product/</code>, letra grande) · <strong>20:40</strong> <code>/security-audit --repo feedbackhub</code>, opción A; anota la hora; abre <code>security-report.md</code> y lee el resumen tal como salga · <strong>20:43</strong> «no lo necesitáis».</p>
-      <p><strong>Plan B:</strong> si a los 2 min no ha terminado o falla, <code>023/plan-b/security-report.md</code>.</p>
+      <p><strong>20:39</strong> cambia a VS Code (<code>herocamp-security-pipeline</code>, letra grande, Git Bash) · <strong>20:40</strong> <code>bash auditar.sh https://github.com/jagarcig-ntt/feedback-hub --rama demo/seguridad</code>; anota la hora; abre <code>security-report.md</code> y lee el resumen tal como salga · <strong>20:43</strong> «no lo necesitáis».</p>
+      <p><strong>Plan B:</strong> si a los 2 min no ha terminado, falla o una familia sale «No revisada», <code>023/plan-b/security-report.md</code>.</p>
     </div>
   </div>
 </section>

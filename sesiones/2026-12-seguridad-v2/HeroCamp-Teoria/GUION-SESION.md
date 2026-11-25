@@ -50,10 +50,10 @@
 
 ### Los días antes
 1. [ ] **Prueba del pipeline de agentes** (SPEC-023 T02, antes del 5-dic):
-   - Comprobar que las claves de `feedbackhub` son falsas o están revocadas.
-   - Ejecutar `/security-audit --repo feedbackhub`, opción A, desde Claude Code en `sesiones/2026-12-seguridad-v2/HeroCamp-Product/`.
-   - Cronometrarlo.
-   - Guardar el informe en `sdd/specs/023-seguridad-v2-guion/plan-b/security-report.md`. Es el plan B de la demo.
+   - Abrir en VS Code la carpeta `C:\Users\jaime\herocamp-security-pipeline`, con una terminal Git Bash.
+   - Ejecutar `bash auditar.sh https://github.com/jagarcig-ntt/feedback-hub --rama demo/seguridad`.
+   - Comprobar que salen revisadas las cuatro familias y apuntar la duración.
+   - El plan B ya está guardado en `sdd/specs/023-seguridad-v2-guion/plan-b/security-report.md`. Solo hay que sustituirlo si el nuevo es mejor.
 2. [ ] **`prueba-cloud` sigue como el 24-nov** (`sdd/specs/026-seguridad-v2-replanteamiento/prueba-lovable.md` §2.5):
    - la tabla `notas_publicas` con el aviso crítico en **More → Security → Findings**;
    - el formulario de registro con DNI, teléfono y fecha de nacimiento;
@@ -64,15 +64,17 @@
 
 ### Una hora antes (18:00)
 **Pestañas abiertas, en este orden:**
-1. La guía en PDF: https://jagarcig-ntt.github.io/ai-pm-pro-seguridad/sesiones/2026-12-seguridad-v2/descargas/guia_seguridad_alumnos.pdf
+1. El portal: https://jagarcig-ntt.github.io/ai-pm-pro-seguridad/sesiones/2026-12-seguridad-v2/ (en la pantalla que compartes, **sin** `?notas`). La guía en PDF se abre desde `#descargas`: https://jagarcig-ntt.github.io/ai-pm-pro-seguridad/sesiones/2026-12-seguridad-v2/descargas/guia_seguridad_alumnos.pdf
 2. Lovable, **`prueba-cloud`**, en el chat (comprueba el nombre arriba a la izquierda).
 3. Lovable, `prueba-cloud`, en **More → Security → Findings**.
 4. La vista previa de `prueba-cloud`, en el formulario de registro.
-5. Los prompts para copiar: `sesiones/2026-12-seguridad-v2/HeroCamp-Teoria/Entregables/prompts_chequeo_lovable.md`.
+5. El portal otra vez, en `#prompts`, para copiar los prompts. Si el portal falla, están en `sesiones/2026-12-seguridad-v2/HeroCamp-Teoria/Entregables/prompts_chequeo_lovable.md`.
 6. La carpeta del plan B: `sdd/specs/026-seguridad-v2-replanteamiento/capturas/`, `sdd/specs/023-seguridad-v2-guion/capturas/` y `sdd/specs/023-seguridad-v2-guion/plan-b/security-report.md`.
 
 **VS Code**, aparte:
-- Abierto en `sesiones/2026-12-seguridad-v2/HeroCamp-Product/`, con Claude Code preparado.
+- Abierto en `C:\Users\jaime\herocamp-security-pipeline`, con una terminal **Git Bash** y esta orden escrita, sin lanzar:
+  `bash auditar.sh https://github.com/jagarcig-ntt/feedback-hub --rama demo/seguridad`
+- Sin ningún `security-report.md` de una prueba anterior en esa carpeta, para no enseñar uno viejo.
 - Letra grande (28 o más).
 
 **Comprobaciones:**
@@ -83,7 +85,7 @@
 - [ ] Agua.
 
 ### Diez minutos antes (18:50)
-- Compartir pantalla con la portada de la guía en PDF.
+- Compartir pantalla con la portada del portal (`#inicio`).
 - Abrir la sala y saludar a quien vaya entrando.
 
 ---
@@ -91,7 +93,7 @@
 ## APERTURA · 19:00–19:10 (10 min)
 
 ### 19:00 — Saludo y para qué sirve esta sesión (3 min)
-**ACCIÓN:** pantalla compartida con la portada de la guía en PDF.
+**ACCIÓN:** pantalla compartida con el portal, en `#inicio`. Cuando llegues a «Empiezo por el para qué», baja a `#paraque`.
 
 > Hola a todos. Bienvenidos a la sesión de seguridad. Ya nos conocemos del 21 de noviembre: aquel día pusisteis vuestro producto en producción. Hoy vamos a hablar de qué puede salir mal cuando ese producto tiene usuarios reales, y de qué podéis revisar vosotros para evitarlo.
 >
@@ -102,7 +104,7 @@
 > Hoy no vais a programar nada ni a tocar nada. Es una sesión para entender tres riesgos y saber dónde mirar en vuestro producto.
 
 ### 19:03 — Qué os lleváis y el plan de hoy (3 min)
-**ACCIÓN:** pasar por el índice de la guía mientras hablas.
+**ACCIÓN:** el portal, en «Qué te llevas» (`#paraque`). Cuando hables del plan, `#dia`.
 
 > Qué os lleváis. Ya tenéis una guía, que os enviamos antes de la sesión. Tiene tres partes. Primero, los tres riesgos, explicados con un caso real cada uno. Segundo, tres prompts que podéis pegar en el chat de vuestro proyecto de Lovable para que revise vuestro producto. Esos prompts no cambian nada: solo revisan y os explican lo que encuentran. Tercero, una checklist de una página para revisar vuestro producto antes del Demo Day.
 >
@@ -130,6 +132,8 @@
 
 ## F1 · CLAVES Y SECRETOS · 19:10–19:37 (27 min)
 
+🎓 **En las tres familias:** la tarjeta del portal ya cuenta, más abajo, lo que pasó en Lovable. No bajes de «Caso real» antes de la pregunta de predicción del chequeo, o verán la respuesta.
+
 *Ideas:*
 1. No todas las claves son iguales.
 2. Lovable guarda las secretas en *Secrets* y se niega a ponerlas en la web, pero solo protege lo que pasa por Lovable.
@@ -138,7 +142,7 @@
 *Antes de entrar:* clave, clave pública, clave secreta.
 
 ### 19:10 — Para qué y "Antes de entrar" (3 min)
-**ACCIÓN:** la página 1 de la guía, "Claves y secretos", en "Palabras que vas a ver".
+**ACCIÓN:** el portal, tarjeta `#f1`, abierta en «Antes de entrar».
 
 > Primer riesgo: las claves y los secretos. Para qué os importa: si una clave secreta de vuestro producto se publica, otra persona puede usar un servicio en vuestro nombre, y la factura os llega a vosotros. Es el riesgo que antes os puede costar dinero.
 >
@@ -189,7 +193,7 @@
 >
 > ¿Cuánto tardan? La empresa de seguridad Unit 42, de Palo Alto Networks, lo estudió en 2023. En el caso que estudiaron, las claves publicadas en GitHub se empezaron a usar en menos de cinco minutos.
 
-**ACCIÓN:** la guía, en "Caso real" de la familia 1.
+**ACCIÓN:** el portal, tarjeta `#f1`, en «Caso real».
 
 > Ahora, un caso real. Una startup mexicana, en febrero de 2026. Era un equipo de tres personas. Gastaban unos 180 dólares al mes en servicios de Google. Entre el 11 y el 12 de febrero, alguien usó su clave para generar texto e imágenes con Gemini, la IA de Google. La factura llegó a 82.314 dólares. En 48 horas.
 
@@ -208,7 +212,7 @@
 
 🎓 Espera unos 20 segundos y lee cuántos sí y cuántos no hay. No des la respuesta todavía.
 
-**ACCIÓN:** pestaña de `prueba-cloud`, en el chat. Copia el prompt 1 de `prompts_chequeo_lovable.md`, pégalo y envíalo. Anota la hora.
+**ACCIÓN:** pestaña de `prueba-cloud`, en el chat. Copia el prompt 1 del portal (`#prompts`), pégalo y envíalo. Anota la hora.
 
 > Ahora le pido a Lovable que revise las claves de este proyecto. Es el primer prompt de vuestra guía, el mismo que podéis usar en vuestro producto. Empieza diciendo «No cambies nada: solo revisa e informa». Lovable va a tardar un poco en responder.
 
@@ -249,7 +253,7 @@
 *Antes de entrar:* base de datos, tabla, RLS.
 
 ### 19:37 — Para qué y "Antes de entrar" (3 min)
-**ACCIÓN:** la página 2 de la guía, "Datos y permisos", en "Palabras que vas a ver".
+**ACCIÓN:** el portal, tarjeta `#f2`, abierta en «Antes de entrar».
 
 > Segundo riesgo: los datos y los permisos. En el riesgo anterior hemos visto que la clave pública de la base de datos está en la web y que es normal. Ahora la pregunta es: si cualquiera puede ver esa clave, ¿qué impide que cualquiera vea los datos de vuestros usuarios?
 >
@@ -294,7 +298,7 @@
 ### 19:49 — Idea 3 · Lovable avisa, la decisión es tuya (6 min)
 > Tercera idea: Lovable crea las tablas con reglas RLS, pero si vosotros le pedís algo inseguro, lo hace y os avisa. La decisión es vuestra.
 
-**ACCIÓN:** la guía, en "Caso real" de la familia 2.
+**ACCIÓN:** el portal, tarjeta `#f2`, en «Caso real».
 
 > Primero, un caso real. El 29 de mayo de 2025, el investigador Matt Palmer publicó que muchas apps hechas con Lovable tenían reglas RLS insuficientes. Cualquier persona, sin iniciar sesión, podía leer o escribir datos de sus tablas. Según el investigador, afectaba a más de 170 apps. Se registró como un fallo de seguridad de gravedad crítica, con un 9,3 sobre 10, con el código CVE-2025-48757. Lovable no está de acuerdo con esa clasificación: dice que cada cliente es responsable de proteger los datos de su app.
 >
@@ -317,7 +321,7 @@
 
 🎓 Espera unos 20 segundos y lee algunas respuestas. No des la respuesta todavía.
 
-**ACCIÓN:** pestaña de `prueba-cloud`, en el chat. Copia el prompt 2 de `prompts_chequeo_lovable.md`, pégalo y envíalo. Anota la hora.
+**ACCIÓN:** pestaña de `prueba-cloud`, en el chat. Copia el prompt 2 del portal (`#prompts`), pégalo y envíalo. Anota la hora.
 
 > Lanzo el segundo prompt de la guía, el de datos y permisos. Le pide a Lovable que revise cada tabla: qué datos guarda, si tiene RLS y quién puede leerla. Tampoco cambia nada.
 
@@ -359,7 +363,7 @@
 ### 20:04 — Pausa (8 min)
 > Hacemos una pausa de ocho minutos. Volvemos a las ocho y doce. Si tenéis alguna duda de lo que hemos visto, dejadla en el chat y la respondo a la vuelta o al final.
 
-🎓 Deja en pantalla la portada de la guía. Lee el chat durante la pausa y apunta las preguntas para el colchón. A las 20:12, en punto:
+🎓 Deja en pantalla el portal, en `#familias`, con las tarjetas cerradas. Lee el chat durante la pausa y apunta las preguntas para el colchón. A las 20:12, en punto:
 
 > Seguimos. Vamos con el tercer riesgo.
 
@@ -377,7 +381,7 @@
 🎓 Escrito el 24-nov con las ideas validadas (spec P4) y la guía publicada. Cuando esté la teoría de F3 de SPEC-021 (30-nov), se revisa que use los mismos términos y casos, sin cambiar las 3 ideas.
 
 ### 20:12 — Para qué y "Antes de entrar" (3 min)
-**ACCIÓN:** la página 3 de la guía, "Datos personales", en "Palabras que vas a ver".
+**ACCIÓN:** el portal, tarjeta `#f3`, abierta en «Antes de entrar».
 
 > Tercer riesgo: los datos personales. En el riesgo anterior hablamos de quién puede leer vuestras tablas. Ahora hablamos de qué datos guardáis en ellas y adónde van.
 >
@@ -424,7 +428,7 @@
 > Fijaos en lo que habéis escrito. Para cada dato, la pregunta es la misma: ¿para qué lo uso? Lo vamos a comprobar en Lovable dentro de unos minutos.
 
 ### 20:24 — Idea 3 · 72 horas para avisar (6 min)
-**ACCIÓN:** la guía, en "Caso real" de la familia 3.
+**ACCIÓN:** el portal, tarjeta `#f3`, en «Caso real».
 
 > Antes de la tercera idea, un caso real sobre la IA. Samsung, en 2023. En pocas semanas, empleados de Samsung pegaron en ChatGPT código interno y notas de reuniones para que la IA les ayudara. Esa información se envió a un servicio externo, fuera del control de la empresa. Samsung limitó el uso de estas herramientas y después lo prohibió. Lo publicó la prensa coreana, y lo recogió The Register el 6 de abril de 2023.
 >
@@ -445,7 +449,7 @@
 
 🎓 Espera unos 20 segundos y lee cuántos sí y cuántos no hay. No des la respuesta todavía.
 
-**ACCIÓN:** pestaña de `prueba-cloud`, en el chat. Copia el prompt 3 de `prompts_chequeo_lovable.md`, pégalo y envíalo. Anota la hora.
+**ACCIÓN:** pestaña de `prueba-cloud`, en el chat. Copia el prompt 3 del portal (`#prompts`), pégalo y envíalo. Anota la hora.
 
 > Lanzo el tercer prompt de la guía, el de datos personales. Le pide a Lovable que diga qué datos personales pide el producto, dónde se guardan, si alguno se escribe en la consola o en los registros, si alguno se envía a otro servicio y si hay alguno que no hace falta.
 
@@ -483,38 +487,38 @@
 🎓 Es el único momento de la sesión en el que salen VS Code y Claude Code. No es para que lo usen: es para que vean que estas revisiones se pueden automatizar.
 
 ### 20:39 — Qué vais a ver (1 min)
-**ACCIÓN:** cambia a VS Code, abierto en `sesiones/2026-12-seguridad-v2/HeroCamp-Product/`, con letra grande.
+**ACCIÓN:** cambia a VS Code, abierto en `herocamp-security-pipeline`, con letra grande.
 
 > Antes de cerrar, os quiero enseñar algo durante cinco minutos. No lo necesitáis para vuestro producto. Es para que veáis qué más se puede hacer.
 >
 > Esto es VS Code, un programa para trabajar con el código desde el ordenador, fuera de Lovable. Dentro tengo Claude Code, un asistente de IA que puede leer y revisar el código de un proyecto entero. Y con él he montado un pipeline de agentes. Un agente es un programa de IA que recibe una tarea, decide qué pasos dar y los ejecuta por su cuenta: leer ficheros, buscar fallos y escribir un informe. Un pipeline es una secuencia de pasos que se lanzan juntos.
 
 ### 20:40 — Lanzar el pipeline y leer el informe (3 min)
-**ACCIÓN:** en Claude Code, escribe `/security-audit --repo feedbackhub` y elige la opción **A**. Anota la hora.
+**ACCIÓN:** en la terminal Git Bash, lanza la orden que tienes escrita: `bash auditar.sh https://github.com/jagarcig-ntt/feedback-hub --rama demo/seguridad`. Anota la hora.
 
-> El proyecto que va a revisar se llama `feedbackhub`. Es un proyecto de prueba, como `prueba-cloud`, con fallos metidos a propósito y claves falsas.
+> El proyecto que va a revisar se llama `feedback-hub`. Es el proyecto de Lovable que vimos el 21 de noviembre. Reviso una versión aparte, en la que he metido un fallo a propósito por cada familia, con claves y datos inventados. Esa versión no está publicada como web.
 >
 > Lanzo cuatro agentes a la vez. Cada uno revisa una familia de riesgos. Tres son las que hemos visto hoy: claves y secretos, datos y permisos, y datos personales. El cuarto revisa la configuración: por ejemplo, si hay archivos o páginas de prueba que cualquiera puede abrir. La configuración la tenéis en la checklist de la guía.
 
-🎓 Según el fichero del comando (`.claude/commands/security-audit.md`), la opción A tarda unos 60 segundos. Usa la duración real de tu prueba de los días antes (T02). Mientras corre, el texto de arriba ocupa ese tiempo.
+🎓 Tardó entre 36 y 72 segundos en las pruebas del 25-nov (SPEC-027). Apunta aquí la de tu ensayo: ____ s. Mientras corre, el texto de arriba ocupa ese tiempo. Si sale `↻ Segundo intento`, no hagas nada: se repite solo.
 
-**ACCIÓN:** cuando termine, abre `security-report.md`. Enseña el resumen y la recomendación del principio, y baja por las cuatro familias.
+**ACCIÓN:** cuando termine, abre `security-report.md`. Con `Ctrl+Shift+V` se ve con formato. Enseña el resumen y la recomendación del principio, y baja por las cuatro familias.
 
 > Aquí está el informe. Arriba, el resumen: cuántos problemas hay y cómo de graves son. Debajo, una sección por familia. Cada problema dice qué es, dónde está, por qué importa y qué hacer.
 
 🎓 Lee el resumen y la recomendación tal como salgan. No cites cifras que no estén en pantalla.
 
-**Plan B:** si a los 2 min no ha terminado, o si falla, abre `sdd/specs/023-seguridad-v2-guion/plan-b/security-report.md`: «Os enseño el informe que generó hace unos días sobre el mismo proyecto».
+**Plan B:** si a los 2 min no ha terminado, si falla o si una familia sale como «No revisada», abre `sdd/specs/023-seguridad-v2-guion/plan-b/security-report.md`: «Os enseño el informe que generó hace unos días sobre el mismo proyecto».
 
 ### 20:43 — Qué significa para vosotros (1 min)
-> ¿Qué significa esto para vosotros? Que no lo necesitáis. Para vuestro producto de Lovable, con el escáner de Lovable, los tres prompts y la checklist de la guía tenéis lo necesario. Lo que habéis visto es la misma revisión, automatizada, para cuando un día trabajéis con el código fuera de Lovable. Lo tenéis en el recuadro «Para curiosos» de la guía.
+> ¿Qué significa esto para vosotros? Que no lo necesitáis. Para vuestro producto de Lovable, con el escáner de Lovable, los tres prompts y la checklist de la guía tenéis lo necesario. Lo que habéis visto es la misma revisión, automatizada, para cuando un día trabajéis con el código fuera de Lovable. Si alguien quiere probarlo, el enlace está en «Para curiosos», en el portal.
 
 ---
 
 ## CIERRE · 20:44–20:48 (4 min)
 
 ### 20:44 — La guía, la checklist y el Demo Day (2 min)
-**ACCIÓN:** vuelve a la guía en PDF, en "Checklist antes de publicar".
+**ACCIÓN:** vuelve al portal, en `#cierre`. Si quieres enseñar la checklist, abre la guía en la página 8 desde `#descargas`.
 
 > Para cerrar, qué hacer ahora. Todo está en la guía.
 >
@@ -562,7 +566,7 @@ Si no sabes la respuesta: «No lo sé. Lo miro y os lo paso por el canal del cur
 | La respuesta del prompt sale larga o técnica | Lee solo el resumen de dos frases del principio. Si no lo tiene, enseña la captura |
 | Lovable no carga o se cae | Todo el chequeo con capturas: `026/capturas/` (escáner, chat y formulario) y `023/capturas/` (respuestas) |
 | `prueba-cloud` ha cambiado (falta un fallo plantado) | Captura del 24-nov de ese fallo, en `026/capturas/` |
-| El pipeline tarda más de 2 min o falla | Informe de la prueba: `023/plan-b/security-report.md` |
+| El pipeline tarda más de 2 min, falla o deja una familia «No revisada» | Informe de la prueba: `023/plan-b/security-report.md` |
 | Aparece en pantalla un valor de una clave | Deja de compartir pantalla. Después de la sesión, cambia la clave (aunque sea falsa, comprueba cuál era) |
 | Nadie responde en el chat | Espera 30 s, pide respuesta en voz o responde tú con un ejemplo y sigue |
 | Una pregunta técnica que se sale de la sesión | «Está en la guía» o «La apunto y la vemos al final, en las preguntas abiertas» |
