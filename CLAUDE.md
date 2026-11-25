@@ -27,4 +27,4 @@ Las plantillas están en `sdd/templates/`.
 
 El contexto operativo de la sesión de junio (audiencia, identidad visual, decisiones de diseño) está en `sesiones/2026-12-seguridad-v2/HeroCamp-Teoria/Contexto-Proyecto.md`.
 
-Portales: hub en `index.html`, estilo y JS comunes en `assets/` (ver su README). Antes de cada push: `python scripts/check_links.py`.
+Portales: hub en `index.html`, estilo y JS comunes en `assets/` (ver su README). Antes de cada push: `python scripts/check_links.py` y `python scripts/check_prompts.py` (los prompts de Seguridad v2, iguales en el portal, la guía y el fichero de prompts).

@@ -1,1493 +1,518 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seguridad y buenas prácticas en desarrollo con IA · AI PM Pro</title>
+<title>Seguridad y buenas prácticas con IA · AI PM Pro</title>
+<meta name="description" content="Portal de la sesión de seguridad de AI PM Pro (The Hero Camp), jueves 10 de diciembre de 2026: tres riesgos de tu producto de Lovable y cómo revisarlo.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@300;400;500;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/portal.css">
+<style>
+  /* Estilos solo de este portal (SPEC-024). La base común está en assets/. Tabla, copiable, desplegables y descargas: los mismos que el portal del 21-nov. */
+  .tabla { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
+  .tabla th, .tabla td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--divider); vertical-align:top; color:var(--ink-dim); }
+  .tabla th { font-family:var(--mono); font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--ink-faint); font-weight:500; }
+  .tabla td strong { color:var(--ink); }
+  .tabla tr.riesgo td { color:var(--ink); background:rgba(220,238,60,0.05); }
+  .tabla td.hora, .tabla tr.riesgo td.hora { font-family:var(--mono); color:var(--accent); white-space:nowrap; }
+  .pasos { counter-reset:paso; list-style:none; padding:0; margin:20px 0; }
+  .pasos > li { counter-increment:paso; position:relative; padding:14px 0 14px 52px; border-bottom:1px solid var(--divider); color:var(--ink-dim); line-height:1.6; }
+  .pasos > li::before { content:counter(paso); position:absolute; left:0; top:12px; width:34px; height:34px; border:1px solid var(--accent); color:var(--accent); font-family:var(--mono); font-size:13px; display:flex; align-items:center; justify-content:center; }
+  .pasos > li strong { color:var(--ink); }
+  .copiable { position:relative; margin:12px 0; background:var(--bg-deeper); border:1px solid var(--divider); padding:14px 110px 14px 16px; font-family:var(--mono); font-size:12.5px; line-height:1.55; color:var(--ink); white-space:pre-wrap; word-break:break-word; }
+  .copiar { position:absolute; top:10px; right:10px; font-family:var(--mono); font-size:11px; letter-spacing:0.08em; padding:7px 12px; background:var(--accent); color:#0A0E1A; border:none; cursor:pointer; font-weight:700; }
+  .copiar.hecho { background:var(--jade); }
+  .prompt { margin-top:36px; padding-left:16px; border-left:3px solid var(--divider); scroll-margin-top:calc(var(--header-h) + 16px); }
+  .prompt[data-c="blue"] { border-left-color:var(--blue); }
+  .prompt[data-c="coral"] { border-left-color:var(--coral); }
+  .prompt[data-c="jade"] { border-left-color:var(--jade); }
+  .prompt h3 { margin-bottom:8px; }
+  .comandos { margin-top:28px; border:1px solid var(--divider); background:var(--bg-deeper); }
+  .comandos > summary { cursor:pointer; padding:12px 16px; font-family:var(--mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); list-style:none; }
+  .comandos > summary::-webkit-details-marker { display:none; }
+  .comandos > summary::before { content:"+ "; }
+  .comandos[open] > summary::before { content:"− "; }
+  .comandos > div { padding:0 16px 14px; }
+  .comandos p { color:var(--ink-dim); font-size:14px; margin:0 0 10px; }
+  .descargas { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-top:28px; }
+  .descarga { display:block; padding:18px 20px; background:var(--bg-raised); border:1px solid var(--divider); text-decoration:none; transition:border-color .2s; }
+  .descarga:hover { border-color:var(--accent); }
+  .descarga .d-tipo { font-family:var(--mono); font-size:10px; letter-spacing:0.12em; color:var(--accent); margin-bottom:6px; }
+  .descarga .d-titulo { color:var(--ink); font-weight:600; font-size:14px; }
+  .descarga .d-desc { color:var(--ink-dim); font-size:13px; margin-top:4px; }
+  .mensaje { margin-top:40px; font-family:var(--serif); font-size:clamp(22px,2.6vw,32px); font-weight:300; color:var(--ink); line-height:1.2; }
+  .mensaje em { color:var(--accent); }
+  .fam-card[data-c="blue"] .fam-block-label, .fam-card[data-c="blue"] .fam-idea-mark { color:var(--blue); }
+  .fam-card[data-c="coral"] .fam-block-label, .fam-card[data-c="coral"] .fam-idea-mark { color:var(--coral); }
+  .fam-card[data-c="jade"] .fam-block-label, .fam-card[data-c="jade"] .fam-idea-mark { color:var(--jade); }
+  .fam-card .fam-block-label::before { background:currentColor; }
+  .fam-img { margin:0 0 16px; }
+  .fam-img img { display:block; max-width:100%; height:auto; border:1px solid var(--divider); }
+  .fam-mensaje { margin-top:28px; padding:14px 18px; background:var(--bg-deeper); border-left:3px solid var(--accent); font-family:var(--serif); font-size:19px; color:var(--ink); line-height:1.35; }
+  .fam-enlaces { margin-top:14px; font-size:14px; }
+  .fam-enlaces a { color:var(--accent); text-underline-offset:3px; }
+  section p a, .tabla a, .pasos a, .comp-text a, .fam-idea-txt a { color:var(--accent); text-underline-offset:3px; }
+  @media (max-width: 640px) {
+    .copiable { padding:48px 14px 14px; }
+    .tabla { font-size:13px; }
+    .tabla th, .tabla td { padding:8px 6px; }
+  }
+</style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="brand"><img src="../../assets/logo-herocamp.jpg" alt="Hero Camp" style="height:28px; width:auto; display:block;"></div>
   <nav class="nav" id="nav">
-    <a href="#hero" class="active">Inicio</a>
-    <a href="#paraque">Qué te llevas</a>
-    <a href="#quien">Quién</a>
-    <a href="#impacto">Impacto</a>
-    <a href="#familias">Las 4 familias</a>
-    <a href="#dinamicas">Quiz</a>
-    <a href="#practica">Práctica</a>
+    <a href="#inicio" class="active">Inicio</a>
+    <a href="#dia">El día</a>
+    <a href="#familias">Riesgos</a>
+    <a href="#prompts">Prompts</a>
+    <a href="#descargas">Descargas</a>
     <a href="#cierre">Cierre</a>
   </nav>
-  <div class="header-meta">AI PM PRO · 26 JUN</div>
+  <div class="header-meta">AI PM PRO · 10 DIC</div>
 </header>
 
 <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
 <div class="notes-banner">Modo notas activo</div>
 
-<!-- HERO -->
-<section id="hero" class="hero">
+<!-- 18:50 portada · 19:00 apertura -->
+<section id="inicio" class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="container">
-    <div class="hero-label reveal">Sesión final · AI PM Pro</div>
-    <h1 class="reveal rd1">Seguridad <em>y buenas</em><br>prácticas en<br>desarrollo <em>con IA</em></h1>
-    <p class="lead reveal rd2">Cómo construir rápido con agentes sin que la velocidad te pase factura. Cuatro patrones de riesgo, casos reales y un pipeline que audita tu código.</p>
+    <div class="hero-label reveal">Seguridad y buenas prácticas con IA · AI PM Pro</div>
+    <h1 class="reveal rd1">Tu producto,<br>con <em>usuarios reales</em></h1>
+    <p class="lead reveal rd2">Tres riesgos de tu producto de Lovable, con un caso real cada uno, y cómo revisarlo tú: con el escáner de seguridad de Lovable (una revisión automática que busca fallos en tu proyecto), tres prompts y una checklist. Hoy no vas a programar ni a tocar nada.</p>
     <div class="hero-footer reveal rd3">
-      <div class="hf-item"><span class="hf-label">Duración</span><span class="hf-value">3 horas</span></div>
-      <div class="hf-item"><span class="hf-label">Formato</span><span class="hf-value">Remoto · Zoom</span></div>
+      <div class="hf-item"><span class="hf-label">Fecha</span><span class="hf-value">Jueves 10 dic · 19:00–21:00</span></div>
+      <div class="hf-item"><span class="hf-label">Formato</span><span class="hf-value">Remoto · Zoom · Solo teoría</span></div>
       <div class="hf-item"><span class="hf-label">Ponente</span><span class="hf-value">Jaime · Senior Tech Leader</span></div>
     </div>
+    <p class="mensaje reveal rd4">Lovable protege una parte; <em>la decisión es tuya</em>.</p>
     <div class="notas-block">
-      <div class="notas-label">Nota de apertura</div>
-      <p>Conéctate 10 min antes. A las 17:00 en punto arrancas, aunque no estén todos. Cámara encendida, saludo natural.</p>
-      <p><strong>No abras compartiendo esta web.</strong> Primero un saludo humano. Cuando la conversación social se cierre de forma natural, comparte pantalla: "He preparado esto para que lo recorramos juntos."</p>
-      <p><strong>Frase de arranque:</strong> "Soy Jaime, llevo años como Tech Leader trabajando con IA en producto. Esta es la última sesión del curso, así que no os voy a dar teoría que podáis leer en cualquier sitio. Os voy a contar cosas que me han pasado a mí."</p>
+      <div class="notas-label">Nota · 18:50 · Portada</div>
+      <p><strong>18:50</strong> comparte esta portada y saluda a quien vaya entrando. <strong>19:00</strong> saludo en cámara: ya os conocéis del 21-nov. <strong>Antes:</strong> <em>Secrets</em> cerrado, grabación activada, chat de Zoom visible.</p>
     </div>
   </div>
 </section>
 
-<!-- PARA QUÉ -->
+<!-- 19:00–19:06 -->
 <section id="paraque">
   <div class="container">
     <div class="eyebrow reveal">Para qué</div>
-    <h2 class="reveal rd1">Qué te llevas <em>hoy</em></h2>
-    <p class="reveal rd2" style="margin-top:24px;">No son apuntes. Son dos herramientas que puedes usar el lunes sobre tu propio proyecto.</p>
-    <div class="reveal rd3" style="margin:20px 0 32px;display:flex;flex-wrap:wrap;gap:8px;">
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;padding:5px 12px;border:1px solid var(--divider);color:var(--ink-dim);">🔑 CREDENCIALES</span>
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;padding:5px 12px;border:1px solid var(--divider);color:var(--ink-dim);">🗄️ PERMISOS DE BD</span>
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;padding:5px 12px;border:1px solid var(--divider);color:var(--ink-dim);">👤 DATOS SENSIBLES</span>
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;padding:5px 12px;border:1px solid var(--divider);color:var(--ink-dim);">⚙️ CONFIGURACIÓN</span>
-    </div>
-    <div class="entregables-grid">
-      <div class="ent-card reveal rd2" onclick="this.classList.toggle('open')">
-        <span class="ent-toggle">+</span>
-        <div class="ent-num">ENTREGABLE 01</div>
-        <h3 class="ent-title">Guía de Seguridad</h3>
-        <p class="ent-desc">Un documento operativo con las cuatro familias de riesgo y un checklist para revisar antes de cada despliegue.</p>
-        <div class="ent-detail">
-          <div class="ent-detail-inner">
-            <p>No son apuntes de clase. Es un documento pensado para tenerlo abierto el día que vayas a desplegar algo a producción.</p>
-            <div class="ent-items">
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Resumen de las cuatro familias</strong> con sus mecanismos y principios, en formato de referencia rápida.</span></div>
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Checklist previo al despliegue</strong>: las comprobaciones que debes hacer antes de cada push a producción, ordenadas por familia.</span></div>
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Preguntas de auditoría</strong> para revisar el trabajo del agente: qué buscar, cómo verificarlo, qué hacer si lo encuentras.</span></div>
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Sin jerga innecesaria.</strong> Pensado para un PM Senior, no para un equipo de seguridad.</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="ent-card reveal rd3" onclick="this.classList.toggle('open')">
-        <span class="ent-toggle">+</span>
-        <div class="ent-num">ENTREGABLE 02</div>
-        <h3 class="ent-title">Agentes de seguridad</h3>
-        <p class="ent-desc">Cuatro agentes especializados en Claude Code que auditan tu repositorio en paralelo y generan un informe de despliegue.</p>
-        <div class="ent-detail">
-          <div class="ent-detail-inner">
-            <p>Al terminar la sesión te lo llevas funcionando. Un comando sobre cualquier proyecto tuyo y tienes el informe.</p>
-            <div class="ent-items">
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Cuatro agentes especializados</strong>: credenciales, base de datos, privacidad y configuración. Corren en paralelo.</span></div>
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Informe de despliegue</strong>: ¿puedo desplegar? Hallazgos priorizados por severidad con acción concreta para cada uno.</span></div>
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Adaptable</strong>: los prompts de los agentes son archivos de texto que puedes leer, modificar y extender.</span></div>
-              <div class="ent-item"><span class="ent-item-mark">→</span><span class="ent-item-text"><strong>Modo familia</strong>: puedes auditar las 4 familias o solo la que te interesa con <code style="font-size:11px;">--family 2</code>.</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <h2 class="reveal rd1">Por qué te <em>importa</em></h2>
+    <p class="reveal rd2" style="margin-top:24px;">El 12 de diciembre presentas tu producto en el Demo Day. Desde que una persona real se registra en tu web, tienes datos de otra persona a tu cargo. Y si tu producto usa servicios de pago, como una IA, la factura puede crecer mucho si otra persona usa tus claves.</p>
+    <p class="reveal rd2" style="margin-top:14px;">Muchas decisiones de seguridad son decisiones de producto: qué datos pides, quién puede ver qué y dónde guardas las claves. Esas decisiones las tomas tú, aunque el código lo escriba Lovable.</p>
+    <h3 class="reveal" style="margin-top:40px;">Qué te llevas</h3>
+    <div class="compromisos">
+      <div class="comp-card reveal rd2"><div class="comp-num">01</div><p class="comp-text"><strong>Los tres riesgos</strong>, explicados con un caso real cada uno.</p></div>
+      <div class="comp-card reveal rd3"><div class="comp-num">02</div><p class="comp-text"><strong>Tres prompts</strong> para pegar en el chat de tu proyecto de Lovable. No cambian nada: solo revisan y te explican lo que encuentran. <a href="#prompts">Están aquí</a>.</p></div>
+      <div class="comp-card reveal rd4"><div class="comp-num">03</div><p class="comp-text"><strong>Una checklist de una página</strong> para revisar tu producto antes del Demo Day. Está en la <a href="#descargas">guía</a>.</p></div>
     </div>
     <div class="notas-block">
-      <div class="notas-label">Nota · El "para qué" antes del shock</div>
-      <p>Esta sección va ANTES del caso Gemini a propósito (ajuste del informe de evaluación). Que el alumno sepa qué gana antes de asustarle con cifras.</p>
-      <p><strong>Da permiso a todos los niveles:</strong> "Los dos entregables sirven tanto si tocáis código como si no. La guía es para cualquiera. El pipeline lo ejecutáis con un comando."</p>
+      <div class="notas-label">Nota · 19:00 · Para qué (3) · 19:03 · Qué os lleváis (3)</div>
+      <p><strong>19:00</strong> para qué: Demo Day el 12-dic, datos de otras personas y facturas · <strong>19:03</strong> las tres partes de la guía y el plan: tres riesgos, chequeo en <code>prueba-cloud</code> después de cada uno, pausa a las 20:04 y demo del pipeline al final.</p>
     </div>
   </div>
 </section>
 
-<!-- QUIÉN SOY -->
-<section id="quien">
+<!-- 19:03–19:10 -->
+<section id="dia">
   <div class="container">
-    <div class="eyebrow reveal">Formador</div>
-    <h2 class="reveal rd1" style="margin-bottom:48px;">Jaime <em>García</em></h2>
-    <div class="traj-layout">
-      <p class="traj-intro reveal rd2">AI Engineering Lead en NTT DATA. Llevo más de una década en banca y tecnología, y he construido con las mismas herramientas que vosotros usáis ahora.</p>
-      <div class="traj-points">
-        <div class="traj-point reveal rd2">
-          <span class="traj-marker">HOY</span>
-          <span class="traj-text"><strong>AI Engineering Lead en NTT DATA</strong> — diseño y ejecución de pipelines multi-agente para modernizar sistemas bancarios legacy. Claude Code, LangGraph y arquitecturas agenticas aplicadas a proyectos reales.</span>
-        </div>
-        <div class="traj-point reveal rd3">
-          <span class="traj-marker">RECORRIDO</span>
-          <span class="traj-text"><strong>8 años en NTT DATA</strong>, creciendo de Software Engineer a Technical Lead y AI Engineering Senior Lead. Equipos de 8 a 12 personas, microservicios, Azure, mainframe, banca de inversión.</span>
-        </div>
-        <div class="traj-point reveal rd4">
-          <span class="traj-marker">ORIGEN</span>
-          <span class="traj-text">Economista de formación, con experiencia previa en el sector financiero antes de pivotar a tecnología. La combinación de negocio y técnica es lo que define mi forma de trabajar.</span>
-        </div>
-        <div class="traj-point reveal rd5">
-          <span class="traj-marker">SESIÓN</span>
-          <span class="traj-text">He construido con estas herramientas en proyectos reales, he cometido estos errores, y sé dónde duelen. Por eso esto es práctico: habla de lo que pasa de verdad, no de cómo debería funcionar.</span>
-        </div>
-      </div>
-    </div>
+    <div class="eyebrow reveal">El día</div>
+    <h2 class="reveal rd1">Dos horas, <em>tres riesgos</em></h2>
+    <p class="reveal rd1" style="margin-top:16px;">Tres veces igual: un riesgo explicado con un caso real y, después, lo compruebo en directo en <code>prueba-cloud</code>, un proyecto de Lovable de prueba en el que he metido fallos a propósito.</p>
+    <table class="tabla reveal rd2">
+      <thead><tr><th>Hora</th><th>Min</th><th>Bloque</th></tr></thead>
+      <tbody>
+        <tr><td class="hora">19:00</td><td>10</td><td><strong>Apertura</strong></td></tr>
+        <tr class="riesgo"><td class="hora">19:10</td><td>27</td><td><strong>Riesgo 1 · Claves y secretos</strong>, con chequeo en Lovable</td></tr>
+        <tr class="riesgo"><td class="hora">19:37</td><td>27</td><td><strong>Riesgo 2 · Datos y permisos</strong>, con chequeo en Lovable</td></tr>
+        <tr><td class="hora">20:04</td><td>8</td><td>Pausa</td></tr>
+        <tr class="riesgo"><td class="hora">20:12</td><td>27</td><td><strong>Riesgo 3 · Datos personales</strong>, con chequeo en Lovable</td></tr>
+        <tr><td class="hora">20:39</td><td>5</td><td><strong>Para curiosos:</strong> una revisión automática de un proyecto entero</td></tr>
+        <tr><td class="hora">20:44</td><td>4</td><td><strong>Cierre</strong></td></tr>
+        <tr><td class="hora">20:48</td><td>12</td><td>Preguntas</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="reveal" style="margin-top:40px;">Cómo vamos a participar</h3>
+    <ol class="pasos reveal">
+      <li><strong>Tres preguntas en cada riesgo.</strong> Responde por el chat o abre el micrófono. Las respuestas son cortas: una palabra o una frase.</li>
+      <li><strong>Las dudas, en el chat.</strong> Si son del tema, las respondo en ese momento. Si no, las vemos al final: hay 12 minutos para preguntas.</li>
+      <li><strong>Todo lo que cuento está en la <a href="descargas/guia_seguridad_alumnos.pdf">guía</a></strong>, con las mismas palabras. Puedes tenerla abierta mientras hablo.</li>
+    </ol>
     <div class="notas-block">
-      <div class="notas-label">Nota · Mantener breve · máx. 90 segundos</div>
-      <p>Cuatro puntos, cuatro frases en voz alta. No los leas: cuéntalos. El cierre funciona si es directo y sin disclaimers: "He construido con esto en producción. Sé dónde duele."</p>
-      <p><strong>Datos que puedes soltar de memoria:</strong> 10 años en banca y tecnología, 8 en NTT DATA, de Software Engineer a AI Lead, equipos de hasta 12 personas.</p>
-      <p><strong>Gancho de cierre:</strong> "Pero no estáis aquí por mi CV. Estáis aquí por lo que os vais a llevar. Vamos a ello."</p>
+      <div class="notas-label">Nota · 19:06 · Cómo participar (2) · 19:08 · Pregunta (2)</div>
+      <p><strong>19:08 · Pregunta (chat):</strong> «¿Habéis abierto la guía? Escribid sí o no». Espera unos 30 s, lee cuántos sí y cuántos no, y pega en el chat el enlace de la guía.</p>
     </div>
   </div>
 </section>
 
-<!-- IMPACTO -->
-<section id="impacto">
-  <div class="container">
-    <div class="eyebrow reveal">La realidad del sector</div>
-    <h2 class="reveal rd1">Por qué esto <em>importa</em> ahora</h2>
-    <div style="display:flex;flex-direction:column;gap:12px;margin-top:32px;">
-
-      <div class="dato-card reveal rd2" style="border-left:3px solid var(--accent);" onclick="toggleDato(this)">
-        <div class="dato-hdr">
-          <div class="dato-num" style="color:var(--accent);">82K$</div>
-          <div style="flex:1">
-            <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.15em;margin-bottom:6px;">F1 · CREDENCIALES</div>
-            <p class="dato-desc">Factura de una startup en 48 horas tras filtrar una clave de Gemini. Un bot la encontró <strong>4 minutos</strong> después del commit. Google no devolvió nada.</p>
-            <div class="dato-source"><span>The Register · febrero 2026</span><span class="dato-source-toggle">+</span></div>
-          </div>
-        </div>
-        <div class="dato-detail">
-          <div class="dato-detail-inner">
-            <p>Una startup mexicana de tres desarrolladores. Su factura habitual en servicios de IA: 180$ al mes. El 11 de febrero alguien subió una clave de Gemini en un commit de madrugada. A las pocas horas un bot automatizado la encontró, la validó, y empezó a consumir la API a máxima velocidad.</p>
-            <p>El día 12 tenían una factura de <strong>82.314 dólares</strong>. Google aplicó el modelo de responsabilidad compartida: la infraestructura era segura, la clave la gestionaba el cliente. Sin perdón, sin devolución.</p>
-            <p>El bot tardó <strong>4 minutos</strong> desde el commit hasta el primer uso de la clave. No hay margen de reacción: o se previene o se paga.</p>
-            <div class="dato-personal">
-              <div class="dato-personal-label">Contexto</div>
-              <p>"He subido el .env a GitLab. No una vez, varias. Siempre igual: tenía prisa, había probado que funcionaba, hice git add . sin pensar. No fue negligencia. Fue que a esa velocidad el check mental simplemente no ocurre."</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dato-card reveal rd3" style="border-left:3px solid var(--coral);" onclick="toggleDato(this)">
-        <div class="dato-hdr">
-          <div class="dato-num" style="color:var(--coral);">170+</div>
-          <div style="flex:1">
-            <div style="font-family:var(--mono);font-size:10px;color:var(--coral);letter-spacing:0.15em;margin-bottom:6px;">F2 · BASES DE DATOS Y PERMISOS</div>
-            <p class="dato-desc">Apps generadas por Lovable con RLS desactivado en Supabase. <strong>13.000 usuarios expuestos</strong>, datos accesibles sin autenticación. CVE-2025-48757, mayo 2025.</p>
-            <div class="dato-source"><span>Supabase Security Advisory · 2025</span><span class="dato-source-toggle">+</span></div>
-          </div>
-        </div>
-        <div class="dato-detail">
-          <div class="dato-detail-inner">
-            <p>En mayo de 2025, investigadores documentaron que Lovable generaba esquemas de Supabase con Row Level Security desactivado por defecto. Cada tabla era accesible desde la API pública sin necesidad de autenticación.</p>
-            <p>El problema afectó a <strong>más de 170 aplicaciones publicadas</strong>, con al menos <strong>13.000 usuarios finales</strong> cuyos datos eran accesibles con solo conocer la URL del proyecto. CVE-2025-48757.</p>
-            <p>El mecanismo: la anon key de Supabase <em>está pensada</em> para ser pública cuando RLS está activo. Sin RLS, esa clave da acceso de lectura —y a veces escritura— a todas las tablas. El generador omitía RLS porque era más simple no configurarlo.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dato-card reveal rd4" style="border-left:3px solid var(--jade);" onclick="toggleDato(this)">
-        <div class="dato-hdr">
-          <div class="dato-num" style="color:var(--jade);">3</div>
-          <div style="flex:1">
-            <div style="font-family:var(--mono);font-size:10px;color:var(--jade);letter-spacing:0.15em;margin-bottom:6px;">F3 · DATOS SENSIBLES</div>
-            <p class="dato-desc">Incidentes en 20 días en Samsung: empleados copiando código propietario, diseños y actas de reuniones a ChatGPT. <strong>RGPD: 72h para notificar, hasta €20M de multa.</strong></p>
-            <div class="dato-source"><span>Bloomberg · abril 2023</span><span class="dato-source-toggle">+</span></div>
-          </div>
-        </div>
-        <div class="dato-detail">
-          <div class="dato-detail-inner">
-            <p>En abril de 2023, Bloomberg reveló que Samsung sufrió tres incidentes en menos de 20 días. Empleados utilizaron ChatGPT para depurar código de semiconductores, comprimir notas de reuniones internas y resumir código de una base de datos propietaria. Los datos viajaron a servidores de OpenAI y quedaron fuera del control de Samsung.</p>
-            <p>La respuesta: Samsung prohibió el uso de IA generativa externa para todos sus empleados. El coste inmediato no fue regulatorio sino de reputación y operacional.</p>
-            <p><strong>La obligación RGPD si ocurre con datos europeos:</strong> notificación a la autoridad de protección de datos en 72 horas. Multa de hasta el 4% de la facturación global anual o <strong>20 millones de euros</strong>, la cifra que sea mayor.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dato-card reveal rd5" style="border-left:3px solid var(--violet);" onclick="toggleDato(this)">
-        <div class="dato-hdr">
-          <div class="dato-num" style="color:var(--violet);">99%</div>
-          <div style="flex:1">
-            <div style="font-family:var(--mono);font-size:10px;color:var(--violet);letter-spacing:0.15em;margin-bottom:6px;">F4 · CONFIGURACIÓN</div>
-            <p class="dato-desc">De los fallos de seguridad cloud hasta 2026 serán culpa del cliente, no del proveedor — Gartner. CBIZ: endpoint dormido, <strong>36.000 registros</strong>, 3 meses sin detectar.</p>
-            <div class="dato-source"><span>Gartner 2025 · CBIZ breach report</span><span class="dato-source-toggle">+</span></div>
-          </div>
-        </div>
-        <div class="dato-detail">
-          <div class="dato-detail-inner">
-            <p>CBIZ, uno de los principales proveedores de servicios financieros en Estados Unidos, mantuvo un endpoint de API accesible públicamente sin autenticación entre mayo y agosto de 2024. No hubo malware, no hubo ataque sofisticado: solo una puerta abierta que alguien encontró.</p>
-            <p><strong>36.000 registros</strong> personales y financieros de clientes fueron exfiltrados durante los tres meses que el endpoint estuvo activo. La brecha se descubrió cuando los datos ya circulaban en mercados negros.</p>
-            <p>Gartner lo enmarca en una tendencia clara: el 99% de los fallos de seguridad cloud hasta 2026 serán responsabilidad del cliente, no del proveedor. Las plataformas funcionan. Lo que falla es la configuración de quienes las usan.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <div class="notas-block" style="margin-top:32px;">
-      <div class="notas-label">Nota · Uso de los datos en clase</div>
-      <p><strong>No leas las tarjetas.</strong> Narra el caso Gemini de memoria (tres desarrolladores, 180$/mes habitual, 82.314$ en 48h, sin perdón). La cifra en pantalla es el ancla visual mientras tú cuentas la historia.</p>
-      <p><strong>Tu historia del .env va justo aquí</strong>, después del caso Gemini. Pregunta al chat: "¿Quién ha tenido alguna vez una clave en un repo, aunque fuera un momento?"</p>
-      <p><strong>Las cuatro familias están representadas</strong>: recuerda que estos son solo los ganchos de entrada, cada caso se desarrolla a fondo en su bloque teórico.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FAMILIAS -->
+<!-- 19:10–20:39 -->
 <section id="familias">
   <div class="container">
-    <div class="eyebrow reveal">Teoría aplicada · Bloque 1</div>
-    <h2 class="reveal rd1">Las cuatro <em>familias</em> de riesgo</h2>
-    <p class="reveal rd2" style="margin-top:24px;">Cuatro patrones que aparecen una y otra vez. Cuatro dimensiones de impacto que convergen sobre el mismo producto.</p>
+    <div class="eyebrow reveal">Los tres riesgos · 19:10, 19:37 y 20:12</div>
+    <h2 class="reveal rd1">Tres riesgos, <em>tres decisiones</em></h2>
+    <p class="reveal rd2" style="margin-top:24px;">Tres ideas por riesgo y lo que pasó al comprobarlo en Lovable. Haz clic en cada tarjeta para verlas.</p>
     <div class="familias-grid">
 
-      <div class="fam-card reveal rd2" data-n="01" data-c="blue" style="cursor:pointer" onclick="toggleFamily(this)">
+      <div class="fam-card reveal rd2" id="f1" data-n="01" data-c="blue" style="cursor:pointer" onclick="toggleFamily(this)">
         <div class="fam-card-toggle">+</div>
         <div class="fam-hdr">
           <div class="fam-num-hdr">01</div>
-          <div style="flex:1">
-            <div class="fam-tag">Impacto económico inmediato</div>
-            <h3 class="fam-name">Credenciales y claves de acceso</h3>
-            <p class="fam-desc">Claves de API, tokens y credenciales que acaban en el código o el repositorio.</p>
-            <div class="fam-case">Caso Gemini · 82.314$ en 48h tras filtrar la clave.</div>
+          <div>
+            <div class="fam-tag">19:10 · Riesgo 1</div>
+            <h3 class="fam-name">Claves y secretos</h3>
+            <p class="fam-desc">Si una clave secreta de tu producto se publica, otra persona puede usar un servicio en tu nombre, y la factura te llega a ti.</p>
           </div>
         </div>
-        <div class="fam-expanded">
-          <div class="fam-expanded-inner">
-          <div class="fam-block" style="background:rgba(255,122,107,0.06);border:1px solid rgba(255,122,107,0.18);border-radius:10px;padding:20px 24px;">
-            <div class="fam-block-label" style="color:var(--coral);">Antes de entrar · tres conceptos en lenguaje humano</div>
-            <div style="display:grid;gap:14px;margin-top:4px;">
-              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
-                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--coral);padding-top:2px;">Clave de API</span>
-                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">Es la contraseña que tu app usa para identificarse ante un servicio externo. Si alguien la roba, puede usarla en tu nombre: gastar tu crédito, borrar tus datos o suplantar tu aplicación.</span>
-              </div>
-              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
-                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--coral);padding-top:2px;">.env</span>
-                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">El archivo donde se guardan todas las claves en local, separadas del código. Es como la caja fuerte del proyecto. El problema ocurre cuando ese archivo viaja al repositorio por error y queda visible para siempre en el historial de Git.</span>
-              </div>
-              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
-                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--coral);padding-top:2px;">Secrets / variables de entorno</span>
-                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">La versión segura del .env en producción. Plataformas como Cloudflare Pages o GitHub guardan las claves cifradas fuera del código, inyectándolas solo cuando la app arranca. La clave nunca toca el repositorio.</span>
-              </div>
-            </div>
-          </div>
-
-            <div class="fam-block">
-            <div class="fam-block-label">Qué es</div>
-            <p>Cualquier cadena que autentica tu aplicación contra un servicio y que debería permanecer protegida: claves de API de servicios externos (Gemini, OpenAI, Stripe), credenciales de infraestructura cloud (AWS, GCP, Azure), credenciales de base de datos, tokens de autenticación y secretos de aplicación. Es el vector con la mejor relación impacto/esfuerzo que existe hoy: no requiere técnicas sofisticadas, solo que alguien deje una clave donde no debe y que un bot la encuentre.</p>
-          </div>
-
+        <div class="fam-expanded"><div class="fam-expanded-inner">
           <div class="fam-block">
-            <div class="fam-block-label">No todas las claves son iguales</div>
-            <p>La distinción que un PM casi nunca maneja, y que es puro criterio de producto:</p>
-            <div class="fam-keys">
-              <div class="fam-key">
-                <div class="fam-key-t">Claves de identificación</div>
-                <div class="fam-key-d">Pensadas para ser públicas (una Google Maps key en el frontend). Identifican, no dan acceso sensible.</div>
-              </div>
-              <div class="fam-key">
-                <div class="fam-key-t">Claves de autenticación</div>
-                <div class="fam-key-d">Dan acceso real y nunca deben salir del servidor. Una AWS IAM con permisos amplios expuesta es una catástrofe.</div>
-              </div>
-            </div>
-            <p style="margin-top:14px;">Esa frontera se está rompiendo: en el caso Gemini 2026, claves que Google consideraba "solo identificadores públicos" empezaron a autenticar silenciosamente, convirtiéndose en credenciales de facto sin que nadie avisara.</p>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">Por qué ocurre, sobre todo con agentes IA</div>
-            <div style="margin-bottom:20px;overflow-x:auto;">
-              <svg width="100%" viewBox="0 0 680 130" style="display:block;min-width:400px;">
-                <defs>
-                  <marker id="arr-f1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M2 1L8 5L2 9" fill="none" stroke="#6B9DFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </marker>
-                  <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M2 1L8 5L2 9" fill="none" stroke="#FF7A6B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </marker>
-                </defs>
-                <rect x="0" y="0" width="680" height="130" fill="none"/>
-                <!-- línea base -->
-                <line x1="40" y1="54" x2="640" y2="54" stroke="#1F2745" stroke-width="1.5"/>
-                <!-- Nodo 1: commit -->
-                <circle cx="60" cy="54" r="10" fill="#2E75B6" stroke="#6B9DFF" stroke-width="1.5"/>
-                <text x="60" y="34" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#6B9DFF">git push</text>
-                <text x="60" y="22" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#646B82">t = 0</text>
-                <text x="60" y="78" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">Commit</text>
-                <text x="60" y="90" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">con clave</text>
-                <!-- Flecha 1→2 -->
-                <line x1="72" y1="54" x2="170" y2="54" stroke="#6B9DFF" stroke-width="1.5" marker-end="url(#arr-f1)"/>
-                <!-- Nodo 2: bot detecta -->
-                <circle cx="184" cy="54" r="10" fill="#3B1F1A" stroke="#FF7A6B" stroke-width="1.5"/>
-                <text x="184" y="34" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">bot scan</text>
-                <text x="184" y="22" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#FF7A6B">t = 4 min</text>
-                <text x="184" y="78" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">Bot</text>
-                <text x="184" y="90" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">detecta</text>
-                <!-- Flecha 2→3 -->
-                <line x1="196" y1="54" x2="294" y2="54" stroke="#FF7A6B" stroke-width="1.5" marker-end="url(#arr-red)"/>
-                <!-- Nodo 3: validación -->
-                <circle cx="308" cy="54" r="10" fill="#3B1F1A" stroke="#FF7A6B" stroke-width="1.5"/>
-                <text x="308" y="34" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">validate</text>
-                <text x="308" y="22" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#646B82">t = 5 min</text>
-                <text x="308" y="78" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">Clave</text>
-                <text x="308" y="90" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">verificada</text>
-                <!-- Flecha 3→4 -->
-                <line x1="320" y1="54" x2="418" y2="54" stroke="#FF7A6B" stroke-width="1.5" marker-end="url(#arr-red)"/>
-                <!-- Nodo 4: explotación -->
-                <circle cx="432" cy="54" r="10" fill="#3B1F1A" stroke="#FF7A6B" stroke-width="1.5"/>
-                <text x="432" y="34" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">exploit</text>
-                <text x="432" y="22" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#646B82">t = 6 min</text>
-                <text x="432" y="78" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">Explotación</text>
-                <text x="432" y="90" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">automática</text>
-                <!-- Flecha 4→5 -->
-                <line x1="444" y1="54" x2="542" y2="54" stroke="#FF7A6B" stroke-width="1.5" marker-end="url(#arr-red)"/>
-                <!-- Nodo 5: factura -->
-                <circle cx="556" cy="54" r="14" fill="#4A1B0C" stroke="#FF7A6B" stroke-width="2"/>
-                <text x="556" y="34" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">$$$</text>
-                <text x="556" y="22" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#646B82">t = 48h</text>
-                <text x="556" y="80" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#FF7A6B">82.314$</text>
-                <text x="556" y="92" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">en 48 horas</text>
-                <!-- Zona sin reacción humana -->
-                <rect x="170" y="106" width="270" height="18" rx="4" fill="#2A1010"/>
-                <text x="305" y="118" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#FF7A6B">No hay margen de reacción humana aquí</text>
-              </svg>
-            </div>
-            <div class="fam-steps">
-              <div class="fam-step"><span class="fam-step-n">1</span><span class="fam-step-t">El PM pide una funcionalidad: "conecta el formulario a Supabase", "añade un botón que genere texto con Gemini".</span></div>
-              <div class="fam-step"><span class="fam-step-n">2</span><span class="fam-step-t">El agente busca el camino que <strong>menos errores produce</strong>. Si la clave administrativa "simplemente funciona", tira de ella.</span></div>
-              <div class="fam-step"><span class="fam-step-n">3</span><span class="fam-step-t">La clave se hardcodea <strong>"temporalmente"</strong>. El refactor para moverla a variables de entorno no llega nunca.</span></div>
-              <div class="fam-step"><span class="fam-step-n">4</span><span class="fam-step-t">El PM hace <strong>commit y push</strong>. Si el repo es público, la clave queda expuesta al mundo; si es privado, al historial permanente y a todos los colaboradores.</span></div>
-              <div class="fam-step"><span class="fam-step-n">5</span><span class="fam-step-t">Bots automatizados <strong>detectan la clave</strong> monitorizando el stream de eventos de GitHub en tiempo real.</span></div>
-              <div class="fam-step"><span class="fam-step-n">6</span><span class="fam-step-t">El atacante <strong>explota</strong>: consume servicios a tu cargo, mina cripto con tu infraestructura, o exfiltra tus datos.</span></div>
-            </div>
-            <p style="margin-top:16px;">El agente no es el culpable: es un <strong>amplificador</strong>. Acelera el paso 2, multiplica el volumen del paso 3, y los datos lo confirman: los commits asistidos por Claude Code en 2025 tuvieron el doble de tasa de fuga que la línea base.</p>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">La magnitud del problema</div>
-            <div class="fam-data-row"><span class="fam-data-num">29 M</span><span class="fam-data-txt">secretos nuevos expuestos en GitHub público en 2025 (+34% interanual, el mayor salto jamás registrado).</span></div>
-            <div class="fam-data-row"><span class="fam-data-num">70 %</span><span class="fam-data-txt">de los secretos expuestos en 2022 seguían activos en 2025. Mayoritariamente no se solucionan nunca.</span></div>
-            <div class="fam-data-row"><span class="fam-data-num">4-5 min</span><span class="fam-data-txt">tiempo medio desde que se expone una clave hasta el primer intento de explotación. No hay margen para reaccionar, solo para prevenir.</span></div>
-            <div class="fam-data-row"><span class="fam-data-num">35 %</span><span class="fam-data-txt">de los repositorios privados contienen secretos en texto plano. El repo privado no es un refugio.</span></div>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">Lo que el PM tiene que interiorizar</div>
+            <div class="fam-block-label">Antes de entrar</div>
             <div class="fam-ideas">
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>"Que funcione" no es "que esté bien".</strong> Cuando el agente dice que ya funciona, pregúntate si es porque está bien construido o porque ha quitado un obstáculo.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>El repo privado no protege.</strong> Trata cualquier credencial commiteada como comprometida desde el momento en que se sube.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Se mide en minutos, no en días.</strong> No intentes reaccionar a la fuga: previene que ocurra y configura límites de gasto como red de seguridad.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Mínimo privilegio siempre.</strong> Cada clave solo debe tener los permisos que necesita. Una clave con AdministratorAccess expuesta no tiene techo de daño.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Clave:</strong> un código que permite a tu producto usar un servicio, por ejemplo la base de datos o una IA.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Clave pública:</strong> una clave que puede estar en la web. Por sí sola no da acceso a nada privado.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Clave secreta:</strong> una clave que nunca debe estar en la web. Quien la tenga puede usar el servicio en tu nombre, y pagas tú.</span></div>
             </div>
           </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Tres ideas</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">1</span><span class="fam-idea-txt"><strong>No todas las claves son iguales.</strong> La clave pública de la base de datos está en tu web, y es normal. Las secretas, como la de una IA o la de pagos, no pueden estar en la web. La regla: si con ella se puede gastar dinero o ver todos los datos, es secreta.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>Lovable protege las claves que pasan por Lovable.</strong> Guarda las secretas en <em>Secrets</em>, un almacén protegido, y se niega a ponerlas en el código de la web. No puede proteger una clave que pegas en otro sitio: GitHub, un documento, un correo, otra herramienta de IA o una captura de pantalla.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>Una clave publicada se usa en minutos.</strong> Hay programas automáticos que buscan claves publicadas en Internet todo el tiempo. En un caso estudiado, las claves publicadas en GitHub se empezaron a usar en menos de 5 minutos (Unit 42, Palo Alto Networks, 2023).</span></div>
+            </div>
           </div>
-        </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Caso real</div>
+            <p><strong>Una startup mexicana, 82.314 dólares en 48 horas (febrero de 2026).</strong> Un equipo de tres personas gastaba unos 180 dólares al mes en servicios de Google. Entre el 11 y el 12 de febrero de 2026, alguien usó su clave para generar texto e imágenes con Gemini, y la factura llegó a 82.314 dólares. Google respondió que proteger las claves es responsabilidad del cliente (The Register, 3 de marzo de 2026).</p>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Lo comprobamos en Lovable · 24 nov 2026</div>
+            <figure class="fam-img"><img src="img/f1_lovable_rechaza_clave.png" alt="Chat de Lovable. Petición: añadir en el código de la web una constante OPENAI_API_KEY con el valor del secreto. Respuesta de Lovable: no he cambiado el código; poner tu clave de OpenAI en el código de la web la expondría a cualquiera; puedo crear el ejemplo en el servidor usando el secreto que ya guardaste." loading="lazy"></figure>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Le pedimos que pusiera una clave secreta en el código de la web, y se negó.</strong> Propuso usarla desde el servidor, que es la parte de la app que no llega al navegador.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Cuando pegamos una clave en el chat, la guardó en <em>Secrets</em>.</strong></span></div>
+            </div>
+          </div>
+          <p class="fam-mensaje">Lovable te protege si la clave pasa por Lovable. Fuera de Lovable, nadie te protege.</p>
+          <div class="fam-block">
+            <div class="fam-block-label">Lo que te llevas</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">1</span><span class="fam-idea-txt"><strong>Las claves secretas, solo en <em>Secrets</em>.</strong> No las pegues en ningún otro sitio.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>Un límite de gasto en cada servicio que cobra por uso.</strong> Algunos servicios solo avisan y siguen cobrando: comprueba qué hace cada uno y, como mínimo, activa el aviso.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>Si una clave secreta se publica, cámbiala en ese momento.</strong> Crea una nueva en el servicio, borra la antigua y guarda la nueva en <em>Secrets</em>.</span></div>
+            </div>
+            <p class="fam-enlaces"><a href="#prompt1" onclick="event.stopPropagation()">Prompt para revisarlo en tu producto</a> · <a href="descargas/guia_seguridad_alumnos.pdf#page=2" onclick="event.stopPropagation()">La guía, página 2</a></p>
+          </div>
+          <div class="notas-block">
+            <div class="notas-label">Nota · F1 · 19:10–19:37 (27 min)</div>
+            <p><strong>19:10</strong> para qué y «Antes de entrar» (3) · <strong>19:13</strong> ideas 1 y 2 (7) · <strong>19:20 · Pregunta:</strong> «¿Dónde has pegado alguna vez una clave? ¿En un chat, en un documento?» · <strong>19:22</strong> idea 3 y caso (6). <strong>Si vas tarde:</strong> salta Cyble.</p>
+            <p><strong>19:28 · Chequeo (7):</strong> pregunta «¿Creéis que Lovable pondrá una clave secreta en la web si se lo pido?» · prompt 1 en <code>prueba-cloud</code> · mientras responde, sube en el historial hasta la negativa del 24-nov · lee el resumen de dos frases. <strong>Corte a los 4 min:</strong> <code>023/capturas/f1-prompt.png</code>. Sin la negativa en el historial: la imagen de esta tarjeta.</p>
+            <p><strong>19:35 · Pregunta:</strong> «Escribe una clave que use tu producto y si es pública o secreta». Si alguien se equivoca: «Si con ella se puede gastar dinero o ver todos los datos, es secreta».</p>
+          </div>
+        </div></div>
       </div>
 
-      <div class="fam-card reveal rd3" data-n="02" data-c="coral" style="cursor:pointer" onclick="toggleFamily(this)">
+      <div class="fam-card reveal rd3" id="f2" data-n="02" data-c="coral" style="cursor:pointer" onclick="toggleFamily(this)">
         <div class="fam-card-toggle">+</div>
         <div class="fam-hdr">
           <div class="fam-num-hdr">02</div>
-          <div style="flex:1">
-            <div class="fam-tag">Impacto técnico y de usuarios</div>
-            <h3 class="fam-name">Bases de datos y permisos</h3>
-            <p class="fam-desc">RLS desactivado, claves con privilegios excesivos, acceso sin restricciones reales.</p>
-            <div class="fam-case">CVE-2025-48757 · Lovable + Supabase · 13.000 usuarios expuestos.</div>
+          <div>
+            <div class="fam-tag">19:37 · Riesgo 2</div>
+            <h3 class="fam-name">Datos y permisos</h3>
+            <p class="fam-desc">En tu base de datos están los emails, los mensajes y las notas de las personas que usan tu producto. Si este riesgo falla, expones los datos de otras personas.</p>
           </div>
         </div>
-        <div class="fam-expanded">
-          <div class="fam-expanded-inner">
-            <div class="fam-block" style="background:rgba(107,157,255,0.06);border:1px solid rgba(107,157,255,0.18);border-radius:10px;padding:20px 24px;">
-            <div class="fam-block-label" style="color:var(--blue);">Antes de entrar · tres conceptos en lenguaje humano</div>
-            <div style="display:grid;gap:14px;margin-top:4px;">
-              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
-                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--blue);padding-top:2px;">RLS</span>
-                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">El portero de cada habitación de tu base de datos. Sin él, cualquiera que entre al edificio puede abrir todas las puertas. Con él, cada habitación tiene su propia cerradura.</span>
-              </div>
-              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
-                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--blue);padding-top:2px;">Anon key</span>
-                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">La llave que Supabase pone intencionadamente en la puerta de entrada de tu app —es pública y eso está bien—. El problema es si las habitaciones de dentro no tienen cerradura (RLS).</span>
-              </div>
-              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
-                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--blue);padding-top:2px;">Service role key</span>
-                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">La llave maestra del edificio: abre todo, ignora todos los porteros. Existe para el servidor, no para tu app. Si la metes en el código del frontend es como colgar la llave maestra en la puerta principal.</span>
-              </div>
-            </div>
-          </div>
-
+        <div class="fam-expanded"><div class="fam-expanded-inner">
           <div class="fam-block">
-            <div class="fam-block-label">Qué es y por qué os afecta directamente</div>
-            <p>El control de quién puede leer, escribir o borrar cada dato de tu base de datos. Es la familia más relevante para este curso porque el stack que usáis (Supabase, Lovable, anon keys en el cliente) es exactamente el mismo que ha protagonizado los casos más graves de 2025. A diferencia de las credenciales, una base de datos mal protegida no se descubre con una factura: se descubre meses después, cuando alguien publica un volcado de tus datos o llega una carta del regulador. La ventana silenciosa es larga y el daño, acumulativo.</p>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">El trío que hay que dominar</div>
-            <div class="fam-keys">
-              <div class="fam-key">
-                <div class="fam-key-t">RLS · Row Level Security</div>
-                <div class="fam-key-d">Reglas de PostgreSQL que deciden, fila por fila, quién accede a qué. Clave: no se activa por defecto. Una tabla sin RLS es una tabla pública accesible desde internet.</div>
-              </div>
-              <div class="fam-key">
-                <div class="fam-key-t">Anon key</div>
-                <div class="fam-key-d">Pensada para ir en el frontend, es pública por diseño. Es la llave de la puerta principal; RLS son las cerraduras de cada habitación. Sin cerraduras, la llave abre toda la casa.</div>
-              </div>
-              <div class="fam-key">
-                <div class="fam-key-t">Service role key</div>
-                <div class="fam-key-d">Modo dios: salta todas las políticas RLS. Solo en servidor, nunca en el cliente, nunca en un repo, nunca en un ticket. Si aparece fuera de su sitio, el proyecto está comprometido.</div>
-              </div>
-              <div class="fam-key">
-                <div class="fam-key-t">Vistas SECURITY DEFINER</div>
-                <div class="fam-key-d">Se ejecutan con permisos del administrador que las creó, saltándose el RLS de la tabla. Vector sutil que un agente puede introducir sin que nadie lo revise.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">Qué diferencia hace el RLS en la práctica</div>
-            <div style="margin-bottom:8px;overflow-x:auto;">
-              <svg width="100%" viewBox="0 0 680 200" style="display:block;min-width:380px;">
-                <defs>
-                  <marker id="arr-ok" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M2 1L8 5L2 9" fill="none" stroke="#7FD1B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </marker>
-                  <marker id="arr-bad" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M2 1L8 5L2 9" fill="none" stroke="#FF7A6B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </marker>
-                  <marker id="arr-block" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M2 1L8 5L2 9" fill="none" stroke="#646B82" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </marker>
-                </defs>
-
-                <!-- ===== LADO SEGURO (izquierda) ===== -->
-                <!-- Título -->
-                <rect x="20" y="10" width="290" height="24" rx="4" fill="#0D2B1E"/>
-                <text x="165" y="26" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="11" font-weight="600" fill="#7FD1B9">Con RLS bien configurado</text>
-
-                <!-- Anon key -->
-                <rect x="60" y="48" width="100" height="34" rx="6" fill="#11162B" stroke="#6B9DFF" stroke-width="1.5"/>
-                <text x="110" y="62" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#6B9DFF">anon key</text>
-                <text x="110" y="75" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">pública · OK</text>
-
-                <!-- Flecha hacia RLS -->
-                <line x1="162" y1="65" x2="188" y2="65" stroke="#7FD1B9" stroke-width="1.5" marker-end="url(#arr-ok)"/>
-
-                <!-- Bloque RLS -->
-                <rect x="190" y="44" width="72" height="42" rx="6" fill="#0D2B1E" stroke="#7FD1B9" stroke-width="2"/>
-                <text x="226" y="62" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="#7FD1B9">RLS</text>
-                <text x="226" y="76" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#7FD1B9">activo</text>
-
-                <!-- Flecha hacia datos propios -->
-                <line x1="264" y1="57" x2="294" y2="50" stroke="#7FD1B9" stroke-width="1.2" marker-end="url(#arr-ok)"/>
-                <!-- Datos propios usuario -->
-                <rect x="296" y="38" width="90" height="26" rx="4" fill="#0D2B1E" stroke="#7FD1B9" stroke-width="1"/>
-                <text x="341" y="55" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#7FD1B9">Tus datos ✓</text>
-
-                <!-- Flecha bloqueada hacia otros datos -->
-                <line x1="264" y1="72" x2="294" y2="82" stroke="#646B82" stroke-width="1.2" stroke-dasharray="4,3"/>
-                <!-- Datos de otros bloqueados -->
-                <rect x="296" y="72" width="90" height="26" rx="4" fill="#11162B" stroke="#646B82" stroke-width="1" stroke-dasharray="4,3"/>
-                <text x="341" y="89" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#646B82">Otros datos ✗</text>
-
-                <!-- Explicación bajo lado seguro -->
-                <text x="165" y="124" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#7FD1B9">Cada usuario solo ve sus filas</text>
-
-                <!-- ===== SEPARADOR ===== -->
-                <line x1="340" y1="30" x2="340" y2="140" stroke="#1F2745" stroke-width="1" stroke-dasharray="4,4"/>
-
-                <!-- ===== LADO INSEGURO (derecha) ===== -->
-                <!-- Título -->
-                <rect x="370" y="10" width="290" height="24" rx="4" fill="#2A1010"/>
-                <text x="515" y="26" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="11" font-weight="600" fill="#FF7A6B">Sin RLS (o con USING true)</text>
-
-                <!-- Anon key -->
-                <rect x="410" y="48" width="100" height="34" rx="6" fill="#11162B" stroke="#6B9DFF" stroke-width="1.5"/>
-                <text x="460" y="62" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#6B9DFF">anon key</text>
-                <text x="460" y="75" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">pública · OK</text>
-
-                <!-- Flecha directa a todos los datos -->
-                <line x1="512" y1="65" x2="548" y2="65" stroke="#FF7A6B" stroke-width="2" marker-end="url(#arr-bad)"/>
-
-                <!-- Todos los datos expuestos -->
-                <rect x="550" y="38" width="100" height="56" rx="6" fill="#2A1010" stroke="#FF7A6B" stroke-width="2"/>
-                <text x="600" y="58" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" font-weight="600" fill="#FF7A6B">TODOS</text>
-                <text x="600" y="72" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#FF7A6B">los datos</text>
-                <text x="600" y="86" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#FF7A6B">sin filtro</text>
-
-                <!-- Explicación bajo lado inseguro -->
-                <text x="515" y="124" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#FF7A6B">Cualquiera puede volcar toda la tabla</text>
-
-                <!-- ===== NOTA INFERIOR GLOBAL ===== -->
-                <rect x="20" y="148" width="640" height="38" rx="6" fill="#11162B"/>
-                <text x="340" y="163" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">La anon key es pública en los dos casos · La diferencia la hace el RLS</text>
-                <text x="340" y="179" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#646B82">Sin RLS = anon key + curl = volcado completo de tus datos de usuarios</text>
-              </svg>
-            </div>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">Cómo el agente deja tu base de datos abierta</div>
-            <div class="fam-steps">
-              <div class="fam-step"><span class="fam-step-n">1</span><span class="fam-step-t">El PM pide una funcionalidad con tablas: "guarda los perfiles", "que los usuarios dejen comentarios".</span></div>
-              <div class="fam-step"><span class="fam-step-n">2</span><span class="fam-step-t">El agente crea las tablas vía SQL o migraciones, caminos donde <strong>RLS no se activa por defecto</strong>. La tabla nace desprotegida.</span></div>
-              <div class="fam-step"><span class="fam-step-n">3</span><span class="fam-step-t">Conecta el frontend con la anon key. Todo funciona. Para el PM, "la funcionalidad ya va".</span></div>
-              <div class="fam-step"><span class="fam-step-n">4</span><span class="fam-step-t">La app se publica con la anon key embebida (correcto) sobre tablas sin cerraduras (catastrófico).</span></div>
-              <div class="fam-step"><span class="fam-step-n">5</span><span class="fam-step-t">Cualquiera extrae la anon key del navegador en 30 segundos y vuelca la tabla entera con una simple petición HTTP. No hay que hackear nada.</span></div>
-            </div>
-            <p style="margin-top:16px;">Dos variantes aún peores: que el agente <strong>desactive RLS explícitamente</strong> para "que deje de dar errores", o que cree una política <strong>USING (true)</strong> que aparenta seguridad pero permite todo. Seguridad cosmética.</p>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">La verificación de 30 segundos</div>
-            <p>El mismo comando que usa un atacante es el que te audita a ti. Si devuelve datos, tu tabla no tiene RLS; si devuelve vacío, las políticas bloquean:</p>
-            <p style="font-family:var(--mono); font-size:12.5px; color:var(--coral); background:var(--bg-deeper); padding:14px 18px; border-left:2px solid var(--coral); margin-top:6px;">curl 'https://tu-proyecto.supabase.co/rest/v1/users?select=*' -H "apikey: TU_ANON_KEY"</p>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">La magnitud del problema</div>
-            <div class="fam-data-row"><span class="fam-data-num">170+ apps</span><span class="fam-data-txt">en producción afectadas por el CVE-2025-48757: Lovable generaba esquemas de Supabase sin RLS de forma consistente.</span></div>
-            <div class="fam-data-row"><span class="fam-data-num">13.000</span><span class="fam-data-txt">usuarios con sus datos expuestos, incluyendo tablas de tokens de reseteo de contraseña que permitían tomas de cuenta completas.</span></div>
-            <div class="fam-data-row"><span class="fam-data-num">40 %</span><span class="fam-data-txt">de las claves expuestas en GitHub, GitLab y Pastebin corresponden a bases de datos. El vector es masivo.</span></div>
-            <div class="fam-data-row"><span class="fam-data-num">∞</span><span class="fam-data-txt">la ventana de exposición. A diferencia de una credencial, una base de datos sin RLS sigue abierta indefinidamente hasta que alguien lo descubre.</span></div>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">La trifecta letal · cuando el agente es la causa directa</div>
-            <p>Simon Willison describió cómo cualquier agente IA con acceso a tu base de datos es explotable cuando se combinan tres elementos: <strong>acceso a datos privados</strong> (service_role), <strong>exposición a instrucciones de usuarios externos</strong> (un ticket de soporte, un comentario) y <strong>un canal de salida</strong> (escribir de vuelta, enviar un email). Un atacante esconde instrucciones en un ticket, el agente las obedece y exfiltra los datos. RLS no protege aquí: el agente actúa con plenos permisos.</p>
-            <p><strong>La defensa:</strong> nunca des service_role a un agente que procesa input no confiable. Usa modo read-only siempre que puedas: si el agente no puede escribir, la trifecta se rompe.</p>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">Lo que el PM tiene que interiorizar</div>
+            <div class="fam-block-label">Antes de entrar</div>
             <div class="fam-ideas">
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>RLS no se activa por defecto, se activa por decisión.</strong> Asume que cualquier tabla creada por un agente está desprotegida hasta que lo verifiques con el Security Advisor.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Tener RLS no garantiza estar protegido.</strong> Una política USING (true) es cosmética. Las políticas deben filtrar por auth.uid() o una condición real.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>La anon key puede ser pública; la service_role, nunca.</strong> Si aparece fuera del servidor, trata el proyecto como comprometido y rota las claves.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Permisos mínimos y read-only para agentes.</strong> Ningún agente debería operar con service_role si puede hacerlo con una clave protegida por RLS.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Base de datos:</strong> donde tu producto guarda la información. En tu caso, en Lovable Cloud.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Tabla:</strong> una parte de la base de datos con filas y columnas. Por ejemplo, una tabla de usuarios o de notas, con una fila por cada usuario o nota.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>RLS:</strong> (<em>Row Level Security</em>, seguridad por fila): las reglas que deciden qué filas puede ver, crear, cambiar o borrar cada usuario.</span></div>
             </div>
           </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Tres ideas</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">1</span><span class="fam-idea-txt"><strong>Con la clave pública, cualquiera puede consultar tu base de datos.</strong> Tu web usa la clave pública para leer y guardar datos. Cualquiera puede verla en el navegador, y es normal: está pensada así.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>RLS decide qué filas ve cada usuario.</strong> Lo que protege tus datos no es la clave, son las reglas RLS. Si una tabla no tiene reglas, o tiene una regla que deja leerlo todo, cualquier persona con la clave pública puede leer todas sus filas: emails, mensajes, notas de tus usuarios.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>Lovable avisa; la decisión es tuya.</strong> Lovable crea las tablas con RLS. Pero si pides algo inseguro, lo hace y te avisa con su escáner de seguridad: una revisión automática que busca fallos de seguridad en tu proyecto.</span></div>
+            </div>
           </div>
-        </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Caso real</div>
+            <p><strong>Apps hechas con Lovable con la base de datos abierta (2025).</strong> El investigador Matt Palmer publicó el 29 de mayo de 2025 que muchas apps hechas con Lovable tenían reglas RLS insuficientes: cualquier persona, sin iniciar sesión, podía leer o escribir datos de sus tablas. Según el investigador, afectaba a más de 170 apps. Se registró como fallo de seguridad de gravedad crítica (CVE-2025-48757, 9,3 sobre 10). Lovable no está de acuerdo con esa clasificación: dice que cada cliente es responsable de proteger los datos de su app.</p>
+            <p><strong>Moltbook (enero de 2026).</strong> Una red social con una base de datos sin RLS bien configurada dejó expuestas alrededor de 1,5 millones de claves de acceso a servicios (Wiz, 2 de febrero de 2026).</p>
+          </div>
+          <div class="fam-block">
+            <div class="fam-block-label">Lo comprobamos en Lovable · 24 nov 2026</div>
+            <figure class="fam-img"><img src="img/f2_escaner_critico.png" alt="Panel Findings del escáner de seguridad de Lovable: 1 security finding, de gravedad Critical: Anyone can read every record in notas_publicas. Botones Run checks y Fix all (Free)." loading="lazy"></figure>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Pedimos una tabla, <code>notas_publicas</code>, que cualquiera pudiera leer sin iniciar sesión, y Lovable la creó.</strong> Hace lo que le pides.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>El escáner la marcó como crítica:</strong> «Anyone can read every record in notas_publicas» (cualquiera puede leer todas las filas de <code>notas_publicas</code>). El aviso sale en el chat y en <strong>More → Security → Findings</strong>. <em>Run checks</em> lanza la revisión; <em>Fix all</em> propone un arreglo.</span></div>
+            </div>
+          </div>
+          <p class="fam-mensaje">Lovable avisa; la decisión es tuya. Lee los avisos de Security antes de publicar.</p>
+          <div class="fam-block">
+            <div class="fam-block-label">Lo que te llevas</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">1</span><span class="fam-idea-txt"><strong>Antes de publicar, abre More → Security → Findings</strong> y lanza <em>Run checks</em>.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>Lee cada aviso crítico y decide.</strong> Si una tabla tiene que ser pública, comprueba que no guarde datos personales.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>Si no entiendes un aviso, lanza el prompt 2</strong> para que Lovable te lo explique.</span></div>
+            </div>
+            <p class="fam-enlaces"><a href="#prompt2" onclick="event.stopPropagation()">Prompt para revisarlo en tu producto</a> · <a href="descargas/guia_seguridad_alumnos.pdf#page=4" onclick="event.stopPropagation()">La guía, página 4</a></p>
+          </div>
+          <div class="notas-block">
+            <div class="notas-label">Nota · F2 · 19:37–20:04 (27 min)</div>
+            <p><strong>19:37</strong> para qué y «Antes de entrar» (3) · <strong>19:40</strong> ideas 1 y 2 (7) · <strong>19:47 · Pregunta:</strong> «Si tu clave pública está en la web, ¿qué protege tus datos?» · <strong>19:49</strong> idea 3 y caso (6). <strong>Si vas tarde:</strong> salta Moltbook.</p>
+            <p><strong>19:55 · Chequeo (7):</strong> pregunta «¿Qué creéis que dirá el escáner de una tabla que cualquiera puede leer?» · prompt 2 · mientras responde, <strong>Findings</strong>: no pulses <em>Fix all</em> ni <em>Run checks</em> · lee el resumen. Si dice que no hay incidencias: «Lo que vale es Findings». <strong>Corte a los 4 min:</strong> <code>023/capturas/f2-prompt.png</code>. Si Findings no carga: la imagen de esta tarjeta.</p>
+            <p><strong>20:02 · Pregunta:</strong> «¿Dónde mirarías hoy si tu producto tiene un aviso crítico?». Respuesta: More → Security → Findings.</p>
+          </div>
+        </div></div>
       </div>
 
-      <div class="fam-card reveal rd4" data-n="03" data-c="jade" style="cursor:pointer" onclick="toggleFamily(this)">
+      <div class="fam-card reveal rd4" id="f3" data-n="03" data-c="jade" style="cursor:pointer" onclick="toggleFamily(this)">
         <div class="fam-card-toggle">+</div>
         <div class="fam-hdr">
           <div class="fam-num-hdr">03</div>
-          <div style="flex:1">
-            <div class="fam-tag">Impacto regulatorio · RGPD</div>
-            <h3 class="fam-name">Datos sensibles y privacidad</h3>
-            <p class="fam-desc">Datos personales en logs, datos reales en pruebas, fugas a LLMs externos.</p>
-            <div class="fam-case">Samsung · 3 fugas de código propietario a ChatGPT en 20 días.</div>
+          <div>
+            <div class="fam-tag">20:12 · Riesgo 3</div>
+            <h3 class="fam-name">Datos personales</h3>
+            <p class="fam-desc">Los datos personales pertenecen a las personas que usan tu producto, no a ti. La ley dice qué puedes hacer con ellos y qué tienes que hacer si algo sale mal.</p>
           </div>
         </div>
-        <div class="fam-expanded">
-          <div class="fam-expanded-inner">
-          <div class="fam-block" style="background:rgba(127,209,185,0.06);border:1px solid rgba(127,209,185,0.18);border-radius:10px;padding:20px 24px;">
-            <div class="fam-block-label" style="color:var(--jade);">Antes de entrar · tres conceptos en lenguaje humano</div>
-            <div style="display:grid;gap:14px;margin-top:4px;">
-              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
-                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--jade);padding-top:2px;">PII / Dato personal</span>
-                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">Cualquier información que permita identificar a una persona, directa o indirectamente. No solo el nombre: una dirección IP, un user_id o un historial de compras son datos personales. Si aparecen en un log que se filtra, el RGPD aplica.</span>
-              </div>
-              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
-                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--jade);padding-top:2px;">RGPD</span>
-                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">El reglamento europeo que regula cómo se recogen, almacenan y procesan los datos personales. No es solo una ley técnica: afecta a decisiones de producto como qué datos loguear, cuánto tiempo guardarlos y a quién se los mandas. Las multas llegan al 4% de la facturación global anual.</span>
-              </div>
-              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
-                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--jade);padding-top:2px;">Log</span>
-                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">El diario de a bordo de tu aplicación: registra qué pasa, cuándo y con qué datos. Imprescindible para depurar errores, pero si logueas sin filtrar puedes estar guardando emails, contraseñas o mensajes privados de tus usuarios sin darte cuenta.</span>
-              </div>
-            </div>
-          </div>
-
-            <div class="fam-block">
-            <div class="fam-block-label">Qué es y por qué es la más cara a medio plazo</div>
-            <p>La familia con mayor impacto regulatorio. Cuando una clave de Gemini se filtra, el coste lo marca el atacante con su factura. Cuando se exponen datos personales, el coste lo marca el regulador. En 2025 las autoridades europeas emitieron 1.200 millones de euros en multas RGPD. Y el reglamento no distingue entre startup y multinacional: <strong>las obligaciones son las mismas desde el primer email recogido</strong>.</p>
-            <p>Esta familia convierte el discurso técnico en discurso de negocio. Una configuración incorrecta de logs puede derivar en una multa sobre el porcentaje de tu facturación global. Eso ya no es un problema de ingeniería: es una decisión de producto.</p>
-          </div>
-
+        <div class="fam-expanded"><div class="fam-expanded-inner">
           <div class="fam-block">
-            <div class="fam-block-label">Qué cuenta como dato personal (más de lo que crees)</div>
-            <div class="fam-keys">
-              <div class="fam-key">
-                <div class="fam-key-t">Datos personales ordinarios</div>
-                <div class="fam-key-d">Nombres, emails, teléfonos, IPs, user_id, session_id, historial de uso, localización. Un email suelto sin nombre es dato personal. Una IP sin nombre es dato personal.</div>
-              </div>
-              <div class="fam-key">
-                <div class="fam-key-t">Categorías especiales</div>
-                <div class="fam-key-d">Salud, datos biométricos, orientación sexual, religión, opiniones políticas, datos de menores. Su exposición multiplica la gravedad regulatoria. Muchos productos los recogen sin darse cuenta.</div>
-              </div>
-              <div class="fam-key">
-                <div class="fam-key-t">Datos técnicos con potencial sensible</div>
-                <div class="fam-key-d">Logs que parecen inocuos pero contienen PII, trazas de API con payload completo, mensajes de error con datos del usuario. La categoría más olvidada.</div>
-              </div>
-              <div class="fam-key">
-                <div class="fam-key-t">La pregunta útil</div>
-                <div class="fam-key-d">"Si este archivo se publica mañana en Reddit, ¿tengo un problema?" No: "¿este campo es personal?"</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">Los tres vectores por donde se escapan los datos</div>
-            <div style="margin-bottom:20px; overflow-x:auto;">
-              <svg width="100%" viewBox="0 0 680 230" style="display:block;min-width:380px;">
-                <defs>
-                  <marker id="arr-jade" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M2 1L8 5L2 9" fill="none" stroke="#7FD1B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </marker>
-                  <marker id="arr-jade-dash" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M2 1L8 5L2 9" fill="none" stroke="#7FD1B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </marker>
-                </defs>
-                <!-- Producto central -->
-                <rect x="255" y="85" width="170" height="60" rx="8" fill="#0D2B22" stroke="#7FD1B9" stroke-width="2"/>
-                <text x="340" y="109" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="13" font-weight="600" fill="#7FD1B9">Tu producto</text>
-                <text x="340" y="126" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#7FD1B9">datos personales de usuarios</text>
-
-                <!-- Vector 1: Logs (arriba izquierda) -->
-                <path d="M290 85 Q230 60 150 44" fill="none" stroke="#7FD1B9" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-jade)"/>
-                <rect x="20" y="14" width="140" height="50" rx="6" fill="#0A1F18" stroke="#7FD1B9" stroke-width="1"/>
-                <text x="90" y="34" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="11" font-weight="600" fill="#7FD1B9">Logs de aplicación</text>
-                <text x="90" y="49" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">console.log(user)</text>
-                <text x="90" y="61" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">Vector 01 · nadie los revisa</text>
-
-                <!-- Vector 2: Entorno pruebas (abajo) -->
-                <path d="M340 145 L340 178" fill="none" stroke="#7FD1B9" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-jade)"/>
-                <rect x="220" y="180" width="240" height="44" rx="6" fill="#0A1F18" stroke="#7FD1B9" stroke-width="1"/>
-                <text x="340" y="199" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="11" font-weight="600" fill="#7FD1B9">Entorno de pruebas</text>
-                <text x="340" y="214" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">Vector 02 · datos reales sin protecciones de prod</text>
-
-                <!-- Vector 3: LLM externo (arriba derecha) -->
-                <path d="M390 85 Q450 60 510 44" fill="none" stroke="#7FD1B9" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-jade)"/>
-                <rect x="500" y="14" width="162" height="50" rx="6" fill="#0A1F18" stroke="#7FD1B9" stroke-width="1"/>
-                <text x="581" y="34" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="11" font-weight="600" fill="#7FD1B9">LLM externo</text>
-                <text x="581" y="49" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#AEB4C6">ChatGPT, Gemini, Claude web</text>
-                <text x="581" y="61" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">Vector 03 · shadow AI</text>
-
-                <!-- Etiqueta inferior -->
-                <text x="340" y="220" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#646B82">En los tres casos el dato sale de entornos controlados sin que nadie lo decida conscientemente</text>
-              </svg>
-            </div>
-            <p><strong>Vector 1 · Logs.</strong> El agente añade <code style="font-family:var(--mono);font-size:12px;color:var(--jade);">console.log(user)</code> para depurar. Ese log llega a producción y registra PII de cada usuario que pasa por ese punto. Nadie lo revisa porque los logs "son técnicos".</p>
-            <p><strong>Vector 2 · Entornos de pruebas.</strong> El 29% de las empresas usa datos reales de producción en testing. El agente pide "un ejemplo real para reproducir el bug" y los datos acaban en el laptop, en Slack, en un .txt de referencia. Cuando el bug se arregla, nadie limpia los datos.</p>
-            <p><strong>Vector 3 · Shadow AI.</strong> El 20% de las brechas de 2025 tuvieron shadow AI involucrada. Un desarrollador pega datos de usuarios en ChatGPT "para consultar algo rápido". Esos datos viajan al proveedor, que puede retenerlos por defecto.</p>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">Cómo el agente multiplica la superficie de fuga</div>
-            <div class="fam-steps">
-              <div class="fam-step"><span class="fam-step-n">1</span><span class="fam-step-t">El PM necesita resolver algo: "¿por qué falla este usuario?", "¿cómo replico este bug?". Son preguntas de trabajo completamente legítimas.</span></div>
-              <div class="fam-step"><span class="fam-step-n">2</span><span class="fam-step-t">Se extrae un snapshot de datos reales: dump de BBDD, consulta ad-hoc, export CSV. En producción tenían protecciones. A partir de aquí, no.</span></div>
-              <div class="fam-step"><span class="fam-step-n">3</span><span class="fam-step-t">Los datos viajan: laptop, Slack de debug, ticket interno, <strong>contexto del agente IA</strong>, caché del IDE, logs del terminal.</span></div>
-              <div class="fam-step"><span class="fam-step-n">4</span><span class="fam-step-t">Los datos <strong>quedan</strong>. El bug se arregla, nadie limpia. El archivo sigue. El Slack sigue. El agente tiene el contexto en su historial.</span></div>
-              <div class="fam-step"><span class="fam-step-n">5</span><span class="fam-step-t">La fuga ocurre meses después: el laptop se pierde, el repo privado se expone, el staging tenía configuración de red distinta. <strong>Nadie recuerda ya por qué estaban ahí esos datos.</strong></span></div>
-            </div>
-            <p style="margin-top:16px;">Diferencia clave con F1 y F2: aquí el agente no filtra "sin querer". <strong>Mueve activamente el dato a sitios más expuestos</strong>. Cada "dame un ejemplo real" al LLM crea una nueva copia del dato en un lugar que no controlas.</p>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">La magnitud del problema</div>
-            <div class="fam-data-row"><span class="fam-data-num">1.200 M€</span><span class="fam-data-txt">en multas RGPD en 2025. 7.100 M€ acumulados desde 2018. La multa más grande del año: 530 M€ a TikTok.</span></div>
-            <div class="fam-data-row"><span class="fam-data-num">29 %</span><span class="fam-data-txt">de empresas usan datos reales de producción en entornos de pruebas. El 45% ha sufrido una brecha relacionada.</span></div>
-            <div class="fam-data-row"><span class="fam-data-num">20 %</span><span class="fam-data-txt">de todas las brechas de datos en 2025 tuvieron shadow AI involucrada, con 670.000$ de coste adicional por incidente.</span></div>
-            <div class="fam-data-row"><span class="fam-data-num">72 h</span><span class="fam-data-txt">plazo para notificar una brecha a la autoridad. El reloj empieza cuando tienes constancia, no cuando ocurre la brecha.</span></div>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">Las obligaciones RGPD que el PM debe manejar</div>
-            <p>No es contenido de Legal. Son decisiones de producto con consecuencias económicas directas. Las cinco más importantes para un PM que construye con Claude Code:</p>
+            <div class="fam-block-label">Antes de entrar</div>
             <div class="fam-ideas">
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Base jurídica antes de recoger.</strong> Necesitas un motivo legal para cada dato que recoges: consentimiento, contrato, interés legítimo. Sin él, recoger el dato ya es incumplimiento.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Minimización.</strong> Solo recoges lo que necesitas. Cada campo extra es una obligación más y una superficie de exposición más.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>72 horas para notificar.</strong> Desde que tienes constancia de una brecha que afecta a datos personales. Tener el procedimiento preparado antes de necesitarlo no es opcional.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Derechos de los usuarios.</strong> Acceso, rectificación, borrado, portabilidad. Tu producto necesita mecanismos para atenderlos. No importa que estés en beta.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Privacy by Design.</strong> La protección de datos se diseña desde el principio, no se añade después. Pseudonimización, cifrado, accesos mínimos, logs protegidos.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Dato personal:</strong> cualquier dato que identifica a una persona o permite identificarla: nombre, email, teléfono, dirección, foto, DNI.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>RGPD:</strong> la ley europea de protección de datos. Se aplica desde tu primer usuario real.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Brecha:</strong> cuando datos personales llegan a quien no debería tenerlos, por un error o por un ataque.</span></div>
             </div>
           </div>
-
           <div class="fam-block">
-            <div class="fam-block-label">Lo que el PM tiene que interiorizar</div>
+            <div class="fam-block-label">Tres ideas</div>
             <div class="fam-ideas">
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Un email es un dato personal.</strong> No necesitas nombre y DNI para que el RGPD aplique. Email, IP, user_id, cookie: todos están protegidos.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>"Estoy en beta" no existe regulatoriamente.</strong> Desde el primer usuario real, las obligaciones aplican. La AEPD no acepta "estábamos validando la idea".</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Datos reales fuera de producción = brecha invisible.</strong> Laptop, Slack, IDE, LLM: si contienen datos reales de usuarios, tienes una superficie de exposición que nadie protege.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Lo que le das al agente, se lo das al proveedor.</strong> Revisa las políticas de retención. Nunca pegues un dump de producción en el contexto de un LLM externo.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">1</span><span class="fam-idea-txt"><strong>Pide solo lo que necesitas: ninguna herramienta lo decide por ti.</strong> Cada dato que pides es un dato que tienes que proteger. Si hay una brecha, cuantos más datos tengas, más grave es. El RGPD te obliga a pedir solo los datos que necesitas para lo que hace tu producto.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>Los datos pueden acabar donde no lo sabes.</strong> En la consola del navegador, una ventana donde la web escribe mensajes técnicos y que cualquier persona que use tu web puede abrir. En los registros, los mensajes que tu producto guarda sobre lo que hace (también llamados <em>logs</em>). Y en las herramientas de IA donde pegas datos.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>72 horas para avisar si hay una brecha.</strong> Desde que sabes que ha habido una brecha, tienes 72 horas para avisar a la autoridad de protección de datos (RGPD, artículo 33). En España, la autoridad es la AEPD.</span></div>
             </div>
           </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="fam-card reveal rd5" data-n="04" data-c="violet" style="cursor:pointer" onclick="toggleFamily(this)">
-        <div class="fam-card-toggle">+</div>
-        <div class="fam-hdr">
-          <div class="fam-num-hdr">04</div>
-          <div style="flex:1">
-            <div class="fam-tag">Impacto operacional · transversal</div>
-            <h3 class="fam-name">Configuración de entornos</h3>
-            <p class="fam-desc">Frontera difusa entre dev y producción, defaults permisivos, endpoints expuestos.</p>
-            <div class="fam-case">Caso CBIZ · endpoint sin auth 3 meses · 36.000 registros.</div>
-          </div>
-        </div>
-        <div class="fam-expanded">
-          <div class="fam-expanded-inner">
-            <div class="fam-block" style="background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.18);border-radius:10px;padding:20px 24px;">
-            <div class="fam-block-label" style="color:var(--violet);">Antes de entrar · un concepto en lenguaje humano</div>
-            <div style="display:grid;gap:14px;margin-top:4px;">
-              <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
-                <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--violet);padding-top:2px;">CORS</span>
-                <span style="font-size:14px;color:var(--ink-soft);line-height:1.5;">Es el portero que decide qué webs externas pueden hablar con tu servidor. <code style="font-family:var(--mono);font-size:12px;color:var(--violet);">origin: *</code> es decirle al portero "deja pasar a todo el mundo sin preguntar". Cómodo para desarrollar, peligroso en producción: cualquier web del mundo puede hacer peticiones a tu API.</span>
-              </div>
-            </div>
-          </div>
-
-            <div class="fam-block">
-            <div class="fam-block-label">La más silenciosa y la que cierra el círculo</div>
-            <p>No hay CVE, no hay factura desorbitada, no hay carta del regulador. Lo que hay es un endpoint de debug respondiendo durante tres meses sin que nadie lo sepa, un bucket de almacenamiento creado para pruebas y nunca cerrado, una configuración CORS que acepta cualquier origen desde el día uno. Es la familia más grande estadísticamente y la más invisible.</p>
-            <p>Su rol en la sesión es específico: <strong>conecta todo lo anterior</strong>. Las tres familias previas ocurren casi siempre sobre un sustrato de mala configuración. La clave expuesta es más peligrosa porque el IAM tenía permisos de administrador. La base de datos sin RLS está accesible porque el endpoint REST acepta cualquier origen. El log que filtra PII es visible porque el modo debug sigue activo en producción. La configuración determina cuánto daño puede hacer cualquier otro fallo.</p>
-          </div>
-
           <div class="fam-block">
-            <div class="fam-block-label">Qué es una "misconfiguración" en la práctica</div>
-            <div class="fam-keys">
-              <div class="fam-key">
-                <div class="fam-key-t">Defaults no cambiados</div>
-                <div class="fam-key-d">Endpoints que el framework expone por defecto: /health, /actuator, /api-docs, /swagger. El PM no los creó. Vienen en la caja y nadie los cierra.</div>
-              </div>
-              <div class="fam-key">
-                <div class="fam-key-t">Permisos excesivos</div>
-                <div class="fam-key-d">CORS con origin: *, IAM con AdministratorAccess, buckets de almacenamiento públicos. Creados en desarrollo "para que funcione" y nunca reducidos.</div>
-              </div>
-              <div class="fam-key">
-                <div class="fam-key-t">Configuración que revela información</div>
-                <div class="fam-key-d">Stack traces verbosos, variables de entorno expuestas por endpoints de debug, mensajes de error con datos del sistema. Ofrece al atacante un mapa del sistema.</div>
-              </div>
-              <div class="fam-key">
-                <div class="fam-key-t">Frontera dev/prod difusa</div>
-                <div class="fam-key-d">Variables de entorno con fallback permisivo, modo debug hardcodeado, autenticación desactivada "temporalmente". Lo que funciona en local viaja a producción sin revisión.</div>
-              </div>
-            </div>
+            <div class="fam-block-label">Caso real</div>
+            <p><strong>Samsung y ChatGPT (2023).</strong> En pocas semanas, empleados de Samsung pegaron en ChatGPT código interno y notas de reuniones para que la IA les ayudara. Esa información se envió a un servicio externo, fuera del control de la empresa. Samsung limitó el uso de estas herramientas y después lo prohibió (información de la prensa coreana, recogida por The Register el 6 de abril de 2023).</p>
+            <p><strong>Lo mismo vale para tu producto:</strong> si pegas datos reales de tus usuarios en el chat de Lovable o de otra IA para que te ayude, esos datos salen de tu producto.</p>
           </div>
-
           <div class="fam-block">
-            <div class="fam-block-label">Cómo el agente arrastra la deuda de configuración a producción</div>
-            <div style="margin-bottom:20px; overflow-x:auto;">
-              <svg width="100%" viewBox="0 0 680 210" style="display:block;min-width:400px;">
-                <defs>
-                  <marker id="arr-vio" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M2 1L8 5L2 9" fill="none" stroke="#B39DFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </marker>
-                  <marker id="arr-vio-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M2 1L8 5L2 9" fill="none" stroke="#FF7A6B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </marker>
-                </defs>
-
-                <!-- Columna DEV -->
-                <rect x="20" y="10" width="240" height="30" rx="6" fill="#1A1330" stroke="#B39DFF" stroke-width="1.5"/>
-                <text x="140" y="30" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="12" font-weight="600" fill="#B39DFF">Entorno de desarrollo</text>
-
-                <!-- Items DEV (en verde, son intencionales aquí) -->
-                <rect x="30" y="52" width="220" height="26" rx="4" fill="#111827" stroke="#646B82" stroke-width="1"/>
-                <text x="44" y="68" font-family="'JetBrains Mono',monospace" font-size="10" fill="#7FD1B9">CORS_ORIGIN = *</text>
-                <text x="228" y="68" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">necesario en local</text>
-
-                <rect x="30" y="84" width="220" height="26" rx="4" fill="#111827" stroke="#646B82" stroke-width="1"/>
-                <text x="44" y="100" font-family="'JetBrains Mono',monospace" font-size="10" fill="#7FD1B9">DEBUG = true</text>
-                <text x="228" y="100" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">útil para depurar</text>
-
-                <rect x="30" y="116" width="220" height="26" rx="4" fill="#111827" stroke="#646B82" stroke-width="1"/>
-                <text x="44" y="132" font-family="'JetBrains Mono',monospace" font-size="10" fill="#7FD1B9">AUTH_REQUIRED = false</text>
-                <text x="228" y="132" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">facilita el testing</text>
-
-                <rect x="30" y="148" width="220" height="26" rx="4" fill="#111827" stroke="#646B82" stroke-width="1"/>
-                <text x="44" y="164" font-family="'JetBrains Mono',monospace" font-size="10" fill="#7FD1B9">CORS_ORIGIN || '*'</text>
-                <text x="228" y="164" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">fallback permisivo</text>
-
-                <!-- Flecha central con etiqueta -->
-                <line x1="264" y1="105" x2="390" y2="105" stroke="#B39DFF" stroke-width="2.5" marker-end="url(#arr-vio)"/>
-                <rect x="282" y="82" width="96" height="46" rx="4" fill="#0A0E1A" stroke="#B39DFF" stroke-width="1"/>
-                <text x="330" y="101" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" font-weight="600" fill="#B39DFF">deploy</text>
-                <text x="330" y="116" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">nadie revisa</text>
-                <text x="330" y="128" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="9" fill="#646B82">la config</text>
-
-                <!-- Columna PROD -->
-                <rect x="394" y="10" width="266" height="30" rx="6" fill="#2A1A1A" stroke="#FF7A6B" stroke-width="1.5"/>
-                <text x="527" y="30" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="12" font-weight="600" fill="#FF7A6B">Producción · mismo código</text>
-
-                <!-- Items PROD (los mismos, ahora en rojo porque son peligrosos) -->
-                <rect x="404" y="52" width="246" height="26" rx="4" fill="#1A0A0A" stroke="#FF7A6B" stroke-width="1"/>
-                <text x="418" y="68" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">CORS_ORIGIN = *</text>
-                <text x="638" y="68" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#FF7A6B">⚠ cualquier origen</text>
-
-                <rect x="404" y="84" width="246" height="26" rx="4" fill="#1A0A0A" stroke="#FF7A6B" stroke-width="1"/>
-                <text x="418" y="100" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">DEBUG = true</text>
-                <text x="638" y="100" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#FF7A6B">⚠ expone internos</text>
-
-                <rect x="404" y="116" width="246" height="26" rx="4" fill="#1A0A0A" stroke="#FF7A6B" stroke-width="1"/>
-                <text x="418" y="132" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">AUTH_REQUIRED = false</text>
-                <text x="638" y="132" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#FF7A6B">⚠ sin autenticación</text>
-
-                <rect x="404" y="148" width="246" height="26" rx="4" fill="#1A0A0A" stroke="#FF7A6B" stroke-width="1"/>
-                <text x="418" y="164" font-family="'JetBrains Mono',monospace" font-size="10" fill="#FF7A6B">CORS_ORIGIN || '*'</text>
-                <text x="638" y="164" text-anchor="end" font-family="'Manrope',sans-serif" font-size="9" fill="#FF7A6B">⚠ fallback activo</text>
-
-                <!-- Nota inferior -->
-                <rect x="20" y="186" width="640" height="18" rx="4" fill="#1A0E0A"/>
-                <text x="340" y="199" text-anchor="middle" font-family="'Manrope',sans-serif" font-size="10" fill="#FF7A6B">La misma configuración. Apropiada en dev. Catastrófica en prod. El agente no distingue entre entornos.</text>
-              </svg>
-            </div>
-            <div class="fam-steps">
-              <div class="fam-step"><span class="fam-step-n">1</span><span class="fam-step-t">El entorno dev se configura con <strong>defaults permisivos</strong>: tiene sentido. Quieres que las cosas funcionen rápido.</span></div>
-              <div class="fam-step"><span class="fam-step-n">2</span><span class="fam-step-t">El agente <strong>hereda esas convenciones</strong> y las replica en todo el código nuevo que genera. La mala configuración se propaga por mimetismo.</span></div>
-              <div class="fam-step"><span class="fam-step-n">3</span><span class="fam-step-t">Al desplegar, el PM configura las variables de producción <strong>apresuradamente</strong>, olvidando algunas. El agente no tiene contexto de "esto cambia en prod".</span></div>
-              <div class="fam-step"><span class="fam-step-n">4</span><span class="fam-step-t">Los <strong>fallbacks inseguros</strong> entran en acción: <code style="font-family:var(--mono);font-size:11px;color:var(--violet);">CORS_ORIGIN || '*'</code> activa el wildcard si la variable no está definida.</span></div>
-              <div class="fam-step"><span class="fam-step-n">5</span><span class="fam-step-t">La deuda <strong>se acumula en silencio</strong>. No hay alertas, no hay errores observables. El endpoint olvidado sigue respondiendo.</span></div>
-            </div>
-            <p style="margin-top:16px;">Un patrón especialmente común: el agente resuelve un error de CORS o autenticación <strong>aflojando la configuración</strong> en lugar de resolver la raíz. "Si pongo origin: *, deja de dar error." Desde el punto de vista del agente, el problema está resuelto.</p>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">La magnitud del problema</div>
-            <div class="fam-data-row"><span class="fam-data-num">99 %</span><span class="fam-data-txt">de los fallos de seguridad en la nube hasta 2026 serán culpa del cliente, no del proveedor (Gartner). AWS, Supabase y Cloudflare hacen bien su parte. Lo que configuras tú, es tu responsabilidad.</span></div>
-            <div class="fam-data-row"><span class="fam-data-num">#2</span><span class="fam-data-txt">las misconfiguraciones son la segunda causa de brechas después del phishing, y el 23% de los incidentes cloud se deben directamente a ellas.</span></div>
-            <div class="fam-data-row"><span class="fam-data-num">3.000+</span><span class="fam-data-txt">activos cloud mal configurados tiene la empresa media en cualquier momento dado. La mayoría no lo sabe.</span></div>
-            <div class="fam-data-row"><span class="fam-data-num">3 meses</span><span class="fam-data-txt">estuvo activo el endpoint sin autenticación en el caso CBIZ antes de que se descubriera. 36.000 registros exfiltrados. Sin malware, sin atacantes sofisticados. Solo un endpoint olvidado.</span></div>
-          </div>
-
-          <div class="fam-block">
-            <div class="fam-block-label">Lo que el PM tiene que interiorizar</div>
+            <div class="fam-block-label">Lo comprobamos en Lovable · 24 nov 2026</div>
+            <figure class="fam-img"><img src="img/f3_lovable_rechaza_consola.png" alt="Respuesta de Lovable en el chat: añadiré los campos al registro y validaré los datos, pero no los mostraré en la consola por privacidad." loading="lazy"></figure>
             <div class="fam-ideas">
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>La configuración es código invisible.</strong> Cada variable, flag y permiso es una decisión. Si nadie la toma conscientemente, gana el default. Y los defaults priorizan facilidad de desarrollo sobre seguridad.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>La configuración de dev no es la de prod. Nunca.</strong> Las variables de entorno deben fallar ruidosamente si falta algo crítico en producción. "Si no está definido, usa este permisivo" es casi siempre una mala decisión.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Las misconfiguraciones se descubren tarde.</strong> No hay alertas, no hay facturas, no hay picos de tráfico. Por eso hay que buscarlas activamente, no esperar a que se manifiesten.</span></div>
-              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>El agente no revisa la configuración por iniciativa propia.</strong> Hay que pedírselo. O mejor: automatizar esa revisión con el pipeline que construimos en clase.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Se negó a escribir los datos del formulario en la consola del navegador</strong> «por privacidad».</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>Pero añadió sin avisar los datos que no hacían falta:</strong> pedimos un registro con nombre, email, teléfono, DNI y fecha de nacimiento para una app de notas, y Lovable los añadió todos.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">→</span><span class="fam-idea-txt"><strong>El escáner no lo marcó.</strong> Solo el prompt 3 detectó que el DNI, el teléfono y la fecha de nacimiento sobraban.</span></div>
             </div>
           </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <p class="familia-pie reveal rd5">Las cuatro familias se interconectan: un fallo en una amplifica el riesgo en las demás.</p>
-
-        <div class="notas-block">
-      <div class="notas-label">Nota · Estructura de cada familia</div>
-      <p><strong>Para cada una:</strong> caso (30-60s) → pregunta de producto al grupo → patrón general → qué hace la skill del pipeline. No es exposición: es debate guiado.</p>
-      <p><strong>Tus historias:</strong> Familia 1 → el .env. Familia 2 → la BBDD PostgreSQL que dejé sin seguridad "para la demo". Familia 4 → compañeros que borraron procesos por permisos excesivos.</p>
-      <p><strong>Familia 3 (RGPD) - riesgo de "esto es de Legal":</strong> ánclala con pregunta de producto. "Si descubrís que lleváis 3 meses guardando IPs en los logs sin saberlo, ¿qué decisión tomáis primero?"</p>
-      <p><strong>Preguntas de producto por familia:</strong></p>
-      <ul>
-        <li>F1: ¿Tenéis configurado un límite de gasto en vuestros servicios de IA?</li>
-        <li>F2: ¿Habéis ejecutado el Security Advisor de Supabase alguna vez?</li>
-        <li>F3: ¿Habéis usado datos reales de usuarios para probar algo?</li>
-        <li>F4: ¿Sabéis qué endpoints tiene expuestos vuestro proyecto ahora mismo?</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- DINÁMICAS / QUIZ -->
-<section id="dinamicas">
-  <div class="container">
-    <div class="eyebrow reveal">Quiz · Después de cada familia</div>
-    <h2 class="reveal rd1">A ver qué ha <em>calado</em></h2>
-    <p class="reveal rd2" style="margin-top:24px;">Cuatro preguntas, una por familia. Las respondéis justo después de ver cada bloque. Sin trampas — hay una respuesta correcta y una explicación detrás.</p>
-
-    <div class="quiz-tabs reveal rd2">
-      <button class="quiz-tab active" data-f="f1" onclick="showFamily('f1')">01 · Credenciales</button>
-      <button class="quiz-tab" data-f="f2" onclick="showFamily('f2')">02 · Bases de datos</button>
-      <button class="quiz-tab" data-f="f3" onclick="showFamily('f3')">03 · Datos sensibles</button>
-      <button class="quiz-tab" data-f="f4" onclick="showFamily('f4')">04 · Configuración</button>
-    </div>
-
-    <!-- F1 -->
-    <div class="quiz-panel active" id="qf1">
-      <div class="quiz-q" id="q1-1">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F01 · 1 / 4</div>
-          <div class="quiz-q-text">Vuestra app usa una clave de API de Stripe. El proyecto está desplegado en Cloudflare Pages. ¿Dónde debe vivir esa clave?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>En el .env commiteado al repositorio</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Hardcodeada en el código con un nombre de variable genérico</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">C</span>Como Secret en Cloudflare Pages, nunca en el repositorio</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>En un archivo de configuración separado, fuera del código</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q1-1')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q1-1')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q1-1">
-          <p><strong>C.</strong> Los Secrets son la versión de producción del .env. Cloudflare, Vercel y similares guardan la clave cifrada en la plataforma e inyectan en la app al arrancar. La clave nunca toca el repositorio. A y D son trampas: el archivo sigue en el repo. B es el peor caso: visible para cualquiera.</p>
-        </div>
-      </div>
-      <div class="quiz-q" id="q1-2">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F01 · 2 / 4</div>
-          <div class="quiz-q-text">Tienes la clave en una variable de entorno. ¿Es suficiente?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Sí, es privada</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Solo si .env no está en el repo</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo con repo privado</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Sí, no aparece en el código</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q1-2')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q1-2')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q1-2">
-          <p><strong>B.</strong> La variable de entorno protege solo si el archivo .env está en el .gitignore. El 35% de los repos privados contienen secretos en texto plano.</p>
-        </div>
-      </div>
-      <div class="quiz-q" id="q1-3">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F01 · 3 / 4</div>
-          <div class="quiz-q-text">Subiste una clave y la borraste en el siguiente commit. ¿El problema está resuelto?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Sí, ya no está</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Sí si hiciste push</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">C</span>No: sigue en el historial</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende del tiempo</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q1-3')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q1-3')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q1-3">
-          <p><strong>C.</strong> Git es append-only. Borrar en un commit no elimina el historial. Acción correcta: rotar la clave inmediatamente, tratarla como comprometida.</p>
-        </div>
-      </div>
-      <div class="quiz-q" id="q1-4">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F01 · 4 / 4</div>
-          <div class="quiz-q-text">Tu repositorio es privado. ¿Las claves que contiene están seguras?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Sí, solo tú puedes verlas</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>No del todo</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Sí, GitHub las cifra</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende del plan</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q1-4')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q1-4')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q1-4">
-          <p><strong>B.</strong> "Privado" no significa "seguro". El historial, los colaboradores y una futura fuga del repo son riesgos reales. Trata las claves igual que en repos públicos.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- F2 -->
-    <div class="quiz-panel" id="qf2">
-      <div class="quiz-q" id="q2-1">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F02 · 1 / 4</div>
-          <div class="quiz-q-text">Creas una tabla en Supabase con el agente. ¿Quién puede leer esos datos por defecto?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Solo usuarios autenticados</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Solo tú como admin</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">C</span>Cualquiera con la URL</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Nadie hasta configurarlo</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q2-1')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q2-1')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q2-1">
-          <p><strong>C.</strong> Sin RLS, la anon key (pública en el frontend) da acceso libre a toda la tabla. Cualquiera puede volcarla con un curl en 30 segundos.</p>
-        </div>
-      </div>
-      <div class="quiz-q" id="q2-2">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F02 · 2 / 4</div>
-          <div class="quiz-q-text">Tienes RLS activado. ¿Significa que estás protegido?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Sí, eso es lo que hace RLS</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Depende de las políticas</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Sí con la anon key</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Solo con service_role protegida</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q2-2')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q2-2')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q2-2">
-          <p><strong>B.</strong> Una política USING (true) activa RLS pero permite todo: es seguridad cosmética. Las políticas deben filtrar por auth.uid() para ser reales.</p>
-        </div>
-      </div>
-      <div class="quiz-q" id="q2-3">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F02 · 3 / 4</div>
-          <div class="quiz-q-text">¿Cuál es la diferencia entre anon key y service_role key?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>La anon está cifrada</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Service_role salta todo el RLS</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Anon solo va en el frontend</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">D</span>B y C son correctas</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q2-3')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q2-3')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q2-3">
-          <p><strong>D.</strong> Anon key: pública por diseño, va en el frontend, el RLS la hace segura. Service_role: modo dios, nunca en el cliente, nunca en un repo.</p>
-        </div>
-      </div>
-      <div class="quiz-q" id="q2-4">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F02 · 4 / 4</div>
-          <div class="quiz-q-text">La anon key de Supabase está diseñada para estar visible en el JavaScript del navegador. ¿Eso es un riesgo de seguridad?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Sí siempre: ninguna clave debería ser pública</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>No si RLS está bien configurado: la clave es pública, los datos no</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo si alguien inspecciona el código fuente</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende de si el repositorio es privado</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q2-4')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q2-4')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q2-4">
-          <p><strong>B.</strong> La anon key puede ser pública por diseño: identifica el proyecto pero no da acceso a los datos. RLS es lo que decide qué puede ver alguien con esa clave. Sin RLS, la clave pública da acceso a todo. Con RLS bien configurado, solo da acceso a lo que el usuario tiene permitido.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- F3 -->
-    <div class="quiz-panel" id="qf3">
-      <div class="quiz-q" id="q3-1">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F03 · 1 / 4</div>
-          <div class="quiz-q-text">Un email sin nombre ni apellidos, ¿es dato personal bajo el RGPD?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>No, sin nombre no identifica</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Sí</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo combinado con otros datos</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende del país</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q3-1')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q3-1')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q3-1">
-          <p><strong>B.</strong> El RGPD protege cualquier dato que permita identificar a alguien directa o indirectamente. Email, IP, user_id, cookie: todos están protegidos.</p>
-        </div>
-      </div>
-      <div class="quiz-q" id="q3-2">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F03 · 2 / 4</div>
-          <div class="quiz-q-text">El agente deja logs en producción que imprimen el objeto completo del usuario. ¿Es un problema?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>No si son logs internos</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">B</span>Solo si hay una brecha</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">C</span>Sí, registra PII de cada usuario</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Solo con datos bancarios</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q3-2')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q3-2')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q3-2">
-          <p><strong>C.</strong> Registrar PII sistemáticamente en logs puede ser incumplimiento del RGPD por sí solo, aunque no haya ninguna brecha posterior.</p>
-        </div>
-      </div>
-      <div class="quiz-q" id="q3-3">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F03 · 3 / 4</div>
-          <div class="quiz-q-text">Vuestra app usa un modelo de IA externo para generar resúmenes de conversaciones de soporte. Esas conversaciones contienen nombres y emails de clientes. ¿Qué problema legal puede tener esto?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Ninguno: los datos ya están en vuestro sistema, no salís del entorno</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Estáis transfiriendo datos personales a un tercero sin que el usuario haya consentido</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo hay problema si el proveedor de IA tiene servidores fuera de Europa</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende del tamaño de la empresa</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q3-3')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q3-3')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q3-3">
-          <p><strong>B.</strong> Los usuarios consintieron que sus datos estuvieran en vuestro sistema. No consintieron que viajaran a un proveedor de IA externo. Esto no impide usar IA: hay que declararlo en la política de privacidad, elegir proveedores con los acuerdos adecuados y, en algunos casos, obtener consentimiento explícito.</p>
-        </div>
-      </div>
-      <div class="quiz-q" id="q3-4">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F03 · 4 / 4</div>
-          <div class="quiz-q-text">Detectáis que datos de usuarios han estado expuestos sin las protecciones adecuadas. ¿Cuánto tiempo tenéis para notificar a la autoridad de protección de datos?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>30 días desde que ocurrió</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>72 horas desde que lo detectáis</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo si hay más de 100 afectados</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Sin obligación si no hubo un ataque externo activo</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q3-4')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q3-4')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q3-4">
-          <p><strong>B.</strong> 72 horas desde que tenéis constancia, no desde que ocurrió. D es la trampa más común: la exposición sin protecciones adecuadas ya es brecha notificable aunque no haya habido ataque. C también es trampa: el RGPD no tiene umbral mínimo de afectados.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- F4 -->
-    <div class="quiz-panel" id="qf4">
-      <div class="quiz-q" id="q4-1">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F04 · 1 / 4</div>
-          <div class="quiz-q-text">El agente deja el modo debug activo en producción. ¿Qué puede pasar?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>La app va más lenta</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Los errores exponen información interna</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo afecta a desarrollo</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Nada hasta que haya un error</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q4-1')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q4-1')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q4-1">
-          <p><strong>B.</strong> Debug activo devuelve stack traces con el framework, versión y estructura interna del código. Un mapa del sistema para cualquier atacante.</p>
-        </div>
-      </div>
-      <div class="quiz-q" id="q4-2">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F04 · 2 / 4</div>
-          <div class="quiz-q-text">Algo falla por mala configuración en AWS. ¿Quién es responsable?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>AWS</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Tú, el cliente</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>50% cada uno</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Depende del contrato</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q4-2')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q4-2')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q4-2">
-          <p><strong>B.</strong> Gartner: el 99% de los fallos cloud son del cliente. La plataforma asegura su infraestructura. Lo que configuras tú encima es responsabilidad tuya.</p>
-        </div>
-      </div>
-      <div class="quiz-q" id="q4-3">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F04 · 3 / 4</div>
-          <div class="quiz-q-text">El agente crea un endpoint /api/debug durante el desarrollo que muestra logs internos del servidor. El proyecto se despliega sin eliminarlo. ¿Qué riesgo tiene?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>Ninguno: solo los desarrolladores conocen esa URL</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Cualquiera que la encuentre puede ver información interna de la aplicación</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Es un riesgo solo si la app tiene muchos usuarios</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Se desactiva automáticamente en modo producción</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q4-3')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q4-3')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q4-3">
-          <p><strong>B.</strong> A es "seguridad por oscuridad": asumir que nadie encontrará algo porque no está anunciado. Los atacantes tienen listas de rutas comunes (/debug, /api-docs, /swagger, /actuator) y las prueban sistemáticamente. D es otra trampa: el modo producción no elimina endpoints, solo cambia el entorno.</p>
-        </div>
-      </div>
-      <div class="quiz-q" id="q4-4">
-        <div class="quiz-q-header">
-          <div class="quiz-q-num">F04 · 4 / 4</div>
-          <div class="quiz-q-text">El agente añade <code style="font-family:var(--mono);font-size:14px;color:var(--violet);">origin: *</code> para resolver un error de CORS. ¿Qué significa eso?</div>
-        </div>
-        <div class="quiz-options">
-          <div class="quiz-opt"><span class="quiz-opt-letter">A</span>CORS ya no dará problemas</div>
-          <div class="quiz-opt" data-correct="true"><span class="quiz-opt-letter">B</span>Cualquier web puede hacer peticiones a tu API</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">C</span>Solo orígenes conocidos tienen acceso</div>
-          <div class="quiz-opt"><span class="quiz-opt-letter">D</span>Hay que reiniciar el servidor</div>
-        </div>
-        <div class="quiz-reveal-row">
-          <button class="quiz-btn" onclick="revealAnswer('q4-4')">Revelar</button>
-          <button class="quiz-btn-reset" onclick="resetQuestion('q4-4')">Reiniciar</button>
-        </div>
-        <div class="quiz-explanation" id="exp-q4-4">
-          <p><strong>B.</strong> Origin: * significa "acepto peticiones de cualquier dominio". Cómodo en dev, catastrófico en prod. El agente lo pone para que deje de dar error; nadie lo revisa antes del deploy.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="notas-block">
-      <div class="notas-label">Nota · Uso del quiz en clase</div>
-      <p><strong>Mecánica:</strong> pregunta en voz alta, responden A/B/C/D en el chat de Zoom, lees algunas, pulsas Revelar cuando el debate esté listo.</p>
-      <p><strong>Sin respuesta incorrecta pública.</strong> La explicación corrige sin nombrar. Objetivo: activar intuición, no evaluar.</p>
-      <p>Todas las preguntas tienen respuesta correcta definida. El objetivo es reforzar conceptos, no evaluar.</p>
-    </div>
-  </div>
-</section>
-
-<!-- PRÁCTICA -->
-<section id="practica">
-  <div class="container">
-    <div class="eyebrow reveal">Manos a la obra · Bloque 2</div>
-    <h2 class="reveal rd1">Cuatro agentes, <em>un informe</em></h2>
-    <p class="reveal rd2" style="margin-top:24px;">Cada agente está especializado en una familia de riesgo. Corren en paralelo sobre el mismo repositorio y el resultado se consolida en un único informe de despliegue.</p>
-
-    <div class="pipeline-flow reveal rd2">
-      <div class="pf-node"><div class="pf-node-t">Tu proyecto</div><div class="pf-node-s">cualquier repositorio local</div></div>
-      <div class="pf-arrow">↓</div>
-      <div class="pf-node" style="border-color:rgba(220,238,60,0.25);"><div class="pf-node-label" style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--ink-faint);margin-bottom:4px;">CLAUDE CODE</div><div class="pf-node-t" style="font-family:var(--mono);font-style:normal;font-size:12px;color:var(--accent);">/security-audit --repo .</div></div>
-      <div class="pf-arrow">↓</div>
-      <div class="pf-node pf-orch"><div class="pf-node-t">Orquestador</div><div class="pf-node-s">lee los agentes · los lanza en paralelo</div></div>
-      <div class="pf-parallel-label">▼ paralelo ▼</div>
-      <div class="pf-skills">
-        <div class="pf-skill"><b>01</b>Credenciales<span>API keys · .env · Git history</span></div>
-        <div class="pf-skill"><b>02</b>Base de datos<span>RLS · permisos · service_role</span></div>
-        <div class="pf-skill"><b>03</b>Privacidad<span>PII · logs · RGPD</span></div>
-        <div class="pf-skill"><b>04</b>Configuración<span>CORS · endpoints · headers</span></div>
-      </div>
-      <div class="pf-fanin">↓ consolidación ↓</div>
-      <div class="pf-node" style="border-color:rgba(220,238,60,0.4);"><div class="pf-node-t">Informe de seguridad</div><div class="pf-node-s">✓ seguro · △ revisar · ✗ no desplegar</div></div>
-    </div>
-
-    <div class="reveal rd3" style="margin:40px 0 0;padding:20px 24px;background:var(--bg-raised);border:1px solid var(--divider);border-left:2px solid var(--accent);">
-      <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">Cómo ejecutarlo</div>
-      <div style="font-family:var(--mono);font-size:13px;color:var(--ink);line-height:1.8;">
-        <span style="color:var(--ink-dim);"># Desde Claude Code, en la carpeta del proyecto de seguridad</span><br>
-        <span style="color:var(--coral);">/security-audit</span> --repo ../feedbackhub<br><br>
-        <span style="color:var(--ink-dim);"># O solo una familia</span><br>
-        <span style="color:var(--coral);">/security-audit</span> --repo ../feedbackhub --family 2<br><br>
-        <span style="color:var(--ink-dim);"># Resultado → feedbackhub/security-report.md</span>
-      </div>
-    </div>
-
-    <div class="agents-grid reveal rd3">
-
-      <div class="agent-card" onclick="this.classList.toggle('open')">
-        <span class="agent-toggle">+</span>
-        <div class="agent-num">AGENTE 01 · CREDENCIALES</div>
-        <div class="agent-title">Secretos expuestos</div>
-        <div class="agent-desc">Busca claves y tokens que hayan llegado al código o al historial de Git.</div>
-        <div class="agent-detail">
-          <div class="agent-detail-inner">
-            <div class="agent-section-label">Qué detecta</div>
-            <div class="agent-items">
-              <div class="agent-item">API keys hardcodeadas en código fuente</div>
-              <div class="agent-item">Archivos .env commiteados al repositorio</div>
-              <div class="agent-item">Credenciales en los últimos 50 commits de Git</div>
-              <div class="agent-item">Cadenas de conexión a base de datos con contraseña</div>
+          <p class="fam-mensaje">Ninguna herramienta decide por ti qué datos necesita tu producto. Es una decisión de producto.</p>
+          <div class="fam-block">
+            <div class="fam-block-label">Lo que te llevas</div>
+            <div class="fam-ideas">
+              <div class="fam-idea"><span class="fam-idea-mark">1</span><span class="fam-idea-txt"><strong>Para cada dato que pide tu producto, pregúntate para qué lo usas.</strong> Si no tienes respuesta, quítalo.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">2</span><span class="fam-idea-txt"><strong>No pegues datos reales de tus usuarios</strong> en el chat de Lovable ni en otra herramienta de IA.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">3</span><span class="fam-idea-txt"><strong>Ten una política de privacidad</strong> que diga qué datos pides y para qué. No hace falta que sea perfecta, pero tiene que existir.</span></div>
+              <div class="fam-idea"><span class="fam-idea-mark">4</span><span class="fam-idea-txt"><strong>Si hay una brecha, tienes 72 horas para avisar.</strong> Empieza por «Si ya ocurrió: los primeros 30 minutos», en la <a href="descargas/guia_seguridad_alumnos.pdf#page=9" onclick="event.stopPropagation()">página 9 de la guía</a>.</span></div>
             </div>
-            <div class="agent-section-label">Qué produce</div>
-            <div class="agent-output">Lista de secretos con ubicación exacta (archivo:línea) y acción inmediata recomendada.</div>
+            <p class="fam-enlaces"><a href="#prompt3" onclick="event.stopPropagation()">Prompt para revisarlo en tu producto</a> · <a href="descargas/guia_seguridad_alumnos.pdf#page=6" onclick="event.stopPropagation()">La guía, página 6</a></p>
           </div>
-        </div>
+          <div class="notas-block">
+            <div class="notas-label">Nota · F3 · 20:12–20:39 (27 min)</div>
+            <p><strong>20:12</strong> para qué y «Antes de entrar» (3) · <strong>20:15</strong> ideas 1 y 2 (7) · <strong>20:22 · Pregunta:</strong> «¿Qué datos pide tu formulario de registro?» · <strong>20:24</strong> idea 3 y caso (6). <strong>Si vas tarde:</strong> salta las multas (DLA Piper).</p>
+            <p><strong>20:30 · Chequeo (7):</strong> pregunta «¿Creéis que Lovable me avisará de que pido datos de más?» · prompt 3 · mientras responde, la vista previa de <code>prueba-cloud</code> en el formulario de registro · lee el resumen. <strong>Corte a los 4 min:</strong> <code>023/capturas/f3-prompt.png</code>. Si la vista previa no carga: la imagen de esta tarjeta.</p>
+            <p><strong>20:37 · Pregunta:</strong> «Di un dato que tu producto pide y que podrías quitar». Si alguien escribe «ninguno», está bien.</p>
+          </div>
+        </div></div>
       </div>
 
-      <div class="agent-card" onclick="this.classList.toggle('open')">
-        <span class="agent-toggle">+</span>
-        <div class="agent-num">AGENTE 02 · BASE DE DATOS</div>
-        <div class="agent-title">Permisos y acceso a datos</div>
-        <div class="agent-desc">Audita si los datos están realmente protegidos o si cualquiera puede acceder a ellos.</div>
-        <div class="agent-detail">
-          <div class="agent-detail-inner">
-            <div class="agent-section-label">Qué detecta</div>
-            <div class="agent-items">
-              <div class="agent-item">Tablas de Supabase sin RLS activado</div>
-              <div class="agent-item">Políticas RLS que permiten todo (seguridad cosmética)</div>
-              <div class="agent-item">service_role key en código que corre en el navegador</div>
-              <div class="agent-item">Tablas accesibles sin autenticación (verifica en vivo)</div>
-            </div>
-            <div class="agent-section-label">Qué produce</div>
-            <div class="agent-output">Mapa de qué tablas están expuestas y qué datos son accesibles sin autenticación.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="agent-card" onclick="this.classList.toggle('open')">
-        <span class="agent-toggle">+</span>
-        <div class="agent-num">AGENTE 03 · PRIVACIDAD</div>
-        <div class="agent-title">Datos personales fuera de sitio</div>
-        <div class="agent-desc">Detecta si datos de usuarios aparecen en logs, archivos de test o flujos de IA externos.</div>
-        <div class="agent-detail">
-          <div class="agent-detail-inner">
-            <div class="agent-section-label">Qué detecta</div>
-            <div class="agent-items">
-              <div class="agent-item">Emails o IPs reales en archivos de test o fixtures</div>
-              <div class="agent-item">Logs que imprimen el objeto completo del usuario</div>
-              <div class="agent-item">Transferencias de datos a servicios externos sin declarar</div>
-              <div class="agent-item">Ausencia de política de privacidad accesible</div>
-            </div>
-            <div class="agent-section-label">Qué produce</div>
-            <div class="agent-output">Listado de ficheros con PII real y patrones de logging que incumplen RGPD.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="agent-card" onclick="this.classList.toggle('open')">
-        <span class="agent-toggle">+</span>
-        <div class="agent-num">AGENTE 04 · CONFIGURACIÓN</div>
-        <div class="agent-title">Puertas abiertas en producción</div>
-        <div class="agent-desc">Revisa si la configuración del despliegue deja accesos que no deberían existir.</div>
-        <div class="agent-detail">
-          <div class="agent-detail-inner">
-            <div class="agent-section-label">Qué detecta</div>
-            <div class="agent-items">
-              <div class="agent-item">CORS abierto a cualquier origen (wildcard)</div>
-              <div class="agent-item">Endpoints de debug o admin sin autenticación</div>
-              <div class="agent-item">Headers de seguridad HTTP ausentes</div>
-              <div class="agent-item">Modo debug activo en configuración de producción</div>
-            </div>
-            <div class="agent-section-label">Qué produce</div>
-            <div class="agent-output">Lista de configuraciones permisivas con impacto de negocio y cambio concreto para resolverlas.</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="notas-block" style="margin-top:40px;">
-      <div class="notas-label">Nota · Gestión de la heterogeneidad</div>
-      <p><strong>Al abrir el capó, da permiso explícito:</strong> "Los que estéis cómodos con código, leed el prompt del agente. Los que no, mirad el output: qué dice el informe y por qué ese hallazgo es crítico. Las dos lecturas son igual de válidas."</p>
-      <p><strong>Si falla la demo:</strong> "Esto es justo lo que pasa cuando no pruebas el día antes." Ten captura de pantalla del security-report.md como fallback.</p>
-      <p><strong>Si alguien menos técnico se desconecta:</strong> pregunta de producto directa. "¿Cuál de los cuatro hallazgos te parece más crítico para vuestro producto?"</p>
-    </div>
-  </div>
-</section>
-
-<!-- DEBATE -->
-<section id="debate">
-  <div class="container">
-    <div class="eyebrow reveal">Para terminar</div>
-    <h2 class="reveal rd1">Cuándo el pipeline <em>no basta</em></h2>
-    <p class="reveal rd2" style="margin-top:24px;">Hay situaciones donde la herramienta no llega y necesitas a un profesional. Salid con el criterio para reconocerlas.</p>
-    <div class="debate-box reveal rd2">
-      <p class="debate-q">¿Vuestro producto maneja datos de salud, financieros o biométricos?</p>
-      <p class="debate-q">¿Vais a pasar de 100 a 10.000 usuarios en semanas?</p>
-      <p class="debate-q">¿Os conectáis a sistemas críticos de un cliente?</p>
-      <p class="debate-q">¿Os pide alguien una auditoría formal?</p>
     </div>
     <div class="notas-block">
-      <div class="notas-label">Nota · El momento más valioso para el grupo</div>
-      <p>Los 5 escenarios donde llamar a un experto: datos regulados, salto de escala, sistemas críticos de cliente, procesamiento de pagos, auditoría formal.</p>
-      <p><strong>Cómo pedir ayuda eficiente:</strong> qué producto y stack, qué datos y cuántos usuarios, qué has revisado ya, qué escenario concreto preocupa.</p>
-      <p><strong>15 min de debate abierto sobre SUS proyectos.</strong> Facilita, no protagonices. Disparador si nadie arranca: "Marga, has construido con Lovable. ¿Algo de hoy te ha hecho pensar en tu proyecto?"</p>
-      <p><strong>Corta a las 19:52:</strong> "Podríamos seguir, que es buena señal. Dos minutos y cerramos."</p>
+      <div class="notas-label">Nota · Los tres riesgos</div>
+      <p><strong>20:04 · Pausa (8 min):</strong> deja en pantalla esta sección. Lee el chat y apunta las preguntas para el final. A las 20:12 en punto: «Seguimos. Vamos con el tercer riesgo».</p>
     </div>
   </div>
 </section>
 
-<!-- CIERRE -->
+<!-- Al final de cada riesgo: 19:28, 19:55 y 20:30 -->
+<section id="prompts">
+  <div class="container">
+    <div class="eyebrow reveal">Revisa tu producto</div>
+    <h2 class="reveal rd1">Tres prompts <em>para copiar</em></h2>
+    <p class="reveal rd2" style="margin-top:24px;">Uno por cada riesgo. Copia uno, pégalo en el chat de tu proyecto de Lovable y envíalo. Lovable responde con un resumen de dos frases y una tabla con lo más importante primero.</p>
+    <h3 class="reveal" style="margin-top:40px;">Tres reglas</h3>
+    <ol class="pasos reveal">
+      <li><strong>Los prompts no cambian nada.</strong> Piden a Lovable que revise tu proyecto y te explique lo que encuentra. Si Lovable propone arreglar algo, no lo aceptes todavía: primero lee el informe y decide.</li>
+      <li><strong>Si arreglas algo, hazlo con un Pull Request</strong> (una propuesta de cambio que revisas antes de publicarla). Comprueba la preview (la versión de prueba) antes del merge (unir el cambio a la versión publicada), como en la sesión del 21 de noviembre.</li>
+      <li><strong>No apliques arreglos el día antes del Demo Day</strong> sin haberlos probado antes.</li>
+    </ol>
+
+    <div class="prompt reveal" id="prompt1" data-c="blue">
+      <h3>1 · Claves y secretos</h3>
+      <p>Busca las claves de los servicios que usa tu producto y te dice cuáles son públicas, cuáles secretas y dónde está cada una. Una <strong>clave pública</strong> puede estar en la web; una <strong>clave secreta</strong> nunca, porque quien la tenga puede usar el servicio en tu nombre.</p>
+      <div class="copiable"><button class="copiar" type="button">Copiar</button>Revisa este proyecto y busca las claves de los servicios que usa (base de datos, IA, pagos, publicación). No cambies nada: solo revisa e informa.
+
+Para cada clave que encuentres, dime:
+1. De qué servicio es.
+2. Si es pública (puede estar en la web) o secreta (no debe estar en la web).
+3. Si está en el código que se envía al navegador del usuario o guardada en Secrets.
+4. Qué podría hacer otra persona si la copia.
+5. Qué me recomiendas hacer.
+
+No incluyas las contraseñas de los usuarios, las sesiones ni los datos de prueba.
+Si no encuentras ninguna clave secreta en el código del navegador, dilo claramente.
+
+Formato de la respuesta:
+- Empieza con un resumen de dos frases: si hay algo que arreglar y qué es lo más urgente.
+- Después, una tabla de 5 filas como máximo, con lo más importante primero. Si hay más, agrupa en una fila las que tengan el mismo riesgo.
+- Nombra cada cosa como la ve el usuario del producto (por ejemplo, "clave de OpenAI" o "formulario de registro"), sin rutas de ficheros ni nombres de variables.
+- En español, con frases cortas. Explica cualquier término técnico en una frase.</div>
+    </div>
+
+    <div class="prompt reveal" id="prompt2" data-c="coral">
+      <h3>2 · Datos y permisos</h3>
+      <p>Revisa cada tabla de tu base de datos y te dice quién puede leer y cambiar sus filas. Las <strong>reglas RLS</strong> deciden qué filas puede ver o cambiar cada usuario; sin ellas, cualquiera con la clave pública puede leer todas las filas.</p>
+      <div class="copiable"><button class="copiar" type="button">Copiar</button>Revisa la base de datos de este proyecto. No cambies nada: solo revisa e informa.
+
+Para cada tabla, dime:
+1. Qué datos guarda.
+2. Si tiene RLS activado.
+3. Quién puede leer sus filas, quién puede crearlas, cambiarlas y borrarlas: cualquier persona sin iniciar sesión, cualquier usuario con sesión o solo el dueño de cada fila.
+4. Si alguna regla permite más de lo necesario.
+5. Qué me recomiendas hacer.
+
+Ordena las tablas de mayor a menor riesgo.
+
+Formato de la respuesta:
+- Empieza con un resumen de dos frases: si hay algo que arreglar y qué es lo más urgente.
+- Después, una tabla de 5 filas como máximo, con lo más importante primero. Si hay más, agrupa en una fila las que tengan el mismo riesgo.
+- Nombra cada cosa como la ve el usuario del producto (por ejemplo, "clave de OpenAI" o "formulario de registro"), sin rutas de ficheros ni nombres de variables.
+- En español, con frases cortas. Explica cualquier término técnico en una frase.</div>
+    </div>
+
+    <div class="prompt reveal" id="prompt3" data-c="jade">
+      <h3>3 · Datos personales</h3>
+      <p>Revisa qué datos personales pide tu producto, dónde se guardan, adónde se envían y si alguno sobra. Un <strong>dato personal</strong> es cualquier dato que identifica a una persona o permite identificarla: nombre, email, teléfono, dirección, foto o DNI.</p>
+      <div class="copiable"><button class="copiar" type="button">Copiar</button>Revisa qué datos personales recoge y usa este proyecto. No cambies nada: solo revisa e informa.
+
+Dime:
+1. Qué datos personales pide el producto y en qué pantalla.
+2. Dónde se guardan.
+3. Si alguno se escribe en los registros (logs) o en la consola del navegador.
+4. Si alguno se envía a otro servicio, por ejemplo a una IA, y a cuál.
+5. Si hay algún dato que el producto pide pero no necesita para funcionar.
+6. Qué me recomiendas hacer.
+
+Formato de la respuesta:
+- Empieza con un resumen de dos frases: si hay algo que arreglar y qué es lo más urgente.
+- Después, una tabla de 5 filas como máximo, con lo más importante primero. Si hay más, agrupa en una fila las que tengan el mismo riesgo.
+- Nombra cada cosa como la ve el usuario del producto (por ejemplo, "clave de OpenAI" o "formulario de registro"), sin rutas de ficheros ni nombres de variables.
+- En español, con frases cortas. Explica cualquier término técnico en una frase.</div>
+    </div>
+    <div class="notas-block">
+      <div class="notas-label">Nota · Chequeos · 19:28, 19:55 y 20:30 (7 min cada uno)</div>
+      <p><strong>Antes de lanzar el prompt</strong>, la pregunta de predicción del riesgo. Copia el prompt desde aquí, pégalo en el chat de <code>prueba-cloud</code> y anota la hora.</p>
+      <p><strong>Corte a los 4 min:</strong> si Lovable no ha respondido, la captura de la víspera (<code>023/capturas/fN-prompt.png</code>). Si la respuesta sale larga, lee solo el resumen de dos frases.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 20:39–20:44 -->
+<section id="curiosos">
+  <div class="container">
+    <div class="eyebrow reveal">Para curiosos · 20:39</div>
+    <h2 class="reveal rd1">La misma revisión, <em>automática</em></h2>
+    <p class="reveal rd2" style="margin-top:24px;"><strong>No lo necesitas para tu producto.</strong> Con el escáner de Lovable, los tres prompts y la checklist de la guía tienes lo necesario. Esto es para que veas qué más se puede hacer.</p>
+    <details class="comandos reveal">
+      <summary>Qué es un pipeline de agentes</summary>
+      <div>
+        <p><strong>VS Code</strong> es un programa para trabajar con el código desde el ordenador, fuera de Lovable. <strong>Claude Code</strong> es un asistente de IA que funciona dentro de VS Code y puede leer y revisar el código de un proyecto entero.</p>
+        <p>Un <strong>agente</strong> es un programa de IA que recibe una tarea, decide qué pasos dar y los ejecuta por su cuenta: leer ficheros, buscar fallos y escribir un informe. Un <strong>pipeline</strong> es una secuencia de pasos que se lanzan juntos.</p>
+        <p>En la sesión lanzo cuatro agentes sobre <code>feedbackhub</code>, un proyecto de prueba con fallos metidos a propósito y claves falsas. Cada agente revisa una familia de riesgos: las tres de hoy y la configuración (por ejemplo, si hay archivos o páginas de prueba que cualquiera puede abrir). La configuración la tienes en la checklist de la guía.</p>
+        <p>El resultado es un informe: arriba, cuántos problemas hay y cómo de graves son; debajo, una sección por familia. Cada problema dice qué es, dónde está, por qué importa y qué hacer.</p>
+      </div>
+    </details>
+    <div class="notas-block">
+      <div class="notas-label">Nota · 20:39 · Demo del pipeline (5 min)</div>
+      <p><strong>20:39</strong> cambia a VS Code (<code>HeroCamp-Product/</code>, letra grande) · <strong>20:40</strong> <code>/security-audit --repo feedbackhub</code>, opción A; anota la hora; abre <code>security-report.md</code> y lee el resumen tal como salga · <strong>20:43</strong> «no lo necesitáis».</p>
+      <p><strong>Plan B:</strong> si a los 2 min no ha terminado o falla, <code>023/plan-b/security-report.md</code>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 20:44 -->
+<section id="descargas">
+  <div class="container">
+    <div class="eyebrow reveal">Descargas</div>
+    <h2 class="reveal rd1">La guía, <em>para después</em></h2>
+    <div class="descargas reveal rd2">
+      <a class="descarga" href="descargas/guia_seguridad_alumnos.pdf" download><div class="d-tipo">PDF</div><div class="d-titulo">Guía de seguridad para tu producto de Lovable</div><div class="d-desc">Los tres riesgos, los tres prompts, la checklist antes de publicar y qué hacer si ya ocurrió</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- 20:44–20:48 -->
 <section id="cierre" class="cierre">
   <div class="container">
     <div class="eyebrow reveal">Antes de iros</div>
-    <h2 class="reveal rd1">Tres cosas para <em>esta semana</em></h2>
+    <h2 class="reveal rd1">Antes del <em>Demo Day</em></h2>
     <div class="compromisos">
-      <div class="comp-card reveal rd2"><div class="comp-num">01</div><p class="comp-text">Ejecutad el Security Advisor de Supabase sobre vuestro proyecto. Anotad cuántas tablas salen sin RLS.</p></div>
-      <div class="comp-card reveal rd3"><div class="comp-num">02</div><p class="comp-text">Ejecutad el pipeline sobre un repositorio vuestro. El informe es vuestro punto de partida real.</p></div>
-      <div class="comp-card reveal rd4"><div class="comp-num">03</div><p class="comp-text">Configurad un límite de gasto en los servicios de IA que uséis. Hoy, antes de cerrar el ordenador.</p></div>
+      <div class="comp-card reveal rd2"><div class="comp-num">01</div><p class="comp-text"><strong>Pasa la checklist</strong> de la <a href="#descargas">guía</a>, si no lo has hecho ya. Es una página: claves y secretos, datos y permisos, datos personales y configuración.</p></div>
+      <div class="comp-card reveal rd3"><div class="comp-num">02</div><p class="comp-text"><strong>El 11 de diciembre, nada de cambios grandes:</strong> un arreglo sin probar puede romper tu producto el día de la demo. Si encuentras algo grave, como una clave secreta publicada o una tabla con datos personales que cualquiera puede leer, arréglalo ya con «Si ya ocurrió: los primeros 30 minutos» de la guía.</p></div>
+      <div class="comp-card reveal rd4"><div class="comp-num">03</div><p class="comp-text"><strong>En la demo, datos de prueba</strong>, no datos reales de tus usuarios. Y no enseñes en pantalla <em>Secrets</em> ni ninguna clave.</p></div>
     </div>
-
-    <div class="reveal rd5" style="margin-top:32px;padding:32px 36px;background:var(--bg-raised);border:1px solid rgba(255,122,107,0.3);border-left:3px solid var(--coral);">
-      <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--coral);margin-bottom:12px;">Si ya ocurrió</div>
-      <div style="font-family:var(--serif);font-size:clamp(20px,2.2vw,28px);font-weight:300;color:var(--ink);margin-bottom:24px;line-height:1.1;">Los primeros <em style="color:var(--coral);">30 minutos</em></div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;">
-        <div style="padding:16px;background:var(--bg-card);border-top:2px solid var(--coral);text-align:center;">
-          <div style="font-family:var(--serif);font-size:20px;font-style:italic;color:var(--coral);margin-bottom:8px;">01</div>
-          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink);margin-bottom:6px;letter-spacing:0.05em;">Rota</div>
-          <div style="font-size:12px;color:var(--ink-dim);line-height:1.4;">La clave comprometida. Ahora. Antes de investigar.</div>
-        </div>
-        <div style="padding:16px;background:var(--bg-card);border-top:2px solid var(--coral);text-align:center;">
-          <div style="font-family:var(--serif);font-size:20px;font-style:italic;color:var(--coral);margin-bottom:8px;">02</div>
-          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink);margin-bottom:6px;letter-spacing:0.05em;">Evalúa</div>
-          <div style="font-size:12px;color:var(--ink-dim);line-height:1.4;">¿Qué fue accesible? ¿Cuánto tiempo? No asumas lo mejor.</div>
-        </div>
-        <div style="padding:16px;background:var(--bg-card);border-top:2px solid var(--coral);text-align:center;">
-          <div style="font-family:var(--serif);font-size:20px;font-style:italic;color:var(--coral);margin-bottom:8px;">03</div>
-          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink);margin-bottom:6px;letter-spacing:0.05em;">Llama</div>
-          <div style="font-size:12px;color:var(--ink-dim);line-height:1.4;">Si hay PII: abogado / DPO. El reloj de 72h empieza al conocerlo.</div>
-        </div>
-        <div style="padding:16px;background:var(--bg-card);border-top:2px solid var(--coral);text-align:center;">
-          <div style="font-family:var(--serif);font-size:20px;font-style:italic;color:var(--coral);margin-bottom:8px;">04</div>
-          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink);margin-bottom:6px;letter-spacing:0.05em;">Documenta</div>
-          <div style="font-size:12px;color:var(--ink-dim);line-height:1.4;">Capturas, logs, timestamps. Desde el minuto 1.</div>
-        </div>
-        <div style="padding:16px;background:rgba(255,122,107,0.07);border-top:2px solid var(--coral);text-align:center;">
-          <div style="font-size:18px;color:var(--coral);margin-bottom:8px;">⚠</div>
-          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--coral);margin-bottom:6px;letter-spacing:0.05em;">No borres</div>
-          <div style="font-size:12px;color:var(--ink-dim);line-height:1.4;">Los logs del incidente. Nunca. Es destrucción de evidencia.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="reveal rd5" style="margin-top:40px;">
-      <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:20px;">Materiales de la sesión</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
-        <a href="descargas/guia_seguridad_alumnos.pdf" download style="display:flex;align-items:center;gap:14px;padding:18px 20px;background:var(--bg-raised);border:1px solid var(--divider);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--divider)'">
-          <div style="flex-shrink:0;width:36px;height:36px;background:rgba(100,210,255,0.1);border:1px solid rgba(100,210,255,0.25);display:flex;align-items:center;justify-content:center;font-size:16px;">📋</div>
-          <div>
-            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--accent);margin-bottom:4px;">ENTREGABLE 01</div>
-            <div style="font-size:13px;color:var(--ink);font-weight:500;line-height:1.3;">Guía de seguridad<br><span style="font-weight:400;color:var(--ink-dim);">Referencia operativa</span></div>
-          </div>
-        </a>
-        <a href="descargas/familia1_credenciales_alumnos.pdf" download style="display:flex;align-items:center;gap:14px;padding:18px 20px;background:var(--bg-raised);border:1px solid var(--divider);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--divider)'">
-          <div style="flex-shrink:0;width:36px;height:36px;background:rgba(100,210,255,0.1);border:1px solid rgba(100,210,255,0.25);display:flex;align-items:center;justify-content:center;font-size:16px;">🔑</div>
-          <div>
-            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--accent);margin-bottom:4px;">FAMILIA 1 · PDF</div>
-            <div style="font-size:13px;color:var(--ink);font-weight:500;line-height:1.3;">Credenciales<br><span style="font-weight:400;color:var(--ink-dim);">Referencia profunda</span></div>
-          </div>
-        </a>
-        <a href="descargas/familia2_bbdd_permisos_alumnos.pdf" download style="display:flex;align-items:center;gap:14px;padding:18px 20px;background:var(--bg-raised);border:1px solid var(--divider);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--divider)'">
-          <div style="flex-shrink:0;width:36px;height:36px;background:rgba(100,210,255,0.1);border:1px solid rgba(100,210,255,0.25);display:flex;align-items:center;justify-content:center;font-size:16px;">🗄️</div>
-          <div>
-            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--accent);margin-bottom:4px;">FAMILIA 2 · PDF</div>
-            <div style="font-size:13px;color:var(--ink);font-weight:500;line-height:1.3;">Bases de datos<br><span style="font-weight:400;color:var(--ink-dim);">Referencia profunda</span></div>
-          </div>
-        </a>
-        <a href="descargas/familia3_datos_sensibles_alumnos.pdf" download style="display:flex;align-items:center;gap:14px;padding:18px 20px;background:var(--bg-raised);border:1px solid var(--divider);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--divider)'">
-          <div style="flex-shrink:0;width:36px;height:36px;background:rgba(100,210,255,0.1);border:1px solid rgba(100,210,255,0.25);display:flex;align-items:center;justify-content:center;font-size:16px;">👤</div>
-          <div>
-            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--accent);margin-bottom:4px;">FAMILIA 3 · PDF</div>
-            <div style="font-size:13px;color:var(--ink);font-weight:500;line-height:1.3;">Datos sensibles<br><span style="font-weight:400;color:var(--ink-dim);">Referencia profunda</span></div>
-          </div>
-        </a>
-        <a href="descargas/familia4_entornos_configuracion_alumnos.pdf" download style="display:flex;align-items:center;gap:14px;padding:18px 20px;background:var(--bg-raised);border:1px solid var(--divider);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--divider)'">
-          <div style="flex-shrink:0;width:36px;height:36px;background:rgba(100,210,255,0.1);border:1px solid rgba(100,210,255,0.25);display:flex;align-items:center;justify-content:center;font-size:16px;">⚙️</div>
-          <div>
-            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--accent);margin-bottom:4px;">FAMILIA 4 · PDF</div>
-            <div style="font-size:13px;color:var(--ink);font-weight:500;line-height:1.3;">Configuración<br><span style="font-weight:400;color:var(--ink-dim);">Referencia profunda</span></div>
-          </div>
-        </a>
-        <a href="descargas/materiales_practica.zip" download style="display:flex;align-items:center;gap:14px;padding:18px 20px;background:var(--bg-raised);border:1px solid rgba(255,122,107,0.35);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--coral)'" onmouseout="this.style.borderColor='rgba(255,122,107,0.35)'">
-          <div style="flex-shrink:0;width:36px;height:36px;background:rgba(255,122,107,0.1);border:1px solid rgba(255,122,107,0.3);display:flex;align-items:center;justify-content:center;font-size:16px;">📦</div>
-          <div>
-            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--coral);margin-bottom:4px;">PRÁCTICA · ZIP</div>
-            <div style="font-size:13px;color:var(--ink);font-weight:500;line-height:1.3;">Pipeline + proyectos<br><span style="font-weight:400;color:var(--ink-dim);">feedbackhub · pipeline · dashboard</span></div>
-          </div>
-        </a>
-      </div>
-    </div>
-
+    <p class="mensaje reveal">Lovable protege una parte; <em>la decisión es tuya</em>.</p>
     <div class="notas-block">
-      <div class="notas-label">Nota · Cierre en 5 minutos estrictos</div>
-      <p><strong>Da 1 minuto de silencio para que anoten los compromisos.</strong> "Un minuto para que los apuntéis." Eso los convierte de "algo que escuché" en "algo que tengo que hacer" (ajuste del informe).</p>
-      <p><strong>Entrega de materiales:</strong> manda la Guía en PDF y el repo del pipeline por Slack EN DIRECTO mientras hablas.</p>
-      <p><strong>Cierre:</strong> "Espero que esto os haga la próxima revisión un poco más reflexiva antes de hacer push. Estoy en el canal para lo que necesitéis." No alargues.</p>
-      <p><strong>Seguimiento una semana después:</strong> mensaje al canal. "¿Alguien ejecutó el Security Advisor? ¿Qué encontró?"</p>
+      <div class="notas-label">Nota · Cierre · 20:44</div>
+      <p><strong>20:44</strong> la checklist y el Demo Day (2) · <strong>20:46 · Pregunta (chat o voz):</strong> «¿Qué vas a revisar primero en tu producto?». Si alguien dice algo que se arregla en un minuto, anímale a hacerlo hoy · despedida con el mensaje de la sesión.</p>
+      <p><strong>20:48 · Preguntas (12):</strong> primero las que apuntaste. A las 21:00, despídete aunque queden preguntas: lo que preguntan está en la guía.</p>
     </div>
   </div>
 </section>
 
 <footer class="footer">
   <img src="../../assets/logo-herocamp.jpg" alt="Hero Camp" style="height:22px; width:auto; display:block; filter:invert(1); margin-bottom:10px;">
-  <p>AI PM PRO · THE HERO CAMP · 26 JUNIO 2026 · JAIME</p>
+  <p>AI PM PRO · THE HERO CAMP · 10 DICIEMBRE 2026 · JAIME</p>
 </footer>
 
 <script src="../../assets/portal.js"></script>
+<script>
+  // Botones de copiar (SPEC-024): copian el texto del bloque sin el botón.
+  // check_prompts.py comprueba que ese texto es idéntico al de la guía y al de prompts_chequeo_lovable.md.
+  document.querySelectorAll('.copiable').forEach((bloque) => {
+    const boton = bloque.querySelector('.copiar');
+    const texto = () => [...bloque.childNodes].filter((n) => n !== boton).map((n) => n.textContent).join('').trim();
+    boton.addEventListener('click', async (ev) => {
+      ev.stopPropagation();
+      const contenido = texto();
+      try {
+        await navigator.clipboard.writeText(contenido);
+      } catch (e) {
+        const area = document.createElement('textarea');
+        area.value = contenido;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+      boton.textContent = 'Copiado';
+      boton.classList.add('hecho');
+      setTimeout(() => { boton.textContent = 'Copiar'; boton.classList.remove('hecho'); }, 2500);
+    });
+  });
+</script>
 </body>
 </html>

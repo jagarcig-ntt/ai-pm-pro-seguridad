@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **aprobada v2** (Jaime, 24-nov) · preguntas respondidas · hub corregido (R1). La v1 (aprobada el 18-nov: 4h, salas, prácticas, prompts auditores y check en el CI) queda en el historial de git. SPEC-026 la redefinió el 24-nov |
+| Estado | **en curso** (25-nov) · aprobada v2 (Jaime, 24-nov) · plan aprobado (25-nov) · tasks · hub corregido (R1). La v1 (aprobada el 18-nov: 4h, salas, prácticas, prompts auditores y check en el CI) queda en el historial de git. SPEC-026 la redefinió el 24-nov |
 | Sesión | 2026-12 Seguridad v2 (**jueves 10-dic · 19:00–21:00 · Zoom**) |
 | Fecha límite | 2026-12-07. El hub, antes: ver R1 |
 | Depende de | SPEC-023 (guion: fuente de los minutos, los textos y las preguntas) · SPEC-026 (guía publicada, prompts y capturas de la prueba en Lovable) · SPEC-016 (portal del 21-nov, modelo de estructura y de botones *Copiar*) · constitution v1.9 |
