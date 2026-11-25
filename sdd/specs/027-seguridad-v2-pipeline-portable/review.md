@@ -1,6 +1,6 @@
 # REVIEW · SPEC-027 · Pipeline de agentes portable
 
-*T01 (aislamiento y tiempo) · T05 (agentes F1 y F2) · T06 (F3 y F4) · T07 (prueba completa) · T08 (README) · T09, T10, T11 y T12, pendientes*
+*T01 (aislamiento y tiempo) · T05 (agentes F1 y F2) · T06 (F3 y F4) · T07 (prueba completa) · T08 (README) · T09 (publicar) · T10, T11 y T12, pendientes*
 
 ## T01 · Aislamiento y tiempo (25-nov-2026)
 
@@ -98,7 +98,17 @@ Con los cuatro agentes a la vez, `--model sonnet`, en el equipo de Jaime.
 - Usa `bash auditar.sh` y no `./auditar.sh` (spec R2): así funciona aunque el fichero no tenga permiso de ejecución. Las dos formas valen.
 - «Pruébalo» y el `git clone` no funcionan hasta T09. Se comprueban en T10.
 
-## T09 · Publicar (en curso, 25-nov-2026)
+## T09 · Publicar (25-nov-2026)
 - **Licencia MIT** añadida (`LICENSE` y una línea en el README; decisión de Jaime).
-- **A la espera de los dos commits de Jaime** (5.5): el pipeline y la rama `demo/seguridad`. El repositorio de GitHub todavía no existe.
+- **Commits de Jaime:** pipeline `288ea2c` y fallos `bad827e`. Jaime subió la rama; el agente creó el repositorio con `gh` y subió el pipeline, por petición de Jaime.
+- **Publicado:** https://github.com/jagarcig-ntt/herocamp-security-pipeline (público, 12 ficheros, `auditar.sh` ejecutable). Antes de subirlo: 9 de 9 pruebas, sin claves, rutas del equipo ni correo en los ficheros.
 - **Estado antes del push, para CA7:** `main` de `feedback-hub` en `ac8d7df`; `demo/seguridad` no está en GitHub. Producción: 200; `/admin`: 404; huella de la lista de ficheros JS: `269b121a571f`. Un Pull Request abierto. Último «Desplegar»: 42635950383 (`main`, 9-nov).
+
+| CA7, después del push | Resultado |
+|---|---|
+| `main` de `feedback-hub` | ✅ Sigue en `ac8d7df` |
+| `main` y `lovable-sync` no contienen `bad827e` | ✅ |
+| Pull Request abiertos | ✅ Solo el #6, como antes |
+| Despliegues | ✅ Ninguno nuevo: el último «Desplegar» sigue siendo 42635950383 |
+| CI de la rama, con Bun | ✅ «Comprobar el PR» 45591619297, correcto |
+| Producción | ✅ 200, `/admin` 404 y la misma huella de ficheros JS |
