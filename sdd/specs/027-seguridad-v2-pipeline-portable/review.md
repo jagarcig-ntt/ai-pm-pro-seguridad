@@ -1,6 +1,6 @@
 # REVIEW · SPEC-027 · Pipeline de agentes portable
 
-*T01 (aislamiento y tiempo) · T05 (agentes F1 y F2) · T06 (F3 y F4) · T07 (prueba completa) · T08 (README) · T09 (publicar) · T10, T11 y T12, pendientes*
+*T01 (aislamiento y tiempo) · T05 (agentes F1 y F2) · T06 (F3 y F4) · T07 (prueba completa) · T08 (README) · T09 (publicar) · T10 (desde cero) · T10b (formato) · T11 y T12, pendientes*
 
 ## T01 · Aislamiento y tiempo (25-nov-2026)
 
@@ -112,3 +112,45 @@ Con los cuatro agentes a la vez, `--model sonnet`, en el equipo de Jaime.
 | Despliegues | ✅ Ninguno nuevo: el último «Desplegar» sigue siendo 42635950383 |
 | CI de la rama, con Bun | ✅ «Comprobar el PR» 45591619297, correcto |
 | Producción | ✅ 200, `/admin` 404 y la misma huella de ficheros JS |
+
+## T10 · Desde cero (25-nov-2026): CA1 ❌
+
+Clon del repositorio publicado en una carpeta vacía, con el PATH de una terminal nueva de Windows y siguiendo el README. Mismo equipo, con git, Node y Claude Code ya instalados: **no se probó la instalación ni otro ordenador.**
+
+| Paso del README | Resultado |
+|---|---|
+| `git clone` y saltos de línea de `auditar.sh` en Windows | ✅ |
+| «Pruébalo» con `demo/seguridad` | ❌ 41 s, **F4 «No revisada»**: la respuesta del agente no tenía el formato esperado. F1 y F2, un crítico cada uno; F3, dos altos y un medio |
+| `./auditar.sh` con `main` | ✅ 36 s, sin críticos ni altos. F3 dio 2 medios (antes, 1) |
+| Carpeta y `--familia 2` · pruebas | ✅ · 9 de 9 |
+
+- **El fallo se ve:** el informe y la terminal dicen «No revisada». Pero CA1 pide que funcione a la primera, y en la demo faltaría una familia.
+- **Causa no demostrada:** la copia temporal se borra y la respuesta se perdió. Cuatro ejecuciones más de F4 dieron JSON correcto. Hipótesis: el agente escribe el JSON a mano y a veces lo rompe, por ejemplo con comillas dentro de un texto.
+- **Arreglo probado en el clon, no aplicado:** con `--json-schema`, Claude Code devuelve la respuesta ya validada en `structured_output`. 4 de 4 correctas, y las 4 con el fallo crítico. En 3 de las 4 no salió el medio de las cabeceras.
+- **Error de la comprobación:** buscaba `admin.tsx` en todo el informe y lo daba por bueno por el hallazgo de F1. **T07 se ha vuelto a comprobar** familia por familia (fichero y título del hallazgo): 6 de 6, se mantiene. El informe de esta ejecución lo sustituyó la siguiente, así que no se pudo revisar por dentro.
+
+## T10b · Formato garantizado y segundo intento (25-nov-2026)
+- **Cambios (en local, sin publicar):** `--json-schema` en los cuatro agentes; `informe.mjs` lee `structured_output` y valida (`--validar`); un segundo intento si el agente falla, dentro del mismo límite de 150 s; una línea en el README. Pruebas: 10 de 10.
+- **Segundo intento, con un `claude` simulado:** formato malo y error a la primera → acierta a la segunda; falla siempre → «No revisada» tras 2 intentos; lento → se detiene sin segundo intento.
+
+| Ejecuciones reales, por URL | Resultado |
+|---|---|
+| `demo/seguridad`, 5 | 4 de 4 fallos en 5 de 5, comprobado por familia (fichero y título del mismo hallazgo). 7 hallazgos en las cinco. 38, 41, 43, 39 y 39 s |
+| `main`, 2 | 0 críticos, 0 altos y los mismos 2 medios. 37 y 37 s |
+| Familias no revisadas · segundos intentos | 0 de 28 · 0 de 28 |
+
+- **Límite:** la causa del fallo de T10 sigue sin demostrarse. 28 agentes sin fallos no descartan uno poco frecuente; el segundo intento y el plan B lo cubren.
+- **El segundo intento no se ha visto actuar con un fallo real.**
+
+## T10 · Desde cero, repetida tras T10b (25-nov-2026): CA1 ✅
+
+Clon de `4ce3895` en una carpeta vacía, con el PATH de una terminal nueva y siguiendo el README. Mismo equipo: **no se probó la instalación ni otro ordenador.**
+
+| Paso | Resultado |
+|---|---|
+| «Pruébalo» con `demo/seguridad` | ✅ A la primera: los 4 fallos, comprobados por familia; 7 hallazgos; sin la clave. 45 s, 48 s desde el clon |
+| `./auditar.sh` con `main` | ✅ 0 críticos, 0 altos y 2 medios. 36 s |
+| Carpeta y `--familia 2` | ✅ 35 s. La carpeta no cambia |
+| Pruebas | ✅ 10 de 10 |
+
+CA2 ✅ también contra la URL publicada (T10b, 5 de 5, y esta).
