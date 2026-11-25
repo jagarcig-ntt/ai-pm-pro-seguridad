@@ -2,6 +2,8 @@
 
 *Spec: [spec.md](spec.md) (aprobada el 11-nov) · Estado del plan: **aprobado** (Jaime, 11-nov) · [tareas](tasks.md)*
 
+> **Obsoleto desde el 25-nov.** La spec se redefinió (§0): el entregable es la página de preguntas difíciles. No hay plan nuevo, porque es un solo fichero; el enfoque y los criterios están en spec §0 y en la tarea T02. Este plan queda como historia.
+
 ## 1. Enfoque
 - **Se reescriben en su sitio** los ficheros de junio de `sesiones/2026-12-seguridad-v2/HeroCamp-Teoria/Bloque Teorico/`. Lo impartido sigue en el tag `sesion-2026-06` (constitution 1.4).
 - **Formato de la teoría de noviembre:** "Antes de entrar", 3 ideas, "cómo se ve en tu producto", caso real, factor agente IA y lo que el PM se lleva. Versión de alumnos y versión de formador con 🎓.

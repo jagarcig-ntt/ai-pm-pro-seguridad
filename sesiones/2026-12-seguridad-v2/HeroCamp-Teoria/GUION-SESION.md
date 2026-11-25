@@ -542,13 +542,15 @@
 
 🎓 Primero responde las preguntas que apuntaste durante la sesión. Si una familia se alargó, este tiempo ya está gastado: despídete a las 21:00 aunque queden preguntas, y diles que lo que preguntan está en la guía.
 
-🎓 **Preguntas probables y qué responder:**
-- **«¿El escáner de Lovable cuesta créditos?»** El botón *Fix all* aparece como gratuito. Si *Run checks* gasta créditos no lo he comprobado. Que lo miren en su saldo antes y después.
-- **«Mi repositorio de GitHub es público, ¿es un problema?»** No, mientras no tenga claves secretas. El fichero `.env` que sube Lovable solo lleva valores públicos (lo vimos el 21 de noviembre). El primer prompt de la guía lo comprueba.
-- **«¿Acepto el Fix all?»** Primero, leer el aviso y entenderlo. Si lo aceptan, con un Pull Request y probando la preview antes del merge. Y no mañana, salvo que sea grave.
-- **«Mi producto no tiene login, ¿me afecta F2?»** Si guarda datos, sí: cualquiera puede leer las tablas que no tengan reglas RLS. Que lancen el segundo prompt.
-- **«¿Tengo que tener política de privacidad para el Demo Day?»** Si recogen datos de usuarios reales, sí: la guía lo pide en la checklist. No hace falta que sea perfecta, pero tiene que existir.
-- **Una pregunta que no sabes responder:** «No lo sé. Lo miro y os lo paso por el canal del curso».
+🎓 **Preguntas probables y qué responder:** en [PREGUNTAS-DIFICILES.md](PREGUNTAS-DIFICILES.md), con 21 preguntas, su respuesta y su fuente. Las más probables:
+- el escáner y los créditos (1–2);
+- *Fix all* (3);
+- el repositorio público (7);
+- un producto sin login (11);
+- la política de privacidad (14);
+- las 72 horas (17).
+
+Si no sabes la respuesta: «No lo sé. Lo miro y os lo paso por el canal del curso».
 
 ---
 

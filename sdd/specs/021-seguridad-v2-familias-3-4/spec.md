@@ -2,12 +2,24 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **en curso** (11-nov) · aprobada por Jaime · **redefinida por [SPEC-026](../026-seguridad-v2-replanteamiento/spec.md) el 24-nov:** queda solo la teoría de F3 (3 ideas, lenguaje directo) y los casos verificados (T01, hecha). F4 sale de la sesión y pasa a la checklist de la guía; salen las prácticas (T06); el kit pasa a SPEC-026. Las tareas T02–T07 se replanifican |
+| Estado | **en curso · redefinida de nuevo (Jaime, 25-nov):** ya no se escribe teoría de F3. El entregable pasa a ser **una página de preguntas difíciles para el formador** (`HeroCamp-Teoria/PREGUNTAS-DIFICILES.md`), con respuestas verificadas de F1, F2 y F3, del escáner de Lovable y de la configuración. Ver §0. Antes: redefinida por [SPEC-026](../026-seguridad-v2-replanteamiento/spec.md) el 24-nov (solo la teoría de F3 y los casos verificados) |
 | Sesión | 2026-12 Seguridad v2 (**jueves 10-dic, 2h, solo teoría**; antes 11-dic · 17:00–21:00) |
 | Fecha límite | 2026-11-30 |
 | Depende de | SPEC-020 (retro validada el 11-nov) · SPEC-022 (pipeline: formato de los agentes de F3 y F4) · constitution v1.6 |
 | Alimenta | SPEC-023 (guion de 4h) · SPEC-024 (portal) |
 | Responsable | Jaime García |
+
+## 0. Redefinición del 25-nov (manda sobre el resto de la spec)
+- **Por qué:** con la guía publicada (SPEC-026) y el guion con el texto completo (SPEC-023), un documento de teoría de F3 repetiría lo mismo con otras palabras (constitution 1.6). Jaime decidió no montar un «Bloque Teórico» para esta sesión. Lo que le falta para estudiar es saber qué responder cuando una pregunta se sale del guion.
+- **Entregable:** `sesiones/2026-12-seguridad-v2/HeroCamp-Teoria/PREGUNTAS-DIFICILES.md`. Es una página para Jaime con las preguntas probables, la respuesta en lenguaje directo y la fuente de cada dato. Sustituye a la lista de preguntas del colchón del guion, que ahora la enlaza.
+- **Requisitos que siguen:** R4 (cada cifra y caso con fuente; lo que no se pueda verificar, sale) y el lenguaje directo de la excepción v1.9.
+- **Salen:** F3 en dos ejes y F4 (R1, R2), las prácticas (R3, R5, R6), los objetivos de aprendizaje, las versiones de alumnos y de formador y el kit. CA1, CA2, CA4 y CA6 dejan de aplicar.
+- **Criterios nuevos:**
+  - **CA-A.** Cada respuesta tiene su fuente en la guía, en la prueba en Lovable del 24-nov o en las verificaciones de casos (`verificacion.md` de esta spec y `026/verificacion-f1-f2.md`).
+  - **CA-B.** Ninguna respuesta contradice la guía ni el guion.
+  - **CA-C.** Cubre las tres familias, el escáner de Lovable, la configuración y el pipeline.
+  - **CA-D.** Jaime la revisa.
+- **Documentos de formador de junio** (`Bloque Teorico/Formador/`): no se reescriben. Quedan como lectura de fondo. El de F2 cuenta mal el caso del CVE, y la página de preguntas difíciles lo advierte (pregunta 13).
 
 ## 1. Problema / necesidad
 - **La retro de junio, validada por Jaime el 11-nov** (`sdd/specs/020-retro-junio/retro.md`), identifica F3 y F4 como las partes peor resueltas:

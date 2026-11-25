@@ -109,6 +109,6 @@ Que el portal de la sesión cuente lo mismo que el guion y la guía: los tres ri
 - [x] **P5. Sí: corregido el 24-nov.** ¿Corrijo ya el hub (R1), antes de aprobar el resto de la spec? Es una línea y los alumnos ya pueden estar mirándolo.
 
 ## 9. Hallazgos fuera de alcance
-- **El hub sigue marcando la sesión del 21-nov como «En preparación»,** cuando ya se impartió. No es de esta spec.
+- ~~**El hub sigue marcando la sesión del 21-nov como «En preparación»,** cuando ya se impartió.~~ **Corregido el 25-nov** (Jaime): la tarjeta del 21-nov dice «Impartida», sin resaltar, y la de seguridad, «Próxima sesión» (antes «En actualización»). Verificado en Edge a 1440 y 390 px.
 - **`plan.md` de esta spec es el de la v1** (salas, prácticas, auditores) y queda obsoleto. Cuando se apruebe esta v2, se rehace con `/sdd-plan 024`.
 - **El portal de junio enlaza contenido que puede no existir ya,** por ejemplo `portal_sesion.html`, que se citaba en el guion de junio como plan B. Se revisará al reescribirlo.

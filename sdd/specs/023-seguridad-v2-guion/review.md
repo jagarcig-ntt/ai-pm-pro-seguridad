@@ -40,6 +40,6 @@ Búsqueda final sin resultados de: "como si", "imagina", "puerta", "portero", "l
 - **T10 (Jaime):**
   - leer el guion y validar el texto y las 11 preguntas;
   - decidir si el guion, que tiene unos 10 min de habla por familia, se queda así o se amplía con más explicación (sin más ideas).
-- **Teoría de F3 de SPEC-021 (30-nov):** cuando exista, comprobar que F3 usa los mismos términos y casos (T06).
+- ~~Teoría de F3 de SPEC-021~~: ya no se escribe (SPEC-021 redefinida el 25-nov). F3 está alineada con la guía.
 - **T02:** la duración real del pipeline, para la nota de las 20:40.
 - **T11:** las capturas de las respuestas de los prompts, la víspera.
